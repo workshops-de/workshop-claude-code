@@ -1,24 +1,23 @@
 <details>
 <summary>💡 Hint 1: Still being asked to log in?</summary>
 
-Check for a leftover personal login session — it can take priority over the environment variable.
-Sign out of any personal account first, or check the docs for the exact precedence order.
+Check for a leftover personal login session — it can take priority over the key set via
+`/config`. Sign out of any personal account first if you're unsure which one is active.
 
 </details>
 
 <details>
-<summary>💡 Hint 2: Variable not set in a new terminal</summary>
+<summary>💡 Hint 2: Can't find the API key option in /config</summary>
 
-If `echo $ANTHROPIC_API_KEY` is empty in a fresh terminal, the `export` line didn't make it into
-your shell's profile file, or you edited the wrong one (check which shell you're running with
-`echo $SHELL`).
+`/config` opens a menu — look for an authentication or API key entry specifically; don't confuse
+it with unrelated settings like theme or permissions.
 
 </details>
 
 <details>
-<summary>💡 Hint 3: Never commit the key</summary>
+<summary>💡 Hint 3: Never paste the key elsewhere</summary>
 
-Keep the key out of any file you might commit to git — environment variables in your shell
-profile, never hard-coded in project files.
+Only paste the key into the `/config` prompt itself — never into a file you might commit to git
+or share in chat outside the intended channel.
 
 </details>

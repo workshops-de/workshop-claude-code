@@ -1,6 +1,6 @@
 ## Learning goals
 
-- **Skills:** configuring authentication via an environment variable; persisting shell config.
+- **Skills:** configuring authentication via the `/config` command.
 - **Concepts:** API key vs. personal account auth; shared workshop billing.
 - **Takeaways:** the workshop key removes a sign-up blocker so everyone can start together.
 
@@ -11,6 +11,8 @@
   key with the room.
 - Share the key in a way participants can copy-paste reliably (chat message or a slide with
   copyable text) — reading it aloud invites typos.
+- Walk through `/config` once on your own machine beforehand so you can point participants to the
+  exact menu entry live instead of hunting for it together.
 - Keep an eye on usage/cost during the workshop; consider rotating or revoking the key afterwards.
 - If a participant already has a personal Claude account logged in, help them confirm the
   workshop key is actually the one being used (the personal login can otherwise take precedence).
