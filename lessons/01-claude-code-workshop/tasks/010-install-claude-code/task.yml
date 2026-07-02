@@ -1,0 +1,14 @@
+# Task Configuration
+title: 'Install Claude Code and Verify It Works'
+position: 10
+category: 'Foundations'
+preparation: true
+estimated_time_in_minutes: 15
+always_unlocked: true
+
+# No git integration: there is no prepared repository or solution branch.
+
+# Note: Markdown content is loaded from separate files:
+# - body.md           -> Main task description
+# - hint.md           -> Hints for solving the task
+# - trainer_hint.md   -> Notes for trainers (not shown to participants)

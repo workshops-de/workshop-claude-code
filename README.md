@@ -14,7 +14,7 @@ lessons/
 └── 01-claude-code-workshop/
     ├── lesson.yml     # Lesson metadata, points at the shared Google Slides deck
     └── tasks/
-        └── NN-task-slug/
+        └── NNN-task-slug/
             ├── task.yml          # Metadata (title, position, category, timing)
             ├── body.md           # Main task description (required)
             ├── hint.md           # Progressive, collapsible hints (optional)
@@ -24,6 +24,13 @@ lessons/
 
 Every knowledge block presented in the slides has exactly one corresponding task folder here,
 numbered in teaching order.
+
+### Task numbering
+
+Task folders and their `position:` field use a **3-digit, stepped scheme** (`010`, `020`, `030`,
+…) instead of consecutive numbers. This leaves gaps to insert a new task between two existing ones
+(e.g. `015`) without renaming or renumbering anything else. Only renumber existing tasks if you
+run out of room between two neighbours (unlikely below ~9 insertions between them).
 
 ## Slides
 
