@@ -1,0 +1,30 @@
+# Lesson configuration for repository import
+# This file defines the lesson metadata that will be synced to the platform
+
+name: Claude Code Workshop
+position: 1
+
+# Trainer (use email or slug to match existing trainer)
+# TODO: replace with the actual trainer email before going live
+trainer: trainer@workshops.de
+
+# Reference application the workshop builds towards (not starter code -
+# participants own every line they write, there is no prepared repository).
+github_code_url: https://github.com/pawsaw/clash
+git_tag_starting: main
+
+# Presentation type: "google_slides" or "slidev"
+slides_type: google_slides
+
+# All knowledge blocks of this workshop live as sections in this single deck
+google_slide_id: '1voXfvVnvD3zC319A2Q4G78ncF43kSbYX6i592zJgBx4'
+
+# PDF sync (works for both Google Slides and Slidev)
+pdf_generation_enabled: true
+
+# Playground options
+stackblitz_enabled: false
+codesandbox_enabled: false
+
+# Status
+deprecated: false
