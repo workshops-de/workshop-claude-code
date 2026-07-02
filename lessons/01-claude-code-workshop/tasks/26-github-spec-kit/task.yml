@@ -1,0 +1,17 @@
+# Task Configuration
+title: 'Build a Small App with Spec Kit'
+position: 26
+category: 'Autonomy & Methodologies'
+preparation: false
+estimated_time_in_minutes: 90
+always_unlocked: false
+
+# No prepared repository. A fresh, small greenfield app (e.g. a
+# personal habit tracker) is recommended so the method stays the
+# focus; the reference Clash repo may optionally be used for
+# brownfield practice: https://github.com/pawsaw/clash
+
+# Note: Markdown content is loaded from separate files:
+# - body.md           -> Main task description
+# - hint.md           -> Hints for solving the task
+# - trainer_hint.md   -> Notes for trainers (not shown to participants)

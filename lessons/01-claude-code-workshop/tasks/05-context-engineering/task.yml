@@ -1,0 +1,15 @@
+# Task Configuration
+title: 'Pollute, Compact, and Reset a Session'
+position: 5
+category: 'Foundations'
+preparation: false
+estimated_time_in_minutes: 30
+always_unlocked: false
+
+# No git integration: there is no prepared repository or solution branch.
+
+# Note: Markdown content is loaded from separate files:
+# - body.md           -> Main task description
+# - hint.md           -> Hints for solving the task
+# - bonus.md          -> Bonus challenges
+# - trainer_hint.md   -> Notes for trainers (not shown to participants)

@@ -1,0 +1,15 @@
+# Task Configuration
+title: 'Scaffold and Verify Your App'
+position: 6
+category: 'Building Clash'
+preparation: false
+estimated_time_in_minutes: 45
+always_unlocked: false
+
+# No git integration: there is no prepared repository or solution branch.
+# Reference application: https://github.com/pawsaw/clash (guide, not starter code)
+
+# Note: Markdown content is loaded from separate files:
+# - body.md           -> Main task description
+# - hint.md           -> Hints for solving the task
+# - trainer_hint.md   -> Notes for trainers (not shown to participants)
