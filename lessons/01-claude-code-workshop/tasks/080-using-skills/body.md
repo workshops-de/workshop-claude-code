@@ -1,8 +1,34 @@
 ## Overview
 
-Turn your agreed domain model into a real, migrated database with seed data, using Prisma and
-SQLite. You will practise giving the agent a precise specification (your model) and **verifying
-the result** — including letting the agent self-correct when a migration fails.
+Put **skills** to work: install ready-made skills for a library that changes fast, watch Claude
+Code pick them up on its own, and compare that with invoking one explicitly. You will see why
+skills are the right home for procedural, up-to-date know-how that shouldn't sit in context all
+the time.
+
+## The Feature
+
+A skill is a folder with a `SKILL.md` (plus optional supporting files). Only its **name and
+description** sit in context; the full instructions load when the task matches or when you invoke
+it — that's _progressive disclosure_.
+
+- **Where skills live:** project skills in `.claude/skills/<name>/SKILL.md` (commit them for your
+  team), personal skills in `~/.claude/skills/<name>/SKILL.md`.
+- **Installing third-party skills:** community catalogues ship skills you add with one command,
+  e.g. `npx skills add prisma/skills@prisma-cli -y`. Look at what lands on disk before trusting it.
+- **Seeing what's available:** `/skills` lists the skills in the current session.
+- **Two ways a skill runs:** Claude invokes it automatically when your prompt matches its
+  description, or you invoke it directly with `/skill-name`. The transcript shows when a skill was
+  loaded.
+
+Skills vs. memory: `CLAUDE.md` and rules are always (or path-) loaded facts; skills are
+procedures loaded on demand.
+
+## Apply it to Clash
+
+The practice ground is turning your domain model from the previous task into a real, migrated
+**Prisma + SQLite** database with seed data. Prisma's setup changed notably in recent versions —
+exactly the kind of fast-moving knowledge where a maintained skill beats the model's training data.
+SQLite has no native enums, so status- and type-like fields are stored as documented strings.
 
 ## Prerequisites
 
@@ -10,36 +36,38 @@ the result** — including letting the agent self-correct when a migration fails
   (`npx skills add prisma/skills@prisma-cli -y`, `npx skills add prisma/skills@prisma-database-setup -y`)
 - Recommended: `prisma-next`, `prisma-client-api`
 
-## Background
-
-Prisma describes your data in a schema file, generates a type-safe client, and applies changes
-through migrations. SQLite keeps the database to a single local file. One wrinkle: SQLite has no
-native enums, so status- and type-like fields are stored as documented strings.
-
 ## Steps
 
-1. Give the agent your entity model and ask it to draft the **schema** for every entity, with the
-   correct relationships and any uniqueness constraint you identified.
-2. Review the schema against your glossary: optional relationships, unique constraints, and
-   status/type fields represented as documented strings.
-3. Have the agent **migrate** the database and generate the client. If a migration fails, let the
-   agent read the error and correct itself.
-4. Ask the agent to write a **seed** with a realistic spread of demo data.
-5. **Verify** by browsing the data (for example, with Prisma Studio) and confirming it matches your
-   model.
-6. Record the database commands (migrate, seed, reset, studio) in your project memory.
+1. Install the required skills, then open one `SKILL.md` and read its description. Run `/skills`
+   in Claude Code and confirm both are listed.
+2. Without mentioning any skill, ask the agent to draft the **Prisma schema** from your domain
+   rules (relationships, optional links, uniqueness constraint, documented string statuses).
+   Watch the transcript: did it load a skill on its own?
+3. Review the schema against your glossary before accepting it.
+4. Invoke a skill **explicitly** (e.g. `/prisma-cli`) to run the migration and generate the
+   client. If a migration fails, let the agent read the error and correct itself.
+5. Ask for a **seed** with a realistic spread of demo data, then verify it in Prisma Studio.
+6. Compare: what did the skill know that the agent alone probably would have gotten wrong? Record
+   the database commands (migrate, seed, reset, studio) in your project memory.
 
 ## Success Criteria
 
+**Feature**
+
+- [ ] The Prisma skills are installed and show up in `/skills`
+- [ ] You observed at least one automatic skill invocation and ran one skill explicitly
+- [ ] You can explain progressive disclosure and why this knowledge belongs in a skill, not in
+      `CLAUDE.md`
+
+**App still works**
+
 - [ ] The schema models all entities with correct relations and unique constraints
-- [ ] A migration applies cleanly and the client generates to the expected location
-- [ ] The seed runs and populates demo data you can browse
+- [ ] A migration applies cleanly; the seed populates demo data you can browse
 - [ ] `tsc --noEmit` passes with the client and your db helper imported
 
 ## Pitfalls (current Prisma)
 
-Recent Prisma (7.x) changed setup — have the agent check the installed version and docs rather
-than copying old snippets:
+Recent Prisma (7.x) changed setup — this is where the skills earn their keep:
 
 - The datasource may have **no `url`**; the connection string is read in `prisma.config.ts` from
   `DATABASE_URL`, and `.env` is not auto-loaded (`dotenv` must be installed).
@@ -49,6 +77,8 @@ than copying old snippets:
 
 ## References
 
+- Claude Code — Skills: https://code.claude.com/docs/en/skills
+- Agent skills (community catalogue): https://agentskills.io
 - Prisma — Schema reference: https://www.prisma.io/docs/orm/prisma-schema
 - Prisma — Migrate: https://www.prisma.io/docs/orm/prisma-migrate
 - Prisma — Seeding: https://www.prisma.io/docs/orm/prisma-migrate/workflows/seeding

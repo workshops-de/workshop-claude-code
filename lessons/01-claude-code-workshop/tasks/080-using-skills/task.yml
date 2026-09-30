@@ -1,7 +1,7 @@
 # Task Configuration
-title: 'Design, Migrate, and Seed the Database'
+title: 'Let Installed Skills Drive Your Database Setup'
 position: 80
-category: 'Building Clash'
+category: 'Extending Claude Code'
 preparation: false
 estimated_time_in_minutes: 45
 always_unlocked: false
