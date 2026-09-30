@@ -1,9 +1,9 @@
 # Task Configuration
-title: 'Implement and Review Authentication'
+title: 'Review Your Auth with a Security Subagent'
 position: 90
-category: 'Building Clash'
+category: 'Extending Claude Code'
 preparation: false
-estimated_time_in_minutes: 45
+estimated_time_in_minutes: 50
 always_unlocked: false
 
 # No git integration: there is no prepared repository or solution branch.
@@ -11,4 +11,5 @@ always_unlocked: false
 # Note: Markdown content is loaded from separate files:
 # - body.md           -> Main task description
 # - hint.md           -> Hints for solving the task
+# - bonus.md          -> Bonus challenges
 # - trainer_hint.md   -> Notes for trainers (not shown to participants)

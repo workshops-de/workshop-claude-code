@@ -1,22 +1,23 @@
 <details>
-<summary>💡 Hint 1: Cookie flags and secrets deserve attention</summary>
+<summary>💡 Hint 1: The description decides delegation</summary>
 
-These are the details most worth your review time in this task.
-
-</details>
-
-<details>
-<summary>💡 Hint 2: One guard beats scattered checks</summary>
-
-A guard enforced once for the whole protected area is easier to reason about than checks
-scattered across pages.
+Claude picks subagents by their `description`. Say _when_ to use it ("after changes to
+authentication code"), not just what it is.
 
 </details>
 
 <details>
-<summary>💡 Hint 3: "Explain why you chose this"</summary>
+<summary>💡 Hint 2: Ask for exactly what you need back</summary>
 
-A powerful prompt for security review — if the agent hard-codes anything sensitive, that's a
-finding worth fixing.
+The value of delegation is the small, clean answer. Tell the subagent the format you want —
+e.g. findings by severity with file and line.
+
+</details>
+
+<details>
+<summary>💡 Hint 3: A finding is a claim, not a verdict</summary>
+
+Check each finding against the code. Cookie flags and secret handling deserve your review time
+most; if something sensitive is hard-coded, that's a real one.
 
 </details>

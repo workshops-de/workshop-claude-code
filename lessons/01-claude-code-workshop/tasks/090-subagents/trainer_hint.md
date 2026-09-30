@@ -1,19 +1,24 @@
 ## Learning goals
 
-- **Skills:** reviewing security-sensitive agent output; reading diffs critically; challenging the
-  agent's decisions.
-- **Concepts:** password hashing; signed session cookies; route-level guards; secrets from the
-  environment.
-- **Takeaways:** trust but verify; the commit has your name on it.
+- **Feature:** built-in vs. custom subagents, `.claude/agents/` files and frontmatter
+  (`description`, `tools`, `model`), automatic vs. explicit invocation (`@agent-…`,
+  `claude --agent`).
+- **Concepts:** context isolation; delegation for noisy work; restricting tools to match the job.
+- **Practice ground:** custom-session authentication with a route guard, reviewed by a read-only
+  security subagent.
+- **Takeaways:** push noisy work out of the main context; a reviewer is input, the decision is
+  yours.
 
 ## Facilitation notes
 
-- This is a good moment to slow the room down — resist the urge to let people rubber-stamp the
-  diff. Ask at least one person to read their diff aloud.
-- If someone "vibe-codes" this task (accepts everything without reading), use it as a teaching
-  moment about "you push it, you own it" rather than a failure.
+- The before/after `/context` comparison sells context isolation — make sure people actually run
+  it, not just read about it.
+- Since v2.1.198 `/agents` no longer opens a creation wizard; participants create subagents by
+  asking Claude or writing the file. Older screenshots or blog posts will show the wizard.
+- Resist rubber-stamping in both directions: neither the implementation diff nor the reviewer's
+  findings should be accepted unread. Ask one person to walk the room through their triage.
 - Common issue on recent Next.js: forgetting to `await cookies()`/`headers()`.
 
 ## Time estimate
 
-~45 minutes; this closes out the "Modeling & Building the Skeleton" morning.
+~50 minutes.
