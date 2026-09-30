@@ -1,16 +1,22 @@
 ## Learning goals
 
-- **Skills:** integrating a client-only library into a server-first app; stating constraints up
-  front; verifying interactive UI.
-- **Concepts:** client vs. server components; dynamic import without server rendering; map markers
-  and popups.
-- **Takeaways:** lead with hard constraints; isolate interactivity into focused client components.
+- **Feature:** `claude mcp add` (stdio vs. remote), scopes and `.mcp.json`, `/mcp` and
+  `claude mcp list`, context cost of tool results.
+- **Concepts:** closing the loop on a running system; choosing the leanest verification tool.
+- **Practice ground:** a client-only Leaflet map with markers, popups, and a location picker in a
+  server-first app.
+- **Takeaways:** state hard constraints up front; let the agent see what it built; connect what
+  you need, not everything.
 
 ## Facilitation notes
 
-- Consider a live demo: run the task once WITHOUT stating the constraint (let the agent try SSR
-  and fail) vs. WITH the constraint stated, side by side, to make the lesson vivid.
-- Note OpenStreetMap tile-usage etiquette if anyone asks about production use beyond the workshop.
+- A vivid demo: let the agent verify the map by code-reading only, then via the browser — the
+  browser run usually catches something (missing marker icons, a popup link to the wrong route).
+- Network/firewall issues can block MCP server installs in some environments — have a fallback
+  recording ready.
+- Leaflet's default marker icons often break under bundlers; if it shows up, it's a great example
+  of a bug only the browser check finds.
+- Note OpenStreetMap tile-usage etiquette if anyone asks about production use.
 
 ## Time estimate
 
