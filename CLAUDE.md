@@ -20,14 +20,31 @@ hands-on tasks — see `README.md` for the high-level structure.
   repositories, branches, or checkpoints.
 - **Content source:** curriculum, task structure, and teaching narrative are adapted from a
   canonical workshop document (`workshop.md`) prepared by the trainer (26 topics, originally a
-  3-day format), rebalanced here into 6 half-day "mornings" plus foundational setup tasks.
+  3-day format), consolidated here into feature-first tasks.
+- **Feature-first:** every task introduces **one Claude Code feature** as its headline; a Clash
+  step is only the practice ground for it. Design rationale:
+  `docs/superpowers/specs/2026-09-30-feature-first-restructure-design.md`.
+
+## Categories
+
+Use exactly these `category:` values, in teaching order:
+
+| Category                   | Positions | Features                                                |
+| -------------------------- | --------- | ------------------------------------------------------- |
+| `Foundations`              | 010–050   | Install, fundamentals, permission modes, CLAUDE.md, context |
+| `Steering & Memory`        | 060–070   | Plan mode, rules and imports                            |
+| `Extending Claude Code`    | 080–120   | Skills, subagents, custom skills/commands, MCP, hooks   |
+| `Quality & Automation`     | 180–220   | Refactoring, debugging, TDD, headless, PR review        |
+| `Autonomy & Methodologies` | 230–270   | Autonomous runs, Agent SDK, gateways, Spec Kit, BMAD    |
+
+Positions 130–170 are intentionally empty (their former tasks were merged into 090–120).
 
 ## Task folder conventions
 
 ```
 lessons/01-claude-code-workshop/tasks/NNN-task-slug/
 ├── task.yml          # required: title, position, category, timing, lock/prep flags
-├── body.md           # required: Overview, Background, Steps, Success Criteria, References
+├── body.md           # required: Overview, The Feature, Apply it to Clash, Steps, Success Criteria, References
 ├── hint.md           # optional: collapsible <details> hints, 2-4 per task
 ├── trainer_hint.md   # optional: facilitator-only notes (learning goals, timing, pitfalls)
 └── bonus.md          # optional: "Going further" stretch content
@@ -38,7 +55,7 @@ lessons/01-claude-code-workshop/tasks/NNN-task-slug/
 ```yaml
 title: 'Imperative, GitHub-issue-style title'
 position: 20          # matches the numeric folder prefix
-category: 'Foundations'  # or the morning's theme, see below
+category: 'Foundations'  # one of the categories above
 preparation: false     # true only for pure setup tasks done before the session
 estimated_time_in_minutes: 30
 always_unlocked: false # true only for setup tasks that must work before the trainer unlocks anything
@@ -59,8 +76,14 @@ other file changes needed for the numbering itself.
 
 ### Content style
 
-- Body text: Overview → (Background/Prerequisites) → numbered Steps → Success Criteria checklist
-  → References. Keep steps actionable and concrete (real commands, real prompts).
+- Body text: Overview → **The Feature** (what it is, when to use it, how — real commands, file
+  paths, config snippets) → **Apply it to Clash** (short project context) → (Prerequisites) →
+  numbered Steps (set up the feature first, then apply it) → Success Criteria (a **Feature** block
+  first, then an **App still works** block) → References (Claude Code docs first). Foundations and
+  later-category tasks without a Clash step may keep Background instead of the two feature
+  sections. Keep steps actionable and concrete (real commands, real prompts).
+- Verify feature claims against the current docs (`https://code.claude.com/docs/en/<page>.md`
+  returns plain Markdown) — Claude Code changes fast (e.g. `/agents` no longer has a wizard).
 - Hints: 2–4 collapsible `<details>` blocks, each nudging without giving away the solution.
 - Trainer notes: learning goals, facilitation notes (common pitfalls, timing, what to watch for),
   time estimate.
@@ -94,6 +117,13 @@ Every task/knowledge block gets exactly these 7 slides, in this order, using the
 Layout IDs are stable for this presentation (`master` = `g90f556b6f5_0_57`) — re-verify with
 `get_presentation` + `fields: "layouts(objectId,layoutProperties)"` if they ever seem wrong.
 
+Existing block IDs (`topicNN_*`) come from the original 26-topic numbering and do **not** match
+folder numbers: `topic05`–`topic11` are the blocks for tasks 060–120. Placeholder IDs follow
+`topicNN_title_ph`, `topicNN_subtitle_ph`, `topicNN_littlewhat_ph`, `topicNN_why_ph`,
+`topicNN_how_title_ph` / `_how_body_ph`, `topicNN_what_title_ph` / `_what_body0_ph` /
+`_what_body1_ph` / `_what_body2_ph`, `topicNN_task_title_ph`, `topicNN_whatif_title_ph` /
+`_whatif_body_ph`. Map blocks to tasks by reading their text, not by number.
+
 ### Adding a new knowledge block — step by step
 
 1. **Find the current slide count/order first.** Other people can and do edit this deck directly
@@ -124,7 +154,12 @@ Five legacy slide blocks (`claude_commands_*`, `claude_ide_*`, `claude_subagents
 `claude_cicd_*`, plus assorted intro/"Vibe Coding" slides the trainer added directly) still exist
 in the deck and don't map cleanly onto the 26-topic curriculum. They're intentionally left in place
 pending a deliberate cleanup pass — don't delete or "fix" them incidentally while adding new
-content.
+content. The same applies to:
+
+- two install blocks (`task01install_*` and `claude_install_*`) covering the same task 010
+- a stale `task015apikey_*` block whose task folder has already been removed
+- trainer-added slides inside topic blocks (e.g. `g4099a12ada7_0_252` "Claude.MD Memory" in the
+  `topic04` block, and the empty `g4099a12ada7_0_257`, which now sits in the MCP block `topic10`)
 
 ## Git conventions
 
@@ -133,7 +168,9 @@ content.
 - Commit directly to `main`; keep commits atomic (one task, one structural change, or one content
   fix per commit).
 - When renaming/renumbering task folders, use `git mv` (or let `git add -A` detect the rename) so
-  history stays traceable — check `git status --short` shows `R` (rename), not delete+add.
+  history stays traceable — check `git status --short` shows `R` (rename), not delete+add. If
+  you also rewrite the files' content, commit the pure rename first and the rewrite second;
+  otherwise git sees too little similarity and records delete+add.
 
 ## Quick checklist for "add a new task"
 

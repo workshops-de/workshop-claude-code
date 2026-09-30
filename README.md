@@ -52,10 +52,23 @@ New slides are always written in English.
 ## Content source
 
 The curriculum, task structure, and teaching narrative are derived from a canonical 3-day workshop
-(`workshop.md`) prepared by the trainer, rebalanced here into 5 half-day sessions. The reference
-application the workshop builds towards is [`pawsaw/clash`](https://github.com/pawsaw/clash) — a
+(`workshop.md`) prepared by the trainer.
+
+The workshop is **feature-first**: every task introduces one Claude Code feature (plan mode,
+rules, skills, subagents, MCP, hooks, …) as its headline, and a step of the reference application
+[`pawsaw/clash`](https://github.com/pawsaw/clash) serves as the practice ground for it. Clash is a
 guide, not starter code: participants own every line of code they write, there are no prepared
 repositories, branches, or checkpoints.
+
+Tasks are grouped into these categories, in teaching order:
+
+| Category              | Tasks   | Focus                                                  |
+| --------------------- | ------- | ------------------------------------------------------ |
+| Foundations           | 010–050 | Install, fundamentals, permission modes, memory, context |
+| Steering & Memory     | 060–070 | Plan mode, rules and imports                           |
+| Extending Claude Code | 080–120 | Skills, subagents, custom commands, MCP, hooks         |
+| Quality & Automation  | 180–220 | Refactoring, debugging, TDD, headless, PR review       |
+| Autonomy & Methodologies | 230–270 | Autonomous runs, Agent SDK, gateways, Spec Kit, BMAD |
 
 ## Git conventions
 
