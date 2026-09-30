@@ -1,14 +1,16 @@
 <details>
-<summary>💡 Hint 1: Keep the first scaffold minimal</summary>
+<summary>💡 Hint 1: A plan you never argue with is a rubber stamp</summary>
 
-You will add features deliberately in later tasks — resist scope creep now.
+Ask "why is this step needed?" for anything that surprises you — extra libraries especially. Keep
+the first scaffold minimal; later tasks add features deliberately.
 
 </details>
 
 <details>
-<summary>💡 Hint 2: Question extra libraries</summary>
+<summary>💡 Hint 2: Your edit beats a long correction prompt</summary>
 
-If the agent proposes libraries you didn't ask for, question them before accepting.
+If you'd need three sentences to explain a change, it is often faster to open the plan with
+`Ctrl+G` and just write it the way you want.
 
 </details>
 
