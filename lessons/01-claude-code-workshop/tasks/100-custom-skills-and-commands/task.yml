@@ -1,7 +1,7 @@
 # Task Configuration
-title: 'Build and Reuse a Feature Slice'
+title: 'Capture Your Feature Pattern as Skill and Command'
 position: 100
-category: 'Building Clash'
+category: 'Extending Claude Code'
 preparation: false
 estimated_time_in_minutes: 60
 always_unlocked: false
@@ -11,4 +11,5 @@ always_unlocked: false
 # Note: Markdown content is loaded from separate files:
 # - body.md           -> Main task description
 # - hint.md           -> Hints for solving the task
+# - bonus.md          -> Bonus challenges
 # - trainer_hint.md   -> Notes for trainers (not shown to participants)

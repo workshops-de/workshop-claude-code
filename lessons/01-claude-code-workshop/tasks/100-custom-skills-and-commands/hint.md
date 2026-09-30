@@ -1,20 +1,31 @@
 <details>
-<summary>💡 Hint 1: Resist special-casing the second feature</summary>
+<summary>💡 Hint 1: The description gets the skill picked</summary>
 
-The point is that the shape repeats — differences should be minor (e.g. one extra field).
-
-</details>
-
-<details>
-<summary>💡 Hint 2: One schema, two consumers</summary>
-
-Keep validation in one schema shared by the form and the action.
+Be specific about _when_ to use it and lead with the words your prompts actually contain
+("adding a feature", "new field", "server action").
 
 </details>
 
 <details>
-<summary>💡 Hint 3: Build one screen at a time</summary>
+<summary>💡 Hint 2: Test in a clean context</summary>
 
-Verify each screen before moving to the next rather than building all four at once.
+In the session where you wrote the skill, the agent already knows the pattern. Only a fresh
+session proves the skill — not your conversation — did the work.
+
+</details>
+
+<details>
+<summary>💡 Hint 3: Who decides, you or the agent?</summary>
+
+If the agent should decide _when_ to act, it's a skill. If you want to trigger it deliberately
+(and pass an argument), it's a command — `disable-model-invocation: true`.
+
+</details>
+
+<details>
+<summary>💡 Hint 4: Resist special-casing the second entity</summary>
+
+The point is that the shape repeats. If the command needs lots of extra instructions for entity
+two, improve the skill instead.
 
 </details>
