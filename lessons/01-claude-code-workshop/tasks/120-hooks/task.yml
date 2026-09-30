@@ -1,9 +1,9 @@
 # Task Configuration
-title: 'Implement Join, Accept, and Reject'
+title: 'Guard the Participation Flow with Hooks'
 position: 120
-category: 'Building Clash'
+category: 'Extending Claude Code'
 preparation: false
-estimated_time_in_minutes: 60
+estimated_time_in_minutes: 50
 always_unlocked: false
 
 # No git integration: there is no prepared repository or solution branch.
@@ -11,4 +11,5 @@ always_unlocked: false
 # Note: Markdown content is loaded from separate files:
 # - body.md           -> Main task description
 # - hint.md           -> Hints for solving the task
+# - bonus.md          -> Bonus challenges
 # - trainer_hint.md   -> Notes for trainers (not shown to participants)

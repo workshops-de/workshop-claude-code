@@ -1,44 +1,94 @@
 ## Overview
 
-Implement the heart of the domain: people request to join an activity, hosts accept or reject, and
-each transition notifies the right person. You will learn to **encode a state machine explicitly**
-so the agent doesn't invent ad-hoc statuses, and to attach cross-cutting side-effects
-(notifications) cleanly to the write path.
+Make quality and safety **deterministic** with hooks — commands that Claude Code runs on
+lifecycle events, every time, regardless of what the model decides. You set up a format/type-check
+hook and a secrets guard first, then build the most intricate feature of the app with both active.
+
+## The Feature
+
+Hooks are configured in settings (`.claude/settings.json` for the project, commit it) and fire on
+events such as `PreToolUse` (before a tool runs — can block), `PostToolUse` (after it ran),
+`Stop`, or `SessionStart`.
+
+- **Matchers** pick the tools a hook applies to, e.g. `"Edit|Write"`.
+- **Input** arrives as JSON on stdin — the edited file is at `.tool_input.file_path`:
+
+  ```json
+  {
+    "hooks": {
+      "PostToolUse": [
+        {
+          "matcher": "Edit|Write",
+          "hooks": [
+            {
+              "type": "command",
+              "command": "jq -r '.tool_input.file_path' | xargs npx prettier --write"
+            }
+          ]
+        }
+      ]
+    }
+  }
+  ```
+
+- **Blocking** — in a `PreToolUse` hook, `exit 2` blocks the tool call and your stderr is shown to
+  Claude as the reason. Careful: `exit 1` does **not** block, it's treated as a non-blocking error.
+- **Scripts** — keep longer logic in `.claude/hooks/*.sh` (executable) and reference it as
+  `"${CLAUDE_PROJECT_DIR}/.claude/hooks/guard.sh"`.
+- **Inspect** — `/hooks` shows every configured hook, its matcher, and which settings file it came
+  from.
+
+Memory advises; hooks enforce.
+
+## Apply it to Clash
+
+The practice ground is the heart of the domain: people **request to join** an activity, hosts
+**accept or reject**, and each transition **notifies** the right person. A participation moves
+from _pending_ to _accepted_ or _rejected_ — nothing else. It touches schema, server actions,
+authorization, and UI in many files at once: exactly where a hook that formats and type-checks
+every edit keeps the agent honest.
 
 ## Prerequisites
 
+- `jq` installed (used to read hook input).
 - Recommended: `prisma-client-api`, `react-best-practices`
-- Optional: `agent-browser` to drive the flow end-to-end with two accounts.
-
-## Background
-
-A participation moves from _pending_ to _accepted_ or _rejected_; modelling those states and
-transitions explicitly keeps the implementation honest. Every transition is a write that should
-follow the same validated, authorized path as other mutations — and additionally emit a
-notification to the right user.
 
 ## Steps
 
-1. State the **transitions** to the agent: request-to-join creates a pending participation and
-   notifies the host; accept and reject move it to the corresponding state and notify the
-   requester. Confirm the agent restates them correctly.
-2. Implement join/leave and host accept/reject as server actions that validate, **authorize** (only
-   the host may decide), persist, emit the right notification, and revalidate.
-3. Build the participant-facing UI (join/leave with feedback) and the host-facing requests view.
-4. Add a grouped "my participations" view splitting going, awaiting approval, and declined.
-5. Verify with two seeded accounts: one requests, the other (the host) accepts; confirm the
-   notification reaches the right person and views update.
-6. Optionally extend: notify a venue's owner when a new activity is created at their venue.
+1. Add a **`PostToolUse`** hook for `Edit|Write` that formats the changed file and runs a fast
+   type-check. Make a trivial edit and confirm it fires.
+2. Add a **`PreToolUse`** guard script that blocks reads and writes to `.env*` files and key
+   material with `exit 2`. Ask the agent to read your `.env` and confirm it's blocked with your
+   message.
+3. Check both in `/hooks`.
+4. With the hooks active, state the **transitions** to the agent (request → pending, notify host;
+   accept/reject → decided, notify requester) and have it restate them before coding.
+5. Implement join/leave and host accept/reject as server actions that validate, **authorize** (only
+   the host decides), persist, notify, and revalidate — plus the participant UI, the host's
+   requests view, and a grouped "my participations" page. Notice when the type-check hook pushes
+   back on the agent mid-task.
+6. Verify with two seeded accounts: one requests, the other accepts; confirm the notification
+   reaches the right person.
 
 ## Success Criteria
 
+**Feature**
+
+- [ ] A post-edit hook formats and type-checks automatically, and you saw it fire during the build
+- [ ] A guard hook blocks access to at least one sensitive path with `exit 2`
+- [ ] Both hooks appear in `/hooks` from your project settings
+- [ ] You can explain why these belong in hooks rather than in `CLAUDE.md`
+
+**App still works**
+
 - [ ] Join/leave and host accept/reject work and enforce authorization
-- [ ] Each transition emits a notification to the correct person
-- [ ] Invalid transitions are rejected; a person can't request the same item twice
-- [ ] "My participations" groups going / awaiting / declined correctly; `npm run build` passes
+- [ ] Each transition notifies the correct person; invalid transitions and duplicate requests are
+      rejected
+- [ ] "My participations" groups going / awaiting / declined; `npm run build` passes
 
 ## References
 
-- State machine concept: https://en.wikipedia.org/wiki/Finite-state_machine
+- Claude Code — Hooks reference: https://code.claude.com/docs/en/hooks
+- Claude Code — Hooks guide: https://code.claude.com/docs/en/hooks-guide
+- Claude Code — Settings: https://code.claude.com/docs/en/settings
 - Next.js — Server Actions and mutations: https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations
-- Prisma — Relations and queries: https://www.prisma.io/docs/orm/prisma-client/queries

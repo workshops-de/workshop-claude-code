@@ -1,17 +1,22 @@
 ## Learning goals
 
-- **Skills:** implementing a state machine; attaching side-effects to writes; enforcing
-  authorization on transitions.
-- **Concepts:** finite states and transitions; cross-cutting concerns (notifications); host vs.
-  participant permissions.
-- **Takeaways:** model states explicitly; route every transition through the validated write path.
+- **Feature:** hook events and matchers, stdin JSON input, blocking with `exit 2`, project hooks in
+  `.claude/settings.json`, `/hooks`.
+- **Concepts:** deterministic guardrails vs. advisory memory; defense in depth.
+- **Practice ground:** the participation state machine with notifications and host-only
+  authorization.
+- **Takeaways:** if it must always happen, make it a hook — not an instruction.
 
 ## Facilitation notes
 
-- This task closes out "Building the Product" — a good checkpoint to confirm everyone has a
-  working vertical slice before Morning 4 shifts focus to Claude Code's own building blocks.
-- Two-account testing is the step people skip — actively check for it during the room walk.
+- Reconnect to the `CLAUDE.md` task: memory advises, hooks enforce — draw the contrast explicitly.
+- The `exit 1` vs. `exit 2` trap catches most people writing their first guard; let them hit it,
+  then point at the hint.
+- Watch for slow hooks (full test suite per edit) — steer back to fast, targeted commands.
+- The payoff moment is the type-check hook pushing back mid-feature; ask someone to show it.
+- Two-account testing of the participation flow is the step people skip — check for it during the
+  room walk.
 
 ## Time estimate
 
-~60 minutes.
+~50 minutes.
