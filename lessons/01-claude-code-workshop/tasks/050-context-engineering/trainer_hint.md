@@ -7,8 +7,8 @@
 
 ## Facilitation notes
 
-- This is a conceptual bridge task before the group dives back into building Clash — keep it
-  hands-on but time-boxed.
+- This is a conceptual bridge task before the feature tasks, which use Clash as their practice
+  ground — keep it hands-on but time-boxed.
 - The most memorable moment is usually the "before/after" comparison after `/compact` — make sure
   every participant actually does this comparison, not just reads about it.
 - Connect explicitly back to "Context is King" from the opening theory, and forward to Skills/
