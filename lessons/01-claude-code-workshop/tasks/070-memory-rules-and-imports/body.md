@@ -1,41 +1,82 @@
 ## Overview
 
-Translate a written brief into a clear, shared domain model **before** writing any schema or code.
-You will use the agent to restate the domain, surface ambiguities, and agree on precise
-terminology. The lesson is that cheap alignment on meaning prevents expensive rework later.
+Grow your project memory beyond a single `CLAUDE.md`: split instructions into focused **rule
+files**, scope some of them to the files they govern, and pull shared documents in with
+**imports**. You will use this to pin down your domain language so every future session speaks
+it — without bloating the context of every single prompt.
 
-## Background
+## The Feature
 
-A reference brief (the "clash" concept — activities happening at a place and time, hosted at
-reusable venues, joined by request/approval) is a good stand-in if you don't yet have your own
-product brief: see [`pawsaw/clash`](https://github.com/pawsaw/clash) for the full write-up. Getting
-concepts and relationships precise now means the schema, validation, and UI all line up later.
-Ambiguity is a context hazard: synonyms and vague terms lead the agent to merge things that should
-stay distinct.
+Claude Code loads more than one memory file:
+
+- **`.claude/rules/*.md`** — one topic per file (e.g. `domain.md`, `testing.md`). Rules without
+  frontmatter load at launch, just like `CLAUDE.md`. Files are discovered recursively, so
+  subfolders like `frontend/` work too.
+- **Path-scoped rules** — add a `paths` field and the rule only loads when Claude reads matching
+  files:
+
+  ```markdown
+  ---
+  paths:
+    - "prisma/**"
+    - "lib/validation/**"
+  ---
+
+  # Data model rules
+  - Status fields are documented strings, never free text
+  ```
+
+- **Imports** — `@path/to/file` inside `CLAUDE.md` expands another file into context at launch
+  (relative to the importing file, up to four hops deep). Imports organise memory; they don't
+  reduce its cost, because imported files load at launch too.
+- **`/memory`** lists every memory file in play and opens one in your editor; **`/context`** shows
+  which `CLAUDE.md` and rule files actually loaded into the current session.
+
+Rule of thumb: always-relevant facts go in `CLAUDE.md` or an unscoped rule; area-specific
+conventions go in a path-scoped rule.
+
+## Apply it to Clash
+
+The practice ground is the **domain model** of [`pawsaw/clash`](https://github.com/pawsaw/clash):
+activities happening at a place and time, hosted at reusable venues, joined by request/approval.
+Ambiguity is a context hazard — synonyms and vague terms lead the agent to merge things that
+should stay distinct. You agree on the language once and store it where every session can read
+it. No schema or code yet.
 
 ## Steps
 
-1. Give the agent your brief and ask it to **restate the domain in its own words** — the core
-   entities, how they relate, and the lifecycle of a join request (or your domain's equivalent).
-2. Hunt for ambiguity: ask the agent to list terms that are unclear or could be confused, and
-   resolve each into a single agreed definition.
-3. Produce a **glossary** of the core entities and add it to your project memory so future
-   sessions stay aligned.
-4. Sketch the **entity model**: entities, their key attributes, the relationships between them
-   (including which are optional), and the states an entity can be in.
-5. Identify any constraints that matter (for example, uniqueness of a request per activity) and
-   note them for the database design that follows.
-6. Confirm the model against the brief end to end before moving on.
+1. Give the agent the brief and ask it to **restate the domain in its own words** — core entities,
+   how they relate, and the lifecycle of a join request. Correct any drift.
+2. Ask it to list terms that are unclear or could be confused, and resolve each into one agreed
+   definition.
+3. Have the agent write the result to **`.claude/rules/domain.md`**: glossary, entity model
+   (entities, key attributes, relationships incl. optional ones, states), and constraints such as
+   "one request per person per activity".
+4. Add a **path-scoped rule** (for example `.claude/rules/data-model.md` with `paths` pointing at
+   where your schema and validation will live) holding the conventions that only matter there.
+5. If you keep the brief as a file (e.g. `docs/brief.md`), **import** it from `CLAUDE.md` with
+   `@docs/brief.md`.
+6. Start a fresh session and run `/context`: confirm `domain.md` loaded and the path-scoped rule
+   did **not** — then ask a domain question and check the answer uses your glossary.
 
 ## Success Criteria
 
-- [ ] The agent's restatement of the domain matches the brief (you corrected any drift)
-- [ ] A glossary of the core entities is recorded where the agent can re-read it
-- [ ] The entity model names every entity, its key attributes, relationships, and states
+**Feature**
+
+- [ ] `.claude/rules/domain.md` exists and loads in a fresh session (visible in `/context`)
+- [ ] At least one rule is path-scoped with `paths` frontmatter and stays unloaded until a
+      matching file is read
+- [ ] You can explain when to use `CLAUDE.md`, an unscoped rule, a path-scoped rule, or an import
+
+**Domain model**
+
+- [ ] The glossary names every core entity with one agreed definition
+- [ ] The entity model covers attributes, relationships (incl. optional ones), and states
 - [ ] Any uniqueness constraint is explicitly captured
 
 ## References
 
+- Claude Code — Memory, rules and imports: https://code.claude.com/docs/en/memory
+- Claude Code — Path-specific rules: https://code.claude.com/docs/en/memory#path-specific-rules
 - Clash brief (reference domain): https://github.com/pawsaw/clash
-- Domain modelling primer: https://martinfowler.com/bliki/UbiquitousLanguage.html
-- Entity–relationship modelling overview: https://en.wikipedia.org/wiki/Entity%E2%80%93relationship_model
+- Ubiquitous language: https://martinfowler.com/bliki/UbiquitousLanguage.html
