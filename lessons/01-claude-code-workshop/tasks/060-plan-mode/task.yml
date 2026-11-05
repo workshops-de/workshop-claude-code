@@ -1,5 +1,5 @@
 # Task Configuration
-title: 'Plan Before You Build: Scaffold with Plan Mode'
+title: 'Plan Mode: Scaffold BookMonkey from a Reviewed Plan'
 position: 60
 category: 'Steering & Memory'
 preparation: false
@@ -7,7 +7,7 @@ estimated_time_in_minutes: 45
 always_unlocked: false
 
 # No git integration: there is no prepared repository or solution branch.
-# Reference application: https://github.com/pawsaw/clash (guide, not starter code)
+# Practice backend: https://github.com/workshops-de/bookmonkey-api (run with `npx bookmonkey-api`)
 
 # Note: Markdown content is loaded from separate files:
 # - body.md           -> Main task description

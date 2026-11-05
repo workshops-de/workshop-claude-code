@@ -2,7 +2,7 @@
 <summary>💡 Hint 1: A plan you never argue with is a rubber stamp</summary>
 
 Ask "why is this step needed?" for anything that surprises you — extra libraries especially. Keep
-the first scaffold minimal; later tasks add features deliberately.
+the first scaffold minimal; the component library arrives in the skills task, on purpose.
 
 </details>
 
@@ -15,10 +15,10 @@ If you'd need three sentences to explain a change, it is often faster to open th
 </details>
 
 <details>
-<summary>💡 Hint 3: The shadcn CLI is interactive</summary>
+<summary>💡 Hint 3: The page is empty, but the API is up?</summary>
 
-Its `init` can still prompt (e.g. "Which preset?") even with `--yes` — let the agent answer it.
-Its flags also change: `-b` now selects the component library, not a colour, so check
-`init --help` rather than copying old commands.
+Check what the browser actually requested and whether the request ran on the server or in the
+client. `NEXT_PUBLIC_` variables are inlined at build time — restart the dev server after changing
+`.env.local`.
 
 </details>
