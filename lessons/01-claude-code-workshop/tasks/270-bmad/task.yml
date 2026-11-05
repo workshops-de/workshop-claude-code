@@ -8,8 +8,8 @@ always_unlocked: false
 
 # No prepared repository. A fresh, small greenfield app (e.g. a
 # reusable packing-list app) is recommended so each persona's role
-# stays clear; the reference Clash repo may optionally be used for
-# brownfield practice: https://github.com/pawsaw/clash
+# stays clear; your BookMonkey app may optionally be used for
+# brownfield practice
 
 # Note: Markdown content is loaded from separate files:
 # - body.md           -> Main task description

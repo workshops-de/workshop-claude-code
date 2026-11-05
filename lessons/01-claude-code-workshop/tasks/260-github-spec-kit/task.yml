@@ -8,8 +8,8 @@ always_unlocked: false
 
 # No prepared repository. A fresh, small greenfield app (e.g. a
 # personal habit tracker) is recommended so the method stays the
-# focus; the reference Clash repo may optionally be used for
-# brownfield practice: https://github.com/pawsaw/clash
+# focus; your BookMonkey app may optionally be used for
+# brownfield practice
 
 # Note: Markdown content is loaded from separate files:
 # - body.md           -> Main task description

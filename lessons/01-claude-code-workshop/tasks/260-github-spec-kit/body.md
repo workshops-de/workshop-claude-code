@@ -9,7 +9,7 @@ truth**, and the implementation is generated from it — a sharp contrast to ad-
 Spec Kit provides slash commands that walk you through governing principles, a specification of
 the _what_ and _why_, an optional clarification pass, a technical plan, a task breakdown, an
 optional consistency analysis, and finally implementation. Build a **new, small application** here
-(not your Clash build) so the method — not the domain — is the lesson. Suggested brief: a personal
+(not your BookMonkey build) so the method — not the domain — is the lesson. Suggested brief: a personal
 habit tracker (define habits, check in daily, see streaks).
 
 ## Steps

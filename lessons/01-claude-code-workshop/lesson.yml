@@ -8,9 +8,9 @@ position: 1
 # TODO: replace with the actual trainer email before going live
 trainer: trainer@workshops.de
 
-# Reference application the workshop builds towards (not starter code -
-# participants own every line they write, there is no prepared repository).
-github_code_url: https://github.com/pawsaw/clash
+# Ready-made backend the BookMonkey frontend is built against (`npx bookmonkey-api`);
+# participants own every line they write, there is no prepared repository.
+github_code_url: https://github.com/workshops-de/bookmonkey-api
 git_tag_starting: main
 
 # Presentation type: "google_slides" or "slidev"

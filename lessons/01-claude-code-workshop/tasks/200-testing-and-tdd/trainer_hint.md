@@ -16,7 +16,7 @@
   from the OpenAPI spec that the real API doesn't quite satisfy — fixing the test is the lesson.
 - Watch for agents editing tests to make them pass. If it happens, show the protect-the-tests hook
   idea from the bonus.
-- Port clash: Next.js uses 3000, the reference API 4730 — suggest 3001 for the own backend.
+- Port conflicts: Next.js uses 3000, the reference API 4730 — suggest 3001 for the own backend.
 - If time is tight, `GET /books/:isbn` alone is enough to see the loop; `POST` can move to 230.
 - Directly foreshadows Headless & Automation: the gate command built here gets wrapped into a
   script next.
