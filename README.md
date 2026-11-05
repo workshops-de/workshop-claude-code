@@ -55,10 +55,12 @@ The curriculum, task structure, and teaching narrative are derived from a canoni
 (`workshop.md`) prepared by the trainer.
 
 The workshop is **feature-first**: every task introduces one Claude Code feature (plan mode,
-rules, skills, subagents, MCP, hooks, …) as its headline, and a step of the reference application
-[`pawsaw/clash`](https://github.com/pawsaw/clash) serves as the practice ground for it. Clash is a
-guide, not starter code: participants own every line of code they write, there are no prepared
-repositories, branches, or checkpoints.
+rules, skills, subagents, MCP, hooks, …) as its headline, and a step of **BookMonkey**, a small book
+catalogue, serves as the practice ground for it. Participants build the frontend against the
+ready-made [`bookmonkey-api`](https://github.com/workshops-de/bookmonkey-api) (`npx bookmonkey-api`)
+and later replace it with their own NestJS backend that honours the same OpenAPI contract (tasks
+200 and 230). Participants own every line of code they write; there are no prepared repositories,
+branches, or checkpoints.
 
 Tasks are grouped into these categories, in teaching order:
 

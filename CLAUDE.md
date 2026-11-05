@@ -15,13 +15,15 @@ hands-on tasks — see `README.md` for the high-level structure.
 - **Lesson metadata:** `lessons/01-claude-code-workshop/lesson.yml`
 - **Google Slides deck:** `google_slide_id: 1voXfvVnvD3zC319A2Q4G78ncF43kSbYX6i592zJgBx4` (one
   shared presentation for the whole workshop)
-- **Reference application:** [`pawsaw/clash`](https://github.com/pawsaw/clash) — inspiration/guide
-  only, not starter code. Participants own every line they write; there are no prepared
-  repositories, branches, or checkpoints.
+- **Practice project:** **BookMonkey**, a book catalogue. Participants build the frontend against the
+  ready-made [`bookmonkey-api`](https://github.com/workshops-de/bookmonkey-api) (`npx
+  bookmonkey-api`, port 4730, OpenAPI at `/api-json`) and replace it with their own NestJS backend
+  against the same contract in tasks 200 and 230. Participants own every line they write; there
+  are no prepared repositories, branches, or checkpoints.
 - **Content source:** curriculum, task structure, and teaching narrative are adapted from a
   canonical workshop document (`workshop.md`) prepared by the trainer (26 topics, originally a
   3-day format), consolidated here into feature-first tasks.
-- **Feature-first:** every task introduces **one Claude Code feature** as its headline; a Clash
+- **Feature-first:** every task introduces **one Claude Code feature** as its headline; a BookMonkey
   step is only the practice ground for it. Design rationale:
   `docs/superpowers/specs/2026-09-30-feature-first-restructure-design.md`.
 
@@ -44,7 +46,7 @@ Positions 130–170 are intentionally empty (their former tasks were merged into
 ```
 lessons/01-claude-code-workshop/tasks/NNN-task-slug/
 ├── task.yml          # required: title, position, category, timing, lock/prep flags
-├── body.md           # required: Overview, The Feature, Apply it to Clash, Steps, Success Criteria, References
+├── body.md           # required: Overview, The Feature, Apply it to BookMonkey, Steps, Success Criteria, References
 ├── hint.md           # optional: collapsible <details> hints, 2-4 per task
 ├── trainer_hint.md   # optional: facilitator-only notes (learning goals, timing, pitfalls)
 └── bonus.md          # optional: "Going further" stretch content
@@ -53,7 +55,7 @@ lessons/01-claude-code-workshop/tasks/NNN-task-slug/
 `task.yml` shape:
 
 ```yaml
-title: 'Imperative, GitHub-issue-style title'
+title: 'Feature: Imperative, GitHub-issue-style action'  # e.g. 'Hooks: Guard the Reading List Flow'
 position: 20          # matches the numeric folder prefix
 category: 'Foundations'  # one of the categories above
 preparation: false     # true only for pure setup tasks done before the session
@@ -77,10 +79,10 @@ other file changes needed for the numbering itself.
 ### Content style
 
 - Body text: Overview → **The Feature** (what it is, when to use it, how — real commands, file
-  paths, config snippets) → **Apply it to Clash** (short project context) → (Prerequisites) →
+  paths, config snippets) → **Apply it to BookMonkey** (short project context) → (Prerequisites) →
   numbered Steps (set up the feature first, then apply it) → Success Criteria (a **Feature** block
   first, then an **App still works** block) → References (Claude Code docs first). Foundations and
-  later-category tasks without a Clash step may keep Background instead of the two feature
+  later-category tasks without a BookMonkey step may keep Background instead of the two feature
   sections. Keep steps actionable and concrete (real commands, real prompts).
 - Verify feature claims against the current docs (`https://code.claude.com/docs/en/<page>.md`
   returns plain Markdown) — Claude Code changes fast (e.g. `/agents` no longer has a wizard).
@@ -111,7 +113,7 @@ Every task/knowledge block gets exactly these 7 slides, in this order, using the
 | 3 | Why                       | Why 1                    | `g90f556b6f5_0_104`        | `BODY` (≤4 bullets: why it matters)                                                |
 | 4 | How                       | Title and body           | `g90f556b6f5_0_70`         | `TITLE` ("How: …"), `BODY` (≤4 bullets: steps)                                     |
 | 5 | What                      | Code                     | `g90f556b6f5_0_76`         | `TITLE` ("What: …"), `BODY` (2 mini-headers), `BODY` idx 1 (code), `BODY` idx 2 (one-line tip) |
-| 6 | Task                      | Tasks 1                  | `g90f556b6f5_0_91`         | `TITLE` index 1 ("Task: <task.yml title>")                                         |
+| 6 | Task                      | Tasks 1                  | `g90f556b6f5_0_91`         | `TITLE` index 1 ("Task: <task.yml title without the feature prefix>")              |
 | 7 | What if                   | Title and body           | `g90f556b6f5_0_70`         | `TITLE` ("What if: …"), `BODY` (≤4 bullets: pitfalls)                              |
 
 Layout IDs are stable for this presentation (`master` = `g90f556b6f5_0_57`) — re-verify with
