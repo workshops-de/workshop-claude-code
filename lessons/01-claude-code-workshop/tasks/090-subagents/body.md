@@ -32,31 +32,36 @@ summary. Its intermediate reading doesn't pollute your context.
 - **Tool restriction** — `tools` is an allowlist, `disallowedTools` a denylist. A reviewer that
   can't write can't "helpfully" fix things behind your back.
 
-## Apply it to Clash
+## Apply it to BookMonkey
 
-The practice ground is **authentication** for your app: registration, login, logout, a signed
-session cookie, and a guard for the authenticated area — a custom-session approach with hashed
-passwords rather than a third-party provider. Security-sensitive code is exactly where "you push
-it, you own it" matters most, so a second, independent pair of eyes is worth its setup.
+The practice ground is **sign-in** for BookMonkey. The `bookmonkey-api` already offers
+`POST /register` and `POST /login`, both returning `{ accessToken, user }` — your job is the
+frontend side: forms, storing the token safely, sign-out, and a guard for the authenticated area.
+There is a catch worth finding: **the API does not check the token on any endpoint**. Your guard
+protects pages, not data. That is exactly the kind of gap an independent reviewer should surface —
+and it is the reason you'll build your own backend later.
 
 ## Prerequisites
 
-- Recommended skills: `prisma-client-api`, `react-best-practices`
-- No dedicated skill covers `jose`/`bcrypt` — rely on the linked docs below.
+- The `bookmonkey-api` is running; demo user `admin@bookmonkey.api` / `password1!`.
+- Recommended skill: `react-best-practices`.
 
 ## Steps
 
-1. Ask Claude (plan first) to implement registration, login, and logout with hashed passwords, a
-   signed http-only session cookie, an env-sourced secret, and one guard for the authenticated
-   area. Test it end to end in the browser.
+1. Ask Claude (plan first) to implement sign-up, sign-in, and sign-out against the API: the token
+   ends up in a signed or encrypted **http-only cookie** set on the server (not in `localStorage`),
+   and one guard redirects the authenticated area to sign-in. Test it end to end in the browser.
 2. **Explore with a subagent**: ask a research question about your auth flow ("trace a request to
-   a protected page — where is the session checked?") and have it delegated to Explore. Run
-   `/context` before and after and note that the main context stayed lean.
+   a protected page — where is the token checked, and by whom?") and have it delegated to Explore.
+   Run `/context` before and after and note that the main context stayed lean.
 3. Create the **`security-reviewer`** subagent in `.claude/agents/` with read-only tools.
-4. Invoke it explicitly with `@agent-security-reviewer` on your auth code.
-5. **Triage** the findings yourself: fix what's real, discard what isn't, and explain why for at
+4. Invoke it explicitly with `@agent-security-reviewer` on your auth code, and ask it to include
+   the API's behaviour in its review (`curl -X DELETE http://localhost:4730/books/<isbn>` without a
+   token is a fair test).
+5. **Triage** the findings yourself: fix what's real in your code, record what only the backend can
+   fix (in `docs/backlog.md` or similar), and reject what isn't a problem — with a reason for at
    least one of each. Re-run the reviewer after your fixes.
-6. Reflect: which kinds of work are worth delegating, and which are simpler inline?
+6. Restore the seed if you deleted a book: `curl -X POST http://localhost:4730/dev/reset`.
 
 ## Success Criteria
 
@@ -69,21 +74,22 @@ it, you own it" matters most, so a second, independent pair of eyes is worth its
 
 **App still works**
 
-- [ ] Register, login, and logout work end to end; the session persists across reloads
-- [ ] The cookie is httpOnly (secure in production) and the secret is env-sourced
-- [ ] The guard redirects every protected page to sign-in; passwords are only stored as hashes
-- [ ] `tsc --noEmit` and `npm run build` both pass
+- [ ] Sign-up, sign-in, and sign-out work end to end; the session persists across reloads
+- [ ] The token lives in an http-only cookie (secure in production), never in `localStorage`
+- [ ] The guard redirects every page of the authenticated area to sign-in
+- [ ] The unenforced token on the API side is documented as a known backend gap
+- [ ] Type-check and `npm run build` pass
 
 ## Pitfalls (current framework)
 
 - `cookies()` / `headers()` from `next/headers` are **async** on recent Next.js — `await` them.
 - A `redirect()` inside a Server Action works by **throwing** — don't swallow it in `try/catch`.
-- A native database driver may need to be marked as a server-external package for the build.
+- Setting a cookie works in Server Actions and Route Handlers, not in Server Components.
 
 ## References
 
 - Claude Code — Subagents: https://code.claude.com/docs/en/sub-agents
 - Claude Code — Invoke subagents explicitly: https://code.claude.com/docs/en/sub-agents#invoke-subagents-explicitly
+- BookMonkey API — Auth: https://github.com/workshops-de/bookmonkey-api#auth
 - Next.js — Authentication guide: https://nextjs.org/docs/app/building-your-application/authentication
-- jose — JWT signing/verification: https://github.com/panva/jose
-- OWASP — Authentication cheat sheet: https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html
+- OWASP — Session management cheat sheet: https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html
