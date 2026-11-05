@@ -7,17 +7,17 @@ start looks exactly like "the agent ignores my instructions".
 </details>
 
 <details>
-<summary>💡 Hint 2: Restate the constraint if needed</summary>
+<summary>💡 Hint 2: Keep the client boundary small</summary>
 
-If the agent starts down a server-rendered path, restate the client-only constraint — better early
-than after a broken build. Keep the map in its own client component.
+If the agent turns the whole card or page into a client component just to catch an image error,
+push back. Only the piece that needs the browser should run in the browser.
 
 </details>
 
 <details>
 <summary>💡 Hint 3: Ask for observations, not a verdict</summary>
 
-"Report how many markers you see and where the first popup links" gives you something checkable.
-"Does it work?" gives you a yes.
+"Report the title on page 2's first card and where the 'next in series' link leads" gives you
+something checkable. "Does it work?" gives you a yes.
 
 </details>
