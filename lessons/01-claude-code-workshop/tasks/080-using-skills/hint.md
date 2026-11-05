@@ -2,7 +2,7 @@
 <summary>💡 Hint 1: Read before you trust</summary>
 
 An installed skill is instructions the agent will follow. Skim its `SKILL.md` like you'd skim a
-dependency's README — what does it tell the agent to do?
+dependency's README — what does it tell the agent to do? Who maintains it?
 
 </details>
 
@@ -15,9 +15,9 @@ matches the description's wording — rephrase, or invoke it explicitly and note
 </details>
 
 <details>
-<summary>💡 Hint 3: A failed migration is a teaching moment</summary>
+<summary>💡 Hint 3: Covers don't show up?</summary>
 
-Watch how the agent diagnoses and fixes it before fixing it yourself. Keep the schema aligned to
-your glossary names — consistency pays off across the whole app.
+Look at what the `cover` field actually contains and where it points. Next.js' `<Image>` only
+loads remote hosts you allow in `next.config` — a plain `<img>` is fine for this workshop too.
 
 </details>
