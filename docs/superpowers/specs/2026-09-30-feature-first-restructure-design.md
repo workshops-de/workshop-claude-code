@@ -126,3 +126,45 @@ Per-task feature focus:
 - Content changes to 010–050 (except the 040 bonus trim) and 180–270 (except cross-references).
 - New feature tasks (checkpoints, plugins, worktrees, …).
 - Cleanup of legacy/duplicate slide blocks.
+
+---
+
+## Revision 2026-11-05: BookMonkey instead of Clash, feature-prefixed titles
+
+### Decisions
+
+| Question | Decision |
+| --- | --- |
+| Title format | `<Feature>: <Action>` as in the React/PHP/SQLite fork (`lessons/12-claude-code-workshop`) |
+| Practice project | BookMonkey, against the ready-made [`bookmonkey-api`](https://github.com/workshops-de/bookmonkey-api) first |
+| Own backend | **Sequential**: everyone starts on the ready-made API; tasks 200 and 230 build an own **NestJS** backend against the same OpenAPI contract |
+| State machine in 120 | Frontend **reading list** (want to read → reading → finished), persisted locally — the API has no checkout |
+| Task slide title | `Task: <action>` without the feature prefix (the section slide already names the feature) |
+
+### The ready-made API (verified 2026-11-05, v5.0.1)
+
+- `npx bookmonkey-api` (Node ≥ 26), default port **4730**, Swagger UI `/api`, OpenAPI JSON `/api-json`.
+- Books CRUD addressed by `:isbn`; `id` is a server GUID; `price` number + `currency` enum;
+  series via `predecessorIsbn` / `successorIsbn`; server-managed `createdAt` / `updatedAt`.
+- `GET /books` supports `_page`, `_limit`, `_sort`, `_order`, `q`, field filters, `_gte/_lte/_ne/_like`;
+  `X-Total-Count` header when paging.
+- `POST /register` / `POST /login` return `{ accessToken, user }`, but **no endpoint enforces the
+  token**. Demo user `admin@bookmonkey.api` / `password1!`. `POST /dev/reset` restores the seed.
+- Duplicate ISBN on `POST /books` → `409 Conflict`.
+
+### Storyline
+
+| Task | Title | BookMonkey step |
+| --- | --- | --- |
+| 060 | Plan Mode: Scaffold BookMonkey from a Reviewed Plan | Next.js + Tailwind frontend, API running on 4730 |
+| 070 | Rules & Imports: Pin the Book Domain and API Contract | glossary, `docs/openapi.json` from `/api-json`, path-scoped rule for the API client |
+| 080 | Skills: Build the Catalogue UI with an Installed Skill | shadcn skill builds the book list (shadcn moves from 060 to here) |
+| 090 | Subagents: Review Your Login with a Security Subagent | login via `/login`, token handling, guard; reviewer flags the unenforced token |
+| 100 | Custom Skills & Commands: Capture Your Book Feature Pattern | slice 1 list with search/sort/paging; slice 2 via `/new-book-view` create/edit |
+| 110 | MCP: Verify the Catalogue in the Browser | Playwright checks covers, paging, series navigation |
+| 120 | Hooks: Guard the Reading List Flow | reading-list state machine, hooks active |
+| 200 | Testing & TDD: Drive Your Own Backend with Contract Tests | contract tests green against `bookmonkey-api`, then NestJS backend test-first |
+| 230 | Autonomous Workflows: Finish Your Backend Against the Contract | `/goal` until all contract tests pass in a worktree, then switch `API_URL` |
+
+All other tasks only get fork-format titles and Clash → BookMonkey wording. Slides: `topic05`–`topic11`
+plus the blocks for 200 and 230 are updated; `lesson.yml` `github_code_url` points to `bookmonkey-api`.
