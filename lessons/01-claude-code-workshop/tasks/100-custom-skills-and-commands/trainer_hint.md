@@ -4,20 +4,23 @@
   `disable-model-invocation: true`; arguments with `$ARGUMENTS`.
 - **Concepts:** progressive disclosure; skill (agent triggers) vs. command (you trigger) vs.
   memory (always loaded); commands merged into skills.
-- **Practice ground:** a server-first feature slice (list, detail, create, edit), then the second
-  entity built from the captured pattern.
-- **Takeaways:** build it once by hand, encode it, then let the encoding do the second one.
+- **Practice ground:** BookMonkey's read side (search, sort, paging, series navigation) by hand,
+  then the create and edit screens built from the captured pattern.
+- **Takeaways:** build it once by hand, encode it, then let the encoding do the next ones.
 
 ## Facilitation notes
 
-- This is the biggest task — consider live-building the first entity together as a group, so
+- This is the biggest task — consider live-building the read side together as a group, so
   participants spend their solo time on the skill and the command.
 - Don't let people skip the "fresh session" check; genuine automatic invocation is the proof.
 - The skill-vs-command distinction trips people up; have examples ready ("commit message" =
-  command, "add a feature the established way" = skill).
+  command, "add a book screen the established way" = skill).
 - Older material shows `.claude/commands/` as the only way to write commands — both work, skills
   are the current format.
-- If the group is behind, trim the second entity to create + list only.
+- Paging needs the `X-Total-Count` response header — agents often compute "has next page" from
+  the array length instead. Good review moment.
+- Created books persist in the shared API instance; `POST /dev/reset` cleans up between groups.
+- If the group is behind, trim the command run to the create screen only.
 
 ## Time estimate
 

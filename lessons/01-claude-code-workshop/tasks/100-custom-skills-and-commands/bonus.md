@@ -9,5 +9,5 @@
 - **Keep descriptions discoverable** — with many skills, descriptions get shortened; lead with
   trigger words.
 
-Try scoping your `add-feature` skill to your app directory with `paths`, or turn your command into
+Try scoping your `add-book-feature` skill to your app directory with `paths`, or turn your command into
 a small plugin your team could install.

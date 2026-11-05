@@ -2,7 +2,7 @@
 <summary>💡 Hint 1: The description gets the skill picked</summary>
 
 Be specific about _when_ to use it and lead with the words your prompts actually contain
-("adding a feature", "new field", "server action").
+("book screen", "new field", "form", "server action").
 
 </details>
 
@@ -23,9 +23,9 @@ If the agent should decide _when_ to act, it's a skill. If you want to trigger i
 </details>
 
 <details>
-<summary>💡 Hint 4: Resist special-casing the second entity</summary>
+<summary>💡 Hint 4: Resist special-casing the edit screen</summary>
 
-The point is that the shape repeats. If the command needs lots of extra instructions for entity
-two, improve the skill instead.
+The point is that the shape repeats. If the command needs lots of extra instructions for the
+second screen, improve the skill instead.
 
 </details>
