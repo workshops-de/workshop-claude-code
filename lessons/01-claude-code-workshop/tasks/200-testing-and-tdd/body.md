@@ -1,38 +1,82 @@
 ## Overview
 
-Use the agent to build a real safety net across the test pyramid, and practise **test-driven
-development** with an agent — letting tests give it a built-in "done" signal.
+Practise **test-driven development** with an agent and let tests give it a built-in "done" signal.
+You pin down the behaviour of the ready-made API in contract tests, then start your **own
+backend** and drive it test-first until it behaves the same.
+
+## The Feature
+
+Agents are strong test writers and can run tests themselves, which makes tests the most reliable
+feedback loop available to them. But they won't reliably do TDD unless you make it explicit:
+
+- **Say it, and separate the phases**: "Use TDD. Write failing tests for X first. Do not write any
+  implementation yet." Review the tests, run them, see them fail — only then ask for the
+  implementation.
+- **Make the agent hunt for edge cases** before implementing: ask it to enumerate them, then add
+  the ones it missed.
+- **Protect the tests**: tell the agent not to change tests to make them pass. A `PreToolUse` hook
+  from the hooks task can enforce that on your test folder.
+- **One gate command** (type-check, lint, build, tests) the agent can run on its own — recorded in
+  `CLAUDE.md` so every session knows what "done" means.
+
+## Apply it to BookMonkey
+
+So far your frontend talks to the ready-made `bookmonkey-api`. Now you start replacing it with your
+own **NestJS** backend — without breaking the frontend. The safety net is a **contract test
+suite** that only talks HTTP and reads its base URL from `API_URL`:
+
+- Run against `http://localhost:4730`, the suite documents how the reference API behaves. If a
+  test fails there, the test is wrong, not the API.
+- Run against your backend, the same suite tells the agent exactly what's still missing.
+
+`docs/openapi.json` from the rules task is the contract both sides share.
 
 ## Prerequisites
 
-- Recommended: `agent-browser` for end-to-end browser flows.
-
-## Background
-
-Agents are strong test writers and can run tests themselves, which makes testing the most reliable
-feedback loop available to them. Agents won't reliably do TDD unless you ask, so make it explicit.
+- The `bookmonkey-api` is running on port 4730; `docs/openapi.json` is committed.
+- NestJS CLI available via `npx @nestjs/cli` (no global install needed).
+- Recommended skills: `prisma-cli`, `prisma-database-setup` if you choose Prisma + SQLite for
+  persistence.
 
 ## Steps
 
-1. Pick a domain rule (for example, a date must be in the future). Instruct the agent to use
-   **TDD**: write failing tests first, review them, then implement the minimal code to pass.
-2. Before the implementation, review the tests and ask the agent to enumerate **edge cases**; add
-   any it missed.
-3. Add an **integration test** that exercises a write against an ephemeral database.
-4. Add one **end-to-end test** for a critical path.
-5. Wire the **quality gates** (type-check, lint, build, tests) into a single command the agent can
-   run, and record it in project memory.
-6. Reflect on how having a runnable test loop changed the agent's behaviour.
+1. Ask the agent to set up a `contract-tests/` package (Vitest + `fetch` or `supertest` against a
+   URL) that reads `API_URL`. Instruct it to use **TDD**: write tests for `GET /books/:isbn` (200
+   with the book shape, 404 for an unknown ISBN) and `POST /books` (201, server-set `id` /
+   `createdAt` / `updatedAt`, **409 for a duplicate ISBN**, 400 for a missing title) — no
+   implementation anywhere.
+2. Review the tests, ask the agent to enumerate further **edge cases**, and add the ones it missed.
+   Run the suite against the reference API: everything must be green. Fix tests, never the API.
+3. Scaffold the backend in plan mode: `npx @nestjs/cli new backend` with a books module and a
+   persistence choice you can defend (SQLite via Prisma is a good default). Use a throwaway test
+   database, never your dev data.
+4. Run the contract suite against your backend (`API_URL=http://localhost:3001`) and watch it fail.
+   Then let the agent implement **just enough** to turn the tests from step 1 green — and tell it
+   not to touch the tests.
+5. Wire the **quality gates** (type-check, lint, build, unit tests, contract tests) into one command
+   and record it in project memory.
+6. Reflect: how did a runnable, failing test suite change the agent's behaviour compared to a
+   prose request?
 
 ## Success Criteria
 
-- [ ] A domain rule was implemented test-first, with tests reviewed before code
-- [ ] An integration test exercises a real write against an ephemeral database
-- [ ] One end-to-end test covers a critical path
-- [ ] A single command runs all quality gates
+**Feature**
+
+- [ ] Tests were written and reviewed before any backend implementation existed
+- [ ] You added at least one edge case the agent didn't think of
+- [ ] The agent implemented against failing tests without editing them
+- [ ] A single command runs all quality gates and is recorded in `CLAUDE.md`
+
+**App still works**
+
+- [ ] The contract suite is green against the reference API on port 4730
+- [ ] The same suite is green for `GET /books/:isbn` and `POST /books` against your NestJS backend
+- [ ] The frontend still runs unchanged against the reference API
 
 ## References
 
-- Test pyramid (Martin Fowler): https://martinfowler.com/articles/practical-test-pyramid.html
+- Claude Code — Common workflows (testing): https://code.claude.com/docs/en/common-workflows
+- Claude Code — Best practices: https://code.claude.com/docs/en/best-practices
+- NestJS — First steps: https://docs.nestjs.com/first-steps
 - Vitest — Getting started: https://vitest.dev/guide/
-- Playwright — Writing tests: https://playwright.dev/docs/writing-tests
+- Consumer-driven contracts (Martin Fowler): https://martinfowler.com/articles/consumerDrivenContracts.html

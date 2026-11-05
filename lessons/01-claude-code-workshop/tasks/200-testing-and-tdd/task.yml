@@ -1,9 +1,9 @@
 # Task Configuration
-title: 'Drive a Feature Test-First'
+title: 'Testing & TDD: Drive Your Own Backend with Contract Tests'
 position: 200
 category: 'Quality & Automation'
 preparation: false
-estimated_time_in_minutes: 45
+estimated_time_in_minutes: 60
 always_unlocked: false
 
 # No git integration: there is no prepared repository or solution branch.
