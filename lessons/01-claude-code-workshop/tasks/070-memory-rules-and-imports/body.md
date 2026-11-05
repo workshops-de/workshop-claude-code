@@ -2,8 +2,8 @@
 
 Grow your project memory beyond a single `CLAUDE.md`: split instructions into focused **rule
 files**, scope some of them to the files they govern, and pull shared documents in with
-**imports**. You will use this to pin down your domain language so every future session speaks
-it — without bloating the context of every single prompt.
+**imports**. You will use this to pin down your domain language and the API contract so every
+future session speaks them — without bloating the context of every single prompt.
 
 ## The Feature
 
@@ -18,12 +18,11 @@ Claude Code loads more than one memory file:
   ```markdown
   ---
   paths:
-    - "prisma/**"
-    - "lib/validation/**"
+    - "src/lib/api/**"
   ---
 
-  # Data model rules
-  - Status fields are documented strings, never free text
+  # API client rules
+  - Books are addressed by ISBN, never by `id`
   ```
 
 - **Imports** — `@path/to/file` inside `CLAUDE.md` expands another file into context at launch
@@ -35,48 +34,62 @@ Claude Code loads more than one memory file:
 Rule of thumb: always-relevant facts go in `CLAUDE.md` or an unscoped rule; area-specific
 conventions go in a path-scoped rule.
 
-## Apply it to Clash
+## Apply it to BookMonkey
 
-The practice ground is the **domain model** of [`pawsaw/clash`](https://github.com/pawsaw/clash):
-activities happening at a place and time, hosted at reusable venues, joined by request/approval.
-Ambiguity is a context hazard — synonyms and vague terms lead the agent to merge things that
-should stay distinct. You agree on the language once and store it where every session can read
-it. No schema or code yet.
+The practice ground is BookMonkey's **domain and API contract**. The `bookmonkey-api` looks
+simple, but has traps an agent will happily fall into: a book has both a server-generated `id` and
+an `isbn` — yet every detail route is addressed by ISBN. `price` is a number with a separate
+`currency`. Books in a series point to each other via `predecessorIsbn` / `successorIsbn`.
+`createdAt` / `updatedAt` are server-managed and can't be sent. Login hands out a token that no
+endpoint checks.
+
+You agree on that language once and store it where every session can read it. The contract itself
+is the OpenAPI document the API serves at `/api-json` — the same contract your own backend will
+have to honour later.
 
 ## Steps
 
-1. Give the agent the brief and ask it to **restate the domain in its own words** — core entities,
-   how they relate, and the lifecycle of a join request. Correct any drift.
-2. Ask it to list terms that are unclear or could be confused, and resolve each into one agreed
-   definition.
-3. Have the agent write the result to **`.claude/rules/domain.md`**: glossary, entity model
-   (entities, key attributes, relationships incl. optional ones, states), and constraints such as
-   "one request per person per activity".
-4. Add a **path-scoped rule** (for example `.claude/rules/data-model.md` with `paths` pointing at
-   where your schema and validation will live) holding the conventions that only matter there.
-5. If you keep the brief as a file (e.g. `docs/brief.md`), **import** it from `CLAUDE.md` with
-   `@docs/brief.md`.
-6. Start a fresh session and run `/context`: confirm `domain.md` loaded and the path-scoped rule
-   did **not** — then ask a domain question and check the answer uses your glossary.
+1. With the API running, save the contract: `curl -s http://localhost:4730/api-json >
+   docs/openapi.json`.
+2. Ask the agent to **restate the domain in its own words** from `docs/openapi.json` and a few real
+   responses (`GET /books?_limit=3`, `GET /books/<isbn>`): entities, fields, relationships, and
+   what the server manages. Correct any drift.
+3. Ask it to list terms that are unclear or could be confused (`id` vs. `isbn`, author vs.
+   co-authors, predecessor vs. successor) and resolve each into one agreed definition. Add the
+   term **reading list** now, with its states *want to read → reading → finished* — you'll build it
+   in the hooks task.
+4. Have the agent write the result to **`.claude/rules/domain.md`**: glossary, entity model, and
+   constraints such as "ISBN is unique — a duplicate `POST /books` returns `409`".
+5. Have it write a **compact** `docs/api-contract.md` (endpoints, query parameters, status codes —
+   one screen, not the full JSON) and **import** it from `CLAUDE.md` with `@docs/api-contract.md`.
+6. Add a **path-scoped rule** `.claude/rules/api-client.md` with `paths` pointing at your API
+   client code, holding the conventions that only matter there (address by ISBN, never send
+   server-managed fields, read `X-Total-Count` for paging, `docs/openapi.json` is the source of
+   truth).
+7. Start a fresh session and run `/context`: confirm `domain.md` and the imported contract loaded
+   and `api-client.md` did **not** — then ask a domain question and check the answer uses your
+   glossary.
 
 ## Success Criteria
 
 **Feature**
 
 - [ ] `.claude/rules/domain.md` exists and loads in a fresh session (visible in `/context`)
+- [ ] `CLAUDE.md` imports `docs/api-contract.md` via `@`
 - [ ] At least one rule is path-scoped with `paths` frontmatter and stays unloaded until a
       matching file is read
-- [ ] You can explain when to use `CLAUDE.md`, an unscoped rule, a path-scoped rule, or an import
+- [ ] You can explain why you imported a compact summary instead of the raw `openapi.json`
 
 **Domain model**
 
-- [ ] The glossary names every core entity with one agreed definition
-- [ ] The entity model covers attributes, relationships (incl. optional ones), and states
-- [ ] Any uniqueness constraint is explicitly captured
+- [ ] The glossary names every core entity (book, user, series, reading list) with one agreed
+      definition
+- [ ] `id` vs. `isbn` and the server-managed fields are explicitly captured
+- [ ] The ISBN uniqueness constraint and the reading-list states are recorded
 
 ## References
 
 - Claude Code — Memory, rules and imports: https://code.claude.com/docs/en/memory
 - Claude Code — Path-specific rules: https://code.claude.com/docs/en/memory#path-specific-rules
-- Clash brief (reference domain): https://github.com/pawsaw/clash
+- BookMonkey API (README and querying guide): https://github.com/workshops-de/bookmonkey-api
 - Ubiquitous language: https://martinfowler.com/bliki/UbiquitousLanguage.html

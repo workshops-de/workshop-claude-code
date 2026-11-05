@@ -1,16 +1,16 @@
 <details>
 <summary>💡 Hint 1: Make the agent commit to definitions</summary>
 
-"It depends" is a sign to ask a sharper question. Not every activity has a venue — say so
-explicitly instead of assuming everything is required.
+"It depends" is a sign to ask a sharper question. Not every book belongs to a series and not every
+field is required — check the contract and say so explicitly instead of assuming.
 
 </details>
 
 <details>
-<summary>💡 Hint 2: One topic per rule file</summary>
+<summary>💡 Hint 2: Importing the raw OpenAPI file?</summary>
 
-If a rule file needs a table of contents, it is probably two files. Descriptive filenames help
-both you and the agent.
+Run `/context` before and after. Every import loads at launch, on every prompt. A one-screen
+summary plus a pointer to the full file usually beats the full file.
 
 </details>
 

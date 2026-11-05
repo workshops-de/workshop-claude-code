@@ -4,8 +4,8 @@
   and `/context` to inspect what loaded.
 - **Concepts:** memory is layered; scoping keeps context lean; imports organise but don't save
   context.
-- **Practice ground:** restating the Clash brief, resolving ambiguous terms, recording glossary and
-  entity model as a rule.
+- **Practice ground:** the BookMonkey domain and API contract — glossary, entity model, a compact
+  contract summary, and API-client conventions.
 - **Takeaways:** align on meaning before code; put it where the agent re-reads it every session.
 
 ## Facilitation notes
@@ -14,10 +14,12 @@
   enough anymore".
 - The `/context` check in a fresh session is the proof moment; make sure people see a scoped rule
   appear only after a matching file was read.
-- Participants eager to code may want to skip the domain part — hold the line, it prevents the
-  most expensive rework later.
-- Good group discussion: compare glossaries across pairs and see where wording diverges on the same
-  brief.
+- Someone will import the raw `openapi.json` — let them, then compare `/context` token usage with
+  a neighbour who imported the summary. Strong teaching moment.
+- `id` vs. `isbn` is the trap that bites later (wrong detail URLs, broken edit forms). If it isn't
+  in the glossary, ask the group why it should be.
+- `docs/openapi.json` comes back in task 200 as the contract the own backend must satisfy — mention
+  that it should be committed.
 
 ## Time estimate
 
