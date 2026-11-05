@@ -40,35 +40,39 @@ events such as `PreToolUse` (before a tool runs — can block), `PostToolUse` (a
 
 Memory advises; hooks enforce.
 
-## Apply it to Clash
+## Apply it to BookMonkey
 
-The practice ground is the heart of the domain: people **request to join** an activity, hosts
-**accept or reject**, and each transition **notifies** the right person. A participation moves
-from _pending_ to _accepted_ or _rejected_ — nothing else. It touches schema, server actions,
-authorization, and UI in many files at once: exactly where a hook that formats and type-checks
-every edit keeps the agent honest.
+The practice ground is BookMonkey's **reading list**: a signed-in user puts a book on their list
+(_want to read_), starts it (_reading_), and finishes it (_finished_) — and may start a finished
+book again or remove it at any time. Nothing else is legal: no jumping from _want to read_
+straight to _finished_. The `bookmonkey-api` has no endpoint for this, so the list lives in the
+browser for now (per user, in `localStorage`); your own backend takes it over later. A small state
+machine touching a pure domain module, a client store, the detail page, a list page, and the
+header at once — exactly where a hook that formats and type-checks every edit keeps the agent
+honest.
 
 ## Prerequisites
 
 - `jq` installed (used to read hook input).
-- Recommended: `prisma-client-api`, `react-best-practices`
+- Recommended: `react-best-practices`
 
 ## Steps
 
 1. Add a **`PostToolUse`** hook for `Edit|Write` that formats the changed file and runs a fast
    type-check. Make a trivial edit and confirm it fires.
 2. Add a **`PreToolUse`** guard script that blocks reads and writes to `.env*` files and key
-   material with `exit 2`. Ask the agent to read your `.env` and confirm it's blocked with your
-   message.
+   material with `exit 2`. Ask the agent to read your `.env.local` and confirm it's blocked with
+   your message.
 3. Check both in `/hooks`.
-4. With the hooks active, state the **transitions** to the agent (request → pending, notify host;
-   accept/reject → decided, notify requester) and have it restate them before coding.
-5. Implement join/leave and host accept/reject as server actions that validate, **authorize** (only
-   the host decides), persist, notify, and revalidate — plus the participant UI, the host's
-   requests view, and a grouped "my participations" page. Notice when the type-check hook pushes
-   back on the agent mid-task.
-6. Verify with two seeded accounts: one requests, the other accepts; confirm the notification
-   reaches the right person.
+4. With the hooks active, state the **transitions** to the agent (add → _want to read_; start →
+   _reading_; finish → _finished_; start again → _reading_; remove from any state) and have it
+   restate them — and the illegal ones — before coding.
+5. Have it implement the state machine as a **pure function** (`transition(state, action)`) that
+   rejects illegal moves, a per-user store on top of it, reading-list buttons on the detail page,
+   a reading-list page in the authenticated area grouped by state, and a counter in the header.
+   Notice when the type-check hook pushes back on the agent mid-task.
+6. Verify with two accounts in the same browser (register a second one): each sees only their own
+   list, and illegal transitions are impossible from the UI.
 
 ## Success Criteria
 
@@ -81,14 +85,15 @@ every edit keeps the agent honest.
 
 **App still works**
 
-- [ ] Join/leave and host accept/reject work and enforce authorization
-- [ ] Each transition notifies the correct person; invalid transitions and duplicate requests are
-      rejected
-- [ ] "My participations" groups going / awaiting / declined; `npm run build` passes
+- [ ] Add, start, finish, start again, and remove work; the illegal jump to _finished_ is rejected
+      by the domain function, not just hidden in the UI
+- [ ] Two accounts on the same browser see separate reading lists; lists survive a reload
+- [ ] The reading-list page groups books by state and is only reachable when signed in
+- [ ] `npm run build` passes
 
 ## References
 
 - Claude Code — Hooks reference: https://code.claude.com/docs/en/hooks
 - Claude Code — Hooks guide: https://code.claude.com/docs/en/hooks-guide
 - Claude Code — Settings: https://code.claude.com/docs/en/settings
-- Next.js — Server Actions and mutations: https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations
+- MDN — Window.localStorage: https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage

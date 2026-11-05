@@ -25,7 +25,7 @@ and check its exit code with `echo $?`.
 <details>
 <summary>💡 Hint 4: Decide legal transitions before coding</summary>
 
-Write the state diagram down first, reject everything else, and test explicitly that a non-host
-can't accept a request.
+Write the state diagram down first and reject everything else in the domain function. Hiding a
+button is not a rule — call the function with an illegal move and check that it refuses.
 
 </details>

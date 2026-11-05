@@ -3,8 +3,8 @@
 - **Feature:** hook events and matchers, stdin JSON input, blocking with `exit 2`, project hooks in
   `.claude/settings.json`, `/hooks`.
 - **Concepts:** deterministic guardrails vs. advisory memory; defense in depth.
-- **Practice ground:** the participation state machine with notifications and host-only
-  authorization.
+- **Practice ground:** the BookMonkey reading-list state machine as a pure domain function with a
+  per-user client store.
 - **Takeaways:** if it must always happen, make it a hook — not an instruction.
 
 ## Facilitation notes
@@ -14,8 +14,12 @@
   then point at the hint.
 - Watch for slow hooks (full test suite per edit) — steer back to fast, targeted commands.
 - The payoff moment is the type-check hook pushing back mid-feature; ask someone to show it.
-- Two-account testing of the participation flow is the step people skip — check for it during the
-  room walk.
+- `localStorage` is a deliberate stopgap because the API has no reading-list endpoint. If someone
+  asks "isn't that insecure / not shared across devices?" — yes, and that is what the own backend
+  in tasks 200/230 can fix. Keep the pure `transition` function: it moves to the backend unchanged.
+- Hydration mismatches are common when the header counter reads `localStorage` during render —
+  a good debugging example if it shows up.
+- Two-account testing is the step people skip — check for it during the room walk.
 
 ## Time estimate
 
