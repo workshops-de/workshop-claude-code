@@ -1,22 +1,23 @@
 <details>
 <summary>💡 Hint 1: Isolation makes mistakes cheap</summary>
 
-Longer autonomous runs amplify both good and bad decisions — isolation makes mistakes cheap to
+Longer autonomous runs amplify both good and bad decisions — a worktree makes a bad run cheap to
 discard.
 
 </details>
 
 <details>
-<summary>💡 Hint 2: A clear goal beats "keep going"</summary>
+<summary>💡 Hint 2: The evaluator only sees the transcript</summary>
 
-A clear completion condition (tests green, build passing) turns "keep going" into "keep going
-toward something."
+It doesn't run commands itself. "The backend is done" can't be judged; "`npm run contract` exits
+0" can — because Claude runs it and the output lands in the conversation.
 
 </details>
 
 <details>
 <summary>💡 Hint 3: A repeated block is a signal</summary>
 
-If the classifier blocks the same action repeatedly, that's a signal, not a failure.
+If the auto-mode classifier blocks the same action repeatedly, that's a signal, not a failure —
+read why before you widen the permissions.
 
 </details>

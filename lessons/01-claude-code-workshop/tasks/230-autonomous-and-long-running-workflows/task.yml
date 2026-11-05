@@ -1,9 +1,9 @@
 # Task Configuration
-title: 'Run a Bounded, Goal-Directed Task'
+title: 'Autonomous Workflows: Finish Your Backend Against the Contract'
 position: 230
 category: 'Autonomy & Methodologies'
 preparation: false
-estimated_time_in_minutes: 30
+estimated_time_in_minutes: 45
 always_unlocked: false
 
 # No git integration: there is no prepared repository or solution branch.
