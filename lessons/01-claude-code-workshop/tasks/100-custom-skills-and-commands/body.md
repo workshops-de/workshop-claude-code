@@ -1,7 +1,7 @@
 ## Overview
 
 Write your **own skill** and your **own slash command**, so the way your team builds a feature is
-encoded once and reused everywhere — without re-explaining it each session. You will build one
+encoded once and reused everywhere, without re-explaining it each session. You will build one
 feature by hand, capture its shape, and let the next features be built from what you captured.
 
 ## The Feature
@@ -10,7 +10,7 @@ Both live in the same place and share one format: a `SKILL.md` in `.claude/skill
 (legacy command files in `.claude/commands/<name>.md` still work and create the same `/name`).
 What differs is **who decides when it runs**.
 
-- **Skill (the agent decides)** — a trigger-friendly `description` lets Claude load it whenever a
+- **Skill (the agent decides)**: a trigger-friendly `description` lets Claude load it whenever a
   task matches:
 
   ```markdown
@@ -26,7 +26,7 @@ What differs is **who decides when it runs**.
   5. Revalidate affected paths, then run type-check and npm run build
   ```
 
-- **Command (you decide)** — add `disable-model-invocation: true` so it only runs when you type
+- **Command (you decide)**: add `disable-model-invocation: true` so it only runs when you type
   it, and use `$ARGUMENTS` (or `$0`, `$1`, …) for input:
 
   ```markdown
@@ -44,22 +44,27 @@ What differs is **who decides when it runs**.
   (A legacy `.claude/commands/new-book-view.md` works too, but command files don't take the `name`
   field.) Quote `argument-hint`: unquoted square brackets are a YAML list, not a string.
 
-- **Keep bodies short and actionable** — numbered steps beat prose, and a loaded skill stays in
+- **Keep bodies short and actionable**: numbered steps beat prose, and a loaded skill stays in
   context for the rest of the session.
 
 ## Apply it to BookMonkey
 
+> **Repo / ports:** your `bookmonkey` repository (Node.js 26), Next.js app on
+> http://localhost:3000, `npx bookmonkey-api` on http://localhost:4730
+>
+> **Login:** demo user `admin@bookmonkey.api` / `password1!`
+
 The practice ground is BookMonkey's **book screens** on a server-first architecture: **reads** in
 server components through your typed API client, **writes** through server actions that validate,
-call the API, and revalidate. You build the read side by hand — catalogue search, sort, and
-paging, plus a detail page that navigates a book series — and let the write side (create, edit) be
+call the API, and revalidate. You build the read side by hand (catalogue search, sort, and
+paging, plus a detail page that navigates a book series) and let the write side (create, edit) be
 generated from what you captured. If your skill is good, the second and third screens are mostly
 just fields.
 
 ## Prerequisites
 
 - The `bookmonkey-api` is running; the catalogue page from the skills task exists.
-- **Required:** `find-skills` (`npx skills add vercel-labs/skills@find-skills -y`) — study how
+- **Required:** `find-skills` (`npx skills add vercel-labs/skills@find-skills -y`): study how
   existing skills are structured before writing your own.
 - Optional skills (nice to have, not required): `anthropics/skills@frontend-design`,
   `vercel-labs/agent-skills@vercel-react-best-practices`
@@ -104,8 +109,8 @@ just fields.
 
 ## Pitfalls (current framework)
 
-- `params` and `searchParams` are **Promises** on recent Next.js — `await` them in pages.
-- Server-side `fetch` results may be cached — make sure the list reflects a book you just created.
+- `params` and `searchParams` are **Promises** on recent Next.js: `await` them in pages.
+- Server-side `fetch` results may be cached: make sure the list reflects a book you just created.
 - Bind an ISBN into a Server Action while keeping the `(prev, formData)` signature:
   `action.bind(null, isbn)`.
 - Route type helpers such as `PageProps<"/books/[isbn]">` exist only after `next dev` or
@@ -115,8 +120,8 @@ just fields.
 
 ## References
 
-- Claude Code — Skills: https://code.claude.com/docs/en/skills
-- Claude Code — Control who invokes a skill: https://code.claude.com/docs/en/skills#control-who-invokes-a-skill
-- Claude Code — Pass arguments to skills: https://code.claude.com/docs/en/skills#pass-arguments-to-skills
-- BookMonkey API — Querying guide: https://github.com/workshops-de/bookmonkey-api/blob/main/docs/querying.md
-- Next.js — Server Actions and mutations: https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations
+- Claude Code: Skills: https://code.claude.com/docs/en/skills
+- Claude Code: Control who invokes a skill: https://code.claude.com/docs/en/skills#control-who-invokes-a-skill
+- Claude Code: Pass arguments to skills: https://code.claude.com/docs/en/skills#pass-arguments-to-skills
+- BookMonkey API: Querying guide: https://github.com/workshops-de/bookmonkey-api/blob/main/docs/querying.md
+- Next.js: Server Actions and mutations: https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations
