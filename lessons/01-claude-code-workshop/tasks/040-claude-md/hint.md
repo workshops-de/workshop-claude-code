@@ -29,3 +29,10 @@ Start a fresh session, ask about an API rule from `api/CLAUDE.md` before Claude 
 API file, then ask it to read one file in `api/` and ask again.
 
 </details>
+
+<details>
+<summary>💡 Hint 5: All tests red at once?</summary>
+
+Check `node -v`: `bookmonkey-legacy` needs Node 24 or newer (`node:sqlite`).
+
+</details>

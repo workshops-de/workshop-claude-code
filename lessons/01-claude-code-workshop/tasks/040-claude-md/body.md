@@ -22,6 +22,11 @@ long-term memory.
 
 ## Apply it to BookMonkey Legacy
 
+> **Repo / ports:** your `bookmonkey-legacy` clone (Node.js 24 or newer), API on
+> http://localhost:4780, web app on http://localhost:5180
+>
+> **Login:** admin `admin@bookmonkey.example` / `admin2021`
+
 The practice ground is the [`bookmonkey-legacy`](https://github.com/andrekovac/bookmonkey-legacy)
 clone from the fundamentals task. It has no `CLAUDE.md` yet, only a README that several people
 edited over the years. A new teammate (human or agent) would read both, so both had better be
@@ -34,8 +39,9 @@ right. Your memory file should hold the facts the next session needs, checked ag
 
 ## Steps
 
-1. Start Claude Code in `bookmonkey-legacy` and run `/init`. Read what it produced before you
-   change anything.
+1. Start Claude Code in `bookmonkey-legacy` in Manual mode (`claude --permission-mode default`),
+   so every edit asks first and the repository only changes where you approve it. Plan mode works
+   too for the reading part. Run `/init` and read what it produced before you change anything.
 2. **Compare `/init` with the README.** Ask Claude for a table: each claim the README makes,
    what `/init` wrote about it, and what the code says. Check every row where they disagree yourself (open the file, run the command).
 3. **Run the commands** your draft lists (`npm install`, `npm run db:reset`, `npm test`, the two
