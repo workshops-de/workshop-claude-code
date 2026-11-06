@@ -34,7 +34,8 @@ server.registerTool(
   async ({ query }) => {
     const res = await fetch(`http://localhost:4730/books?q=${encodeURIComponent(query)}`);
     const books = await res.json();
-    return { content: [{ type: 'text', text: JSON.stringify(books.map((b) => b.title)) }] };
+    const rows = books.map(({ isbn, title, author, price }) => ({ isbn, title, author, price }));
+    return { content: [{ type: 'text', text: JSON.stringify(rows) }] };
   },
 );
 
@@ -64,6 +65,11 @@ await server.connect(new StdioServerTransport());
 
 ## Apply it to BookMonkey
 
+> **Repo / ports:** your `bookmonkey` repository (Node.js 26), Next.js app on
+> http://localhost:3000, `npx bookmonkey-api` on http://localhost:4730
+>
+> **Login:** demo user `admin@bookmonkey.api` / `password1!`
+
 The practice ground is your **BookMonkey** repository and the `bookmonkey-api` it talks to
 (`npx bookmonkey-api` on port 4730). You build `tools/bookmonkey-mcp` with four tools:
 
@@ -82,6 +88,10 @@ Then you ask Claude a question that no single tool answers.
   `http://localhost:4730`
 - Node.js 26 (as for the rest of BookMonkey). JavaScript is fine; for TypeScript, Node 26 runs
   `.ts` files with erasable syntax directly.
+- **On Windows:** the shell snippets are Bash. Run them in Git Bash (comes with Git for Windows),
+  or adapt them for PowerShell: run the commands of step 1 one by one instead of chaining them
+  with `&&` (`mkdir` creates the nested folder without `-p`), and call `curl.exe` instead of
+  `curl`, which is an alias for `Invoke-WebRequest` in Windows PowerShell
 
 ## Steps
 
