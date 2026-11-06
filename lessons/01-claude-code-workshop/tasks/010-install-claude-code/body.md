@@ -2,7 +2,7 @@
 
 Before touching any code, get Claude Code installed as a terminal tool on your own machine and
 confirm it actually works end to end: it runs, you're signed in, and it responds. This is a pure
-setup task — no exploration, no code, just a working install you can rely on for the rest of the
+setup task: no exploration, no code, just a working install you can rely on for the rest of the
 workshop.
 
 ## Prerequisites
@@ -55,13 +55,14 @@ workshop.
    ```
 
 4. **Sign in** when prompted (via Claude.ai or Claude Console) and wait for the prompt to become
-   interactive.
+   interactive. Note the mode shown in the status line below the prompt (for example
+   `auto mode on` or `manual mode on`); the permission modes task explains it.
 
 5. **Test that it works**: ask a trivial question (for example, "what files are in this
    directory?") and confirm you get a sensible response.
 
 6. Exit cleanly (`/exit` or `Ctrl+C`) and start it again to confirm the second launch is just as
-   smooth — no repeated login, no errors.
+   smooth: no repeated login, no errors.
 
 ## Success Criteria
 
@@ -74,7 +75,7 @@ workshop.
 
 ## References
 
-- Claude Code — Overview: https://code.claude.com/docs/en/overview
-- Claude Code — Quickstart: https://code.claude.com/docs/en/quickstart
+- Claude Code: Overview: https://code.claude.com/docs/en/overview
+- Claude Code: Quickstart: https://code.claude.com/docs/en/quickstart
 - Claude Code: Advanced setup: https://code.claude.com/docs/en/setup
-- Claude Code — CLI reference: https://code.claude.com/docs/en/cli-reference
+- Claude Code: CLI reference: https://code.claude.com/docs/en/cli-reference
