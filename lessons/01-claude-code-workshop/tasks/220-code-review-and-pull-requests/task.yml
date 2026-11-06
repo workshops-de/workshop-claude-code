@@ -1,12 +1,12 @@
 # Task Configuration
-title: 'Code Review: Open a PR with an Agent-Assisted Review'
+title: 'Code Review: Review a Pull Request with an Agent and a Security Subagent'
 position: 220
 category: 'Quality & Automation'
 preparation: false
-estimated_time_in_minutes: 30
+estimated_time_in_minutes: 45
 always_unlocked: false
 
-# No git integration: there is no prepared repository or solution branch.
+# No git integration fields: participants review the branch feature/admin-export-v2 of bookmonkey-legacy.
 
 # Note: Markdown content is loaded from separate files:
 # - body.md           -> Main task description
