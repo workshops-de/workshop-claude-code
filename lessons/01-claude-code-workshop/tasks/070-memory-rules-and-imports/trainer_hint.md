@@ -18,6 +18,11 @@
   a neighbour who imported the summary. Strong teaching moment.
 - `id` vs. `isbn` is the trap that bites later (wrong detail URLs, broken edit forms). If it isn't
   in the glossary, ask the group why it should be.
+- The served `openapi.json` is not the whole truth: it lists only `200`/`400` for `PUT`, `PATCH`,
+  and `DELETE`, while the running API answers `404` for an unknown ISBN on `PATCH` and `DELETE`
+  (`PUT` answers `400`). Good proof that a few real responses belong in step 2.
+- In zsh, quote URLs with `?` (`curl "localhost:4730/books?_limit=3"`), or zsh fails with
+  `no matches found`.
 - `docs/openapi.json` comes back in task 200 as the contract the own backend must satisfy — mention
   that it should be committed.
 

@@ -18,7 +18,8 @@ Claude Code loads more than one memory file:
   ```markdown
   ---
   paths:
-    - "src/lib/api/**"
+    - "lib/api*"
+    - "lib/api/**"
   ---
 
   # API client rules
@@ -59,11 +60,13 @@ have to honour later.
    term **reading list** now, with its states *want to read → reading → finished* — you'll build it
    in the hooks task.
 4. Have the agent write the result to **`.claude/rules/domain.md`**: glossary, entity model, and
-   constraints such as "ISBN is unique — a duplicate `POST /books` returns `409`".
+   constraints such as "ISBN is unique: a duplicate `POST /books` returns `409`". If you probe
+   that live, remember the API is shared state: `curl -X POST http://localhost:4730/dev/reset`
+   restores the 50 seed books.
 5. Have it write a **compact** `docs/api-contract.md` (endpoints, query parameters, status codes —
    one screen, not the full JSON) and **import** it from `CLAUDE.md` with `@docs/api-contract.md`.
 6. Add a **path-scoped rule** `.claude/rules/api-client.md` with `paths` pointing at your API
-   client code, holding the conventions that only matter there (address by ISBN, never send
+   client code (in the scaffold from the plan mode task that is `lib/api.ts`, there is no `src/`), holding the conventions that only matter there (address by ISBN, never send
    server-managed fields, read `X-Total-Count` for paging, `docs/openapi.json` is the source of
    truth).
 7. Start a fresh session and run `/context`: confirm `domain.md` and the imported contract loaded
