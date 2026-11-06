@@ -31,3 +31,10 @@ touch too, not only the requests that succeed.
 the agent for the parts that need reading and judgement.
 
 </details>
+
+<details>
+<summary>💡 Hint 5: All tests red at once?</summary>
+
+Check `node -v`: `bookmonkey-legacy` needs Node 24 or newer (`node:sqlite`).
+
+</details>

@@ -12,9 +12,12 @@
 - This opens "Quality & Automation". Set the frame: the rest of the block is about making quality
   systematic.
 - Let participants choose freely. Option (a) is about finding all places that do the same thing
-  differently; option (b) is about moving code without changing what it does. Both take longer
-  than people expect; time-box at 45 minutes of work and accept a partial result if the tests are
-  green.
+  differently; option (b) is about moving code without changing what it does. Both are scoped
+  down on purpose: (a) to list, detail and export (cart and checkout as a bonus), (b) to the two
+  resources moved first. Both still take longer than people expect; time-box at 45 minutes of
+  work and say out loud that a clean partial step with green tests counts as success.
+- Show `/diff` after the first step and `/rewind` (or `Esc` twice) once live: the agenda promises
+  both, and participants only use them after they have seen them once.
 - Do not hand out the list of affected places. The inventory is the learning. The complete list
   for both options and the notes on what the tests should reveal are in the private trainer repo
   (`bookmonkey-legacy-trainer`, `SOLUTIONS.md`).
@@ -31,3 +34,5 @@
 ## Time estimate
 
 ~60 minutes: 10 inventory, 15 characterisation tests, 25 refactor in steps, 10 verify and debrief.
+The narrowed scope is what makes 60 minutes hold; without it, plan 90. Groups that finish early
+take the bonus (cart and checkout for (a), more resources for (b)).
