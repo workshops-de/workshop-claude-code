@@ -17,6 +17,13 @@
 - `init` can still prompt even with `--yes` — participants often think the process hung.
 - Watch for card links built from `id` instead of `isbn` — the glossary from the rules task should
   prevent it; if it doesn't, that's a good discussion about rule quality.
+- The dry run hit two traps: the skill installed mid-session was unknown (`Unknown skill:
+  shadcn`) until the skills were reloaded, because `.claude/skills/` did not exist at session
+  start; and `/shadcn` cannot work because the official skill is `user-invocable: false`. Both
+  are now in the steps; still worth a quick demo of `/reload-skills`.
+- The `lib/api.ts` from the plan mode task usually returns only titles; expect the agent to extend
+  it (cover, author, price, currency). Card links point at `/books/<isbn>`, which stays a 404 until
+  the custom skills task builds the detail page.
 - Authoring your own skill comes later (custom skills task) — keep this one about using them.
 
 ## Time estimate
