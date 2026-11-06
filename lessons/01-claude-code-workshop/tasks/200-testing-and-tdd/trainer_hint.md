@@ -16,6 +16,12 @@
   from the OpenAPI spec that the real API doesn't quite satisfy — fixing the test is the lesson.
 - Watch for agents editing tests to make them pass. If it happens, show the protect-the-tests hook
   idea from the bonus.
+- Tests that `POST` books need cleanup on both targets. Against the reference API
+  `POST /dev/reset` works, but it resets the instance for everyone on it; a `DELETE` in
+  `afterEach` is kinder. The own backend then needs `DELETE /books/:isbn` early (the dry run built
+  it in this task for exactly that reason).
+- The gate command needs the reference API running on 4730, so it is not hermetic. Fine for the
+  workshop; worth saying out loud.
 - Port conflicts: Next.js uses 3000, the reference API 4730 — suggest 3001 for the own backend.
 - If time is tight, `GET /books/:isbn` alone is enough to see the loop; `POST` can move to 230.
 - Directly foreshadows Headless & Automation: the gate command built here gets wrapped into a

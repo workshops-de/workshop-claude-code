@@ -15,7 +15,8 @@ feedback loop available to them. But they won't reliably do TDD unless you make 
 - **Make the agent hunt for edge cases** before implementing: ask it to enumerate them, then add
   the ones it missed.
 - **Protect the tests**: tell the agent not to change tests to make them pass. A `PreToolUse` hook
-  from the hooks task can enforce that on your test folder.
+  from the hooks task can enforce that on your test folder. Let it block edits to **existing** test
+  files only, so you can still add new ones (you extend the suite in task 230).
 - **One gate command** (type-check, lint, build, tests) the agent can run on its own — recorded in
   `CLAUDE.md` so every session knows what "done" means.
 
@@ -35,8 +36,8 @@ suite** that only talks HTTP and reads its base URL from `API_URL`:
 
 - The `bookmonkey-api` is running on port 4730; `docs/openapi.json` is committed.
 - NestJS CLI available via `npx @nestjs/cli` (no global install needed).
-- Recommended skills: `prisma-cli`, `prisma-database-setup` if you choose Prisma + SQLite for
-  persistence.
+- Optional skills if you choose Prisma + SQLite for persistence:
+  `npx skills add prisma/skills@prisma-cli -y` and `npx skills add prisma/skills@prisma-database-setup -y`.
 
 ## Steps
 
@@ -44,12 +45,22 @@ suite** that only talks HTTP and reads its base URL from `API_URL`:
    URL) that reads `API_URL`. Instruct it to use **TDD**: write tests for `GET /books/:isbn` (200
    with the book shape, 404 for an unknown ISBN) and `POST /books` (201, server-set `id` /
    `createdAt` / `updatedAt`, **409 for a duplicate ISBN**, 400 for a missing title) — no
-   implementation anywhere.
+   implementation anywhere. Add a root script so one command runs the suite (task 230 relies on
+   it): `"contract": "cd contract-tests && npx vitest run"` in the root `package.json`, used as
+   `API_URL=http://localhost:4730 npm run contract`.
 2. Review the tests, ask the agent to enumerate further **edge cases**, and add the ones it missed.
    Run the suite against the reference API: everything must be green. Fix tests, never the API.
-3. Scaffold the backend in plan mode: `npx @nestjs/cli new backend` with a books module and a
+3. Scaffold the backend in plan mode:
+   `npx @nestjs/cli new backend --package-manager npm --skip-git` (without the flags the CLI waits
+   for a package-manager prompt and creates a nested git repository), with a books module and a
    persistence choice you can defend (SQLite via Prisma is a good default). Use a throwaway test
-   database, never your dev data.
+   database, never your dev data. NestJS 12 scaffolds **ESM with Vitest and oxlint**; older
+   tutorials with Jest and CommonJS don't match. Its sample `GET /` "Hello World" e2e test goes red
+   once you remove the sample route: delete or adapt it.
+   Before the first backend edit, **scope the frontend tooling to the frontend**: add `"exclude":
+   ["node_modules", "backend", "contract-tests"]` to the root `tsconfig.json` and ignore both
+   folders in the root `eslint.config.mjs`. Otherwise the type-check hook from task 120 runs the
+   root `tsc` over the new packages and fails (`TS1241`, `TS2582 Cannot find name 'describe'`).
 4. Run the contract suite against your backend (`API_URL=http://localhost:3001`) and watch it fail.
    Then let the agent implement **just enough** to turn the tests from step 1 green — and tell it
    not to touch the tests.
