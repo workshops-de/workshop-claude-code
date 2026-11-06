@@ -1,12 +1,12 @@
 # Task Configuration
-title: 'Code Intelligence & Refactoring: Refactor with Intent and a Safety Net'
+title: 'Code Intelligence & Refactoring: Refactor a Legacy Codebase Behind a Safety Net'
 position: 180
 category: 'Quality & Automation'
 preparation: false
-estimated_time_in_minutes: 30
+estimated_time_in_minutes: 60
 always_unlocked: false
 
-# No git integration: there is no prepared repository or solution branch.
+# No git integration fields: practice ground is the participant's bookmonkey-legacy clone.
 
 # Note: Markdown content is loaded from separate files:
 # - body.md           -> Main task description
