@@ -9,7 +9,7 @@ working toward, in an **isolated worktree**, while keeping a human in the loop w
 "Autonomous" does not mean "unsupervised forever." It means setting the agent up to make routine
 decisions on its own within boundaries you define, then reviewing the result.
 
-- **`/goal <condition>`** — after every turn, a separate evaluator model checks the condition; if
+- **`/goal <condition>`**: after every turn, a separate evaluator model checks the condition; if
   it doesn't hold yet, Claude starts the next turn by itself. Write it as something Claude's own
   output can prove, with one measurable end state, a stated check, constraints, and a bound:
 
@@ -22,19 +22,25 @@ decisions on its own within boundaries you define, then reviewing the result.
   judges it from the conversation, like the rest of the condition. (Only non-interactive `claude -p`
   runs have a hard cap, `--max-turns`.)
 - **Auto mode** (or a curated `--allowedTools` set / `acceptEdits`) removes per-tool prompts;
-  `/goal` removes per-turn prompts. They're complementary — a goal doesn't change your permission
+  `/goal` removes per-turn prompts. They're complementary: a goal doesn't change your permission
   mode.
-- **Isolation** — `claude --worktree <name>` starts the session in its own git worktree under
+- **Isolation**: `claude --worktree <name>` starts the session in its own git worktree under
   `.claude/worktrees/<name>/` on a new branch named `worktree-<name>`, so your main checkout stays
   untouched until you review and merge. Add `.claude/worktrees/` to `.gitignore`.
 
 ## Apply it to BookMonkey
 
+> **Repo / ports:** your `bookmonkey` repository (Node.js 26), Next.js app on
+> http://localhost:3000, `npx bookmonkey-api` on http://localhost:4730, your NestJS backend on
+> http://localhost:3001
+>
+> **Login:** demo user `admin@bookmonkey.api` / `password1!`
+
 In the TDD task your NestJS backend learned two endpoints. The practice ground now is **finishing
 it against the contract** without hand-holding: the full `GET /books` query surface (`q`,
 `_page`, `_limit`, `_sort`, `_order`, the `X-Total-Count` header), `PUT` / `PATCH` / `DELETE`,
 `/register` and `/login`, `/dev/reset`, and the 50 seed books. The contract suite is the goal's
-measurable end state. When it's green, you point the frontend at your own backend — the moment of
+measurable end state. When it's green, you point the frontend at your own backend: the moment of
 truth for the whole workshop app.
 
 ## Prerequisites
@@ -63,7 +69,7 @@ truth for the whole workshop app.
    of the goal.
 3. Set the **goal** with a measurable condition, a "don't touch the tests" constraint, and a turn
    bound. Watch the evaluator's verdicts (`Ctrl+O` shows the reasoning).
-4. When the goal clears, review the diff in the worktree like a pull request — this is your
+4. When the goal clears, review the diff in the worktree like a pull request: this is your
    deliberate **human-in-the-loop** checkpoint. Merge only what you'd sign.
 5. Point the frontend at your backend (`NEXT_PUBLIC_API_URL=http://localhost:3001`), restart it, and
    re-run the browser journey from the MCP task: search and paging, a book's series links forward
@@ -88,7 +94,7 @@ truth for the whole workshop app.
 
 ## References
 
-- Claude Code — Keep Claude working toward a goal: https://code.claude.com/docs/en/goal
-- Claude Code — Permission modes (auto mode): https://code.claude.com/docs/en/permission-modes
-- Claude Code — Run parallel sessions with worktrees: https://code.claude.com/docs/en/worktrees
-- BookMonkey API — Querying guide: https://github.com/workshops-de/bookmonkey-api/blob/main/docs/querying.md
+- Claude Code: Keep Claude working toward a goal: https://code.claude.com/docs/en/goal
+- Claude Code: Permission modes (auto mode): https://code.claude.com/docs/en/permission-modes
+- Claude Code: Run parallel sessions with worktrees: https://code.claude.com/docs/en/worktrees
+- BookMonkey API: Querying guide: https://github.com/workshops-de/bookmonkey-api/blob/main/docs/querying.md
