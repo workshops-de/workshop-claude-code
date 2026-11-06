@@ -30,3 +30,10 @@ If Claude proposes a fix in the one place the ticket points at, ask: what else g
 the same code? A fix that only hides the symptom will come back as the next ticket.
 
 </details>
+
+<details>
+<summary>💡 Hint 5: All tests red at once?</summary>
+
+Check `node -v`: `bookmonkey-legacy` needs Node 24 or newer (`node:sqlite`).
+
+</details>

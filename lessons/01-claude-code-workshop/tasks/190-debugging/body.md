@@ -23,6 +23,11 @@ through history. Your job is to set up that loop and keep it honest.
 
 ## Apply it to BookMonkey Legacy
 
+> **Repo / ports:** your `bookmonkey-legacy` clone (Node.js 24 or newer), API on
+> http://localhost:4780, web app on http://localhost:5180
+>
+> **Login:** admin `admin@bookmonkey.example` / `admin2021`
+
 The practice ground is your [`bookmonkey-legacy`](https://github.com/andrekovac/bookmonkey-legacy)
 clone. This ticket arrived from the library team. It is all you get:
 
@@ -41,11 +46,13 @@ clone. This ticket arrived from the library team. It is all you get:
 ## Steps
 
 1. **Reproduce the first sentence.** Open "The Fellowship of the Ring", the first volume of The
-   Lord of the Rings, in the web app and follow the series links forward and back. Then reproduce it without the browser: let Claude find the API calls behind the
-   page and run them with `curl`. Write down the exact request that fails.
-2. **Reproduce the second sentence.** Pick a series that works, save one of its books in the admin
-   without changing anything meaningful, and check the series again. Capture exactly what you
-   see before and after.
+   Lord of the Rings, in the web app and follow the series links forward and back. Then reproduce
+   it without the browser: let Claude find the API calls behind the page and run them with `curl`.
+   Write down the exact request that fails.
+2. **Reproduce the second sentence.** Pick a series that works, save one of its books in the web
+   admin at http://localhost:5180/admin/books (there is also an old admin at
+   http://localhost:4780/admin-old/; use the web admin here) without changing anything
+   meaningful, and check the series again. Capture exactly what you see before and after.
 3. **Hand over the evidence.** Give Claude the ticket and your two reproductions and ask for
    competing hypotheses plus one cheap check for each, in plan mode, before it touches code.
 4. **Narrow it down.** Let Claude run the checks. Every time it states a cause, ask "which
