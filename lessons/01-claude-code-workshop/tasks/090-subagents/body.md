@@ -2,7 +2,7 @@
 
 Use **subagents** to hand focused work to a separate context: first a built-in one for noisy
 exploration, then your own **security reviewer** with restricted tools. You delegate the digging,
-you keep a lean main session — and you still own every finding you act on.
+you keep a lean main session, and you still own every finding you act on.
 
 ## The Feature
 
@@ -10,8 +10,8 @@ A subagent runs with its **own context window**, its own system prompt, and opti
 restricted set of tools. The main session hands it a task; it works elsewhere and returns only a
 summary. Its intermediate reading doesn't pollute your context.
 
-- **Built-in subagents** — e.g. **Explore**, which Claude uses for read-only codebase research.
-- **Custom subagents** — Markdown files in `.claude/agents/` (project, commit them) or
+- **Built-in subagents**: e.g. **Explore**, which Claude uses for read-only codebase research.
+- **Custom subagents**: Markdown files in `.claude/agents/` (project, commit them) or
   `~/.claude/agents/` (personal). Ask Claude to create one, or write the file yourself:
 
   ```markdown
@@ -26,10 +26,10 @@ summary. Its intermediate reading doesn't pollute your context.
   Never edit files.
   ```
 
-- **Invocation** — Claude delegates automatically based on the `description`; to force a specific
+- **Invocation**: Claude delegates automatically based on the `description`; to force a specific
   one, @-mention it (`@agent-security-reviewer`), or run a whole session as it with
   `claude --agent security-reviewer`.
-- **Tool restriction** — `tools` is an allowlist, `disallowedTools` a denylist. A reviewer that
+- **Tool restriction**: `tools` is an allowlist, `disallowedTools` a denylist. A reviewer that
   can't write can't "helpfully" fix things behind your back. It can't run `curl` either: without
   `Bash` it only reads code, so live probes happen in your main session.
 - **Loading:** Claude Code watches `.claude/agents/` and picks up new or edited files within
@@ -38,11 +38,16 @@ summary. Its intermediate reading doesn't pollute your context.
 
 ## Apply it to BookMonkey
 
+> **Repo / ports:** your `bookmonkey` repository (Node.js 26), Next.js app on
+> http://localhost:3000, `npx bookmonkey-api` on http://localhost:4730
+>
+> **Login:** demo user `admin@bookmonkey.api` / `password1!`
+
 The practice ground is **sign-in** for BookMonkey. The `bookmonkey-api` already offers
-`POST /register` and `POST /login`, both returning `{ accessToken, user }` — your job is the
+`POST /register` and `POST /login`, both returning `{ accessToken, user }`; your job is the
 frontend side: forms, storing the token safely, sign-out, and a guard for the authenticated area.
 There is a catch worth finding: **the API does not check the token on any endpoint**. Your guard
-protects pages, not data. That is exactly the kind of gap an independent reviewer should surface —
+protects pages, not data. That is exactly the kind of gap an independent reviewer should surface,
 and it is the reason you'll build your own backend later.
 
 ## Prerequisites
@@ -56,7 +61,7 @@ and it is the reason you'll build your own backend later.
    ends up in a signed or encrypted **http-only cookie** set on the server (not in `localStorage`),
    and one guard redirects the authenticated area to sign-in. Test it end to end in the browser.
 2. **Explore with a subagent**: ask a research question about your auth flow ("trace a request to
-   a protected page — where is the token checked, and by whom?") and have it delegated to Explore.
+   a protected page: where is the token checked, and by whom?") and have it delegated to Explore.
    Run `/context` before and after and note that the main context stayed lean.
 3. Create the **`security-reviewer`** subagent in `.claude/agents/` with read-only tools. If
    `.claude/agents/` is new in this session, restart with `claude --continue` so it loads.
@@ -65,7 +70,7 @@ and it is the reason you'll build your own backend later.
    explicitly with `@agent-security-reviewer` on your auth code and paste the probe's status line
    into the prompt, so it can include the API's behaviour in its review.
 5. **Triage** the findings yourself: fix what's real in your code, record what only the backend can
-   fix (in `docs/backlog.md` or similar), and reject what isn't a problem — with a reason for at
+   fix (in `docs/backlog.md` or similar), and reject what isn't a problem, with a reason for at
    least one of each. Re-run the reviewer after your fixes.
 6. Restore the seed after the probe: `curl -X POST http://localhost:4730/dev/reset` (it also
    removes users you registered while testing).
@@ -89,8 +94,8 @@ and it is the reason you'll build your own backend later.
 
 ## Pitfalls (current framework)
 
-- `cookies()` / `headers()` from `next/headers` are **async** on recent Next.js — `await` them.
-- A `redirect()` inside a Server Action works by **throwing** — don't swallow it in `try/catch`.
+- `cookies()` / `headers()` from `next/headers` are **async** on recent Next.js: `await` them.
+- A `redirect()` inside a Server Action works by **throwing**: don't swallow it in `try/catch`.
 - Setting a cookie works in Server Actions and Route Handlers, not in Server Components.
 - Next.js 16 renamed `middleware.ts` to **`proxy.ts`**. Its `matcher` must cover every protected
   route, including ones you add in later tasks.
@@ -100,8 +105,8 @@ and it is the reason you'll build your own backend later.
 
 ## References
 
-- Claude Code — Subagents: https://code.claude.com/docs/en/sub-agents
-- Claude Code — Invoke subagents explicitly: https://code.claude.com/docs/en/sub-agents#invoke-subagents-explicitly
-- BookMonkey API — Auth: https://github.com/workshops-de/bookmonkey-api#auth
-- Next.js — Authentication guide: https://nextjs.org/docs/app/building-your-application/authentication
-- OWASP — Session management cheat sheet: https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html
+- Claude Code: Subagents: https://code.claude.com/docs/en/sub-agents
+- Claude Code: Invoke subagents explicitly: https://code.claude.com/docs/en/sub-agents#invoke-subagents-explicitly
+- BookMonkey API: Auth: https://github.com/workshops-de/bookmonkey-api#auth
+- Next.js: Authentication guide: https://nextjs.org/docs/app/building-your-application/authentication
+- OWASP: Session management cheat sheet: https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html
