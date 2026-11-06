@@ -1,14 +1,16 @@
 <details>
 <summary>💡 Hint 1: Treat /context as a fuel gauge</summary>
 
-Check it on long sessions, not just when things start to break.
+Check it after every big read, not just when things start to break. A single large file or a long
+log can cost more than all your questions together.
 
 </details>
 
 <details>
 <summary>💡 Hint 2: Compaction trades detail for room</summary>
 
-Re-state anything essential that the summary might drop after a `/compact`.
+Tell `/compact` what to keep. After it, re-state anything essential the summary might have
+dropped, and check one detail you know is in the code.
 
 </details>
 
@@ -16,6 +18,6 @@ Re-state anything essential that the summary might drop after a `/compact`.
 <summary>💡 Hint 3: A "forgetful" agent is a signal</summary>
 
 If the agent seems to forget something important, that's a context signal, not a model failure.
-Shorter, sharper prompts usually beat long, rambling ones.
+Shorter, sharper prompts and a fresh session usually beat long, rambling ones.
 
 </details>
