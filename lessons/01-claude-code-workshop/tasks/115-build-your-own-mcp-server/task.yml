@@ -1,0 +1,15 @@
+# Task Configuration
+title: 'MCP: Build Your Own MCP Server'
+position: 115
+category: 'Extending Claude Code'
+preparation: false
+estimated_time_in_minutes: 45
+always_unlocked: false
+
+# No git integration: participants build the server inside their own BookMonkey repository.
+
+# Note: Markdown content is loaded from separate files:
+# - body.md           -> Main task description
+# - hint.md           -> Hints for solving the task
+# - bonus.md          -> Bonus challenges
+# - trainer_hint.md   -> Notes for trainers (not shown to participants)
