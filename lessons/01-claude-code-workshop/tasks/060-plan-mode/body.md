@@ -24,10 +24,15 @@ changes.
 
 ## Apply it to BookMonkey
 
+> **Repo / ports:** a new, empty `bookmonkey` repository (Node.js 26), Next.js app on
+> http://localhost:3000, `npx bookmonkey-api` on http://localhost:4730
+>
+> **Login:** demo user `admin@bookmonkey.api` / `password1!` (needed from the subagents task on)
+
 Throughout the workshop you build **BookMonkey**, a small book catalogue. The backend already
 exists: the ready-made [`bookmonkey-api`](https://github.com/workshops-de/bookmonkey-api) serves
 50 books with covers, series links, and a demo login. You build the frontend against it now; later
-(tasks 200 and 230) you replace the API with your own backend that honours the same contract.
+(in the TDD and autonomous workflows tasks) you replace the API with your own backend that honours the same contract.
 
 The practice ground here is turning an empty repository into a running Next.js App Router project
 in TypeScript with Tailwind CSS, a **public area** (catalogue, sign-in later) and an
