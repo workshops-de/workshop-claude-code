@@ -27,6 +27,11 @@ For exploration you want all of that, minus the editing:
 
 ## Apply it to BookMonkey Legacy
 
+> **Repo / ports:** your `bookmonkey-legacy` clone (Node.js 24 or newer), API on
+> http://localhost:4780, web app on http://localhost:5180
+>
+> **Login:** admin `admin@bookmonkey.example` / `admin2021`
+
 In the build tasks you create a fresh BookMonkey. Here you meet its older sibling:
 [`bookmonkey-legacy`](https://github.com/andrekovac/bookmonkey-legacy), the company library and
 book shop app as it looks after five years and four developers: an Express API on top of SQLite,
@@ -49,8 +54,12 @@ review tasks, so the map you draw today pays off later.
    claude --permission-mode plan
    ```
 
-2. Warm up: ask Claude how it works (which tools it has, how it decides what to do next) and type
-   `/` to browse the slash commands. Run `/context` once now, so you have a baseline.
+2. **Watch the loop once.** Run `/context`, so you have a baseline. Then ask a first architecture
+   question, for example "Which parts does this repository have, and how is each one started?".
+   When the answer is there, press `Ctrl+O` to open the transcript viewer and count the tool calls
+   Claude made. Pick one call and name its three steps: **Reason** (why Claude chose it), **Act**
+   (the call itself), **Observe** (what came back, and how the next step used it). `Ctrl+O`
+   again closes the viewer.
 3. Ask for an **architecture overview**: the parts of the system, how they are started, which
    ports they use, and where the data lives. Ask Claude to name the files it based each claim on.
 4. Ask for a **dependency map** as a Mermaid diagram: the main modules of the API and the web app
