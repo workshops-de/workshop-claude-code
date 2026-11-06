@@ -29,10 +29,18 @@
 - Do not comment on whether Claude's analysis of the ticket is correct. The debugging task (and
   the private trainer repo, `bookmonkey-legacy-trainer`, `SOLUTIONS.md`) covers that. Here the
   point is the setup and the review of the comment.
-- The `implement` label lets Claude open a draft PR. It is optional; it takes longer and costs
-  more. Use it in the demo if time allows.
+- The `implement` label lets Claude push a branch and link a prefilled pull request page; the
+  action does not open the PR itself by default. It is optional; it takes longer and costs more.
+  Use it in the demo if time allows.
+- Step 1 asks where the workflow allows more than the prompt asks for. Collect answers in the
+  room without grading them, then let participants tighten one of them in step 9.
+- Windows participants: the snippets are Bash. Git Bash works as is; in PowerShell only the
+  `FORK=` variable line changes (`$FORK = "..."`).
+- Insist on the cleanup step (secret, app access, optional fork deletion). A forgotten secret
+  with a one-year token in a public fork is the real risk of this task.
 
 ## Time estimate
 
-~30 minutes: 10 fork and setup, 10 first run and reading the comment, 10 workflow change and
-second run. Add 10 minutes if many participants need to create a token first.
+~40 minutes: 20 fork and setup (fork, Actions and Issues, app, token and secret, labels), 10
+first run and reading the comment, 10 workflow change, second run, and cleanup. Add 10 minutes if
+many participants need to create a token first.

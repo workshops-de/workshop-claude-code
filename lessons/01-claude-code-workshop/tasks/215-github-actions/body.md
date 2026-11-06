@@ -11,7 +11,9 @@ The [Claude Code GitHub Action](https://github.com/anthropics/claude-code-action
 (`anthropics/claude-code-action@v1`) runs Claude Code inside a workflow job. It needs three things:
 
 - **The Claude GitHub App** installed on the repository (<https://github.com/apps/claude>), so
-  Claude can comment, push branches, and open pull requests.
+  Claude can comment and push branches. It does **not** open pull requests by default: when it
+  changes code, it pushes a branch and puts a link to a prefilled pull request page in its
+  comment. You open the PR yourself.
 - **A secret** with your credentials, passed to the matching input:
   - `CLAUDE_CODE_OAUTH_TOKEN` → `claude_code_oauth_token`: a long-lived token for your Claude
     subscription, created with `claude setup-token`
@@ -42,9 +44,14 @@ of a public repository is public. Use `--max-turns` and `timeout-minutes` to cap
 
 ## Apply it to BookMonkey Legacy
 
+> **Repo / ports:** your GitHub fork of `bookmonkey-legacy`; Claude runs on a GitHub Actions
+> runner, so no local ports are needed
+>
+> **Login:** no app login; `gh auth login` and a Claude token or API key
+
 [`bookmonkey-legacy`](https://github.com/andrekovac/bookmonkey-legacy) already contains
 `.github/workflows/claude-issue.yml`: label an issue `analyse` and Claude comments; label it
-`implement` and Claude also opens a draft pull request. It only needs a fork with Actions, Issues,
+`implement` and Claude also pushes a branch and links the prefilled pull request page. It only needs a fork with Actions, Issues,
 the app, and a secret. Your test ticket can be the one from the debugging task, in your own words.
 
 Cannot use a personal token or API key in this training? Then follow the trainer's live demo; the
@@ -53,13 +60,18 @@ steps are the same.
 ## Prerequisites
 
 - A GitHub account and the GitHub CLI, logged in (`gh auth login`)
+- **On Windows:** the commands below are Bash. Run them in Git Bash (comes with Git for Windows),
+  or adapt them for PowerShell: `$FORK = "<your-github-user>/bookmonkey-legacy"` instead of
+  `FORK=...`; the `gh` and `git` commands themselves are the same
 - Your `bookmonkey-legacy` clone, and a Claude plan or API key you may use for this
 
 ## Steps
 
 1. **Read the workflow first.** Ask Claude in your clone to explain
    `.github/workflows/claude-issue.yml`: when it runs, which permissions it has, what Claude may
-   do in each mode, and what could go wrong. You are about to give it your credentials.
+   do in each mode, and what could go wrong. You are about to give it your credentials. Compare
+   the prompt with the permissions and the tool list: does the workflow allow more than the
+   prompt asks for? Write down what you find.
 2. **Fork and add the remote** (inside your clone):
 
    ```bash
@@ -101,6 +113,17 @@ steps are the same.
    (`gh pr create --repo $FORK --base main --head <branch>`), and merge it. Workflows for issue events run from
    the default branch.
 10. Remove the label, add `analyse` again, and compare the new comment with the first one.
+11. **Clean up** when you are done, so no credential stays behind:
+
+    ```bash
+    gh secret delete CLAUDE_CODE_OAUTH_TOKEN --repo $FORK   # or ANTHROPIC_API_KEY
+    ```
+
+    Remove the Claude app from the fork: github.com → your **Settings → Applications → Installed
+    GitHub Apps → Claude → Configure**, then remove the fork from the selected repositories (or
+    uninstall the app). If you no longer need the fork, delete it:
+    `gh auth refresh -s delete_repo` once, then `gh repo delete $FORK`. The token from
+    `claude setup-token` is valid for a year: do not keep a copy of it lying around.
 
 ## Success Criteria
 
@@ -109,12 +132,15 @@ steps are the same.
 - [ ] Your fork has Actions and Issues enabled, the Claude GitHub App installed, and one secret set
 - [ ] Labelling an issue `analyse` started a run, and Claude commented on the issue
 - [ ] You checked at least one claim from Claude's comment against the code
+- [ ] You found at least one place where the workflow allows more than the prompt asks for
 - [ ] A workflow change made with Claude is merged in your fork and the next run shows its effect
 - [ ] You can say where the cost of a run lands, and how you capped it
 
 **Repository still works**
 
 - [ ] Your fork's default branch still passes `npm test`; nothing was merged that you did not review
+- [ ] After cleanup, `gh secret list --repo $FORK` shows no Claude secret, and the Claude app no
+      longer has access to the fork (or the fork is deleted)
 
 ## References
 
