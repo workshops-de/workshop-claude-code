@@ -9,7 +9,7 @@ the time.
 
 A skill is a folder with a `SKILL.md` (plus optional supporting files). Only its **name and
 description** sit in context; the full instructions load when the task matches or when you invoke
-it — that's _progressive disclosure_.
+it: that's _progressive disclosure_.
 
 - **Where skills live:** project skills in `.claude/skills/<name>/SKILL.md` (commit them for your
   team), personal skills in `~/.claude/skills/<name>/SKILL.md`.
@@ -29,9 +29,14 @@ procedures loaded on demand.
 
 ## Apply it to BookMonkey
 
+> **Repo / ports:** your `bookmonkey` repository (Node.js 26), Next.js app on
+> http://localhost:3000, `npx bookmonkey-api` on http://localhost:4730
+>
+> **Login:** demo user `admin@bookmonkey.api` / `password1!`
+
 The practice ground is BookMonkey's **catalogue page**: a grid of book cards (cover, title,
 author, price with currency) that links to a detail page, built with **shadcn/ui** on top of your
-Tailwind scaffold. The shadcn CLI is interactive and its flags change frequently — exactly the kind
+Tailwind scaffold. The shadcn CLI is interactive and its flags change frequently: exactly the kind
 of fast-moving knowledge where a maintained skill beats the model's training data. Data still
 comes from the running `bookmonkey-api`; your API-client rule from the previous task applies.
 
@@ -78,8 +83,8 @@ comes from the running `bookmonkey-api`; your API-client rule from the previous 
 
 ## References
 
-- Claude Code — Skills: https://code.claude.com/docs/en/skills
+- Claude Code: Skills: https://code.claude.com/docs/en/skills
 - Skills catalogue: https://skills.sh
 - Agent skills (open format): https://agentskills.io
-- shadcn/ui — Installation (Next.js): https://ui.shadcn.com/docs/installation/next
+- shadcn/ui: Installation (Next.js): https://ui.shadcn.com/docs/installation/next
 - BookMonkey API: https://github.com/workshops-de/bookmonkey-api
