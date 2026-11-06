@@ -21,6 +21,11 @@ bigger context is not automatically better. Claude Code gives you the levers:
 
 ## Apply it to BookMonkey Legacy
 
+> **Repo / ports:** your `bookmonkey-legacy` clone (Node.js 24 or newer), API on
+> http://localhost:4780, web app on http://localhost:5180
+>
+> **Login:** admin `admin@bookmonkey.example` / `admin2021`
+
 The practice ground is your [`bookmonkey-legacy`](https://github.com/andrekovac/bookmonkey-legacy)
 clone. Legacy code is where context runs out first: one route file with more than a thousand
 lines, a large seed file, a lockfile, five years of `git log -p`, and test and server logs that
@@ -32,14 +37,17 @@ nobody trims. Exactly the material that fills a window without anyone noticing.
 
 ## Steps
 
-1. Start a fresh session and run `/context`. Note the baseline: how much do system prompt, tools,
+1. Start a fresh session in Manual or plan mode (`claude --permission-mode default` or
+   `claude --permission-mode plan`), so the repository stays clean, and run `/context`. Note the baseline: how much do system prompt, tools,
    and your `CLAUDE.md` take before you typed anything?
 2. Ask one precise question you can check later, for example "Which file and function handle
    renewing a loan, and what are the renewal rules?". Write down the answer.
 3. Now **pollute** the session on purpose, checking `/context` after each step:
    - ask Claude to read `api/routes.js` completely and summarise every section
    - ask it to read `api/seed/books.json` and `package-lock.json`
-   - let it run `git log -p` over the whole history and the full `npm test` output
+   - let it run `git log -p` over the whole history and the full `npm test` output. Claude Code
+     may cut such a huge output short or write it to a file and read only parts of it: that is
+     the tool protecting your context, not a failure
    - start `npm run dev:api` and paste a long stretch of its log into the chat
 4. Ask the question from step 2 again, plus one about a detail from the very first file it read.
    Note any drift, vagueness, or forgotten detail.
