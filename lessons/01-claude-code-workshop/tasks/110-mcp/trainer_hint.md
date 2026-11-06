@@ -18,6 +18,14 @@
 - Watch the context meter during the journey: full snapshots are expensive. Good moment to show
   `/context` and discuss when a `curl` would have done.
 - The bogus-cover book persists in the shared API; `POST /dev/reset` cleans up.
+- Snapshots right after `navigate` can be nearly empty while Suspense boundaries still stream in;
+  ask the agent to wait for a known element (or a second) before reading the page.
+- In dev mode with Cache Components, the DOM can keep a hidden copy of the previous page
+  (`display: none`). Observations that count elements can be off by one page; ask for visible
+  elements only.
+- Typical findings from the dry run: a console error `Next.js encountered the unstable value
+  Date.now()` on signed-in pages (fix: `await connection()` before reading time-based session
+  data), and pager links only about 20px high on phone width.
 
 ## Time estimate
 

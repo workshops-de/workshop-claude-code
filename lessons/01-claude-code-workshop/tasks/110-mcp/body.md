@@ -38,18 +38,28 @@ that it compiles.
 
 ## Steps
 
-1. Add a browser-automation MCP server (e.g. Playwright), start a session, and confirm with `/mcp`
-   that it's connected and its tools are listed.
+1. Add a browser-automation MCP server (e.g. Playwright:
+   `claude mcp add playwright -- npx -y @playwright/mcp@latest`), start a session, and confirm with
+   `/mcp` that it's connected and its tools are listed. Playwright MCP writes snapshots and
+   screenshots to `.playwright-mcp/` in your repo: add that folder to `.gitignore`.
 2. Tell the agent the **constraint** first — the fallback is a small client component, the rest of
    the card stays server-rendered — and let it implement the cover fallback. Create one book with a
-   bogus cover URL to have a test case.
+   bogus cover URL to have a test case. Your create form has no cover field, so use the API
+   directly:
+
+   ```bash
+   curl -X POST http://localhost:4730/books -H "Content-Type: application/json" \
+     -d '{"isbn":"9990000000001","title":"Bogus Cover Test","author":"Test","cover":"https://nonexistent.invalid/cover.png"}'
+   ```
 3. Start the dev server and ask the agent to **walk a user journey through the browser tools**:
-   search for "harry", go to page 2 and back, open a book, follow the series links forward and
-   back, sign in as the demo user, try to create a book with an existing ISBN, and find your
-   bogus-cover book. Ask it to report concrete observations, not a verdict.
+   search for "of" (46 hits, enough for a page 2; "harry" has only 7), go to page 2 and back, open
+   a book, follow the series links forward and back, sign in as the demo user
+   (`admin@bookmonkey.api` / `password1!`), try to create a book with an existing ISBN, and find
+   your bogus-cover book. Ask it to report concrete observations, not a verdict.
 4. Repeat the catalogue part at a **phone-sized viewport** (e.g. 390 × 844) and have it report
    layout problems.
-5. Fix whatever the browser check found, then run the check again.
+5. Fix whatever the browser check found, then run the check again. Afterwards remove the test data
+   from the shared API: `curl -X POST http://localhost:4730/dev/reset`.
 6. Find one verification where a CLI command beats the browser (e.g. "does `/books?q=harry` return
    200?" or "how many books does the API have?") and explain why it's the leaner choice.
 
