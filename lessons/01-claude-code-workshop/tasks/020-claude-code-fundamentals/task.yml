@@ -3,11 +3,10 @@ title: 'Fundamentals: Explore a Codebase, No Edits Allowed'
 position: 20
 category: 'Foundations'
 preparation: false
-estimated_time_in_minutes: 30
+estimated_time_in_minutes: 45
 always_unlocked: false
 
-# No git integration: there is no prepared repository or solution branch.
-# Participants own every line of code they create throughout the workshop.
+# No git integration fields: participants clone the public practice repo bookmonkey-legacy.
 
 # Note: Markdown content is loaded from separate files:
 # - body.md           -> Main task description
