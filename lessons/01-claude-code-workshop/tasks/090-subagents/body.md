@@ -30,7 +30,11 @@ summary. Its intermediate reading doesn't pollute your context.
   one, @-mention it (`@agent-security-reviewer`), or run a whole session as it with
   `claude --agent security-reviewer`.
 - **Tool restriction** — `tools` is an allowlist, `disallowedTools` a denylist. A reviewer that
-  can't write can't "helpfully" fix things behind your back.
+  can't write can't "helpfully" fix things behind your back. It can't run `curl` either: without
+  `Bash` it only reads code, so live probes happen in your main session.
+- **Loading:** Claude Code watches `.claude/agents/` and picks up new or edited files within
+  seconds, but only if that directory existed when the session started. After creating the
+  project's first agent file, restart (`claude --continue` keeps your conversation).
 
 ## Apply it to BookMonkey
 
@@ -44,7 +48,7 @@ and it is the reason you'll build your own backend later.
 ## Prerequisites
 
 - The `bookmonkey-api` is running; demo user `admin@bookmonkey.api` / `password1!`.
-- Recommended skill: `react-best-practices`.
+- Optional skill (nice to have, not required): `vercel-labs/agent-skills@vercel-react-best-practices`.
 
 ## Steps
 
@@ -54,14 +58,17 @@ and it is the reason you'll build your own backend later.
 2. **Explore with a subagent**: ask a research question about your auth flow ("trace a request to
    a protected page — where is the token checked, and by whom?") and have it delegated to Explore.
    Run `/context` before and after and note that the main context stayed lean.
-3. Create the **`security-reviewer`** subagent in `.claude/agents/` with read-only tools.
-4. Invoke it explicitly with `@agent-security-reviewer` on your auth code, and ask it to include
-   the API's behaviour in its review (`curl -X DELETE http://localhost:4730/books/<isbn>` without a
-   token is a fair test).
+3. Create the **`security-reviewer`** subagent in `.claude/agents/` with read-only tools. If
+   `.claude/agents/` is new in this session, restart with `claude --continue` so it loads.
+4. Probe the API yourself in the main session: `curl -i -X DELETE
+   http://localhost:4730/books/<isbn>` without a token is a fair test. Then invoke the reviewer
+   explicitly with `@agent-security-reviewer` on your auth code and paste the probe's status line
+   into the prompt, so it can include the API's behaviour in its review.
 5. **Triage** the findings yourself: fix what's real in your code, record what only the backend can
    fix (in `docs/backlog.md` or similar), and reject what isn't a problem — with a reason for at
    least one of each. Re-run the reviewer after your fixes.
-6. Restore the seed if you deleted a book: `curl -X POST http://localhost:4730/dev/reset`.
+6. Restore the seed after the probe: `curl -X POST http://localhost:4730/dev/reset` (it also
+   removes users you registered while testing).
 
 ## Success Criteria
 
@@ -85,6 +92,11 @@ and it is the reason you'll build your own backend later.
 - `cookies()` / `headers()` from `next/headers` are **async** on recent Next.js — `await` them.
 - A `redirect()` inside a Server Action works by **throwing** — don't swallow it in `try/catch`.
 - Setting a cookie works in Server Actions and Route Handlers, not in Server Components.
+- Next.js 16 renamed `middleware.ts` to **`proxy.ts`**. Its `matcher` must cover every protected
+  route, including ones you add in later tasks.
+- With Cache Components on, reading `cookies()` directly in a layout fails the build (`Next.js
+  encountered uncached or runtime data during prerendering`). Do the check in a small async
+  component inside `<Suspense>`.
 
 ## References
 

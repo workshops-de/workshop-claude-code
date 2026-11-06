@@ -18,6 +18,14 @@
 - The unenforced token is the planted finding. If no reviewer finds it, ask the room: "what stops
   me from deleting a book without signing in?" — then point forward to tasks 200/230, where the own
   backend closes the gap.
+- Second real finding the dry run surfaced: `POST /login` and `POST /register` return the
+  **password hash** inside `user`. Good material for the "only the backend can fix it" bucket.
+- In the dry run the reviewer was not found right after its file was written (`Agent type
+  'security-reviewer' not found`), because `.claude/agents/` did not exist at session start. The
+  restart in step 3 fixes it.
+- A reviewer with `Bash` is no longer read-only. Keep it at `Read, Grep, Glob` and let the main
+  session run the `curl` probe (step 4). The dry-run reviewer with Bash really deleted a book and
+  registered a user, so `POST /dev/reset` afterwards is not optional.
 - Someone will store the token in `localStorage` because it's quicker. Let the reviewer catch it.
 - Resist rubber-stamping in both directions: neither the implementation diff nor the reviewer's
   findings should be accepted unread. Ask one person to walk the room through their triage.
