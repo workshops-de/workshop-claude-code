@@ -1,7 +1,7 @@
 ## Overview
 
 Connect Claude Code to a real browser through the **Model Context Protocol (MCP)** and let the
-agent verify what it built by looking at it — clicking, reading, and reporting back. Some things
+agent verify what it built by looking at it: clicking, reading, and reporting back. Some things
 can't be verified by reading code: whether a cover actually shows, whether paging feels right on a
 phone, whether a series link lands on the right book.
 
@@ -10,29 +10,34 @@ phone, whether a series link lands on the right book.
 MCP is an open standard for connecting agents to external tools and data: a browser, a database,
 an issue tracker, or your own tooling.
 
-- **Add a server** — local (stdio) servers run a command after `--`; remote servers take a URL:
+- **Add a server**: local (stdio) servers run a command after `--`; remote servers take a URL:
 
   ```bash
   claude mcp add playwright -- npx -y @playwright/mcp@latest
   claude mcp add --transport http notion https://mcp.notion.com/mcp
   ```
 
-- **Scopes** — the default is local (just you, this project). `--scope project` writes the server
+- **Scopes**: the default is local (just you, this project). `--scope project` writes the server
   to `.mcp.json` at the project root so your team gets it via git; `--scope user` makes it
   available in all your projects.
-- **Check status** — `claude mcp list` shows health per server; `/mcp` inside a session shows
+- **Check status**: `claude mcp list` shows health per server; `/mcp` inside a session shows
   connected servers, their tools, and handles sign-in.
-- **Context cost** — tool search (on by default) defers tool definitions until needed, but tool
+- **Context cost**: tool search (on by default) defers tool definitions until needed, but tool
   **results** still land in your context. A full browser snapshot is big; a `curl` status check
   is tiny.
 
 ## Apply it to BookMonkey
 
-The practice ground is the **catalogue experience** you've built so far — covers, search, paging,
-series navigation, sign-in, and the create/edit forms — plus one small client-only addition: a
+> **Repo / ports:** your `bookmonkey` repository (Node.js 26), Next.js app on
+> http://localhost:3000, `npx bookmonkey-api` on http://localhost:4730
+>
+> **Login:** demo user `admin@bookmonkey.api` / `password1!`
+
+The practice ground is the **catalogue experience** you've built so far (covers, search, paging,
+series navigation, sign-in, and the create/edit forms), plus one small client-only addition: a
 **cover fallback**. Some covers may fail to load (a missing file, a host your app doesn't allow, a
 book created without one); the card should then show a placeholder instead of a broken image.
-Image `onError` handling runs only in the browser, so it lives in a client component — state that
+Image `onError` handling runs only in the browser, so it lives in a client component. State that
 constraint up front, then let the agent prove the result in a real browser rather than trusting
 that it compiles.
 
@@ -42,8 +47,8 @@ that it compiles.
    `claude mcp add playwright -- npx -y @playwright/mcp@latest`), start a session, and confirm with
    `/mcp` that it's connected and its tools are listed. Playwright MCP writes snapshots and
    screenshots to `.playwright-mcp/` in your repo: add that folder to `.gitignore`.
-2. Tell the agent the **constraint** first — the fallback is a small client component, the rest of
-   the card stays server-rendered — and let it implement the cover fallback. Create one book with a
+2. Tell the agent the **constraint** first (the fallback is a small client component, the rest of
+   the card stays server-rendered) and let it implement the cover fallback. Create one book with a
    bogus cover URL to have a test case. Your create form has no cover field, so use the API
    directly:
 
@@ -80,7 +85,7 @@ that it compiles.
 
 ## References
 
-- Claude Code — MCP: https://code.claude.com/docs/en/mcp
-- Claude Code — MCP quickstart: https://code.claude.com/docs/en/mcp-quickstart
+- Claude Code: MCP: https://code.claude.com/docs/en/mcp
+- Claude Code: MCP quickstart: https://code.claude.com/docs/en/mcp-quickstart
 - Playwright MCP server: https://github.com/microsoft/playwright-mcp
-- Next.js — Server and Client Components: https://nextjs.org/docs/app/getting-started/server-and-client-components
+- Next.js: Server and Client Components: https://nextjs.org/docs/app/getting-started/server-and-client-components
