@@ -1,12 +1,12 @@
 # Task Configuration
-title: 'CLAUDE.md: Write and Verify Your CLAUDE.md'
+title: 'CLAUDE.md: Write and Verify a CLAUDE.md for an Inherited Codebase'
 position: 40
 category: 'Foundations'
 preparation: false
 estimated_time_in_minutes: 30
 always_unlocked: false
 
-# No git integration: there is no prepared repository or solution branch.
+# No git integration fields: practice ground is the participant's bookmonkey-legacy clone.
 
 # Note: Markdown content is loaded from separate files:
 # - body.md           -> Main task description
