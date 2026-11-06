@@ -37,10 +37,12 @@ long as you steer.
 
 ## Prerequisites
 
-- Node.js ≥ 26 (required by `bookmonkey-api`).
+- Node.js 26 (current LTS). `bookmonkey-api` declares `node >=26` in its `engines`.
 - Start the API in a separate terminal and leave it running: `npx bookmonkey-api`. It listens on
   `http://localhost:4730`; the interactive docs are at `http://localhost:4730/api`.
-- Recommended skills: `react-best-practices`, `frontend-design`.
+- Optional skills (nice to have, not required):
+  `npx skills add vercel-labs/agent-skills@vercel-react-best-practices -y` and
+  `npx skills add anthropics/skills@frontend-design -y`.
 
 ## Steps
 
@@ -48,6 +50,10 @@ long as you steer.
    ask it to plan the scaffold: stack, route groups for public vs. authenticated areas, styling,
    the API base URL as an environment variable (`NEXT_PUBLIC_API_URL=http://localhost:4730`), and
    one start page that lists the titles of the first five books from `GET /books?_limit=5`.
+   The repository is empty except for `.git`, so the plan should scaffold **into the current
+   directory** with non-interactive flags, for example
+   `npx create-next-app@latest . --ts --tailwind --eslint --app --no-src-dir --import-alias "@/*" --use-npm --yes`.
+   The install alone can take several minutes.
 2. **Challenge the plan** at least twice — choose **No, keep planning** and question any library
    you didn't ask for (a data-fetching library, a UI kit, a state manager), or ask the agent to
    justify a step you're unsure about. Watch the plan change.
@@ -57,7 +63,9 @@ long as you steer.
    manually approve edits. Watch the commands it runs.
 5. **Verify**: start the development server and open the app in a browser — five real book titles
    should appear.
-6. Review the changes and make your first commit with a message you reviewed.
+6. Review the changes and make your first commit with a message you reviewed. Commit a
+   `.env.example` next to the git-ignored `.env.local`: the template `.gitignore` ignores `.env*`,
+   so add `!.env.example` to it.
 
 ## Success Criteria
 
@@ -72,7 +80,8 @@ long as you steer.
 
 - [ ] `npm run dev` serves the app; a public and an authenticated route group both render
 - [ ] The start page shows five book titles loaded from the running `bookmonkey-api`
-- [ ] The API base URL comes from an environment variable, not a hard-coded string
+- [ ] The API base URL comes from an environment variable, not a hard-coded string, and a
+      committed `.env.example` documents it
 - [ ] Type-check and `npm run build` pass; the scaffold is committed
 
 ## References
