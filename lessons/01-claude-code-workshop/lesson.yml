@@ -19,6 +19,9 @@ slides_type: google_slides
 # All knowledge blocks of this workshop live as sections in this single deck
 google_slide_id: '1voXfvVnvD3zC319A2Q4G78ncF43kSbYX6i592zJgBx4'
 
+# German translation of the deck (same slide order, see docs/translation-de.md)
+google_slide_id_de: '1zhR5hkMM9ujaZk4zkoUt1WLMBnZ4KSj4WHNGYRcaQYI'
+
 # PDF sync (works for both Google Slides and Slidev)
 pdf_generation_enabled: true
 
