@@ -52,6 +52,12 @@ lessons/01-claude-code-workshop/tasks/NNN-task-slug/
 └── bonus.md          # optional: "Going further" stretch content
 ```
 
+**German translations** sit next to the English files as `body.de.md`, `hint.de.md`,
+`trainer_hint.de.md`, `bonus.de.md`, plus `translations.de.title` in `task.yml`; the platform
+imports them as `translations.de.*`. English stays the source of truth. Rules and glossary:
+`docs/translation-de.md`. Check status with `scripts/translation-status.sh --todo`, translate with
+the `/translate-task-de <folder>` skill.
+
 `task.yml` shape:
 
 ```yaml
@@ -180,4 +186,5 @@ content. The same applies to:
 - [ ] Create `tasks/NNN-slug/` with `task.yml`, `body.md`, `hint.md`, `trainer_hint.md` (+ `bonus.md` if there's "going further" content)
 - [ ] Re-fetch the live slide order, then create + fill the matching 7-slide block in Google Slides
 - [ ] Verify slide text (bullet counts/lengths) and task files render sensibly
+- [ ] Translate it with `/translate-task-de <folder>` and add the slides to the German deck (`google_slide_id_de`), or leave both for later — `scripts/translation-status.sh` lists what's missing
 - [ ] Commit with a Conventional Commits message and push
