@@ -142,4 +142,5 @@ Leave trainer speaker notes untouched (partly already German, written by the tra
 | Learning goals | Lernziele |
 | Facilitation notes | Hinweise zur Durchführung |
 | Going further | Weiterführend |
+| Time estimate | Zeitbedarf |
 | Hint | Tipp (in `<summary>`: „💡 Tipp 1: …“) |
