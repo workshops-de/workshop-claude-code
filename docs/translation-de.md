@@ -10,6 +10,32 @@ The English deck stays the source of truth. The German deck is a copy with the s
 when an English slide changes, translate the matching German slide by hand (there is no
 automatic sync).
 
+## Tasks
+
+German task content lives next to the English files and is imported into the platform as
+`translations.de.*`; participants switch the language themselves. Missing German files fall back
+to English.
+
+| English           | German                                | Platform field                          |
+| ----------------- | ------------------------------------- | --------------------------------------- |
+| `body.md`         | `body.de.md`                          | `translations.de.body_markdown`         |
+| `hint.md`         | `hint.de.md`                          | `translations.de.hint_markdown`         |
+| `bonus.md`        | `bonus.de.md`                         | `translations.de.bonus_markdown`        |
+| `trainer_hint.md` | `trainer_hint.de.md`                  | `translations.de.trainer_hint_markdown` |
+| `task.yml` title  | `task.yml` → `translations.de.title`  | `translations.de.title`                 |
+
+Workflow:
+
+1. `scripts/translation-status.sh --todo` lists missing and stale translations (stale = the English
+   file was committed after its German sibling).
+2. In Claude Code, run `/translate-task-de <folder>` (or `/translate-task-de --todo`). The skill in
+   `.claude/skills/translate-task-de/` applies the rules of this document.
+3. Review the German files, commit one task per commit:
+   `docs(tasks): translate <folder> to german`.
+
+When you change an English task file, either update the German file in the same commit or leave
+it — the status script will show it as stale.
+
 ## Address and tone
 
 - Address participants as **„ihr/euch“** (as on workshops.de), never „Sie“ or „du“.
@@ -100,3 +126,20 @@ Leave trainer speaker notes untouched (partly already German, written by the tra
 | root cause | Ursache |
 | intent | Absicht |
 | AI (in prose) | KI (but „AI & Agentic Engineering“, „AI Pair Programming“ as names) |
+
+### Task section headings
+
+| English | German |
+| ------- | ------ |
+| Overview | Überblick |
+| The Feature | Das Feature |
+| Apply it to BookMonkey | Anwendung auf BookMonkey |
+| Prerequisites | Voraussetzungen |
+| Steps | Schritte |
+| Success Criteria | Erfolgskriterien |
+| References | Referenzen |
+| Background | Hintergrund |
+| Learning goals | Lernziele |
+| Facilitation notes | Hinweise zur Durchführung |
+| Going further | Weiterführend |
+| Hint | Tipp (in `<summary>`: „💡 Tipp 1: …“) |
