@@ -60,12 +60,20 @@ The curriculum, task structure, and teaching narrative are derived from a canoni
 (`workshop.md`) prepared by the trainer.
 
 The workshop is **feature-first**: every task introduces one Claude Code feature (plan mode,
-rules, skills, subagents, MCP, hooks, …) as its headline, and a step of **BookMonkey**, a small book
-catalogue, serves as the practice ground for it. Participants build the frontend against the
-ready-made [`bookmonkey-api`](https://github.com/workshops-de/bookmonkey-api) (`npx bookmonkey-api`)
-and later replace it with their own NestJS backend that honours the same OpenAPI contract (tasks
-200 and 230). Participants own every line of code they write; there are no prepared repositories,
-branches, or checkpoints.
+rules, skills, subagents, MCP, hooks, …) as its headline, and a step in one of two practice
+projects serves as the practice ground for it:
+
+- **BookMonkey**, a small book catalogue that participants build themselves. They write the
+  frontend against the ready-made [`bookmonkey-api`](https://github.com/workshops-de/bookmonkey-api)
+  (`npx bookmonkey-api`), build their own MCP server for it (task 115), and later replace the API
+  with their own NestJS backend that honours the same OpenAPI contract (tasks 200 and 230).
+  Participants own every line of code they write; there are no checkpoints or solution branches.
+- **BookMonkey Legacy**, an inherited codebase:
+  [`bookmonkey-legacy`](https://github.com/andrekovac/bookmonkey-legacy), a full-stack app that four
+  developers grew over five years (Express and SQLite API, React web app, about 15,000 lines).
+  Participants explore it without edits (020), write its `CLAUDE.md` (040), fill and reset context
+  in it (050), refactor it (180), debug a ticket in it (190), run Claude from GitHub Actions on a
+  fork (215), and review its open pull request branch (220).
 
 Tasks are grouped into these categories, in teaching order:
 
@@ -73,8 +81,8 @@ Tasks are grouped into these categories, in teaching order:
 | --------------------- | ------- | ------------------------------------------------------ |
 | Foundations           | 010–050 | Install, fundamentals, permission modes, memory, context |
 | Steering & Memory     | 060–070 | Plan mode, rules and imports                           |
-| Extending Claude Code | 080–120 | Skills, subagents, custom commands, MCP, hooks         |
-| Quality & Automation  | 180–220 | Refactoring, debugging, TDD, headless, PR review       |
+| Extending Claude Code | 080–120 | Skills, subagents, custom commands, MCP, own MCP server, hooks |
+| Quality & Automation  | 180–220 | Refactoring, debugging, TDD, headless, GitHub Actions, PR review |
 | Autonomy & Methodologies | 230–270 | Autonomous runs, Agent SDK, gateways, Spec Kit, BMAD |
 
 ## Git conventions

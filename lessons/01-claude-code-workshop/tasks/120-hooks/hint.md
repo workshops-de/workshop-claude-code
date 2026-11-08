@@ -12,6 +12,9 @@ keystroke of the agent.
 Check the exit code. Only `exit 2` blocks a `PreToolUse` call; `exit 1` just logs an error and lets
 the action through.
 
+The same goes for the type-check hook: if Claude never reacts to type errors, your `PostToolUse`
+script probably exits `0` or `1`. Only `exit 2` puts its stderr in front of Claude.
+
 </details>
 
 <details>

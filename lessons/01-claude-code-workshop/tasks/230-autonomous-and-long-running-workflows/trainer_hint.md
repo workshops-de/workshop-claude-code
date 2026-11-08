@@ -18,6 +18,19 @@
   agent owns the route there. Don't let people hand step 1 to the goal run.
 - Runs can take a while — have people start the goal before a break, or trim the scope to the
   `GET /books` query surface plus `DELETE`.
+- Dry-run numbers: the goal run took about 6.5 minutes, 41 agentic turns, and about 0.83 USD to
+  get 46 contract tests green. The `num_turns` in `-p` JSON counts agentic turns, not the
+  evaluator's goal turns, so it is not the same unit as "stop after 30 turns".
+- The review checkpoint earned its place in the dry run: the suite was green, yet the demo user
+  could not sign in to the own backend (seed has a bcrypt hash, the backend checked scrypt), and
+  `/dev/reset` answered `{reset:true}` instead of `{ok:true}`. Spec gaps get turned green, not
+  discovered; that is why a human reviews the diff.
+- Reference API quirks people may trip over while extending the suite: `_limit=abc` returns `[]`
+  with `200`; `q` without paging sends no `X-Total-Count`; `_page` without `_limit` uses a page
+  size of 10; `PUT` replaces the whole book; `DELETE` returns `{}`. Decide per quirk whether the
+  contract pins it.
+- The root ESLint run from the gate also lints `contract-tests/` unless the TDD task scoped it;
+  new test files then fail on `no-explicit-any`.
 - The frontend switch-over is the emotional payoff; ask one participant to demo it with the browser
   journey from the MCP task.
 

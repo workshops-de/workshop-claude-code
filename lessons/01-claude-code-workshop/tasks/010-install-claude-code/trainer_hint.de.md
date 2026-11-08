@@ -16,8 +16,10 @@
   die Anmeldung blockieren, und fehlende `PATH`-Updates nach der Installation. Eine Ausweichlösung
   (z. B. einen vorbereiteten Codespace/Devcontainer) für alle bereithalten, die nicht schnell
   weiterkommen.
-- Durch den Raum gehen und bei allen Teilnehmenden bestätigen, dass `claude --version`
-  funktioniert, bevor es mit der Grundlagen-Aufgabe weitergeht – eine kaputte Installation zieht
+- Alle bitten, **Node.js 26** (aktuelles LTS) zu installieren: `bookmonkey-api` verlangt
+  `node >=26`, und eine falsche Version fällt sonst erst in der Plan-Mode-Aufgabe auf.
+- Durch den Raum gehen und bei allen Teilnehmenden bestätigen, dass `claude --version` und
+  `claude doctor` funktionieren, bevor es mit der Grundlagen-Aufgabe weitergeht – eine kaputte Installation zieht
   sich sonst durch den ganzen Tag.
 
 ## Zeitbedarf

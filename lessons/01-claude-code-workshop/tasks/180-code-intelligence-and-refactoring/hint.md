@@ -1,20 +1,40 @@
 <details>
-<summary>💡 Hint 1: Tests first if coverage is thin</summary>
+<summary>💡 Hint 1: Test what is, not what should be</summary>
 
-Refactors are safest with tests in place — add them first if a risky area lacks coverage.
-
-</details>
-
-<details>
-<summary>💡 Hint 2: Give the why, not just the what</summary>
-
-Intent guides better restructuring than a bare instruction.
+A characterisation test records today's output, even if it looks odd. If you "fix" the
+expected value while writing the test, you can no longer tell whether the refactor changed
+behaviour. Note the oddity and keep the test honest.
 
 </details>
 
 <details>
-<summary>💡 Hint 3: Let the IDE win sometimes</summary>
+<summary>💡 Hint 2: The inventory is the real work</summary>
 
-"Mass rename" and "extract method" are usually faster in the IDE.
+Ask for the inventory twice, in different ways: once by searching the code, once by following
+the data (where does this value come from, where does it go next?). The places that only one of
+the two finds are the ones that break later.
+
+</details>
+
+<details>
+<summary>💡 Hint 3: Same behaviour includes the error paths</summary>
+
+"Behaves as before" covers more than the happy path. Cover the error paths of the code you
+touch too, not only the requests that succeed.
+
+</details>
+
+<details>
+<summary>💡 Hint 4: Let the IDE win sometimes</summary>
+
+"Rename this symbol everywhere" and "extract this method" are usually faster in the IDE. Save
+the agent for the parts that need reading and judgement.
+
+</details>
+
+<details>
+<summary>💡 Hint 5: All tests red at once?</summary>
+
+Check `node -v`: `bookmonkey-legacy` needs Node 24 or newer (`node:sqlite`).
 
 </details>

@@ -1,40 +1,82 @@
 ## Overview
 
-Give your project a durable, curated memory that steers every Claude Code session. You will create
-and refine a `CLAUDE.md` so the agent consistently knows your stack, conventions, commands, and
-review expectations — without you re-explaining them each time. The lesson is that **long-term
-memory is curated, not dumped**: every line costs context on each turn.
+Give a project a durable, curated memory that steers every Claude Code session. You generate a
+`CLAUDE.md` for the codebase you explored in the fundamentals task, cut it down to what matters,
+and prove in a fresh session that it works. The lesson is that **long-term memory is curated, not
+dumped**: every line costs context on each turn.
 
-## Background
+## The Feature
 
-`CLAUDE.md` is a Markdown file Claude Code reads at the start of every session — your project's
-long-term memory. It is where you encode the decisions and conventions you want honoured every
-time. Because it is loaded on each turn, it must be high-signal: state what the model can't infer
-and delete what it already knows. Subdirectory memory files load only when working in that area,
-and the agent can also accumulate its own memory of useful facts as it works.
+`CLAUDE.md` is a Markdown file Claude Code reads at the start of every session: your project's
+long-term memory.
+
+- **Bootstrap it** with `/init`. Claude analyses the codebase and writes a first draft with build
+  commands, test instructions, and the conventions it found. If a `CLAUDE.md` already exists,
+  `/init` suggests improvements instead of overwriting it.
+- **Curate it.** Keep what Claude cannot infer by itself: exact commands, architectural rules,
+  traps, a short glossary, a review checklist. Delete what it already knows.
+- **Scope it.** A `CLAUDE.md` in a subdirectory (for example `api/CLAUDE.md`) is not loaded at
+  launch. It loads once Claude reads or edits a file in that directory.
+- **Personal notes** go into `CLAUDE.local.md` (add it to `.gitignore`). `/memory` shows and edits
+  the loaded memory files.
+
+## Apply it to BookMonkey Legacy
+
+> **Repo / ports:** your `bookmonkey-legacy` clone (Node.js 24 or newer), API on
+> http://localhost:4780, web app on http://localhost:5180
+>
+> **Login:** admin `admin@bookmonkey.example` / `admin2021`
+
+The practice ground is the [`bookmonkey-legacy`](https://github.com/andrekovac/bookmonkey-legacy)
+clone from the fundamentals task. It has no `CLAUDE.md` yet, only a README that several people
+edited over the years. A new teammate (human or agent) would read both, so both had better be
+right. Your memory file should hold the facts the next session needs, checked against the code.
+
+## Prerequisites
+
+- The `bookmonkey-legacy` clone from the fundamentals task
+- Node.js 24 or newer, so you can run the commands you write down
 
 ## Steps
 
-1. Use `/init` to generate a first-draft `CLAUDE.md`, then read what it produced.
-2. **Curate** it down to high-value facts: your stack and versions, architectural rules, the
-   commands that matter (run, build, lint, type-check), a short domain glossary, and a review
-   checklist.
-3. Delete anything generic the model already knows. Aim for signal over volume.
-4. Open a **fresh** session and ask a question whose answer depends on your memory file. Confirm
-   the agent follows your conventions.
-5. Add a **subdirectory** memory file for one area of your project and verify it loads only when
-   working there.
-6. Reflect on what belongs in memory versus what belongs in a one-off prompt.
+1. Start Claude Code in `bookmonkey-legacy` in Manual mode (`claude --permission-mode default`),
+   so every edit asks first and the repository only changes where you approve it. Plan mode works
+   too for the reading part. Run `/init` and read what it produced before you change anything.
+2. **Compare `/init` with the README.** Ask Claude for a table: each claim the README makes,
+   what `/init` wrote about it, and what the code says. Check every row where they disagree yourself (open the file, run the command).
+3. **Run the commands** your draft lists (`npm install`, `npm run db:reset`, `npm test`, the two
+   dev servers) and keep only the ones that work exactly as written.
+4. **Curate** the file to high-value facts: stack and versions, how to start each part, the
+   commands, architectural rules, a short domain glossary (loan, copy, reservation, waitlist, ...),
+   traps you confirmed in step 2, and a review checklist. Delete anything generic.
+5. Add a **subdirectory** memory file, for example `api/CLAUDE.md` with rules for the API only.
+   Verify it loads only when Claude works in `api/` (ask about it before and after Claude has read
+   an API file, or check `/memory`).
+6. Open a **fresh** session (`/clear` or a new terminal) and ask a question whose answer depends on
+   your file, for example "How do I reset the database and run the tests?" or "Which port does the
+   API use?". Confirm the answer comes from your memory, not from a new exploration.
+7. Commit the memory files in your clone (`git add CLAUDE.md api/CLAUDE.md && git commit`), so the
+   later tasks in this repository start with them.
 
 ## Success Criteria
 
-- [ ] A concise `CLAUDE.md` exists at your project root
-- [ ] It covers stack, architectural rules, key commands, a glossary, and a review checklist
-- [ ] A fresh session demonstrably follows a convention from the file
-- [ ] At least one subdirectory memory file exists and loads only in its own area
+**Feature**
+
+- [ ] `/init` ran, and you can name at least two things you removed from its draft and why
+- [ ] A concise `CLAUDE.md` covers stack, commands, architectural rules, a glossary, and a review
+      checklist
+- [ ] A subdirectory memory file exists and loads only in its own area
+- [ ] A fresh session demonstrably answered from the memory file
+
+**Memory is true**
+
+- [ ] Every command in `CLAUDE.md` runs as written on your machine
+- [ ] You compared README and `/init` against the code, and the memory file follows the code
+- [ ] The memory files are committed in your clone
 
 ## References
 
-- Claude Code — Memory & CLAUDE.md: https://code.claude.com/docs/en/memory
-- Claude Code — Settings: https://code.claude.com/docs/en/settings
+- Claude Code: Memory and CLAUDE.md: https://code.claude.com/docs/en/memory
+- Claude Code: Commands (`/init`, `/memory`): https://code.claude.com/docs/en/commands
+- Claude Code: Best practices: https://code.claude.com/docs/en/best-practices
 - AGENTS.md convention (related idea): https://agents.md

@@ -10,16 +10,29 @@ Content repository for the Workshops.de **Claude Code** training, imported into 
 [workshops.de](https://workshops.de) platform following the
 [workshop-slides-template](https://github.com/workshops-de/workshop-slides-template) conventions.
 Slides live in **Google Slides**, not Slidev, so this repo only holds platform-synced metadata and
-hands-on tasks — see `README.md` for the high-level structure.
+hands-on tasks; see `README.md` for the high-level structure.
 
 - **Lesson metadata:** `lessons/01-claude-code-workshop/lesson.yml`
 - **Google Slides deck:** `google_slide_id: 1voXfvVnvD3zC319A2Q4G78ncF43kSbYX6i592zJgBx4` (one
   shared presentation for the whole workshop)
-- **Practice project:** **BookMonkey**, a book catalogue. Participants build the frontend against the
-  ready-made [`bookmonkey-api`](https://github.com/workshops-de/bookmonkey-api) (`npx
-  bookmonkey-api`, port 4730, OpenAPI at `/api-json`) and replace it with their own NestJS backend
-  against the same contract in tasks 200 and 230. Participants own every line they write; there
-  are no prepared repositories, branches, or checkpoints.
+- **Practice projects:**
+  - **BookMonkey**, a book catalogue. Participants build the frontend against the ready-made
+    [`bookmonkey-api`](https://github.com/workshops-de/bookmonkey-api) (`npx bookmonkey-api`, port
+    4730, OpenAPI at `/api-json`) in tasks 060 to 120, build their own MCP server for it in 115, and
+    replace the API with their own NestJS backend against the same contract in tasks 200 and 230.
+    Participants own every line they write; there are no checkpoints or solution branches.
+  - **BookMonkey Legacy**, the inherited codebase:
+    [`bookmonkey-legacy`](https://github.com/andrekovac/bookmonkey-legacy), a grown full-stack app
+    (Express + `node:sqlite` API on 4780, Vite + React web on 5180, about 15k lines, five years of
+    history by four developers, a prepared PR branch `feature/admin-export-v2`). Participants clone
+    or fork it in tasks 020 (explore read-only), 040 (`/init` and curate), 050 (context), 180
+    (refactoring), 190 (debugging a ticket), 215 (GitHub Actions on a fork), and 220 (review the PR
+    branch); the bonus of 115 adds an ops MCP server for it.
+  - **Answers stay private.** This repo is public, including `trainer_hint.md`. For tasks on
+    `bookmonkey-legacy`, never write root causes, code locations of defects, fixes, or expected
+    review findings into any file here: only symptoms as a user would report them, what to
+    practise, and a pointer to the private trainer repo (`bookmonkey-legacy-trainer`,
+    `SOLUTIONS.md`).
 - **Content source:** curriculum, task structure, and teaching narrative are adapted from a
   canonical workshop document (`workshop.md`) prepared by the trainer (26 topics, originally a
   3-day format), consolidated here into feature-first tasks.
@@ -35,8 +48,8 @@ Use exactly these `category:` values, in teaching order:
 | -------------------------- | --------- | ------------------------------------------------------- |
 | `Foundations`              | 010–050   | Install, fundamentals, permission modes, CLAUDE.md, context |
 | `Steering & Memory`        | 060–070   | Plan mode, rules and imports                            |
-| `Extending Claude Code`    | 080–120   | Skills, subagents, custom skills/commands, MCP, hooks   |
-| `Quality & Automation`     | 180–220   | Refactoring, debugging, TDD, headless, PR review        |
+| `Extending Claude Code`    | 080–120   | Skills, subagents, custom skills/commands, MCP, own MCP server, hooks |
+| `Quality & Automation`     | 180–220   | Refactoring, debugging, TDD, headless, GitHub Actions, PR review |
 | `Autonomy & Methodologies` | 230–270   | Autonomous runs, Agent SDK, gateways, Spec Kit, BMAD    |
 
 Positions 130–170 are intentionally empty (their former tasks were merged into 090–120).
@@ -46,7 +59,7 @@ Positions 130–170 are intentionally empty (their former tasks were merged into
 ```
 lessons/01-claude-code-workshop/tasks/NNN-task-slug/
 ├── task.yml          # required: title, position, category, timing, lock/prep flags
-├── body.md           # required: Overview, The Feature, Apply it to BookMonkey, Steps, Success Criteria, References
+├── body.md           # required: Overview, The Feature, Apply it to BookMonkey (or BookMonkey Legacy), Steps, Success Criteria, References
 ├── hint.md           # optional: collapsible <details> hints, 2-4 per task
 ├── trainer_hint.md   # optional: facilitator-only notes (learning goals, timing, pitfalls)
 └── bonus.md          # optional: "Going further" stretch content
@@ -69,33 +82,34 @@ estimated_time_in_minutes: 30
 always_unlocked: false # true only for setup tasks that must work before the trainer unlocks anything
 ```
 
-No `git_tag_completed` / solution branches: there is no prepared repository for this workshop, so
-omit git integration fields entirely.
+No `git_tag_completed` / solution branches: participants build BookMonkey themselves and use
+`bookmonkey-legacy` as it is, so omit git integration fields entirely.
 
-### Numbering scheme — read this before adding a task
+### Numbering scheme: read this before adding a task
 
 Folders and `position:` use a **3-digit, stepped scheme** (`010`, `020`, `030`, … step 10), **not**
 consecutive numbers. This leaves gaps to insert a new task between two existing ones (e.g. `015`)
 without renaming or renumbering anything else. Only renumber existing tasks if you run out of room
 between two neighbours (unlikely below ~9 insertions at the same spot).
 
-To add a task between `010` and `020`: create `015-new-task-slug/` with `position: 15`. Done — no
+To add a task between `010` and `020`: create `015-new-task-slug/` with `position: 15`. Done, no
 other file changes needed for the numbering itself.
 
 ### Content style
 
-- Body text: Overview → **The Feature** (what it is, when to use it, how — real commands, file
-  paths, config snippets) → **Apply it to BookMonkey** (short project context) → (Prerequisites) →
-  numbered Steps (set up the feature first, then apply it) → Success Criteria (a **Feature** block
-  first, then an **App still works** block) → References (Claude Code docs first). Foundations and
-  later-category tasks without a BookMonkey step may keep Background instead of the two feature
-  sections. Keep steps actionable and concrete (real commands, real prompts).
+- Body text: Overview → **The Feature** (what it is, when to use it, how: real commands, file
+  paths, config snippets) → **Apply it to BookMonkey** or **Apply it to BookMonkey Legacy** (short
+  project context) → (Prerequisites) → numbered Steps (set up the feature first, then apply it) →
+  Success Criteria (a **Feature** block first, then an **App still works** block, or a matching
+  outcome block such as "nothing changed" for read-only tasks) → References (Claude Code docs
+  first). Foundations and later-category tasks without a BookMonkey step may keep Background
+  instead of the two feature sections. Keep steps actionable and concrete (real commands, real prompts).
 - Verify feature claims against the current docs (`https://code.claude.com/docs/en/<page>.md`
-  returns plain Markdown) — Claude Code changes fast (e.g. `/agents` no longer has a wizard).
+  returns plain Markdown). Claude Code changes fast (e.g. `/agents` no longer has a wizard).
 - Hints: 2–4 collapsible `<details>` blocks, each nudging without giving away the solution.
 - Trainer notes: learning goals, facilitation notes (common pitfalls, timing, what to watch for),
   time estimate.
-- Tone throughout: matches the trainer's canonical material — direct, practical, recurring themes
+- Tone throughout: matches the trainer's canonical material: direct, practical, recurring themes
   like "context is king" and "you push it, you own it".
 
 ## Google Slides workflow
@@ -106,7 +120,7 @@ edited via the `user-google-slides-mcp` MCP server (`get_presentation`, `get_pag
 `batch_update_presentation`, `summarize_presentation`).
 
 **New slides are always written in English.** Slide titles: short, single line. Bullet lists: max
-4 bullets, max 70 characters each — anything longer overflows the slide.
+4 bullets, max 70 characters each; anything longer overflows the slide.
 
 ### The 7-slide pattern per knowledge block
 
@@ -122,7 +136,7 @@ Every task/knowledge block gets exactly these 7 slides, in this order, using the
 | 6 | Task                      | Tasks 1                  | `g90f556b6f5_0_91`         | `TITLE` index 1 ("Task: <task.yml title without the feature prefix>")              |
 | 7 | What if                   | Title and body           | `g90f556b6f5_0_70`         | `TITLE` ("What if: …"), `BODY` (≤4 bullets: pitfalls)                              |
 
-Layout IDs are stable for this presentation (`master` = `g90f556b6f5_0_57`) — re-verify with
+Layout IDs are stable for this presentation (`master` = `g90f556b6f5_0_57`). Re-verify with
 `get_presentation` + `fields: "layouts(objectId,layoutProperties)"` if they ever seem wrong.
 
 Existing block IDs (`topicNN_*`) come from the original 26-topic numbering and do **not** match
@@ -132,11 +146,11 @@ folder numbers: `topic05`–`topic11` are the blocks for tasks 060–120. Placeh
 `_what_body1_ph` / `_what_body2_ph`, `topicNN_task_title_ph`, `topicNN_whatif_title_ph` /
 `_whatif_body_ph`. Map blocks to tasks by reading their text, not by number.
 
-### Adding a new knowledge block — step by step
+### Adding a new knowledge block, step by step
 
 1. **Find the current slide count/order first.** Other people can and do edit this deck directly
    (the trainer has added intro/onboarding slides and a "Vibe Coding" section outside this
-   workflow). Never assume stale slide indices — call `get_presentation` with
+   workflow). Never assume stale slide indices: call `get_presentation` with
    `fields: "slides(objectId)"` right before inserting, and compute your `insertionIndex` from the
    live result (find the object ID of the slide you want to insert after, take its array index + 1).
 2. **Create all 7 slides in one `batch_update_presentation` call** using `createSlide` requests
@@ -148,11 +162,11 @@ folder numbers: `topic05`–`topic11` are the blocks for tasks 060–120. Placeh
      the Code layout, the title on Tasks 1).
 3. **Fill text in a second `batch_update_presentation` call** using `insertText` at
    `insertionIndex: 0` on each placeholder object ID from step 2. Don't pre-populate text via
-   `createSlide` — placeholders are created empty.
+   `createSlide`; placeholders are created empty.
 4. **When editing existing slide text** (not creating), prefer `deleteText` (`textRange: {type:
    "ALL"}`) + `insertText`. If the text lives inside a slide you didn't create yourself (e.g.
    something the trainer added with custom bullet/list styling), prefer `replaceAllText` scoped
-   with `pageObjectIds` instead — it substitutes text in place without disturbing bullet glyphs or
+   with `pageObjectIds` instead. It substitutes text in place without disturbing bullet glyphs or
    other formatting you don't fully control.
 5. **Verify** with `summarize_presentation` (or `get_page` for a specific slide) before moving on.
 
@@ -161,7 +175,7 @@ folder numbers: `topic05`–`topic11` are the blocks for tasks 060–120. Placeh
 Five legacy slide blocks (`claude_commands_*`, `claude_ide_*`, `claude_subagents_*`,
 `claude_cicd_*`, plus assorted intro/"Vibe Coding" slides the trainer added directly) still exist
 in the deck and don't map cleanly onto the 26-topic curriculum. They're intentionally left in place
-pending a deliberate cleanup pass — don't delete or "fix" them incidentally while adding new
+pending a deliberate cleanup pass. Don't delete or "fix" them incidentally while adding new
 content. The same applies to:
 
 - two install blocks (`task01install_*` and `claude_install_*`) covering the same task 010
@@ -171,12 +185,12 @@ content. The same applies to:
 
 ## Git conventions
 
-- Commits follow [Conventional Commits](https://www.conventionalcommits.org/) —
+- Commits follow [Conventional Commits](https://www.conventionalcommits.org/):
   `type(scope): summary`, imperative mood, no capital first letter, no trailing period.
 - Commit directly to `main`; keep commits atomic (one task, one structural change, or one content
   fix per commit).
 - When renaming/renumbering task folders, use `git mv` (or let `git add -A` detect the rename) so
-  history stays traceable — check `git status --short` shows `R` (rename), not delete+add. If
+  history stays traceable. Check `git status --short` shows `R` (rename), not delete+add. If
   you also rewrite the files' content, commit the pure rename first and the rewrite second;
   otherwise git sees too little similarity and records delete+add.
 

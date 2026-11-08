@@ -1,7 +1,7 @@
 <details>
 <summary>💡 Hint 1: "claude: command not found"</summary>
 
-Restart your shell (or open a new terminal tab) after installing — the `PATH` update often only
+Restart your shell (or open a new terminal tab) after installing: the `PATH` update often only
 takes effect in new shell sessions.
 
 </details>
@@ -17,7 +17,7 @@ of reaching for `sudo`.
 <details>
 <summary>💡 Hint 3: Stuck on sign-in</summary>
 
-Sign-in opens a browser window — if you're on a restricted or headless machine, check the docs for
+Sign-in opens a browser window. If you're on a restricted or headless machine, check the docs for
 alternative authentication flows before assuming it's broken.
 
 </details>

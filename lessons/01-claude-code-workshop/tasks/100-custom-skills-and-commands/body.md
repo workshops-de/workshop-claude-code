@@ -1,7 +1,7 @@
 ## Overview
 
 Write your **own skill** and your **own slash command**, so the way your team builds a feature is
-encoded once and reused everywhere — without re-explaining it each session. You will build one
+encoded once and reused everywhere, without re-explaining it each session. You will build one
 feature by hand, capture its shape, and let the next features be built from what you captured.
 
 ## The Feature
@@ -10,7 +10,7 @@ Both live in the same place and share one format: a `SKILL.md` in `.claude/skill
 (legacy command files in `.claude/commands/<name>.md` still work and create the same `/name`).
 What differs is **who decides when it runs**.
 
-- **Skill (the agent decides)** — a trigger-friendly `description` lets Claude load it whenever a
+- **Skill (the agent decides)**: a trigger-friendly `description` lets Claude load it whenever a
   task matches:
 
   ```markdown
@@ -22,10 +22,11 @@ What differs is **who decides when it runs**.
   1. Add or extend the typed API client function (address books by ISBN)
   2. Read in a server component; keep filters and paging in the URL
   3. Write through a server action that validates, calls the API, and maps errors
-  4. Revalidate affected paths, then run type-check and npm run build
+  4. Signed-in screens: add the route to the `proxy.ts` matcher
+  5. Revalidate affected paths, then run type-check and npm run build
   ```
 
-- **Command (you decide)** — add `disable-model-invocation: true` so it only runs when you type
+- **Command (you decide)**: add `disable-model-invocation: true` so it only runs when you type
   it, and use `$ARGUMENTS` (or `$0`, `$1`, …) for input:
 
   ```markdown
@@ -33,32 +34,40 @@ What differs is **who decides when it runs**.
   name: new-book-view
   description: Scaffold a new book screen following the add-book-feature skill
   disable-model-invocation: true
-  argument-hint: [create|edit|...]
+  argument-hint: "[create|edit]"
   ---
 
   Build the "$ARGUMENTS" book screen following the add-book-feature skill.
   ```
 
-  Invoke it with `/new-book-view create`.
+  Save it as `.claude/skills/new-book-view/SKILL.md` and invoke it with `/new-book-view create`.
+  (A legacy `.claude/commands/new-book-view.md` works too, but command files don't take the `name`
+  field.) Quote `argument-hint`: unquoted square brackets are a YAML list, not a string.
 
-- **Keep bodies short and actionable** — numbered steps beat prose, and a loaded skill stays in
+- **Keep bodies short and actionable**: numbered steps beat prose, and a loaded skill stays in
   context for the rest of the session.
 
 ## Apply it to BookMonkey
 
+> **Repo / ports:** your `bookmonkey` repository (Node.js 26), Next.js app on
+> http://localhost:3000, `npx bookmonkey-api` on http://localhost:4730
+>
+> **Login:** demo user `admin@bookmonkey.api` / `password1!`
+
 The practice ground is BookMonkey's **book screens** on a server-first architecture: **reads** in
 server components through your typed API client, **writes** through server actions that validate,
-call the API, and revalidate. You build the read side by hand — catalogue search, sort, and
-paging, plus a detail page that navigates a book series — and let the write side (create, edit) be
+call the API, and revalidate. You build the read side by hand (catalogue search, sort, and
+paging, plus a detail page that navigates a book series) and let the write side (create, edit) be
 generated from what you captured. If your skill is good, the second and third screens are mostly
 just fields.
 
 ## Prerequisites
 
 - The `bookmonkey-api` is running; the catalogue page from the skills task exists.
-- **Required:** `find-skills` (`npx skills add vercel-labs/skills@find-skills -y`) — study how
+- **Required:** `find-skills` (`npx skills add vercel-labs/skills@find-skills -y`): study how
   existing skills are structured before writing your own.
-- Recommended: `frontend-design`, `react-best-practices`
+- Optional skills (nice to have, not required): `anthropics/skills@frontend-design`,
+  `vercel-labs/agent-skills@vercel-react-best-practices`
 
 ## Steps
 
@@ -70,11 +79,14 @@ just fields.
    order, with a description that leads with trigger words.
 3. **Test the skill in a fresh session**: ask for a small, matching change (e.g. "show the page
    count on the detail page") without naming the skill, and confirm Claude loads it. Refine the
-   description if it didn't.
+   description if it didn't. The sample description above is only a starting point and often is
+   not picked up as is: lead with the words your prompts contain (book, detail page, catalogue,
+   field names such as page count or price).
 4. Write the **`/new-book-view`** command with `disable-model-invocation: true` and `$ARGUMENTS`.
 5. Run `/new-book-view create` (`POST /books`) and then `/new-book-view edit` (`PATCH
-   /books/<isbn>`). Both are only reachable when signed in. Note what differed between them —
-   ideally only the HTTP call and the form defaults.
+   /books/<isbn>`). Both are only reachable when signed in, so their routes (for example
+   `/books/new` and `/books/<isbn>/edit`) must be in the `proxy.ts` matcher from the subagents
+   task. Note what differed between them: ideally only the HTTP call and the form defaults.
 6. Reflect: which of your repeated requests are skills, which are commands, and which belong in
    `CLAUDE.md`?
 
@@ -97,15 +109,19 @@ just fields.
 
 ## Pitfalls (current framework)
 
-- `params` and `searchParams` are **Promises** on recent Next.js — `await` them in pages.
-- Server-side `fetch` results may be cached — make sure the list reflects a book you just created.
+- `params` and `searchParams` are **Promises** on recent Next.js: `await` them in pages.
+- Server-side `fetch` results may be cached: make sure the list reflects a book you just created.
 - Bind an ISBN into a Server Action while keeping the `(prev, formData)` signature:
   `action.bind(null, isbn)`.
+- Route type helpers such as `PageProps<"/books/[isbn]">` exist only after `next dev` or
+  `next build` has generated the route types; until then `tsc` reports `TS2344`.
+- `/books/new` (signed-in group) and `/books/[isbn]` (public group) share one URL space. The
+  static `new` segment wins, so this works, but keep it in mind when a route seems to vanish.
 
 ## References
 
-- Claude Code — Skills: https://code.claude.com/docs/en/skills
-- Claude Code — Control who invokes a skill: https://code.claude.com/docs/en/skills#control-who-invokes-a-skill
-- Claude Code — Pass arguments to skills: https://code.claude.com/docs/en/skills#pass-arguments-to-skills
-- BookMonkey API — Querying guide: https://github.com/workshops-de/bookmonkey-api/blob/main/docs/querying.md
-- Next.js — Server Actions and mutations: https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations
+- Claude Code: Skills: https://code.claude.com/docs/en/skills
+- Claude Code: Control who invokes a skill: https://code.claude.com/docs/en/skills#control-who-invokes-a-skill
+- Claude Code: Pass arguments to skills: https://code.claude.com/docs/en/skills#pass-arguments-to-skills
+- BookMonkey API: Querying guide: https://github.com/workshops-de/bookmonkey-api/blob/main/docs/querying.md
+- Next.js: Server Actions and mutations: https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations

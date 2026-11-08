@@ -19,6 +19,14 @@
   are the current format.
 - Paging needs the `X-Total-Count` response header — agents often compute "has next page" from
   the array length instead. Good review moment.
+- Paging check: a search for "harry" has only 7 hits, so there is no page 2. Test paging without
+  a search (50 books) or with a broader term.
+- Changing the catalogue client (for example `getBooks(limit)` to `getBooks({ q, sort, page })`)
+  breaks the start page from the plan mode task with a type error. Expected; let the agent fix the
+  caller.
+- In the dry run the sample description was not picked up in a fresh session; a version that led
+  with trigger words ("book, books, book detail page, catalogue, page count, price") was. That is
+  the refinement step 3 asks for.
 - Created books persist in the shared API instance; `POST /dev/reset` cleans up between groups.
 - If the group is behind, trim the command run to the create screen only.
 

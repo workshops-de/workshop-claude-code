@@ -19,6 +19,13 @@
   in tasks 200/230 can fix. Keep the pure `transition` function: it moves to the backend unchanged.
 - Hydration mismatches are common when the header counter reads `localStorage` during render —
   a good debugging example if it shows up.
+- The type-check hook runs after every single edit. During a multi-edit change it can report
+  errors such as `Cannot find name ...` that the next edit (often the import) fixes. Expected;
+  the agent usually carries on.
+- `Edit|Write` doesn't catch files the agent writes through `Bash` (for example a heredoc). Point
+  it out when someone wonders why the hook stayed quiet.
+- "Per user" needs a user key on the client, but the session cookie is http-only. Expect the
+  agent to pass the signed-in email or id from the server into the client store.
 - Two-account testing is the step people skip — check for it during the room walk.
 
 ## Time estimate

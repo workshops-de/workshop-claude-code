@@ -22,3 +22,13 @@ client. `NEXT_PUBLIC_` variables are inlined at build time — restart the dev s
 `.env.local`.
 
 </details>
+
+<details>
+<summary>💡 Hint 4: The build says `"dynamic" is not compatible with cacheComponents`</summary>
+
+Current `create-next-app` (Next.js 16) turns on Cache Components. The old fix
+`export const dynamic = "force-dynamic"` now breaks the build. Data fetched at request time has to
+render inside a `<Suspense>` boundary instead: move the fetch into its own async Server Component
+and wrap it.
+
+</details>

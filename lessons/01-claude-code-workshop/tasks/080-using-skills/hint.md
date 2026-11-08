@@ -19,5 +19,7 @@ matches the description's wording — rephrase, or invoke it explicitly and note
 
 Look at what the `cover` field actually contains and where it points. Next.js' `<Image>` only
 loads remote hosts you allow in `next.config` — a plain `<img>` is fine for this workshop too.
+Covers come from `localhost:4730`, and Next.js refuses to optimise images from private
+addresses, so with `<Image>` you also need `unoptimized`.
 
 </details>

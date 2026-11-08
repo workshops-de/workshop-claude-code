@@ -1,26 +1,31 @@
 <details>
-<summary>💡 Hint 1: Finding planning mode</summary>
+<summary>💡 Hint 1: Claude wants to change something</summary>
 
-Look for a keyboard shortcut that toggles planning mode — the interactive-mode docs list the
-shortcuts. It cycles through several modes; watch the status indicator at the bottom of the
-screen change as you press it.
-
-</details>
-
-<details>
-<summary>💡 Hint 2: Generic-feeling answers</summary>
-
-If a response feels generic, the context is probably thin. Think about what the agent can
-actually "see" right now — an empty directory gives it almost nothing to work with, which is
-expected for this task.
+In plan mode Claude may end with a plan and ask whether to go ahead. Choose **No, keep planning**
+and ask your next question. Approving a plan leaves plan mode, and that is not the goal today.
 
 </details>
 
 <details>
-<summary>💡 Hint 3: How much to trust the agent</summary>
+<summary>💡 Hint 2: Answers without evidence</summary>
 
-Treat the agent like a capable new teammate: clear instructions and verification beat blind
-trust. You don't need an existing codebase to practise this — pointing the agent at a question
-is enough.
+If an answer sounds plausible but names no file, ask "which file and line shows that?". An
+overview you can't check is an opinion. Open one referenced file yourself and compare.
+
+</details>
+
+<details>
+<summary>💡 Hint 3: Quotes are not evidence</summary>
+
+Whatever the source of a claim, ask Claude to show where the code or the config backs it up.
+Verify every claim you plan to rely on.
+
+</details>
+
+<details>
+<summary>💡 Hint 4: History tells you who to ask</summary>
+
+`git shortlog -sn`, `git log --stat` and `git log -- <path>` turn
+"who wrote this?" into a short list. Ask Claude to group the result by area of the code.
 
 </details>
