@@ -12,15 +12,20 @@ platform-synced metadata and the hands-on tasks:
 ```
 lessons/
 └── 01-claude-code-workshop/
-    ├── lesson.yml     # Lesson metadata, points at the shared Google Slides deck
+    ├── lesson.yml     # Lesson metadata, points at the English and German Google Slides decks
     └── tasks/
         └── NNN-task-slug/
-            ├── task.yml          # Metadata (title, position, category, timing)
+            ├── task.yml          # Metadata (title, position, category, timing, translations.de.title)
             ├── body.md           # Main task description (required)
             ├── hint.md           # Progressive, collapsible hints (optional)
             ├── trainer_hint.md   # Facilitator-only notes (optional)
-            └── bonus.md          # Stretch/"going further" content (optional)
+            ├── bonus.md          # Stretch/"going further" content (optional)
+            └── *.de.md           # German translations of the files above
 ```
+
+The workshop is available in English and German. English is the source; German files and the
+German deck follow it. See [`docs/translation-de.md`](docs/translation-de.md) for the glossary,
+style rules and translation workflow (`scripts/translation-status.sh`, `/translate-task-de`).
 
 Every knowledge block presented in the slides has exactly one corresponding task folder here,
 numbered in teaching order.
