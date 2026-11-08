@@ -23,14 +23,15 @@ Manual instead.
 
 ## Steps
 
-1. **Start a session and read the status line** before you type anything (`claude` in any
-   project). Which mode does it show, and why? Check `claude --version` and your
+1. **Start a session and read the status line** before you type anything (`claude` in your
+   `bookmonkey-legacy` clone). Which mode does it show, and why? Check `claude --version` and your
    `~/.claude/settings.json` (`permissions.defaultMode`) to explain it. Then press `Shift+Tab`
    several times and watch the status line: from `auto` the first press switches to Manual
    (`⏸ manual mode on`), then the cycle runs Manual → `acceptEdits` → `plan` → back to `auto`.
    Note what each mode allows without asking.
 2. Make a small edit in `acceptEdits` and confirm it applied without a prompt; then review the
-   change with `git diff` afterward.
+   change with `git diff` afterward. Undo it with `git restore .`, so the clone stays clean for
+   the next tasks.
 3. Cycle back to **auto mode** and give it a contained task. Observe the classifier: run
    `claude auto-mode defaults` in a second terminal to read the default rules, and identify two
    actions it blocks and two it allows by default. Then switch to Manual (`default`) and give the

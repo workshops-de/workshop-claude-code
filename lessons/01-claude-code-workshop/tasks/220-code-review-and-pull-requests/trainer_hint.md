@@ -28,7 +28,7 @@
   and `main` is merged in, so their `CLAUDE.md` is loaded; `main...review/admin-export-v2` still
   shows only the PR's changes. `/security-review` compares with `origin`'s default branch, so it
   also sees the participant's own commits on `main`; point that out if they wonder.
-- The optional security pass over `main` (step 8) is for fast groups. Do not confirm or rate
+- The optional security pass over `main` (step 9) is for fast groups. Do not confirm or rate
   findings from it in the room; the trainer repo has what to compare with.
 - A new subagent file may need a restart of Claude Code to load, as in the subagents task.
 - This closes "Quality & Automation" together with the GitHub Actions task. A natural point for

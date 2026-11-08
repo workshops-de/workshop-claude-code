@@ -39,6 +39,8 @@ clone. This ticket arrived from the library team. It is all you get:
 ## Prerequisites
 
 - The `bookmonkey-legacy` clone with `npm install` and a fresh `npm run db:reset`
+- A fresh branch from `main`, not from your refactoring branch: commit or stash what is left, then
+  `git switch main && git switch -c fix/ticket-412`
 - API (`npm run dev:api`) and web app (`npm run dev:web`) running in two terminals
 - Admin login from the README's test logins table
 - Optional: the `legacy-ops` MCP server from the bonus of "MCP: Build Your Own MCP Server"
@@ -82,7 +84,7 @@ clone. This ticket arrived from the library team. It is all you get:
 - [ ] A regression test fails without your fix and passes with it; `npm test` is green
 - [ ] The Lord of the Rings series navigates forward and back, and saving a book in the admin
       no longer breaks any series
-- [ ] You know whether data that was stored before your fix is affected, and you handled it
+- [ ] Existing data still works after your fix
 
 ## References
 

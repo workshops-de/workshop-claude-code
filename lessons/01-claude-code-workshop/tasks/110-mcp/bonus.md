@@ -8,9 +8,8 @@
   denylists.
 - **MCP in the Agent SDK**: wire the same servers into programmatic agents.
 - **Browser check on `bookmonkey-legacy`**: start its API (port 4780) and web app (port 5180),
-  then let your browser server use the catalogue search and the pager, a few searches and a few
-  pages in a row. Do the same again with a slow network (throttling, for example "Slow 4G" in
-  the Chrome DevTools, or ask Claude to delay the API responses in the browser). Ask Claude to
+  then let your browser server use the app like a customer for five minutes. Do the same again
+  with a slow network (throttling, for example "Slow 4G" in the Chrome DevTools). Ask Claude to
   report **observations, not verdicts**: what it typed or clicked, what the page showed, in which
   order, and how long it took. Compare the fast and the slow run yourself.
 

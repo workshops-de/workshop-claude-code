@@ -47,7 +47,7 @@ the description is short, and Dana is in a hurry. You are the reviewer.
 ## Steps
 
 1. **Get the branch, with your memory file.** First commit or stash what is left from the
-   debugging task (`git status` must be clean; `git stash` is fine if you are not sure). Then
+   refactoring, debugging and GitHub Actions tasks (`git status` must be clean; `git stash` is fine if you are not sure). Then
    create a local review branch from Dana's branch and merge your `main` into it, so your
    `CLAUDE.md` comes along:
 

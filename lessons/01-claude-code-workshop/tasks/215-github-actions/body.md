@@ -51,11 +51,12 @@ of a public repository is public. Use `--max-turns` and `timeout-minutes` to cap
 
 [`bookmonkey-legacy`](https://github.com/andrekovac/bookmonkey-legacy) already contains
 `.github/workflows/claude-issue.yml`: label an issue `analyse` and Claude comments; label it
-`implement` and Claude also pushes a branch and links the prefilled pull request page. It only needs a fork with Actions, Issues,
-the app, and a secret. Your test ticket can be the one from the debugging task, in your own words.
+`implement` and Claude also pushes a branch and links the prefilled pull request page. It only
+needs a fork with Actions, Issues, the app, and a secret. Your test ticket can be the one from the debugging task, in your own words.
 
-Cannot use a personal token or API key in this training? Then follow the trainer's live demo; the
-steps are the same.
+Cannot use a personal token or API key in this training? Then do steps 1 and 9 locally (read the
+workflow, then tighten it with Claude on a branch) and follow the trainer's live demo for the runs
+on GitHub.
 
 ## Prerequisites
 
@@ -105,14 +106,15 @@ steps are the same.
 8. **Watch and read.** Follow the run in the **Actions** tab (or `gh run watch --repo $FORK`),
    then read Claude's comment on the issue. Check one claim from it against the code: is the file
    right, is the line range right?
-9. **Change the workflow with Claude.** In your clone, on a new branch, ask Claude to tighten the
-   workflow, for example: no `Edit` and `Write` tools for the `analyse` label, a smaller
+9. **Change the workflow with Claude.** In your clone, on a new branch from the upstream code
+   (`git switch -c ci/tighten origin/main`, so none of your own commits come along), ask Claude to
+   tighten the workflow, for example: no `Bash(npm install:*)` for the `analyse` label, a smaller
    `--max-turns`, a shorter `timeout-minutes`, or a prompt that asks for a fixed output format.
    Review the diff, push the branch to `fork` (`git push -u fork <branch>`; if the push is refused
    because it changes a workflow, run `gh auth refresh -s workflow` once), open a PR in your fork
-   (`gh pr create --repo $FORK --base main --head <branch>`), and merge it. Workflows for issue events run from
-   the default branch.
-10. Remove the label, add `analyse` again, and compare the new comment with the first one.
+   (`gh pr create --repo $FORK --base main --head <branch>`), and merge it. Workflows for issue
+   events run from the default branch.
+10. If the first run came back in time: remove the label, add `analyse` again, and compare the new comment with the first one.
 11. **Clean up** when you are done, so no credential stays behind:
 
     ```bash

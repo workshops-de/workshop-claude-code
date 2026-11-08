@@ -13,7 +13,7 @@
   systematic.
 - Let participants choose freely. Option (a) is about finding all places that do the same thing
   differently; option (b) is about moving code without changing what it does. Both are scoped
-  down on purpose: (a) to list, detail and export (cart and checkout as a bonus), (b) to the two
+  down on purpose: (a) to three places the group picks, (b) to the two
   resources moved first. Both still take longer than people expect; time-box at 45 minutes of
   work and say out loud that a clean partial step with green tests counts as success.
 - Show `/diff` after the first step and `/rewind` (or `Esc` twice) once live: the agenda promises
@@ -35,4 +35,4 @@
 
 ~60 minutes: 10 inventory, 15 characterisation tests, 25 refactor in steps, 10 verify and debrief.
 The narrowed scope is what makes 60 minutes hold; without it, plan 90. Groups that finish early
-take the bonus (cart and checkout for (a), more resources for (b)).
+take the bonus (more places for (a), more resources for (b)).

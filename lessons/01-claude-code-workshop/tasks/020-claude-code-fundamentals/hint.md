@@ -17,8 +17,8 @@ overview you can't check is an opinion. Open one referenced file yourself and co
 <details>
 <summary>💡 Hint 3: Quotes are not evidence</summary>
 
-When Claude quotes any document, ask it to confirm the claim in the code or the config it
-describes. Verify every claim you plan to rely on.
+Whatever the source of a claim, ask Claude to show where the code or the config backs it up.
+Verify every claim you plan to rely on.
 
 </details>
 

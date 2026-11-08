@@ -48,7 +48,8 @@ nobody trims. Exactly the material that fills a window without anyone noticing.
    - let it run `git log -p` over the whole history and the full `npm test` output. Claude Code
      may cut such a huge output short or write it to a file and read only parts of it: that is
      the tool protecting your context, not a failure
-   - start `npm run dev:api` and paste a long stretch of its log into the chat
+   - start `npm run dev:api`, click through a few pages of the web app (or run `npm test`), and
+     paste a long stretch of the API log into the chat
 4. Ask the question from step 2 again, plus one about a detail from the very first file it read.
    Note any drift, vagueness, or forgotten detail.
 5. **Condense** with `/compact` and focus instructions of your choice. Ask both questions again and

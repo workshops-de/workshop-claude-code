@@ -9,8 +9,9 @@ costs with doing the same by `curl`.
 
 An MCP server is a small program that tells Claude which **tools** it offers (name, description,
 input schema) and runs them when Claude calls. Servers can also offer **resources** (data you can
-`@`-mention) and **prompts** (they appear as slash commands). The official TypeScript SDK does the
-protocol work:
+`@`-mention) and **prompts** (they appear as slash commands). The **MCP Inspector**
+(`npx @modelcontextprotocol/inspector <command>`) lets you call a server's tools in the browser
+before Claude ever sees them. The official TypeScript SDK does the protocol work:
 
 ```bash
 npm install @modelcontextprotocol/sdk zod
@@ -100,7 +101,8 @@ Then you ask Claude a question that no single tool answers.
 2. In plan mode, ask Claude to build the server with the four tools from the table, against the
    API's OpenAPI document (`http://localhost:4730/api-json`). Review the **tool descriptions and
    input schemas** in the plan as carefully as the code: they are what Claude will see.
-3. Try the server before you register it, with the MCP Inspector:
+3. Back in the repository root (`cd ../..`), try the server before you register it, with the MCP
+   Inspector:
    `npx @modelcontextprotocol/inspector node tools/bookmonkey-mcp/index.js`. Call each read tool
    once in the browser UI.
 4. Register it from the repository root with

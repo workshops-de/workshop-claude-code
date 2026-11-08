@@ -7,9 +7,9 @@ Installation, auf die ihr euch für den Rest des Workshops verlassen könnt.
 
 ## Voraussetzungen
 
-- Node.js 26 (aktuelles LTS) installiert (`node -v`). Die BookMonkey-API, die ihr in der Plan-Mode-
-  Aufgabe startet, verlangt `node >=26`; die npm-Installation von Claude Code selbst braucht
-  Node.js 22 oder neuer.
+- Node.js 26 (aktuelles LTS) installiert (`node -v`). Die BookMonkey-API, die ihr in der
+  Plan-Mode-Aufgabe startet, verlangt `node >=26`; die npm-Installation von Claude Code selbst
+  braucht Node.js 22 oder neuer.
 - Ein Terminal, mit dem ihr gut zurechtkommt
 - Ein Claude-Account mit Zugang zu Claude Code (Pro, Max, Team, Enterprise oder Console; der
   kostenlose Claude.ai-Plan enthält Claude Code nicht)
@@ -69,11 +69,11 @@ Installation, auf die ihr euch für den Rest des Workshops verlassen könnt.
 ## Erfolgskriterien
 
 - [ ] `claude --version` läuft ohne Fehler
+- [ ] `claude doctor` meldet keine Installationsfehler
 - [ ] Ihr seid bei einem Claude-Account angemeldet
 - [ ] `claude` startet in einem Projektverzeichnis eine interaktive Session
 - [ ] Der Agent hat eine einfache Frage zum aktuellen Verzeichnis beantwortet
 - [ ] Ein Neustart der Session erfordert keine erneute Anmeldung
-- [ ] `claude doctor` meldet keine Installationsfehler
 
 ## Referenzen
 

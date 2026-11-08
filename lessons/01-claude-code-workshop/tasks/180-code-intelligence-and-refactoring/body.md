@@ -19,7 +19,8 @@ symbol, extract a method).
   of every affected place, a step order that keeps the tests green after each step, and a list of
   risks. Push back before any file changes.
 - **Small verified steps.** Let Claude run the tests after every step and commit when green, so a
-  wrong turn costs one step, not the afternoon. `/rewind` and git are your undo.
+  wrong turn costs one step, not the afternoon. Read each step with `/diff`; `/rewind` and git
+  are your undo.
 - **Code intelligence (optional).** A language-server plugin gives Claude go-to-definition and
   find-references instead of grep (see the bonus).
 
@@ -34,10 +35,11 @@ The practice ground is your [`bookmonkey-legacy`](https://github.com/andrekovac/
 clone. The product owner has two requests on the board. Pick **one**:
 
 - **(a) "Prices must be consistent everywhere."** Every place that shows, sums, stores, or exports
-  a price goes through one money and pricing path that works in integer cents. The customer sees
-  the same price for the same book on every screen, in the cart, at checkout, and in exports.
-  **In this task:** cover the book list, the book detail page, and the export. Cart and checkout
-  are a bonus if you have time left.
+  a price goes through one pricing path. The customer sees the same price for the same book on
+  every screen, in the cart, at checkout, and in exports. How prices are represented is yours to
+  decide in plan mode.
+  **In this task:** pick three places where a price shows up and cover those. The rest is a bonus
+  if you have time left.
 - **(b) "Split the big v1 routes file by resource, without changing behaviour."** `api/routes.js`
   becomes one file per resource, following the pattern that `api/routes/` already started. Every
   endpoint answers exactly as before: same status codes, same bodies, same access rules.
@@ -62,8 +64,8 @@ success**: it is exactly the state a real team would merge and continue tomorrow
    or exports a price, in the API and in the web app. For (b): every endpoint in `api/routes.js`,
    grouped by resource, with the middleware that applies to it. Ask for file and line for each.
 2. **Write characterisation tests** for what you are about to touch, using the existing
-   `node:test` setup in `api/test/` (run with `npm test`). For (a): the prices of a few books as
-   of the three places in scope (list, detail, export) returns them today. For (b): status code
+   `node:test` setup in `api/test/` (run with `npm test`). For (a): what the three places you picked
+   show today for a few books. For (b): status code
    and response shape of each endpoint of the two resources you move first, including the error
    cases. Commit the tests while they are green.
 3. **Plan the refactor.** Ask for a plan with steps that each keep `npm test` green, then challenge
@@ -110,4 +112,3 @@ success**: it is exactly the state a real team would merge and continue tomorrow
 - Claude Code: Checkpointing (`/rewind`): https://code.claude.com/docs/en/checkpointing
 - Michael Feathers: Characterization testing: https://michaelfeathers.silvrback.com/characterization-testing
 - Refactoring catalogue (Martin Fowler): https://refactoring.com/catalog/
-- Martin Fowler: Money pattern: https://martinfowler.com/eaaCatalog/money.html
