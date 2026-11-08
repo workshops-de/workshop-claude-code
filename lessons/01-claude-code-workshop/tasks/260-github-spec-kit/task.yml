@@ -15,3 +15,8 @@ always_unlocked: false
 # - body.md           -> Main task description
 # - hint.md           -> Hints for solving the task
 # - trainer_hint.md   -> Notes for trainers (not shown to participants)
+# German translations: *.de.md next to each file, title below (see docs/translation-de.md)
+
+translations:
+  de:
+    title: 'Spec Kit: Eine kleine App mit Spec Kit bauen'
