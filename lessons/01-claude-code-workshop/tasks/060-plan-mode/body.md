@@ -1,13 +1,13 @@
 ## Overview
 
-Use **plan mode** as a real steering tool, not just a read-only toggle: get a plan, argue with it,
+Use **plan mode** as a real steering tool, not just a switch that blocks edits: get a plan, argue with it,
 edit it, and only then decide how much autonomy the agent gets for the execution. You met plan
 mode briefly in the fundamentals task; here you use it for a change that actually matters.
 
 ## The Feature
 
-In plan mode, Claude Code can read and research but cannot edit files or run changing commands.
-Its output is a **plan** you review before anything happens.
+In plan mode, Claude Code reads, researches and writes only its plan file. Your code stays unchanged
+until you approve. The output is a **plan** you review.
 
 - **Enter it** with `Shift+Tab` (cycle until the status line shows plan mode), prefix a single
   prompt with `/plan`, or start a session directly in it: `claude --permission-mode plan`.

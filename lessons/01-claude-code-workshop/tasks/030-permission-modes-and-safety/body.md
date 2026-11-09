@@ -41,7 +41,6 @@ beats an allow on any other.
    `~/.claude/settings.json` (`permissions.defaultMode`) to explain it. Then press `Shift+Tab`
    several times and watch the status line: from `auto` the first press switches to Manual
    (`⏸ manual mode on`), then the cycle runs Manual → `acceptEdits` → `plan` → back to `auto`.
-   Note what each mode allows without asking.
 2. Make a small edit in `acceptEdits` and confirm it applied without a prompt; then review the
    change with `git diff` afterward. Undo it with `git restore .`, so the clone stays clean for
    the next tasks.
@@ -73,7 +72,7 @@ beats an allow on any other.
 ## Success Criteria
 
 - [ ] You can say which mode your session started in, and why
-- [ ] You can name each permission mode and what it does without asking
+- [ ] You ran the same task in auto and in Manual and can say how many prompts each gave
 - [ ] You confirmed at least one boundary was respected in conversation
 - [ ] You can explain the difference between a stated boundary and a deny rule
 - [ ] You can say in which order deny, ask and allow are checked, and what happens if no rule matches

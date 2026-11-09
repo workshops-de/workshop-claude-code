@@ -30,8 +30,9 @@ Claude Code lädt mehr als eine Memory-Datei:
 - **Imports**: `@path/to/file` in der `CLAUDE.md` fügt eine andere Datei beim Start in den Kontext
   ein (relativ zur importierenden Datei, bis zu vier Ebenen tief). Imports ordnen das Gedächtnis,
   senken aber nicht seine Kosten, denn importierte Dateien werden ebenfalls beim Start geladen.
-- **`/memory`** listet jede aktive Memory-Datei auf und öffnet eine davon im Editor; **`/context`**
-  zeigt, welche `CLAUDE.md`- und Regeldateien tatsächlich in die aktuelle Session geladen wurden.
+- **`/memory`** listet jede aktive Memory-Datei auf und öffnet eine davon im Editor; **`/context all`**
+  listet die beim Start geladenen `CLAUDE.md`- und Regeldateien auf (das einfache `/context` zeigt
+  eventuell nur eine Anzahl).
 
 Faustregel: Immer relevante Fakten gehören in die `CLAUDE.md` oder eine Regel ohne Pfadbezug;
 bereichsspezifische Konventionen in eine pfadbezogene Regel.
@@ -79,15 +80,16 @@ den euer eigenes Backend später einhalten muss.
    `src/`). Sie enthält die Konventionen, die nur dort zählen (per ISBN ansprechen, nie
    servergeführte Felder senden, `X-Total-Count` fürs Paging lesen, `docs/openapi.json` ist die
    Quelle der Wahrheit).
-7. Startet eine frische Session und führt `/context` aus: Prüft, dass `domain.md` und der
-   importierte Vertrag geladen wurden und `api-client.md` **nicht**. Stellt dann eine Domänenfrage
-   und prüft, ob die Antwort euer Glossar verwendet.
+7. Startet eine frische Session und führt `/context all` aus: Prüft, dass `domain.md` und der
+   importierte Vertrag geladen wurden und `api-client.md` **nicht**. Lasst Claude `lib/api.ts`
+   lesen: Der Beweis ist die Zeile `Loaded .claude/rules/api-client.md`, die nach dem Lesen im
+   Gespräch erscheint. Stellt dann eine Domänenfrage und prüft, ob die Antwort euer Glossar verwendet.
 
 ## Erfolgskriterien
 
 **Feature**
 
-- [ ] `.claude/rules/domain.md` existiert und wird in einer frischen Session geladen (sichtbar in `/context`)
+- [ ] `.claude/rules/domain.md` existiert und wird in einer frischen Session geladen (sichtbar in `/context all`)
 - [ ] `CLAUDE.md` importiert `docs/api-contract.md` per `@`
 - [ ] Mindestens eine Regel ist per `paths`-Frontmatter pfadbezogen und bleibt ungeladen, bis eine
       passende Datei gelesen wird

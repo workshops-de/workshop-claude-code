@@ -10,12 +10,14 @@
 
 ## Hinweise zur Durchführung
 
-- Die Teilnehmenden haben den Plan Mode in der Grundlagen-Aufgabe als Nur-Lesen-Schalter gesehen –
+- Die Teilnehmenden haben den Plan Mode in der Grundlagen-Aufgabe als Schalter gesehen, der Änderungen sperrt:
   rahmt diese Aufgabe als die „echte“ Version, in der Widerspruch das Ergebnis tatsächlich verändert.
+- Grenzen des Plan Mode: Shell-Befehle, die nicht nur lesen, prüft der Klassifikator, oder Claude
+  fragt nach. Mit verfügbaren Bypass Permissions gilt beides nicht, und Änderungen sind nicht gesperrt.
 - Prüft, ob die Leute den Plan wirklich hinterfragen; ein häufiger Fehler ist, den ersten Entwurf
   anzunehmen. Bittet eine Person zu zeigen, wie sich ihr Plan verändert hat.
-- `Ctrl+G` öffnet den in `$EDITOR`/`$VISUAL` konfigurierten Editor; haltet eine schnelle Lösung
-  bereit, falls sich nichts öffnet.
+- `Ctrl+G` öffnet den Editor aus `$VISUAL`, sonst aus `$EDITOR`. GUI-Editoren brauchen `--wait`
+  (zum Beispiel `code --wait`). Haltet eine schnelle Lösung bereit, falls sich nichts öffnet.
 - `bookmonkey-api` deklariert Node.js >=26: Alle sollten Node 26 (aktuelles LTS) nutzen. Das vor
   der Session prüfen. Portkonflikte auf 4730 löst man mit `npx bookmonkey-api --port <n>` plus einer
   dazu passenden `NEXT_PUBLIC_API_URL`.

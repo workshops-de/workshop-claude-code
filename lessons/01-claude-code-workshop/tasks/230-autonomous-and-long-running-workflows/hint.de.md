@@ -12,6 +12,7 @@ schlechter Lauf schnell verworfen.
 Er führt selbst keine Befehle aus. „Das Backend ist fertig“ lässt sich nicht beurteilen;
 „`npm run contract` endet mit 0“ schon – denn Claude führt es aus, und die Ausgabe landet in der
 Unterhaltung.
+Er verhindert auch nichts: Für harten Schutz nutzt einen Hook oder eine Deny-Regel.
 
 </details>
 
@@ -20,5 +21,13 @@ Unterhaltung.
 
 Blockiert der Klassifikator des Auto Mode dieselbe Aktion immer wieder, ist das ein Signal und kein
 Fehler – lest nach, warum, bevor ihr die Berechtigungen erweitert.
+
+</details>
+
+<details>
+<summary>💡 Tipp 4: Im Worktree fehlt eure Arbeit</summary>
+
+Prüft `git log` im Worktree. Ohne `baseRef` auf `head` startet er beim Standard-Branch, eure Commits
+aus Schritt 1 sind dann nicht da.
 
 </details>

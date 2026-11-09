@@ -29,8 +29,8 @@ Claude Code loads more than one memory file:
 - **Imports**: `@path/to/file` inside `CLAUDE.md` expands another file into context at launch
   (relative to the importing file, up to four hops deep). Imports organise memory; they don't
   reduce its cost, because imported files load at launch too.
-- **`/memory`** lists every memory file in play and opens one in your editor; **`/context`** shows
-  which `CLAUDE.md` and rule files actually loaded into the current session.
+- **`/memory`** lists every memory file in play and opens one in your editor; **`/context all`**
+  lists the `CLAUDE.md` and rule files loaded at launch (plain `/context` may show only a count).
 
 Rule of thumb: always-relevant facts go in `CLAUDE.md` or an unscoped rule; area-specific
 conventions go in a path-scoped rule.
@@ -76,15 +76,16 @@ have to honour later.
    client code (in the scaffold from the plan mode task that is `lib/api.ts`, there is no `src/`), holding the conventions that only matter there (address by ISBN, never send
    server-managed fields, read `X-Total-Count` for paging, `docs/openapi.json` is the source of
    truth).
-7. Start a fresh session and run `/context`: confirm `domain.md` and the imported contract loaded
-   and `api-client.md` did **not**, then ask a domain question and check the answer uses your
-   glossary.
+7. Start a fresh session and run `/context all`: confirm `domain.md` and the imported contract
+   loaded and `api-client.md` did **not**. Ask Claude to read `lib/api.ts`: the proof is the line
+   `Loaded .claude/rules/api-client.md`, which shows up in the conversation after the read. Ask a
+   domain question and check the answer uses your glossary.
 
 ## Success Criteria
 
 **Feature**
 
-- [ ] `.claude/rules/domain.md` exists and loads in a fresh session (visible in `/context`)
+- [ ] `.claude/rules/domain.md` exists and loads in a fresh session (visible in `/context all`)
 - [ ] `CLAUDE.md` imports `docs/api-contract.md` via `@`
 - [ ] At least one rule is path-scoped with `paths` frontmatter and stays unloaded until a
       matching file is read

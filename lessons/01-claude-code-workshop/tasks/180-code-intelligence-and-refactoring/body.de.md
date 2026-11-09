@@ -21,7 +21,8 @@ die eure IDE sofort erledigt (ein Symbol umbenennen, eine Methode extrahieren).
   Schritt grün bleiben, und eine Liste der Risiken. Widersprecht, bevor sich eine Datei ändert.
 - **Kleine, geprüfte Schritte.** Lasst Claude nach jedem Schritt die Tests ausführen und bei Grün
   committen, damit ein Fehltritt einen Schritt kostet und nicht den Nachmittag. Lest jeden Schritt
-  mit `/diff`; `/rewind` und git sind euer Undo.
+  mit `/diff`; `/rewind` und git sind euer Undo. `/rewind` holt keine Dateien zurück, die nur Bash
+  geändert hat (ein `mv`): Dafür nutzt ihr git.
 - **Code Intelligence (optional).** Ein Language-Server-Plugin gibt Claude Go-to-Definition und
   Find-References statt grep (siehe Bonus).
 

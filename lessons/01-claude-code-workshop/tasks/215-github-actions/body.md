@@ -115,7 +115,7 @@ on GitHub.
    (`gh pr create --repo $FORK --base main --head <branch>`), and merge it. Workflows for issue
    events run from the default branch.
 10. If the first run came back in time: remove the label, add `analyse` again, and compare the new comment with the first one.
-11. **Clean up** when you are done, so no credential stays behind:
+11. **Clean up** when you are done:
 
     ```bash
     gh secret delete CLAUDE_CODE_OAUTH_TOKEN --repo $FORK   # or ANTHROPIC_API_KEY
@@ -124,8 +124,11 @@ on GitHub.
     Remove the Claude app from the fork: github.com → your **Settings → Applications → Installed
     GitHub Apps → Claude → Configure**, then remove the fork from the selected repositories (or
     uninstall the app). If you no longer need the fork, delete it:
-    `gh auth refresh -s delete_repo` once, then `gh repo delete $FORK`. The token from
-    `claude setup-token` is valid for a year: do not keep a copy of it lying around.
+    `gh auth refresh -s delete_repo` once, then `gh repo delete $FORK`.
+
+    The secret is gone, the credential is not. If you used an API key, delete it in the Claude
+    Console. A token from `claude setup-token` stays valid for a year and the docs name no way to
+    revoke it, so remove it from your notes and shell history.
 
 ## Success Criteria
 
@@ -143,6 +146,7 @@ on GitHub.
 - [ ] Your fork's default branch still passes `npm test`; nothing was merged that you did not review
 - [ ] After cleanup, `gh secret list --repo $FORK` shows no Claude secret, and the Claude app no
       longer has access to the fork (or the fork is deleted)
+- [ ] The token is gone from your notes and shell history; an API key is deleted in the Console
 
 ## References
 

@@ -38,8 +38,8 @@
   Das leisten Sandboxes.
 - Prüft, dass alle am Ende von Schritt 5 beide `curl`-Regeln gelöscht haben; eine übrig gebliebene
   Deny-Regel stört spätere Aufgaben.
-- Ein guter Live-Moment: Testet bewusst, ob eine formulierte Grenze ein `/compact` überlebt. Meist
-  tut sie das nicht, und das ist eine einprägsame Lehre über Gespräch vs. Deny-Regeln.
+- Ein guter Live-Moment: Testet bewusst, ob eine formulierte Grenze ein `/compact` überlebt. In
+  kurzen Test-Sessions hielt sie (6 von 6), aber nichts erzwingt sie. Eine Deny-Regel schon.
 
 ## Zeitbedarf
 

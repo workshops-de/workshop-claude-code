@@ -36,8 +36,8 @@ es gelaufen ist), `Stop` oder `SessionStart`.
   wird Claude als Begründung gezeigt. Vorsicht: `exit 1` blockiert **nicht**, es zählt als
   nicht blockierender Fehler.
 - **Feedback:** Ein `PostToolUse`-Hook kann die Änderung nicht rückgängig machen, aber bei `exit 2`
-  sieht Claude seinen stderr und reagiert auf die Fehler. Die Ausgabe eines Hooks, der mit `0`
-  endet, erreicht Claude nie.
+  sieht Claude seinen stderr und reagiert auf die Fehler. Seine Klartext-Ausgabe bei `exit 0`
+  erreicht Claude nicht (bei `SessionStart` und `UserPromptSubmit` erreicht stdout Claude schon).
 - **Skripte**: Längere Logik gehört nach `.claude/hooks/*.sh` (ausführbar) und wird mit
   `"${CLAUDE_PROJECT_DIR}/.claude/hooks/guard.sh"` referenziert.
 - **Prüfen**: `/hooks` zeigt jeden konfigurierten Hook, seinen Matcher und aus welcher
@@ -82,7 +82,8 @@ der jede Änderung formatiert und typprüft, den Agenten auf Kurs hält.
    Dateipfad (`.tool_input.file_path`), nicht irgendeinen Text: Ein Guard, der zusätzlich den
    `Bash`-Befehlstext durchsucht, blockiert harmlose Befehle, die `.env.local` nur erwähnen, etwa
    eine Commit-Message. Bittet den Agenten, eure `.env.local` zu lesen, und prüft, dass er mit
-   eurer Meldung blockiert wird.
+   eurer Meldung blockiert wird. Der Guard sieht nur Datei-Tools: `cat .env.local` über Bash lief
+   im Test trotzdem. Eine Deny-Regel `Read(./.env*)` erfasst auch Befehle wie `cat`.
 3. Prüft beide in `/hooks`.
 4. Nennt dem Agenten bei aktiven Hooks die **Übergänge** (hinzufügen → _want to read_; beginnen →
    _reading_; abschließen → _finished_; erneut beginnen → _reading_; aus jedem Zustand entfernen)

@@ -14,13 +14,15 @@ dem Tool.
 Claude Code liest, durchsucht und führt Befehle in eurem Repository aus und überlegt dann, was es
 gesehen hat. Zum Erkunden wollt ihr all das, nur ohne Änderungen:
 
-- **Plan Mode ist schreibgeschützt.** Startet eine Session darin mit
+- **Plan Mode lässt euren Code in Ruhe.** Startet eine Session darin mit
   `claude --permission-mode plan` oder drückt `Shift+Tab`, bis die Statuszeile `plan mode on`
-  zeigt. Claude liest Dateien und führt erkundende Shell-Befehle aus, Änderungen bleiben aber
-  gesperrt, bis ihr einen Plan freigebt. In dieser Aufgabe gebt ihr nie einen frei.
+  zeigt. Claude liest Dateien, führt erkundende Shell-Befehle aus und schreibt nur seine
+  Plan-Datei. Änderungen bleiben gesperrt, bis ihr einen Plan freigebt (außer die Session hat
+  Bypass Permissions verfügbar). In dieser Aufgabe gebt ihr nie einen frei.
 - **Beobachtet die Schleife.** Jeder Tool-Aufruf (Read, Grep, ein `git log`) ist ein _Act_; seine
-  Ausgabe ist der _Observe_-Schritt; der nächste Satz ist der _Reason_-Schritt. Öffnet den
-  Transcript-Viewer mit `Ctrl+O`, um zu sehen, was Claude sich tatsächlich angeschaut hat.
+  Ausgabe ist der _Observe_-Schritt. Der _Reason_-Schritt passiert dazwischen, und meist seht ihr
+  nur seine Wirkung auf den nächsten Aufruf. Öffnet den Transcript-Viewer mit `Ctrl+O`, um zu
+  sehen, was Claude sich tatsächlich angeschaut hat.
 - **Slash Commands** steuern die Session: `/help` listet sie auf, `/context` zeigt, wie voll das
   Kontextfenster ist, `/permissions` zeigt, was Claude ohne Nachfrage tun darf.
 - **Verlangt Artefakte, keine Eindrücke.** „Zeichne ein Mermaid-Diagramm der Module und ihrer
@@ -59,10 +61,10 @@ zeichnet, zahlt sich also später aus.
 2. **Beobachtet die Schleife einmal.** Führt `/context` aus, damit ihr eine Ausgangsbasis habt.
    Stellt dann eine erste Architekturfrage, zum Beispiel „Aus welchen Teilen besteht dieses
    Repository, und wie wird jeder gestartet?“. Wenn die Antwort da ist, drückt `Ctrl+O`, um den
-   Transcript-Viewer zu öffnen, und zählt die Tool-Aufrufe, die Claude gemacht hat. Wählt einen
-   Aufruf und benennt seine drei Schritte: **Reason** (warum Claude ihn gewählt hat), **Act** (der
-   Aufruf selbst), **Observe** (was zurückkam und wie der nächste Schritt es genutzt hat). Mit
-   `Ctrl+O` schließt ihr den Viewer wieder.
+   Transcript-Viewer zu öffnen (Desktop-App: `Ctrl+O` drücken, bis die Ansicht **Verbose** ist),
+   und zählt die Tool-Aufrufe, die Claude gemacht hat. Sucht dann ein Wort aus dem Ergebnis eines
+   Aufrufs in der Eingabe des nächsten Aufrufs: Das ist **Observe**, das den nächsten **Act**
+   speist. Im Terminal schließt ihr den Viewer mit `Ctrl+O` wieder.
 3. Verlangt einen **Architekturüberblick**: die Teile des Systems, wie sie gestartet werden,
    welche Ports sie nutzen und wo die Daten liegen. Claude soll zu jeder Aussage die Dateien
    nennen, auf die sie sich stützt.
@@ -87,7 +89,7 @@ zeichnet, zahlt sich also später aus.
 **Feature**
 
 - [ ] Ihr habt die ganze Session im Plan Mode erkundet und nie einen Plan freigegeben
-- [ ] Ihr könnt einen Reason → Act → Observe-Zyklus aus eurer Session beschreiben, samt Tool-Aufruf
+- [ ] Ihr habt ein Wort aus einem Tool-Ergebnis im nächsten Tool-Aufruf gefunden und könnt sagen, was das zeigt
 - [ ] Ihr habt `/context` am Anfang und am Ende geprüft und wisst, was das Fenster gefüllt hat
 - [ ] Ihr könnt erklären, wann ihr eine vorgeschlagene Aktion freigebt und wann ihr sie ablehnt
 

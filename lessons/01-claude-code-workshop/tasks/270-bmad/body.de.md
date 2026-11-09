@@ -7,8 +7,8 @@ Spec Kit.
 
 ## Hintergrund
 
-BMAD („Breakthrough Method for Agile AI-Driven Development“) liefert spezialisierte Agenten –
-Analyst, Product Manager, Architekt, Entwickler, QA und mehr – sowie moderierte Workflows, die die
+BMAD („Breakthrough Method for Agile AI-Driven Development“) liefert spezialisierte Agenten
+(Analyst, Product Manager, Architekt, Entwickler, UX-Designer) sowie moderierte Workflows, die die
 Planungstiefe an die Komplexität des Projekts anpassen. Ein „Party Mode“ holt mehrere Personas in
 eine Session, um Trade-offs aufzulösen. Baut hier eine **neue, kleine Anwendung**. Vorgeschlagenes
 Briefing: eine wiederverwendbare Packlisten-App (Vorlagen, aus Vorlagen erzeugte Reisen,
@@ -16,15 +16,16 @@ Abhak-Fortschritt).
 
 ## Schritte
 
-1. Installiert BMAD und wählt das Core-Modul und Claude Code als Tool; bestätigt, dass die Agenten
-   und Workflows verfügbar sind.
+1. Installiert BMAD (`npx bmad-method install`, Version 6.12) und wählt Claude Code als Tool;
+   bestätigt, dass die Agenten und Workflows verfügbar sind.
 2. Erstellt mit der Analyst-/PM-Persona ein kurzes **Product Brief**.
 3. Lasst die **Product-Manager**-Persona das Brief in ein Product Requirements Document überführen.
 4. Lasst die **Architekt**-Persona einen Stack wählen und eine Architektur samt zentralen
    Entscheidungen erstellen.
 5. Zerlegt die Arbeit in **Stories** und lasst dann den Dev-Loop der **Entwickler**-Persona laufen –
    prüft die Diffs und führt die App während des Baus aus.
-6. Führt mit der Testing-Persona einen **QA**-Durchgang aus und nutzt den **Party Mode** mindestens
+6. Macht einen **QA**-Durchgang: Führt den Skill `bmad-qa-generate-e2e-tests` aus, er erzeugt
+   automatisierte API- und End-to-End-Tests für eure Features. Nutzt den **Party Mode** mindestens
    einmal, um einen übergreifenden Trade-off aufzulösen.
 7. Nutzt die **Hilfe** der Methode, wann immer ihr unsicher seid, was als Nächstes kommt.
 
@@ -38,5 +39,5 @@ Abhak-Fortschritt).
 ## Referenzen
 
 - BMAD Method – Repository & README: https://github.com/bmad-code-org/BMAD-METHOD
-- BMAD Method – Documentation: https://docs.bmad-method.org/
-- BMAD Method – Getting started tutorial: https://docs.bmad-method.org/tutorials/getting-started/
+- BMAD Method: Dokumentation (Branch V6.12): https://github.com/bmad-code-org/BMAD-METHOD/tree/V6.12
+- BMAD Method: Doku-Seite (V7, nicht für diese Aufgabe): https://docs.bmad-method.org/

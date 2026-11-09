@@ -45,7 +45,7 @@ einer Ebene schlägt ein Allow auf jeder anderen.
    eure `~/.claude/settings.json` (`permissions.defaultMode`), um es zu erklären. Drückt dann
    mehrmals `Shift+Tab` und beobachtet die Statuszeile: Von `auto` wechselt der erste Druck zu
    Manual (`⏸ manual mode on`), danach läuft der Zyklus Manual → `acceptEdits` → `plan` → zurück
-   zu `auto`. Notiert, was jeder Modus ohne Nachfrage erlaubt.
+   zu `auto`.
 2. Macht in `acceptEdits` eine kleine Änderung und bestätigt, dass sie ohne Nachfrage
    übernommen wurde; prüft die Änderung danach mit `git diff`. Macht sie mit `git restore .`
    rückgängig, damit der Clone für die nächsten Aufgaben sauber bleibt.
@@ -78,7 +78,7 @@ einer Ebene schlägt ein Allow auf jeder anderen.
 ## Erfolgskriterien
 
 - [ ] Ihr könnt sagen, in welchem Modus eure Session gestartet ist und warum
-- [ ] Ihr könnt jeden Permission Mode benennen und sagen, was er ohne Nachfrage erlaubt
+- [ ] Ihr habt dieselbe Aufgabe in Auto und in Manual ausgeführt und könnt sagen, wie viele Nachfragen jeweils kamen
 - [ ] Ihr habt bestätigt, dass mindestens eine Grenze im Gespräch eingehalten wurde
 - [ ] Ihr könnt den Unterschied zwischen einer formulierten Grenze und einer Deny-Regel erklären
 - [ ] Ihr könnt sagen, in welcher Reihenfolge Deny, Ask und Allow geprüft werden und was passiert, wenn keine Regel passt

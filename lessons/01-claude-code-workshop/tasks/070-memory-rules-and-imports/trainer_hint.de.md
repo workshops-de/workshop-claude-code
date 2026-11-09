@@ -13,8 +13,10 @@
 
 - Das baut direkt auf der `CLAUDE.md`-Aufgabe auf – rahmt es als „was tun, wenn eine Datei nicht
   mehr reicht“.
-- Die `/context`-Prüfung in einer frischen Session ist der Beweismoment; sorgt dafür, dass alle
-  sehen, wie eine pfadbezogene Regel erst erscheint, nachdem eine passende Datei gelesen wurde.
+- Die Prüfung mit `/context all` in einer frischen Session zeigt die Regel ohne Pfadbezug (nur im
+  `-p`-Modus geprüft, probiert es also vorher einmal interaktiv aus). Eine pfadbezogene Regel
+  erschien im Test nicht in `/context` (2 von 2), auch nicht nach dem Lesen: Der Beweis ist die
+  Zeile `Loaded .claude/rules/...` im Gespräch.
 - Irgendjemand importiert die rohe `openapi.json` – lasst ihn, und vergleicht dann den
   `/context`-Tokenverbrauch mit dem Nachbarn, der die Zusammenfassung importiert hat. Starker
   Lernmoment.

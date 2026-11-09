@@ -1,14 +1,14 @@
 ## Überblick
 
-Nutzt den **Plan Mode** als echtes Steuerungswerkzeug und nicht nur als Nur-Lesen-Schalter: Lasst euch
+Nutzt den **Plan Mode** als echtes Steuerungswerkzeug und nicht nur als Schalter, der Änderungen sperrt: Lasst euch
 einen Plan erstellen, diskutiert mit ihm, ändert ihn und entscheidet erst dann, wie viel Autonomie
 der Agent bei der Ausführung bekommt. Den Plan Mode habt ihr in der Grundlagen-Aufgabe kurz kennengelernt;
 hier setzt ihr ihn für eine Änderung ein, bei der es wirklich darauf ankommt.
 
 ## Das Feature
 
-Im Plan Mode kann Claude Code lesen und recherchieren, aber keine Dateien ändern und keine
-verändernden Befehle ausführen. Das Ergebnis ist ein **Plan**, den ihr prüft, bevor irgendetwas passiert.
+Im Plan Mode liest und recherchiert Claude Code und schreibt nur seine Plan-Datei. Euer Code bleibt
+unverändert, bis ihr freigebt. Das Ergebnis ist ein **Plan**, den ihr prüft.
 
 - **Aktivieren** mit `Shift+Tab` (so oft drücken, bis die Statuszeile den Plan Mode anzeigt), mit
   `/plan` vor einem einzelnen Prompt oder direkt beim Start: `claude --permission-mode plan`.

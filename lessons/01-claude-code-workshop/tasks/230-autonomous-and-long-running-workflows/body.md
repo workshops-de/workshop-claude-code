@@ -62,10 +62,11 @@ truth for the whole workshop app.
    these **new** files: change it to block existing files only (see the TDD task's bonus) rather
    than working around it. The suite writes to the shared reference API;
    `curl -X POST http://localhost:4730/dev/reset` restores it.
-2. Start an isolated session: `claude --worktree backend-contract` (branch
-   `worktree-backend-contract`), and switch to auto mode (or, if auto mode isn't available, start
-   it with a curated `--allowedTools` set). The worktree is a fresh checkout without
-   `node_modules`: install dependencies in `backend/` and `contract-tests/` first, or make it part
+2. A worktree normally starts at the default branch, without your work from step 1, so first set
+   `"worktree": {"baseRef": "head"}` in `.claude/settings.json`. Then start an isolated session:
+   `claude --worktree backend-contract` (branch `worktree-backend-contract`), and switch to auto
+   mode (or, if auto mode isn't available, start it with a curated `--allowedTools` set). The
+   worktree is a fresh checkout without `node_modules`: install dependencies in `backend/` and `contract-tests/` first, or make it part
    of the goal.
 3. Set the **goal** with a measurable condition, a "don't touch the tests" constraint, and a turn
    bound. Watch the evaluator's verdicts (`Ctrl+O` shows the reasoning).

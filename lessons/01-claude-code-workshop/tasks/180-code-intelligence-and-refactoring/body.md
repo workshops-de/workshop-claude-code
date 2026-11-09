@@ -20,7 +20,7 @@ symbol, extract a method).
   risks. Push back before any file changes.
 - **Small verified steps.** Let Claude run the tests after every step and commit when green, so a
   wrong turn costs one step, not the afternoon. Read each step with `/diff`; `/rewind` and git
-  are your undo.
+  are your undo. `/rewind` does not bring back files that only Bash changed (an `mv`): use git there.
 - **Code intelligence (optional).** A language-server plugin gives Claude go-to-definition and
   find-references instead of grep (see the bonus).
 

@@ -58,8 +58,9 @@ await server.connect(new StdioServerTransport());
 - **Descriptions are prompts.** Claude picks tools by their name and description. A precise
   description ("Given any ISBN in a series, returns the whole series in order") is the difference
   between one call and ten.
-- **Write tools ask first.** Claude Code asks before an MCP tool call unless you allow it, for
-  example with an allow rule `mcp__bookmonkey__search_books`. Keep write tools on "ask".
+- **Write tools need an ask rule.** In Manual mode Claude Code asks before an MCP tool call unless
+  you allow it, for example with an allow rule `mcp__bookmonkey__search_books`. In auto mode a call
+  without a rule can run with no prompt (it did in our test), so add an ask rule for write tools.
   `readOnlyHint` tells Claude Code a tool changes nothing, so it can run those calls in parallel.
 - **Results cost context.** Tool definitions are deferred by tool search, but every result lands
   in the conversation. Return only the fields Claude needs.
@@ -113,9 +114,10 @@ Then you ask Claude a question that no single tool answers.
    need? Did it guess anything?
 6. Improve one tool description or result shape so the same question needs fewer calls or less
    output, start a new session, and ask again.
-7. Ask Claude to **create a book** through `create_book` (a test ISBN such as `9990000000002`).
-   Watch the permission prompt, then allow the three read tools in `/permissions` and keep
-   `create_book` on ask. Clean up afterwards: `curl -X POST http://localhost:4730/dev/reset`.
+7. Switch to Manual mode (`Shift+Tab`), since an auto session may not prompt. In `/permissions`,
+   add an ask rule `mcp__bookmonkey__create_book`. Ask Claude to **create a
+   book** through `create_book` (a test ISBN such as `9990000000002`). Watch the permission prompt,
+   then allow the three read tools in `/permissions`. Clean up afterwards: `curl -X POST http://localhost:4730/dev/reset`.
 8. **Compare with `curl`.** In a fresh session, without the MCP server (`/mcp` lets you disable
    it), ask the same question and let Claude use `curl` only. Compare the number of steps, the
    correctness of the answer, and `/context` after both runs.
@@ -128,7 +130,7 @@ Then you ask Claude a question that no single tool answers.
 - [ ] A stdio MCP server with three read tools and one write tool runs from `tools/bookmonkey-mcp`
 - [ ] It is registered with `--scope project`; `.mcp.json` is committed and `/mcp` shows it connected
 - [ ] Claude answered the series question by chaining your tools, and you followed the calls
-- [ ] The write tool asks before it runs; the read tools are allowed
+- [ ] The write tool has an ask rule and asks before it runs; the read tools are allowed
 - [ ] You can explain the difference in steps and context cost between your tools and `curl`
 
 **App still works**

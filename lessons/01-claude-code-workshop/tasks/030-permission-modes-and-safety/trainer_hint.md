@@ -35,8 +35,8 @@
   That is the lesson: a Bash rule matches command text, it is not a fence. Sandboxes are.
 - Check that everyone deleted both `curl` rules at the end of step 5; a leftover deny rule breaks
   later tasks.
-- A good live moment: deliberately test whether a stated boundary survives a `/compact`. It usually
-  doesn't, which is a memorable lesson about conversation vs. deny rules.
+- A good live moment: deliberately test whether a stated boundary survives a `/compact`. In short
+  test sessions it held (6 of 6), but nothing enforces it. A deny rule does.
 
 ## Time estimate
 

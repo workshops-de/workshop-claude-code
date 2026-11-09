@@ -17,7 +17,8 @@ summary plus a pointer to the full file usually beats the full file.
 <details>
 <summary>💡 Hint 3: Path-scoped rules load on read, not on every prompt</summary>
 
-A scoped rule only shows up after Claude reads a matching file. If `/context` doesn't list it yet,
-ask the agent to open a file under that path and check again.
+A scoped rule only loads after Claude reads a matching file. Ask the agent to open a file under
+that path and look for the line `Loaded .claude/rules/...` in the conversation. In our test
+`/context` did not list the rule.
 
 </details>

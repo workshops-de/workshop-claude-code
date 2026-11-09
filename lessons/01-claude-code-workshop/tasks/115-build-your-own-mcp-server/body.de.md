@@ -61,9 +61,10 @@ await server.connect(new StdioServerTransport());
 - **Beschreibungen sind Prompts.** Claude wählt Tools anhand von Name und Beschreibung. Eine
   präzise Beschreibung („Given any ISBN in a series, returns the whole series in order“) ist der
   Unterschied zwischen einem Aufruf und zehn.
-- **Schreibende Tools fragen zuerst.** Claude Code fragt vor einem MCP-Tool-Aufruf nach, solange
-  ihr ihn nicht erlaubt, zum Beispiel mit der Allow-Regel `mcp__bookmonkey__search_books`. Lasst
-  schreibende Tools auf „fragen“. `readOnlyHint` sagt Claude Code, dass ein Tool nichts ändert,
+- **Schreibende Tools brauchen eine Ask-Regel.** In Manual fragt Claude Code vor einem
+  MCP-Tool-Aufruf nach, solange ihr ihn nicht erlaubt, zum Beispiel mit der Allow-Regel
+  `mcp__bookmonkey__search_books`. Im Auto Mode kann ein Aufruf ohne Regel ohne Nachfrage laufen
+  (im Test tat er das), also setzt für schreibende Tools eine Ask-Regel. `readOnlyHint` sagt Claude Code, dass ein Tool nichts ändert,
   sodass es diese Aufrufe parallel ausführen kann.
 - **Ergebnisse kosten Kontext.** Tool-Definitionen werden durch Tool Search aufgeschoben, aber jedes
   Ergebnis landet in der Unterhaltung. Gebt nur die Felder zurück, die Claude braucht.
@@ -118,9 +119,10 @@ Danach stellt ihr Claude eine Frage, die kein einzelnes Tool beantwortet.
    es gebraucht? Hat es etwas geraten?
 6. Verbessert eine Tool-Beschreibung oder die Form eines Ergebnisses, sodass dieselbe Frage weniger
    Aufrufe oder weniger Ausgabe braucht, startet eine neue Session und fragt erneut.
-7. Bittet Claude, über `create_book` **ein Buch anzulegen** (eine Test-ISBN wie `9990000000002`).
-   Beobachtet die Berechtigungsabfrage, erlaubt dann die drei Lese-Tools in `/permissions` und
-   lasst `create_book` auf „fragen“. Räumt danach auf: `curl -X POST http://localhost:4730/dev/reset`.
+7. Wechselt in Manual (`Shift+Tab`), denn eine Auto-Session fragt eventuell nicht nach. Legt in
+   `/permissions` eine Ask-Regel `mcp__bookmonkey__create_book` an. Bittet Claude, über
+   `create_book` **ein Buch anzulegen** (eine Test-ISBN wie `9990000000002`). Beobachtet die
+   Berechtigungsabfrage und erlaubt dann die drei Lese-Tools in `/permissions`. Räumt danach auf: `curl -X POST http://localhost:4730/dev/reset`.
 8. **Vergleicht mit `curl`.** Stellt in einer frischen Session ohne den MCP-Server (`/mcp` erlaubt
    es, ihn zu deaktivieren) dieselbe Frage und lasst Claude nur `curl` benutzen. Vergleicht die Zahl
    der Schritte, die Korrektheit der Antwort und `/context` nach beiden Läufen.
@@ -135,7 +137,7 @@ Danach stellt ihr Claude eine Frage, die kein einzelnes Tool beantwortet.
       als verbunden
 - [ ] Claude hat die Reihen-Frage beantwortet, indem es eure Tools verkettet hat, und ihr habt die
       Aufrufe verfolgt
-- [ ] Das Schreib-Tool fragt nach, bevor es läuft; die Lese-Tools sind erlaubt
+- [ ] Das Schreib-Tool hat eine Ask-Regel und fragt nach, bevor es läuft; die Lese-Tools sind erlaubt
 - [ ] Ihr könnt den Unterschied bei Schritten und Kontextkosten zwischen euren Tools und `curl`
       erklären
 
