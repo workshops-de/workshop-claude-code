@@ -33,8 +33,7 @@ Claude Code gibt euch die Hebel dafür:
 
 Das Übungsfeld ist euer [`bookmonkey-legacy`](https://github.com/andrekovac/bookmonkey-legacy)-Clone.
 Bei Legacy-Code geht der Kontext zuerst aus: eine Route-Datei mit mehr als tausend Zeilen, eine
-große Seed-Datei, ein Lockfile, fünf Jahre `git log -p` sowie Test- und Server-Logs, die niemand
-kürzt. Genau das Material, das ein Fenster füllt, ohne dass es jemand merkt.
+große Seed-Datei sowie Test- und Server-Logs, die niemand kürzt. Genau das Material, das ein Fenster füllt, ohne dass es jemand merkt.
 
 ## Voraussetzungen
 

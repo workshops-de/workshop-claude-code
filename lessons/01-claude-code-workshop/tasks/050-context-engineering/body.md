@@ -28,8 +28,7 @@ bigger context is not automatically better. Claude Code gives you the levers:
 
 The practice ground is your [`bookmonkey-legacy`](https://github.com/andrekovac/bookmonkey-legacy)
 clone. Legacy code is where context runs out first: one route file with more than a thousand
-lines, a large seed file, a lockfile, five years of `git log -p`, and test and server logs that
-nobody trims. Exactly the material that fills a window without anyone noticing.
+lines, a large seed file, and test and server logs that nobody trims. Exactly the material that fills a window without anyone noticing.
 
 ## Prerequisites
 

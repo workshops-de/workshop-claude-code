@@ -1,7 +1,7 @@
 ## Going further: checkpointing, goals and caching
 
-- **Checkpointing**: rewind Claude's edits and conversation to an earlier state when a long
-  session goes wrong.
+- **Checkpointing**: rewind Claude's file edits and conversation to an earlier state when a long
+  session goes wrong. Files changed only through Bash (`echo`, `mv`) stay as they are.
 - **`/goal`**: set a completion condition so Claude keeps working across turns instead of
   stopping after one.
 - **Context-window simulation**: see exactly what loads and what each read costs.
