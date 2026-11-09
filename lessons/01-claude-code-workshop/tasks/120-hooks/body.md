@@ -34,7 +34,8 @@ events such as `PreToolUse` (before a tool runs, can block), `PostToolUse` (afte
 - **Blocking**: in a `PreToolUse` hook, `exit 2` blocks the tool call and your stderr is shown to
   Claude as the reason. Careful: `exit 1` does **not** block, it's treated as a non-blocking error.
 - **Feedback:** a `PostToolUse` hook can't undo the edit, but `exit 2` shows its stderr to Claude,
-  so it reacts to the errors. Output of a hook that exits `0` never reaches Claude.
+  so it reacts to the errors. Its plain text output on exit `0` does not reach Claude (on
+  `SessionStart` and `UserPromptSubmit`, stdout does).
 - **Scripts**: keep longer logic in `.claude/hooks/*.sh` (executable) and reference it as
   `"${CLAUDE_PROJECT_DIR}/.claude/hooks/guard.sh"`.
 - **Inspect**: `/hooks` shows every configured hook, its matcher, and which settings file it came
@@ -77,7 +78,9 @@ honest.
    material with `exit 2` (let `.env.example` through). Check the file path
    (`.tool_input.file_path`), not just any text: a guard that also greps `Bash` command text blocks
    harmless commands that merely mention `.env.local`, such as a commit message. Ask the agent to
-   read your `.env.local` and confirm it's blocked with your message.
+   read your `.env.local` and confirm it's blocked with your message. The guard only sees file
+   tools: `cat .env.local` through Bash still ran in our test. A deny rule `Read(./.env*)` also
+   covers commands like `cat`.
 3. Check both in `/hooks`.
 4. With the hooks active, state the **transitions** to the agent (add → _want to read_; start →
    _reading_; finish → _finished_; start again → _reading_; remove from any state) and have it
