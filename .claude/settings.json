@@ -9,6 +9,6 @@
     }
   },
   "enabledPlugins": {
-    "workshops-slides@workshops-de": true
+    "workshops-courses@workshops-de": true
   }
 }

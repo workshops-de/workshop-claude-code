@@ -25,7 +25,7 @@ lessons/
 
 The workshop is available in English and German. English is the source; German files and the
 German deck follow it. See [`docs/translation-de.md`](docs/translation-de.md) for the glossary,
-style rules and translation workflow (`scripts/translation-status.sh`, `/workshops-slides:translate-task-de` from the workshops.de Claude Code plugin).
+style rules and translation workflow (`scripts/translation-status.sh`, `/workshops-courses:translate-task-de` from the workshops.de Claude Code plugin).
 
 Every knowledge block presented in the slides has exactly one corresponding task folder here,
 numbered in teaching order.

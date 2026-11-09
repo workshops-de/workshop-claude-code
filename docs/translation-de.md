@@ -28,8 +28,8 @@ Workflow:
 
 1. `scripts/translation-status.sh --todo` lists missing and stale translations (stale = the English
    file was committed after its German sibling).
-2. In Claude Code, run `/workshops-slides:translate-task-de <folder>` (or `… --todo`). The skill comes
-   from the workshops.de plugin (`workshops-de/claude-plugins`, enabled in `.claude/settings.json`)
+2. In Claude Code, run `/workshops-courses:translate-task-de <folder>` (or `… --todo`). The skill comes
+   from the workshops-courses plugin (`workshops-de/claude-plugins`, enabled in `.claude/settings.json`)
    and applies the rules of this document.
 3. Review the German files, commit one task per commit:
    `docs(tasks): translate <folder> to german`.
