@@ -106,6 +106,11 @@ other file changes needed for the numbering itself.
   instead of the two feature sections. Keep steps actionable and concrete (real commands, real prompts).
 - Verify feature claims against the current docs (`https://code.claude.com/docs/en/<page>.md`
   returns plain Markdown). Claude Code changes fast (e.g. `/agents` no longer has a wizard).
+- Test claims, do not just assert them (trainer's request, 2026-11-09). Every factual statement on
+  the slides, in the Trainer Demo Hub or in a task about what Claude Code does needs evidence: a live
+  run first for behaviour, safety and anything a demo depends on, the current docs second. Avoid
+  generalisations like "meist" or "usually" without a test. If a claim cannot be tested yet, say in
+  the trainer notes that it is unverified.
 - Hints: 2–4 collapsible `<details>` blocks, each nudging without giving away the solution.
 - Trainer notes: learning goals, facilitation notes (common pitfalls, timing, what to watch for),
   time estimate.
