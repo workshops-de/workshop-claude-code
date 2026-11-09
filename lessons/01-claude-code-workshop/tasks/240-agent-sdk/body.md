@@ -17,7 +17,8 @@ work; reach for the SDK when building custom applications, CI/CD automation, or 
 2. Write a minimal agent that performs a real task on a small project — for example, "find all
    TODO comments and summarize them" — using only the tools it needs (`Read`, `Glob`, `Grep`).
 3. Tighten it: set a permission mode, add a `PostToolUse` hook that logs file changes, and restrict
-   `allowedTools`.
+   the tools with `tools: [...]` or `disallowedTools`. `allowedTools` only approves without asking:
+   other tools stay available and follow the permission mode.
 4. Return **structured output** (a JSON schema / typed result) and consume it in your script.
 5. Optionally add a **subagent** definition and have the main agent delegate to it.
 6. Compare the experience to `claude -p`: when would you reach for the SDK instead of the CLI?
@@ -25,7 +26,7 @@ work; reach for the SDK when building custom applications, CI/CD automation, or 
 ## Success Criteria
 
 - [ ] A minimal SDK agent runs and completes a real, small task
-- [ ] Tools are explicitly scoped (read-only or a tight allowlist)
+- [ ] Tools are explicitly scoped (`tools` or `disallowedTools`, not `allowedTools` alone)
 - [ ] The agent returns structured output your script consumes
 - [ ] You can explain when to reach for the SDK vs. the CLI
 

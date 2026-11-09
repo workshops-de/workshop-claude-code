@@ -1,7 +1,8 @@
 <details>
 <summary>💡 Tipp 1: Erst nur lesend starten</summary>
 
-Gebt `Read`, `Glob`, `Grep` frei, bevor ihr Schreib- oder Bash-Tools erlaubt.
+Setzt `tools` auf `Read`, `Glob`, `Grep`, bevor ihr Schreib- oder Bash-Tools ergänzt. `allowedTools`
+allein entfernt nichts.
 
 </details>
 

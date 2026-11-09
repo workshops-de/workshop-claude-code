@@ -1,7 +1,8 @@
 <details>
 <summary>💡 Hint 1: Start read-only</summary>
 
-Grant `Read`, `Glob`, `Grep` before write or Bash tools.
+Set `tools` to `Read`, `Glob`, `Grep` before you add write or Bash tools. `allowedTools` alone
+removes nothing.
 
 </details>
 
