@@ -19,8 +19,8 @@ als die ganze Datei.
 <details>
 <summary>💡 Tipp 3: Pfadbezogene Regeln laden beim Lesen, nicht bei jedem Prompt</summary>
 
-Eine pfadbezogene Regel taucht erst auf, nachdem Claude eine passende Datei gelesen hat. Wenn
-`/context` sie noch nicht anzeigt, bittet den Agenten, eine Datei unter diesem Pfad zu öffnen, und
-prüft erneut.
+Eine pfadbezogene Regel lädt erst, nachdem Claude eine passende Datei gelesen hat. Bittet den
+Agenten, eine Datei unter diesem Pfad zu öffnen, und achtet auf die Zeile
+`Loaded .claude/rules/...` im Gespräch. Im Test listete `/context` die Regel nicht.
 
 </details>

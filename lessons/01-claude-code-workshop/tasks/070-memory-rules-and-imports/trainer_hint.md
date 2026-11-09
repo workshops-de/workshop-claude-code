@@ -12,8 +12,9 @@
 
 - This builds directly on the `CLAUDE.md` task — frame it as "what to do when one file isn't
   enough anymore".
-- The `/context` check in a fresh session is the proof moment; make sure people see a scoped rule
-  appear only after a matching file was read.
+- The `/context all` check in a fresh session shows the unscoped rule. A scoped rule did not appear
+  there in our test (2 of 2), even after the read: the proof is the line `Loaded .claude/rules/...`
+  in the conversation.
 - Someone will import the raw `openapi.json` — let them, then compare `/context` token usage with
   a neighbour who imported the summary. Strong teaching moment.
 - `id` vs. `isbn` is the trap that bites later (wrong detail URLs, broken edit forms). If it isn't
