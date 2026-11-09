@@ -9,9 +9,10 @@ der Richtung vertraut, die der Agent einschlägt.
 <details>
 <summary>💡 Tipp 2: Grenzen können verloren gehen</summary>
 
-Eine Grenze, die ihr formuliert, wird bei jeder Prüfung aus dem Transcript neu gelesen und kann
-verloren gehen, wenn der Kontext kompaktiert wird. Für eine harte Garantie fügt stattdessen eine
-Deny-Regel hinzu, statt euch allein auf das Gespräch zu verlassen.
+Im Auto Mode liest der Klassifikator eine Grenze, die ihr formuliert, neu aus dem Transcript; in
+Manual folgt ihr nur das Modell. In beiden Fällen kann sie verloren gehen, wenn der Kontext
+kompaktiert wird. Für eine harte Garantie fügt eine Deny-Regel hinzu, statt euch allein auf das
+Gespräch zu verlassen.
 
 </details>
 

@@ -9,8 +9,9 @@ direction the agent is taking.
 <details>
 <summary>💡 Hint 2: Boundaries can be lost</summary>
 
-A boundary you state is re-read from the transcript each check, so it can be lost if context is
-compacted. For a hard guarantee, add a deny rule instead of relying on conversation alone.
+In auto mode the classifier re-reads a boundary you state from the transcript; in Manual only the
+model follows it. Either way it can be lost if context is compacted. For a hard guarantee, add a
+deny rule instead of relying on conversation alone.
 
 </details>
 
