@@ -18,8 +18,9 @@
   agent owns the route there. Don't let people hand step 1 to the goal run.
 - Runs can take a while — have people start the goal before a break, or trim the scope to the
   `GET /books` query surface plus `DELETE`.
-- Dry-run numbers: the goal run took about 6.5 minutes, 41 agentic turns, and about 0.83 USD to
-  get 46 contract tests green. The `num_turns` in `-p` JSON counts agentic turns, not the
+- Dry-run numbers (from the run's report, yours will differ): the nested goal run took about 6.5
+  minutes, 41 agentic turns, and about 0.83 USD to get 46 contract tests green; the whole session
+  took about 17 minutes, 51 turns, and 1.59 USD. The `num_turns` in `-p` JSON counts agentic turns, not the
   evaluator's goal turns, so it is not the same unit as "stop after 30 turns".
 - The review checkpoint earned its place in the dry run: the suite was green, yet the demo user
   could not sign in to the own backend (seed has a bcrypt hash, the backend checked scrypt), and

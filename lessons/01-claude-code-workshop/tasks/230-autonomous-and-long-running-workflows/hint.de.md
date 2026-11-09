@@ -12,6 +12,7 @@ schlechter Lauf schnell verworfen.
 Er führt selbst keine Befehle aus. „Das Backend ist fertig“ lässt sich nicht beurteilen;
 „`npm run contract` endet mit 0“ schon – denn Claude führt es aus, und die Ausgabe landet in der
 Unterhaltung.
+Er verhindert auch nichts: Für harten Schutz nutzt einen Hook oder eine Deny-Regel.
 
 </details>
 

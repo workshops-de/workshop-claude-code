@@ -11,6 +11,7 @@ discard.
 
 It doesn't run commands itself. "The backend is done" can't be judged; "`npm run contract` exits
 0" can — because Claude runs it and the output lands in the conversation.
+It also prevents nothing: for hard protection use a hook or a deny rule.
 
 </details>
 

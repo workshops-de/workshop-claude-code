@@ -20,8 +20,9 @@
   „fertig“, der Agent den Weg dorthin. Lasst Schritt 1 nicht an den Goal-Lauf abgeben.
 - Läufe können dauern – lasst die Teilnehmenden das Ziel vor einer Pause starten oder kürzt den
   Umfang auf die Query-Oberfläche von `GET /books` plus `DELETE`.
-- Zahlen aus dem Probelauf: Der Goal-Lauf brauchte etwa 6,5 Minuten, 41 agentische Turns und rund
-  0,83 USD, um 46 Contract-Tests grün zu bekommen. Das `num_turns` im `-p`-JSON zählt agentische
+- Zahlen aus dem Bericht des Probelaufs (eure können abweichen): Der verschachtelte Goal-Lauf
+  brauchte etwa 6,5 Minuten, 41 agentische Turns und rund 0,83 USD, um 46 Contract-Tests grün zu
+  bekommen; die ganze Session etwa 17 Minuten, 51 Turns und 1,59 USD. Das `num_turns` im `-p`-JSON zählt agentische
   Turns, nicht die Goal-Turns des Evaluators, ist also nicht dieselbe Einheit wie „stop after 30
   turns“.
 - Der Review-Checkpoint hat sich im Probelauf bewährt: Die Suite war grün, doch der Demo-User konnte
