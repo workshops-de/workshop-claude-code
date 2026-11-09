@@ -22,3 +22,12 @@ Deny-Regel hinzu, statt euch allein auf das Gespräch zu verlassen.
 das euch wichtig ist.
 
 </details>
+
+<details>
+<summary>💡 Tipp 4: Eine Regel scheint nichts zu bewirken</summary>
+
+Eine Deny-Regel schlägt eine Allow-Regel, in derselben Datei oder in jeder anderen. Regeln werden
+nicht danach sortiert, wie genau sie sind. `/permissions` zeigt, aus welcher Settings-Datei jede
+Regel kommt.
+
+</details>
