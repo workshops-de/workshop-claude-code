@@ -75,7 +75,7 @@ Aufgabe gilt.
 **Feature**
 
 - [ ] Ihr habt den Skill-Katalog durchsucht, bewusst einen Skill gewählt, und er erscheint in `/skills`
-- [ ] Ihr habt mindestens einen automatischen Skill-Aufruf beobachtet und den Skill explizit beim Namen aufgerufen
+- [ ] Ihr habt beobachtet, ob Claude den Skill von selbst geladen hat, und den Skill explizit beim Namen aufgerufen
 - [ ] Ihr könnt Progressive Disclosure erklären und warum dieses Wissen in einen Skill gehört und nicht in
       die `CLAUDE.md`
 

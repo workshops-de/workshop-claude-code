@@ -71,7 +71,7 @@ comes from the running `bookmonkey-api`; your API-client rule from the previous 
 **Feature**
 
 - [ ] You searched the catalogue, picked a skill deliberately, and it shows up in `/skills`
-- [ ] You observed at least one automatic skill invocation and invoked the skill explicitly by name
+- [ ] You watched whether Claude loaded the skill on its own, and invoked the skill explicitly by name
 - [ ] You can explain progressive disclosure and why this knowledge belongs in a skill, not in
       `CLAUDE.md`
 
