@@ -20,7 +20,7 @@ wiederverwendbare Agenten baut.
    Beispiel „alle TODO-Kommentare finden und zusammenfassen“ – und nur die Tools nutzt, die er
    braucht (`Read`, `Glob`, `Grep`).
 3. Zieht die Zügel an: Setzt einen Permission Mode, fügt einen `PostToolUse`-Hook hinzu, der
-   Dateiänderungen protokolliert, und setzt `tools: ['Read', 'Glob', 'Grep']` (`allowedTools` spart nur die Nachfrage).
+   jeden Tool-Aufruf protokolliert, und setzt `tools: ['Read', 'Glob', 'Grep']` (`allowedTools` spart nur die Nachfrage).
 4. Lasst ihn **strukturierte Ausgabe** zurückgeben (JSON-Schema / typisiertes Ergebnis) und
    verarbeitet sie in eurem Skript.
 5. Optional: Fügt eine **Subagent**-Definition hinzu und lasst den Haupt-Agenten an ihn delegieren.

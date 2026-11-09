@@ -16,7 +16,7 @@ work; reach for the SDK when building custom applications, CI/CD automation, or 
    Console.
 2. Write a minimal agent that performs a real task on a small project — for example, "find all
    TODO comments and summarize them" — using only the tools it needs (`Read`, `Glob`, `Grep`).
-3. Tighten it: set a permission mode, add a `PostToolUse` hook that logs file changes, and set
+3. Tighten it: set a permission mode, add a `PostToolUse` hook that logs every tool call, and set
    `tools: ['Read', 'Glob', 'Grep']` (`allowedTools` only skips the prompt).
 4. Return **structured output** (a JSON schema / typed result) and consume it in your script.
 5. Optionally add a **subagent** definition and have the main agent delegate to it.
