@@ -1,8 +1,8 @@
 <details>
 <summary>💡 Tipp 1: Erst nur lesend starten</summary>
 
-Setzt `tools` auf `Read`, `Glob`, `Grep`, bevor ihr Schreib- oder Bash-Tools ergänzt. `allowedTools`
-allein entfernt nichts.
+Setzt `tools: ['Read', 'Glob', 'Grep']`, bevor ihr Schreib- oder Bash-Tools ergänzt. Eine
+Schreibaufgabe erzeugt dann keine Datei.
 
 </details>
 

@@ -66,12 +66,11 @@ auf euer eigenes Backend: der Moment der Wahrheit für die gesamte Workshop-App.
    nur bestehende Dateien blockiert (siehe Bonus der TDD-Aufgabe), statt ihn zu umgehen. Die Suite
    schreibt in die gemeinsame Referenz-API; `curl -X POST http://localhost:4730/dev/reset` stellt
    sie wieder her.
-2. Startet eine isolierte Session: `claude --worktree backend-contract` (Branch
-   `worktree-backend-contract`) und wechselt in den Auto Mode (oder startet, falls der Auto Mode
-   nicht verfügbar ist, mit einem kuratierten `--allowedTools`-Set). Mit Remote startet der Worktree
-   von dessen Standard-Branch (`origin/HEAD`), nicht von euren lokalen Commits: Pusht Schritt 1
-   vorher dorthin oder setzt `"worktree": {"baseRef": "head"}` in `.claude/settings.json`. Der Worktree ist ein frischer
-   Checkout ohne `node_modules`: Installiert zuerst die Abhängigkeiten in `backend/` und
+2. Ein Worktree startet normalerweise beim Standard-Branch, ohne eure Arbeit aus Schritt 1. Setzt
+   deshalb zuerst `"worktree": {"baseRef": "head"}` in `.claude/settings.json`. Startet dann eine
+   isolierte Session: `claude --worktree backend-contract` (Branch `worktree-backend-contract`) und
+   wechselt in den Auto Mode (oder startet, falls der Auto Mode nicht verfügbar ist, mit einem
+   kuratierten `--allowedTools`-Set). Der Worktree ist ein frischer Checkout ohne `node_modules`: Installiert zuerst die Abhängigkeiten in `backend/` und
    `contract-tests/` oder macht es zum Teil des Ziels.
 3. Setzt das **Ziel** mit einer messbaren Bedingung, einer Randbedingung „Tests nicht anfassen“ und
    einer Turn-Obergrenze. Beobachtet die Urteile des Evaluators (`Ctrl+O` zeigt die Begründung).

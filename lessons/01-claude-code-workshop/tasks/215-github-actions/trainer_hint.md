@@ -24,8 +24,9 @@
   everyday shortcut.
 - Good discussion for step 1: the issue title and body are text from whoever opened the issue, and
   the workflow puts them into Claude's prompt. Who can trigger a run, and what could a malicious
-  issue ask for? The action only runs for users with write access by default; talk about what really
-  limits a run: the tool list, the workflow's `GITHUB_TOKEN` permissions, and that access check.
+  issue ask for? The action only runs for users with write access by default; discussion point, not
+  verified live: what limits a run? The tool list, the workflow's `GITHUB_TOKEN` permissions, that
+  access check. Calls that need no approval (such as read-only Bash commands) run without an entry.
 - Do not comment on whether Claude's analysis of the ticket is correct. The debugging task (and
   the private trainer repo, `bookmonkey-legacy-trainer`, `SOLUTIONS.md`) covers that. Here the
   point is the setup and the review of the comment.

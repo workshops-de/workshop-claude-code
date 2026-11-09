@@ -9,10 +9,9 @@ der Richtung vertraut, die der Agent einschlägt.
 <details>
 <summary>💡 Tipp 2: Grenzen können verloren gehen</summary>
 
-Im Auto Mode liest der Klassifikator eine Grenze, die ihr formuliert, neu aus dem Transcript; in
-Manual folgt ihr nur das Modell. In beiden Fällen kann sie verloren gehen, wenn der Kontext
-kompaktiert wird. Für eine harte Garantie fügt eine Deny-Regel hinzu, statt euch allein auf das
-Gespräch zu verlassen.
+Im Auto Mode prüft ein zweites Modell (der Klassifikator) jede Aktion. In Manual entscheidet ihr
+bei jeder Nachfrage. Eine formulierte Grenze steht nur im Gespräch, und nichts erzwingt sie. Für
+eine harte Garantie fügt eine Deny-Regel hinzu.
 
 </details>
 

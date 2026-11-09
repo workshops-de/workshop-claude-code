@@ -13,8 +13,7 @@
   Read-Tool gelesen werden (zuerst die große Route-Datei), und lange Logs, die in den Chat
   eingefügt werden.
 - `git log -p` oder ein Lockfile über Bash zählen kaum: Im Test bekam Claude von beiden nur eine
-  kurze Vorschau und den Dateipfad. Das ist ein guter Diskussionspunkt: Das Tool schützt das
-  Fenster bereits.
+  kurze Vorschau und den Dateipfad. Guter Diskussionspunkt: Das Tool schützt das Fenster bereits.
 - Der einprägsamste Moment ist der Vorher-nachher-Vergleich rund um `/compact`. Sorgt dafür, dass
   wirklich alle dieselbe Frage vorher und nachher stellen.
 - Der Subagent-Schritt gibt einen Vorgeschmack auf die Subagents-Aufgabe. Haltet ihn kurz; der

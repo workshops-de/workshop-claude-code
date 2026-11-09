@@ -23,3 +23,11 @@ Blockiert der Klassifikator des Auto Mode dieselbe Aktion immer wieder, ist das 
 Fehler – lest nach, warum, bevor ihr die Berechtigungen erweitert.
 
 </details>
+
+<details>
+<summary>💡 Tipp 4: Im Worktree fehlt eure Arbeit</summary>
+
+Prüft `git log` im Worktree. Ohne `baseRef` auf `head` startet er beim Standard-Branch, eure Commits
+aus Schritt 1 sind dann nicht da.
+
+</details>

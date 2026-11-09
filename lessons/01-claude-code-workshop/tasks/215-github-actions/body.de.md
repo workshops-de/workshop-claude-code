@@ -131,10 +131,11 @@ folgt für die Läufe auf GitHub der Live-Demo des Trainers.
     Entfernt die Claude-App vom Fork: github.com → euer **Settings → Applications → Installed
     GitHub Apps → Claude → Configure**, dann den Fork aus den ausgewählten Repositories entfernen
     (oder die App deinstallieren). Wenn ihr den Fork nicht mehr braucht, löscht ihn:
-    einmal `gh auth refresh -s delete_repo`, dann `gh repo delete $FORK`. Ein gelöschtes Secret
-    beendet die Zugangsdaten nicht: Löscht einen API-Key auch in der Claude Console. Ein Token aus
-    `claude setup-token` bleibt ein Jahr gültig, und die Doku nennt keinen Widerruf: Behaltet keine
-    Kopie.
+    einmal `gh auth refresh -s delete_repo`, dann `gh repo delete $FORK`.
+
+    Das Secret ist weg, die Zugangsdaten nicht. Habt ihr einen API-Key benutzt, löscht ihn in der
+    Claude Console. Ein Token aus `claude setup-token` bleibt ein Jahr gültig, und die Doku nennt
+    keinen Widerruf: Entfernt es also aus euren Notizen und der Shell-Historie.
 
 ## Erfolgskriterien
 
@@ -152,7 +153,7 @@ folgt für die Läufe auf GitHub der Live-Demo des Trainers.
 - [ ] Der Default-Branch eures Forks besteht weiterhin `npm test`; es wurde nichts gemergt, was ihr nicht geprüft habt
 - [ ] Nach dem Aufräumen zeigt `gh secret list --repo $FORK` kein Claude-Secret, und die Claude-App
       hat keinen Zugriff mehr auf den Fork (oder der Fork ist gelöscht)
-- [ ] Ihr habt keine Kopie des Tokens behalten, und ein API-Key ist auch in der Console gelöscht
+- [ ] Das Token ist aus Notizen und Shell-Historie entfernt; ein API-Key ist in der Console gelöscht
 
 ## Referenzen
 

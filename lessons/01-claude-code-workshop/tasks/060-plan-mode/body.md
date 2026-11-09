@@ -7,8 +7,7 @@ mode briefly in the fundamentals task; here you use it for a change that actuall
 ## The Feature
 
 In plan mode, Claude Code reads, researches and writes only its plan file. Your code stays unchanged
-until you approve, unless the session has bypass permissions available. Shell commands that are not
-read-only go through the classifier or ask you first. The output is a **plan** you review.
+until you approve. The output is a **plan** you review.
 
 - **Enter it** with `Shift+Tab` (cycle until the status line shows plan mode), prefix a single
   prompt with `/plan`, or start a session directly in it: `claude --permission-mode plan`.

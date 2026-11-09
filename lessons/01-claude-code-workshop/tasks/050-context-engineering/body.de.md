@@ -33,7 +33,8 @@ Claude Code gibt euch die Hebel dafür:
 
 Das Übungsfeld ist euer [`bookmonkey-legacy`](https://github.com/andrekovac/bookmonkey-legacy)-Clone.
 Bei Legacy-Code geht der Kontext zuerst aus: eine Route-Datei mit mehr als tausend Zeilen, eine
-große Seed-Datei sowie Test- und Server-Logs, die niemand kürzt. Genau das Material, das ein Fenster füllt, ohne dass es jemand merkt.
+große Seed-Datei sowie Test- und Server-Logs, die niemand kürzt. Genau das Material, das ein
+Fenster füllt, ohne dass es jemand merkt.
 
 ## Voraussetzungen
 
@@ -51,12 +52,13 @@ große Seed-Datei sowie Test- und Server-Logs, die niemand kürzt. Genau das Mat
    Antwort auf.
 3. **Verschmutzt** die Session jetzt absichtlich und prüft nach jedem Schritt `/context`:
    - Claude soll `api/routes.js` komplett lesen und jeden Abschnitt zusammenfassen
-   - Claude soll `api/seed/books.json` und `package-lock.json` lesen
-   - Claude soll `git log -p` über die gesamte Historie und die komplette Ausgabe von `npm test`
-     ausführen. Claude Code kürzt so riesige Ausgaben eventuell oder schreibt sie in eine Datei
-     und liest nur Teile davon: Das ist das Tool, das euren Kontext schützt, kein Fehler
+   - Claude soll `api/seed/books.json` und dann viele weitere Dateien unter `api/` mit dem Read-Tool
+     lesen
    - startet `npm run dev:api`, klickt durch ein paar Seiten der Web-App (oder führt `npm test`
      aus) und fügt einen langen Ausschnitt des API-Logs in den Chat ein
+
+   Große Bash-Ausgaben (etwa `git log -p`) werden auf eine Vorschau gekürzt: Das Tool schützt euren
+   Kontext.
 4. Stellt die Frage aus Schritt 2 noch einmal, dazu eine zu einem Detail aus der allerersten Datei,
    die Claude gelesen hat. Notiert Abweichungen, vage Antworten und vergessene Details.
 5. **Kompaktiert** mit `/compact` und Fokus-Anweisungen eurer Wahl. Stellt beide Fragen erneut und

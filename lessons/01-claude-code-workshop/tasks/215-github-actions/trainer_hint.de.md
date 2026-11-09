@@ -27,8 +27,9 @@
 - Gute Diskussion zu Schritt 1: Titel und Text des Issues stammen von der Person, die das Issue
   geöffnet hat, und der Workflow setzt sie in Claudes Prompt ein. Wer kann einen Lauf auslösen, und
   was könnte ein bösartiges Issue verlangen? Die Action läuft standardmäßig nur für Nutzende mit
-  Schreibzugriff; darüber sprechen, was einen Lauf wirklich begrenzt: die
-  Tool-Liste, die `GITHUB_TOKEN`-Rechte des Workflows und diese Zugriffsprüfung.
+  Schreibzugriff; Diskussionspunkt, nicht live
+  geprüft: Was begrenzt einen Lauf? Die Tool-Liste, die `GITHUB_TOKEN`-Rechte des Workflows, diese
+  Zugriffsprüfung. Aufrufe ohne Freigabepflicht (etwa lesende Bash-Befehle) laufen auch ohne Eintrag.
 - Nicht kommentieren, ob Claudes Analyse des Tickets stimmt. Das deckt die Debugging-Aufgabe ab (und
   das private Trainer-Repo `bookmonkey-legacy-trainer`, `SOLUTIONS.md`). Hier geht es um das Setup
   und die Prüfung des Kommentars.

@@ -1,8 +1,8 @@
 <details>
 <summary>💡 Hint 1: Start read-only</summary>
 
-Set `tools` to `Read`, `Glob`, `Grep` before you add write or Bash tools. `allowedTools` alone
-removes nothing.
+Set `tools: ['Read', 'Glob', 'Grep']` before you add write or Bash tools. A write task then creates
+no file.
 
 </details>
 

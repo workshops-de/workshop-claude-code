@@ -114,7 +114,8 @@ Then you ask Claude a question that no single tool answers.
    need? Did it guess anything?
 6. Improve one tool description or result shape so the same question needs fewer calls or less
    output, start a new session, and ask again.
-7. In `/permissions`, add an ask rule `mcp__bookmonkey__create_book`. Ask Claude to **create a
+7. Switch to Manual mode (`Shift+Tab`), since an auto session may not prompt. In `/permissions`,
+   add an ask rule `mcp__bookmonkey__create_book`. Ask Claude to **create a
    book** through `create_book` (a test ISBN such as `9990000000002`). Watch the permission prompt,
    then allow the three read tools in `/permissions`. Clean up afterwards: `curl -X POST http://localhost:4730/dev/reset`.
 8. **Compare with `curl`.** In a fresh session, without the MCP server (`/mcp` lets you disable

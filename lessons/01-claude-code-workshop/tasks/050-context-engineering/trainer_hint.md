@@ -11,7 +11,8 @@
 - Keep it hands-on but time-boxed. What fills the window is many files read with the Read tool
   (the big route file first) and long logs pasted into the chat.
 - `git log -p` or a lockfile through Bash barely count: in a test Claude got only a short preview
-  of each, plus the file path. That is a good discussion point: the tool already protects the window.
+  of each, plus the file path. That is a good discussion point: the tool already protects the
+  window.
 - The most memorable moment is the before/after comparison around `/compact`. Make sure every
   participant actually asks the same question before and after.
 - The subagent step previews the subagents task. Keep it short; the point is how little lands in

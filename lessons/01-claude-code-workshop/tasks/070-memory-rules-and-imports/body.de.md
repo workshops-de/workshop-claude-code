@@ -82,9 +82,8 @@ den euer eigenes Backend später einhalten muss.
    Quelle der Wahrheit).
 7. Startet eine frische Session und führt `/context all` aus: Prüft, dass `domain.md` und der
    importierte Vertrag geladen wurden und `api-client.md` **nicht**. Lasst Claude `lib/api.ts`
-   lesen: Die Zeile `Loaded .claude/rules/api-client.md` im Gespräch ist euer Beweis (im Test
-   listete `/context` die Regel auch dann nicht). Stellt dann eine Domänenfrage und prüft, ob die
-   Antwort euer Glossar verwendet.
+   lesen: Der Beweis ist die Zeile `Loaded .claude/rules/api-client.md`, die nach dem Lesen im
+   Gespräch erscheint. Stellt dann eine Domänenfrage und prüft, ob die Antwort euer Glossar verwendet.
 
 ## Erfolgskriterien
 

@@ -28,7 +28,8 @@ bigger context is not automatically better. Claude Code gives you the levers:
 
 The practice ground is your [`bookmonkey-legacy`](https://github.com/andrekovac/bookmonkey-legacy)
 clone. Legacy code is where context runs out first: one route file with more than a thousand
-lines, a large seed file, and test and server logs that nobody trims. Exactly the material that fills a window without anyone noticing.
+lines, a large seed file, and test and server logs that nobody trims. Exactly the material that
+fills a window without anyone noticing.
 
 ## Prerequisites
 
@@ -37,18 +38,17 @@ lines, a large seed file, and test and server logs that nobody trims. Exactly th
 ## Steps
 
 1. Start a fresh session in Manual or plan mode (`claude --permission-mode default` or
-   `claude --permission-mode plan`), so the repository stays clean, and run `/context`. Note the baseline: how much do system prompt, tools,
-   and your `CLAUDE.md` take before you typed anything?
+   `claude --permission-mode plan`), so the repository stays clean, and run `/context`. Note the
+   baseline: how much do system prompt, tools, and your `CLAUDE.md` take before you typed anything?
 2. Ask one precise question you can check later, for example "Which file and function handle
    renewing a loan, and what are the renewal rules?". Write down the answer.
 3. Now **pollute** the session on purpose, checking `/context` after each step:
    - ask Claude to read `api/routes.js` completely and summarise every section
-   - ask it to read `api/seed/books.json` and `package-lock.json`
-   - let it run `git log -p` over the whole history and the full `npm test` output. Claude Code
-     may cut such a huge output short or write it to a file and read only parts of it: that is
-     the tool protecting your context, not a failure
+   - ask it to read `api/seed/books.json` and then many more files under `api/` with the Read tool
    - start `npm run dev:api`, click through a few pages of the web app (or run `npm test`), and
      paste a long stretch of the API log into the chat
+
+   Large Bash output (such as `git log -p`) is cut to a preview: the tool protects your context.
 4. Ask the question from step 2 again, plus one about a detail from the very first file it read.
    Note any drift, vagueness, or forgotten detail.
 5. **Condense** with `/compact` and focus instructions of your choice. Ask both questions again and

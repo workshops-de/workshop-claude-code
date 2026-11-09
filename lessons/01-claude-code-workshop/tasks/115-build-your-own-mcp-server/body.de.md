@@ -119,7 +119,8 @@ Danach stellt ihr Claude eine Frage, die kein einzelnes Tool beantwortet.
    es gebraucht? Hat es etwas geraten?
 6. Verbessert eine Tool-Beschreibung oder die Form eines Ergebnisses, sodass dieselbe Frage weniger
    Aufrufe oder weniger Ausgabe braucht, startet eine neue Session und fragt erneut.
-7. Legt in `/permissions` eine Ask-Regel `mcp__bookmonkey__create_book` an. Bittet Claude, über
+7. Wechselt in Manual (`Shift+Tab`), denn eine Auto-Session fragt eventuell nicht nach. Legt in
+   `/permissions` eine Ask-Regel `mcp__bookmonkey__create_book` an. Bittet Claude, über
    `create_book` **ein Buch anzulegen** (eine Test-ISBN wie `9990000000002`). Beobachtet die
    Berechtigungsabfrage und erlaubt dann die drei Lese-Tools in `/permissions`. Räumt danach auf: `curl -X POST http://localhost:4730/dev/reset`.
 8. **Vergleicht mit `curl`.** Stellt in einer frischen Session ohne den MCP-Server (`/mcp` erlaubt

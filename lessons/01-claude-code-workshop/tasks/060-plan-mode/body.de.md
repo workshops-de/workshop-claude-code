@@ -8,9 +8,7 @@ hier setzt ihr ihn für eine Änderung ein, bei der es wirklich darauf ankommt.
 ## Das Feature
 
 Im Plan Mode liest und recherchiert Claude Code und schreibt nur seine Plan-Datei. Euer Code bleibt
-unverändert, bis ihr freigebt, außer die Session hat Bypass Permissions verfügbar. Shell-Befehle, die
-nicht nur lesen, prüft der Klassifikator, oder Claude fragt euch. Das Ergebnis ist ein **Plan**, den
-ihr prüft.
+unverändert, bis ihr freigebt. Das Ergebnis ist ein **Plan**, den ihr prüft.
 
 - **Aktivieren** mit `Shift+Tab` (so oft drücken, bis die Statuszeile den Plan Mode anzeigt), mit
   `/plan` vor einem einzelnen Prompt oder direkt beim Start: `claude --permission-mode plan`.

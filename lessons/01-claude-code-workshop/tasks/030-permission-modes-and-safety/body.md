@@ -72,7 +72,7 @@ beats an allow on any other.
 ## Success Criteria
 
 - [ ] You can say which mode your session started in, and why
-- [ ] You saw what runs without a prompt in `acceptEdits`, auto and Manual (steps 2 and 3)
+- [ ] You ran the same task in auto and in Manual and can say how many prompts each gave
 - [ ] You confirmed at least one boundary was respected in conversation
 - [ ] You can explain the difference between a stated boundary and a deny rule
 - [ ] You can say in which order deny, ask and allow are checked, and what happens if no rule matches

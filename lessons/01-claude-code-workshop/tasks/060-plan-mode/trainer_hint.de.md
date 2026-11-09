@@ -12,6 +12,8 @@
 
 - Die Teilnehmenden haben den Plan Mode in der Grundlagen-Aufgabe als Schalter gesehen, der Änderungen sperrt:
   rahmt diese Aufgabe als die „echte“ Version, in der Widerspruch das Ergebnis tatsächlich verändert.
+- Grenzen des Plan Mode: Shell-Befehle, die nicht nur lesen, prüft der Klassifikator, oder Claude
+  fragt nach. Mit verfügbaren Bypass Permissions gilt beides nicht, und Änderungen sind nicht gesperrt.
 - Prüft, ob die Leute den Plan wirklich hinterfragen; ein häufiger Fehler ist, den ersten Entwurf
   anzunehmen. Bittet eine Person zu zeigen, wie sich ihr Plan verändert hat.
 - `Ctrl+G` öffnet den Editor aus `$VISUAL`, sonst aus `$EDITOR`. GUI-Editoren brauchen `--wait`

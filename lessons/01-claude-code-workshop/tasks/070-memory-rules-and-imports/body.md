@@ -77,9 +77,9 @@ have to honour later.
    server-managed fields, read `X-Total-Count` for paging, `docs/openapi.json` is the source of
    truth).
 7. Start a fresh session and run `/context all`: confirm `domain.md` and the imported contract
-   loaded and `api-client.md` did **not**. Ask Claude to read `lib/api.ts`: the line
-   `Loaded .claude/rules/api-client.md` in the conversation is your proof (in our test `/context`
-   did not list the rule even then). Ask a domain question and check the answer uses your glossary.
+   loaded and `api-client.md` did **not**. Ask Claude to read `lib/api.ts`: the proof is the line
+   `Loaded .claude/rules/api-client.md`, which shows up in the conversation after the read. Ask a
+   domain question and check the answer uses your glossary.
 
 ## Success Criteria
 

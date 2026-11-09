@@ -16,7 +16,7 @@ Abhak-Fortschritt).
 
 ## Schritte
 
-1. Installiert BMAD (`npx bmad-method install`, im Test v6.12) und wählt Claude Code als Tool;
+1. Installiert BMAD (`npx bmad-method install`, Version 6.12) und wählt Claude Code als Tool;
    bestätigt, dass die Agenten und Workflows verfügbar sind.
 2. Erstellt mit der Analyst-/PM-Persona ein kurzes **Product Brief**.
 3. Lasst die **Product-Manager**-Persona das Brief in ein Product Requirements Document überführen.
@@ -24,7 +24,8 @@ Abhak-Fortschritt).
    Entscheidungen erstellen.
 5. Zerlegt die Arbeit in **Stories** und lasst dann den Dev-Loop der **Entwickler**-Persona laufen –
    prüft die Diffs und führt die App während des Baus aus.
-6. Führt mit dem Skill `bmad-qa-generate-e2e-tests` einen **QA**-Durchgang aus (eine QA-Persona gibt es nicht) und nutzt den **Party Mode** mindestens
+6. Macht einen **QA**-Durchgang: Führt den Skill `bmad-qa-generate-e2e-tests` aus, er erzeugt
+   automatisierte API- und End-to-End-Tests für eure Features. Nutzt den **Party Mode** mindestens
    einmal, um einen übergreifenden Trade-off aufzulösen.
 7. Nutzt die **Hilfe** der Methode, wann immer ihr unsicher seid, was als Nächstes kommt.
 
@@ -38,5 +39,5 @@ Abhak-Fortschritt).
 ## Referenzen
 
 - BMAD Method – Repository & README: https://github.com/bmad-code-org/BMAD-METHOD
-- BMAD Method: Documentation (beschreibt jetzt die V7-Alpha, nicht v6.12): https://docs.bmad-method.org/
-- BMAD Method: v6.12-Branch: https://github.com/bmad-code-org/BMAD-METHOD/tree/V6.12
+- BMAD Method: Dokumentation (Branch V6.12): https://github.com/bmad-code-org/BMAD-METHOD/tree/V6.12
+- BMAD Method: Doku-Seite (V7, nicht für diese Aufgabe): https://docs.bmad-method.org/

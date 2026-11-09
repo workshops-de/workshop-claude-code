@@ -78,7 +78,7 @@ einer Ebene schlägt ein Allow auf jeder anderen.
 ## Erfolgskriterien
 
 - [ ] Ihr könnt sagen, in welchem Modus eure Session gestartet ist und warum
-- [ ] Ihr habt gesehen, was in `acceptEdits`, Auto und Manual ohne Nachfrage läuft (Schritte 2 und 3)
+- [ ] Ihr habt dieselbe Aufgabe in Auto und in Manual ausgeführt und könnt sagen, wie viele Nachfragen jeweils kamen
 - [ ] Ihr habt bestätigt, dass mindestens eine Grenze im Gespräch eingehalten wurde
 - [ ] Ihr könnt den Unterschied zwischen einer formulierten Grenze und einer Deny-Regel erklären
 - [ ] Ihr könnt sagen, in welcher Reihenfolge Deny, Ask und Allow geprüft werden und was passiert, wenn keine Regel passt

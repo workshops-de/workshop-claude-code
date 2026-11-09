@@ -9,9 +9,9 @@ direction the agent is taking.
 <details>
 <summary>💡 Hint 2: Boundaries can be lost</summary>
 
-In auto mode the classifier re-reads a boundary you state from the transcript; in Manual only the
-model follows it. Either way it can be lost if context is compacted. For a hard guarantee, add a
-deny rule instead of relying on conversation alone.
+In auto mode a second model (the classifier) checks each action. In Manual you decide at each
+prompt. A boundary you state lives only in the conversation and nothing enforces it. For a hard
+guarantee, add a deny rule.
 
 </details>
 

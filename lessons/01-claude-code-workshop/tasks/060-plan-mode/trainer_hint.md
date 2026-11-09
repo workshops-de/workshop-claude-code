@@ -12,6 +12,8 @@
 
 - Participants saw plan mode in the fundamentals task as a switch that blocks edits: frame this task as
   the "for real" version, where pushing back actually changes the outcome.
+- Limits of plan mode: shell commands that are not read-only go through the classifier or ask first.
+  With bypass permissions available, neither applies and edits are not blocked.
 - Check that people really challenge the plan; a common failure is accepting the first draft.
   Ask one participant to show how their plan changed.
 - `Ctrl+G` opens the editor from `$VISUAL`, otherwise `$EDITOR`. GUI editors need `--wait` (for

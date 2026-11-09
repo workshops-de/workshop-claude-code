@@ -22,3 +22,11 @@ If the auto-mode classifier blocks the same action repeatedly, that's a signal, 
 read why before you widen the permissions.
 
 </details>
+
+<details>
+<summary>💡 Hint 4: Your work is missing in the worktree</summary>
+
+Check `git log` in the worktree. Without `baseRef` set to `head`, it starts at the default branch,
+so your commits from step 1 are not there.
+
+</details>
