@@ -112,6 +112,12 @@ other file changes needed for the numbering itself.
   run first for behaviour, safety and anything a demo depends on, the current docs second. Avoid
   generalisations like "meist" or "usually" without a test. If a claim cannot be tested yet, say in
   the trainer notes that it is unverified.
+- **Only write what you ran.** Every statement in a task about what Claude Code does or what a
+  learner will see comes from a real run of that step (throwaway copy of the practice repo, no
+  personal settings, note version and model). The docs alone are not enough. If a step cannot be
+  run, leave the claim out or link to the docs instead of stating it as fact.
+- Write like a trainer talking to colleagues: full, plain sentences. No punchlines, no emoji
+  markers in the task body, no dramatic words.
 - Hints: 2–4 collapsible `<details>` blocks, each nudging without giving away the solution.
 - Trainer notes: learning goals, facilitation notes (common pitfalls, timing, what to watch for),
   time estimate.
