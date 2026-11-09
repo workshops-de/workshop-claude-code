@@ -1,6 +1,6 @@
 ## Learning goals
 
-- **Skills:** launching and steering Claude Code; plan mode as a read-only exploration mode;
+- **Skills:** launching and steering Claude Code; plan mode as an exploration mode without edits;
   reading agent activity; monitoring context usage; managing permissions.
 - **Concepts:** the agent control loop (Reason → Act → Observe); tools vs. text; evidence-backed
   answers; context as the primary resource.

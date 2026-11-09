@@ -13,13 +13,13 @@ You do **not** produce code in this task. You produce understanding, and fluency
 Claude Code reads, searches, and runs commands in your repository, then reasons about what it saw.
 For exploration you want all of that, minus the editing:
 
-- **Plan mode is read-only.** Start a session in it with `claude --permission-mode plan`, or press
-  `Shift+Tab` until the status bar shows `plan mode on`. Claude reads files and runs exploring
-  shell commands, but edits stay blocked until you approve a plan. For this task you never
-  approve one.
+- **Plan mode leaves your code alone.** Start a session in it with `claude --permission-mode plan`,
+  or press `Shift+Tab` until the status bar shows `plan mode on`. Claude reads files, runs exploring
+  shell commands and writes only its plan file. Edits stay blocked until you approve a plan (unless
+  the session has bypass permissions available). For this task you never approve one.
 - **Watch the loop.** Every tool call (Read, Grep, a `git log`) is an _act_; its output is the
-  _observe_ step; the next sentence is the _reason_ step. Open the transcript viewer with `Ctrl+O`
-  to see what Claude actually looked at.
+  _observe_ step. The _reason_ step happens in between, and you usually see only its effect on the
+  next call. Open the transcript viewer with `Ctrl+O` to see what Claude actually looked at.
 - **Slash commands** steer the session: `/help` lists them, `/context` shows how full the context
   window is, `/permissions` shows what Claude may do without asking.
 - **Ask for artefacts, not impressions.** "Draw a Mermaid diagram of the modules and their
@@ -56,10 +56,10 @@ review tasks, so the map you draw today pays off later.
 
 2. **Watch the loop once.** Run `/context`, so you have a baseline. Then ask a first architecture
    question, for example "Which parts does this repository have, and how is each one started?".
-   When the answer is there, press `Ctrl+O` to open the transcript viewer and count the tool calls
-   Claude made. Pick one call and name its three steps: **Reason** (why Claude chose it), **Act**
-   (the call itself), **Observe** (what came back, and how the next step used it). `Ctrl+O`
-   again closes the viewer.
+   When the answer is there, press `Ctrl+O` to open the transcript viewer (Desktop app: press
+   `Ctrl+O` until the view is **Verbose**) and count the tool calls Claude made. Then find a word
+   from the result of one call in the input of the next call: that is **Observe** feeding the next
+   **Act**. In the terminal, `Ctrl+O` again closes the viewer.
 3. Ask for an **architecture overview**: the parts of the system, how they are started, which
    ports they use, and where the data lives. Ask Claude to name the files it based each claim on.
 4. Ask for a **dependency map** as a Mermaid diagram: the main modules of the API and the web app
@@ -80,7 +80,7 @@ review tasks, so the map you draw today pays off later.
 **Feature**
 
 - [ ] You explored the whole session in plan mode and never approved a plan
-- [ ] You can describe one Reason → Act → Observe cycle from your session, tool call included
+- [ ] You found a word from one tool result in the next tool call and can say what it shows
 - [ ] You checked `/context` at the start and at the end and know what filled the window
 - [ ] You can explain when you would approve vs. reject a proposed action
 

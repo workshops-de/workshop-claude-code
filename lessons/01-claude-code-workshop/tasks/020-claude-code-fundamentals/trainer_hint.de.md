@@ -1,6 +1,6 @@
 ## Lernziele
 
-- **Skills:** Claude Code starten und steuern; Plan Mode als schreibgeschützter Erkundungsmodus;
+- **Skills:** Claude Code starten und steuern; Plan Mode als Erkundungsmodus ohne Änderungen;
   Agent-Aktivität lesen; Kontextnutzung überwachen; Berechtigungen verwalten.
 - **Konzepte:** die Agent-Kontrollschleife (Reason → Act → Observe); Tools vs. Text; Antworten mit
   Belegen; Kontext als wichtigste Ressource.
