@@ -28,10 +28,15 @@ Workflow:
 
 1. `scripts/translation-status.sh --todo` lists missing and stale translations (stale = the English
    file was committed after its German sibling).
-2. In Claude Code, run `/translate-task-de <folder>` (or `/translate-task-de --todo`). The skill in
-   `.claude/skills/translate-task-de/` applies the rules of this document.
+2. In Claude Code, run `/workshops-slides:translate-task-de <folder>` (or `… --todo`). The skill comes
+   from the workshops.de plugin (`workshops-de/claude-plugins`, enabled in `.claude/settings.json`)
+   and applies the rules of this document.
 3. Review the German files, commit one task per commit:
    `docs(tasks): translate <folder> to german`.
+
+The German task title is the German slide's „Aufgabe:“ title with the feature prefix kept: slide
+`Aufgabe: Den Leselisten-Flow absichern` → title `Hooks: Den Leselisten-Flow absichern`. If the German
+slide block for a task already uses a phrasing, reuse it.
 
 When you change an English task file, either update the German file in the same commit or leave
 it — the status script will show it as stale.
