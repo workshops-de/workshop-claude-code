@@ -22,7 +22,7 @@ or pick a permission mode.
    exists) and `.total_cost_usd`.
 4. Add a **project script** that pipes the diff against the main branch into `claude -p` and asks
    it to report issues. Pre-approve only the tools it needs.
-5. Run `export ANTHROPIC_API_KEY=...` first, because `--bare` never reads your login. Then try
+5. Run `export ANTHROPIC_API_KEY=...` first (PowerShell: `$env:ANTHROPIC_API_KEY="..."`), because `--bare` never reads your login. Then try
    `--bare` and explain what stops loading; discuss why that matters for CI reproducibility.
 6. Reflect on which repetitive checks in your workflow could become headless Claude steps.
 

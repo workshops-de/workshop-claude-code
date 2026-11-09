@@ -40,9 +40,9 @@ Session nicht verfügbar ist, startet sie stattdessen in Manual.
    Nachfragen ihr jetzt bekommt.
 4. Formuliert im Gespräch eine **Grenze** (zum Beispiel „führe keine Netzwerk-Befehle aus, bis ich
    es sage“) und prüft, dass Claude sie auch dort einhält, wo die Standardregeln die Aktion
-   erlauben würden. Schreibt dieselbe Grenze danach als **Deny-Regel** in die
-   `.claude/settings.local.json` (unter `permissions`, zum Beispiel `"deny": ["Bash(curl *)"]`),
-   führt `/compact` aus und testet noch einmal.
+   erlauben würden. Führt `/compact` aus und testet die Grenze noch einmal. Schreibt dieselbe
+   Grenze danach als **Deny-Regel** in die `.claude/settings.local.json` (unter `permissions`,
+   zum Beispiel `"deny": ["Bash(curl *)"]`) und testet ein weiteres Mal.
 5. Entscheidet für drei Szenarien (ein unbekanntes Repo erkunden, an Code iterieren, den ihr gerade
    reviewt, ein abgeschotteter CI-Job), welcher Modus passt und warum.
 6. Lest nach, wie ihr autonom **sicher** arbeitet (Sandbox oder Dev-Container), und haltet fest,

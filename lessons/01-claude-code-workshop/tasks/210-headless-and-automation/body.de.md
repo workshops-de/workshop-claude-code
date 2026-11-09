@@ -24,7 +24,7 @@ gleiche Ergebnis liefert. Weil kein Mensch Rückfragen beantwortet, gebt ihr Too
    existiert) und `.total_cost_usd`.
 4. Fügt ein **Projekt-Skript** hinzu, das den Diff gegen den Main-Branch per Pipe in `claude -p`
    gibt und es bittet, Probleme zu melden. Gebt nur die Tools vorab frei, die es braucht.
-5. Führt zuerst `export ANTHROPIC_API_KEY=...` aus, denn `--bare` liest euren Login nie. Probiert
+5. Führt zuerst `export ANTHROPIC_API_KEY=...` aus (PowerShell: `$env:ANTHROPIC_API_KEY="..."`), denn `--bare` liest euren Login nie. Probiert
    dann `--bare` und erklärt, was nicht mehr geladen wird; diskutiert, warum das für die
    Reproduzierbarkeit in CI wichtig ist.
 6. Überlegt, welche wiederkehrenden Prüfungen in eurem Workflow zu Headless-Claude-Schritten werden
