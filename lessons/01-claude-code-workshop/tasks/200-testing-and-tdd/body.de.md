@@ -56,7 +56,8 @@ ist eine **Contract-Test-Suite**, die nur über HTTP spricht und ihre Basis-URL 
    fehlendem Titel) schreiben, nirgends eine Implementierung. Legt ein Root-Skript an, damit ein
    Befehl die Suite ausführt (die Aufgabe zu autonomen Workflows setzt darauf auf):
    `"contract": "cd contract-tests && npx vitest run"` in der Root-`package.json`, verwendet als
-   `API_URL=http://localhost:4730 npm run contract`.
+   `API_URL=http://localhost:4730 npm run contract` (PowerShell:
+   `$env:API_URL="http://localhost:4730"; npm run contract`).
 2. Prüft die Tests, bittet den Agenten, weitere **Randfälle** aufzuzählen, und ergänzt die, die er
    übersehen hat. Führt die Suite gegen die Referenz-API aus: Alles muss grün sein. Korrigiert die
    Tests, nie die API.
@@ -77,7 +78,7 @@ ist eine **Contract-Test-Suite**, die nur über HTTP spricht und ihre Basis-URL 
    fehlschlagen. Lasst den Agenten dann **gerade genug** implementieren, damit die Tests aus
    Schritt 1 grün werden, und sagt ihm, dass er die Tests nicht anfassen darf.
 5. Bindet die **Quality Gates** (Type-Check, Lint, Build, Unit-Tests, Contract-Tests) in einen
-   Befehl ein und haltet ihn im Projekt-Memory fest.
+   Befehl ein und haltet ihn in der `CLAUDE.md` fest.
 6. Reflektiert: Wie hat eine lauffähige, fehlschlagende Test-Suite das Verhalten des Agenten
    verändert, verglichen mit einer Anfrage in Textform?
 

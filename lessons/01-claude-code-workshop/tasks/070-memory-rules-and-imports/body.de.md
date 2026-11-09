@@ -1,6 +1,6 @@
 ## Überblick
 
-Baut euer Projekt-Gedächtnis über eine einzelne `CLAUDE.md` hinaus aus: Teilt Anweisungen in
+Baut eure Projekt-Anweisungen über eine einzelne `CLAUDE.md` hinaus aus: Teilt Anweisungen in
 fokussierte **Regeldateien** auf, beschränkt manche davon auf die Dateien, die sie betreffen, und
 holt gemeinsame Dokumente per **Imports** herein. Damit legt ihr eure Fachsprache und den
 API-Vertrag fest, sodass jede künftige Session sie spricht, ohne den Kontext jedes einzelnen Prompts
@@ -71,7 +71,9 @@ den euer eigenes Backend später einhalten muss.
    http://localhost:4730/dev/reset` stellt die 50 Seed-Bücher wieder her.
 5. Lasst ihn eine **kompakte** `docs/api-contract.md` schreiben (Endpoints, Query-Parameter,
    Statuscodes; ein Bildschirm, nicht das ganze JSON) und sie in der `CLAUDE.md` mit
-   `@docs/api-contract.md` **importieren**.
+   `@docs/api-contract.md` **importieren**. Legt die `CLAUDE.md` an, falls sie fehlt, und ergänzt
+   neben diesem Import `@AGENTS.md`: `create-next-app` hat eine `AGENTS.md` erzeugt, und Claude Code
+   liest sie nicht mehr, sobald es eine `CLAUDE.md` gibt.
 6. Fügt eine **pfadbezogene Regel** `.claude/rules/api-client.md` hinzu, deren `paths` auf euren
    API-Client-Code zeigen (im Scaffold aus der Plan-Mode-Aufgabe ist das `lib/api.ts`, es gibt kein
    `src/`). Sie enthält die Konventionen, die nur dort zählen (per ISBN ansprechen, nie

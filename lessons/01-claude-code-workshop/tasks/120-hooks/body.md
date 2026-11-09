@@ -61,6 +61,7 @@ honest.
 ## Prerequisites
 
 - `jq` installed (used to read hook input).
+- On Windows: run hook scripts under Git Bash and install `jq` with `winget install jqlang.jq`.
 - Prettier in the project: `npm i -D prettier` (`create-next-app` doesn't add it). Add a small
   `.prettierrc` that matches your current style, or the first hook run reformats code you didn't
   touch.

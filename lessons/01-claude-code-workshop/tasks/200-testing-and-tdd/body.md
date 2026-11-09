@@ -53,7 +53,8 @@ suite** that only talks HTTP and reads its base URL from `API_URL`:
    `createdAt` / `updatedAt`, **409 for a duplicate ISBN**, 400 for a missing title), no
    implementation anywhere. Add a root script so one command runs the suite (the autonomous workflows
    task relies on it): `"contract": "cd contract-tests && npx vitest run"` in the root `package.json`, used as
-   `API_URL=http://localhost:4730 npm run contract`.
+   `API_URL=http://localhost:4730 npm run contract` (PowerShell:
+   `$env:API_URL="http://localhost:4730"; npm run contract`).
 2. Review the tests, ask the agent to enumerate further **edge cases**, and add the ones it missed.
    Run the suite against the reference API: everything must be green. Fix tests, never the API.
 3. Scaffold the backend in plan mode:
@@ -71,7 +72,7 @@ suite** that only talks HTTP and reads its base URL from `API_URL`:
    Then let the agent implement **just enough** to turn the tests from step 1 green, and tell it
    not to touch the tests.
 5. Wire the **quality gates** (type-check, lint, build, unit tests, contract tests) into one command
-   and record it in project memory.
+   and record it in `CLAUDE.md`.
 6. Reflect: how did a runnable, failing test suite change the agent's behaviour compared to a
    prose request?
 

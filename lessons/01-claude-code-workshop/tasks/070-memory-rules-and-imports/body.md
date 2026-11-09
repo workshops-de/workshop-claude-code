@@ -1,6 +1,6 @@
 ## Overview
 
-Grow your project memory beyond a single `CLAUDE.md`: split instructions into focused **rule
+Grow your project instructions beyond a single `CLAUDE.md`: split instructions into focused **rule
 files**, scope some of them to the files they govern, and pull shared documents in with
 **imports**. You will use this to pin down your domain language and the API contract so every
 future session speaks them, without bloating the context of every single prompt.
@@ -70,6 +70,8 @@ have to honour later.
    restores the 50 seed books.
 5. Have it write a **compact** `docs/api-contract.md` (endpoints, query parameters, status codes;
    one screen, not the full JSON) and **import** it from `CLAUDE.md` with `@docs/api-contract.md`.
+   Create `CLAUDE.md` if it is missing, and add `@AGENTS.md` next to that import: `create-next-app`
+   wrote an `AGENTS.md`, and Claude Code stops reading it once a `CLAUDE.md` exists.
 6. Add a **path-scoped rule** `.claude/rules/api-client.md` with `paths` pointing at your API
    client code (in the scaffold from the plan mode task that is `lib/api.ts`, there is no `src/`), holding the conventions that only matter there (address by ISBN, never send
    server-managed fields, read `X-Total-Count` for paging, `docs/openapi.json` is the source of

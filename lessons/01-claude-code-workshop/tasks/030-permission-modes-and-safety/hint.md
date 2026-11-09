@@ -21,3 +21,11 @@ compacted. For a hard guarantee, add a deny rule instead of relying on conversat
 matters.
 
 </details>
+
+<details>
+<summary>💡 Hint 4: A rule seems to do nothing</summary>
+
+A deny rule beats an allow rule, in the same file or any other. Rules are not sorted by how
+specific they are. `/permissions` shows which settings file each rule comes from.
+
+</details>

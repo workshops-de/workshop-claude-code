@@ -68,14 +68,14 @@ Aufgabe gilt.
    Beispiel „Nutze den shadcn-Skill, um dem Katalog einen Skeleton-Ladezustand und einen leeren
    Zustand hinzuzufügen“. Vergleicht, wie sich das Ergebnis vom Lauf ohne Anleitung unterscheidet.
 6. Vergleicht: Was wusste der Skill, das der Agent allein wahrscheinlich falsch gemacht hätte?
-   Haltet die Antwort in einer Zeile eures Projekt-Gedächtnisses fest.
+   Haltet die Antwort in einer Zeile eurer `CLAUDE.md` fest.
 
 ## Erfolgskriterien
 
 **Feature**
 
 - [ ] Ihr habt den Skill-Katalog durchsucht, bewusst einen Skill gewählt, und er erscheint in `/skills`
-- [ ] Ihr habt mindestens einen automatischen Skill-Aufruf beobachtet und den Skill explizit beim Namen aufgerufen
+- [ ] Ihr habt beobachtet, ob Claude den Skill von selbst geladen hat, und den Skill explizit beim Namen aufgerufen
 - [ ] Ihr könnt Progressive Disclosure erklären und warum dieses Wissen in einen Skill gehört und nicht in
       die `CLAUDE.md`
 
