@@ -12,6 +12,8 @@
 - Have both a Python and a TypeScript quickstart ready since the room will likely be mixed.
 - This is a good moment to clarify the SDK/CLI/Client-SDK/Managed-Agents landscape at a high level
   if participants ask about production deployment options.
+- Participants without an API key follow the trainer's live demo. Never share a trainer key with
+  the room.
 
 ## Time estimate
 

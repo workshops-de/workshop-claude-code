@@ -79,4 +79,5 @@ right. Your memory file should hold the facts the next session needs, checked ag
 - Claude Code: Memory and CLAUDE.md: https://code.claude.com/docs/en/memory
 - Claude Code: Commands (`/init`, `/memory`): https://code.claude.com/docs/en/commands
 - Claude Code: Best practices: https://code.claude.com/docs/en/best-practices
-- AGENTS.md convention (related idea): https://agents.md
+- AGENTS.md (https://agents.md): read by Claude Code when no `CLAUDE.md` exists; share it with `@AGENTS.md`
+- Other scopes: `~/.claude/CLAUDE.md` (user), `CLAUDE.local.md` (local, git-ignored), managed policy file (IT)

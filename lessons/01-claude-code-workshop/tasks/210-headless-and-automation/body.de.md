@@ -9,7 +9,7 @@ Vorab-Freigeben von Tools für unbeaufsichtigte Läufe.
 
 Claude Code folgt der Unix-Philosophie: Mit `-p` (`--print`) läuft jeder Befehl nicht interaktiv,
 liest `stdin` und schreibt das Ergebnis nach `stdout`. `--bare` überspringt die automatische Suche
-nach Hooks, Skills, Plugins, MCP-Servern und `CLAUDE.md`, damit ein Skript auf jedem Rechner das
+nach Hooks, Skills, Plugins, MCP-Servern, Auto Memory, Subagents, Commands und `CLAUDE.md`, damit ein Skript auf jedem Rechner das
 gleiche Ergebnis liefert. Weil kein Mensch Rückfragen beantwortet, gebt ihr Tools mit
 `--allowedTools` vorab frei oder wählt einen Permission Mode.
 
@@ -20,10 +20,12 @@ gleiche Ergebnis liefert. Weil kein Mensch Rückfragen beantwortet, gebt ihr Too
 2. **Leitet** Daten durch Claude **per Pipe**: Gebt ein Build-Log oder einen `git diff` in
    `claude -p` und leitet die Erklärung in eine Datei um.
 3. Erzeugt **strukturierte Ausgabe**: Führt eine Abfrage mit `--output-format json` aus, dann noch
-   einmal eingeschränkt mit `--json-schema`, und lest ein Feld mit `jq` aus.
+   einmal eingeschränkt mit `--json-schema`, und lest ein Feld mit `jq` aus. Die Felder sind `.result`, `.structured_output` (prüft, ob es
+   existiert) und `.total_cost_usd`.
 4. Fügt ein **Projekt-Skript** hinzu, das den Diff gegen den Main-Branch per Pipe in `claude -p`
    gibt und es bittet, Probleme zu melden. Gebt nur die Tools vorab frei, die es braucht.
-5. Probiert `--bare` und erklärt, was nicht mehr geladen wird; diskutiert, warum das für die
+5. Führt zuerst `export ANTHROPIC_API_KEY=...` aus, denn `--bare` liest euren Login nie. Probiert
+   dann `--bare` und erklärt, was nicht mehr geladen wird; diskutiert, warum das für die
    Reproduzierbarkeit in CI wichtig ist.
 6. Überlegt, welche wiederkehrenden Prüfungen in eurem Workflow zu Headless-Claude-Schritten werden
    könnten.

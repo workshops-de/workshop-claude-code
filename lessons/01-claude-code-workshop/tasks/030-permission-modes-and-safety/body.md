@@ -38,6 +38,8 @@ Manual instead.
    same task: count the prompts you get now.
 4. State a **boundary** in conversation (for example, "don't run any network commands until I say
    so") and verify Claude respects it even where defaults would allow the action.
+   Then write the same boundary as a **deny rule** in `.claude/settings.local.json` (under
+   `permissions`, for example `"deny": ["Bash(curl *)"]`), run `/compact`, and test again.
 5. Decide, for three scenarios (exploring an unfamiliar repo, iterating on code you're reviewing, a
    locked-down CI job), which mode fits and why.
 6. Read how to run autonomously **safely** (a sandbox or dev container) and note why deterministic

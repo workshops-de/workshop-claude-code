@@ -9,8 +9,8 @@
 
 ## Facilitation notes
 
-- Directly builds on the previous task's quality-gate command — reuse it as the thing being
-  wrapped into a script here.
+- The script wraps a `git diff` review (step 4). If time allows, the previous task's quality-gate
+  command can be a second thing to wrap.
 - If API costs are a concern for the room, point out `total_cost_usd` in the JSON output as a way
   to track spend per invocation.
 

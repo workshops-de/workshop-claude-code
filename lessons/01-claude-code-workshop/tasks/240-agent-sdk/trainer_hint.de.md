@@ -13,6 +13,8 @@
   wahrscheinlich gemischt ist.
 - Das ist ein guter Moment, um die Landschaft aus SDK, CLI, Client SDK und Managed Agents grob
   einzuordnen, falls Teilnehmende nach Optionen für den Produktivbetrieb fragen.
+- Teilnehmende ohne API Key folgen der Live-Demo. Einen Trainer-Key nie mit dem
+  Raum teilen.
 
 ## Zeitbedarf
 

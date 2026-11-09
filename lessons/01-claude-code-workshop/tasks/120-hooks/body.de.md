@@ -64,6 +64,7 @@ der jede Änderung formatiert und typprüft, den Agenten auf Kurs hält.
 ## Voraussetzungen
 
 - `jq` installiert (liest die Hook-Eingabe).
+- Unter Windows: Hook-Skripte unter Git Bash ausführen und `jq` mit `winget install jqlang.jq` installieren.
 - Prettier im Projekt: `npm i -D prettier` (`create-next-app` fügt es nicht hinzu). Legt eine
   kleine `.prettierrc` an, die zu eurem aktuellen Stil passt, sonst formatiert der erste Hook-Lauf
   Code um, den ihr nicht angefasst habt.

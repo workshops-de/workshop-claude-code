@@ -89,4 +89,5 @@ braucht, geprüft am Code.
 - Claude Code: Memory and CLAUDE.md: https://code.claude.com/docs/en/memory
 - Claude Code: Commands (`/init`, `/memory`): https://code.claude.com/docs/en/commands
 - Claude Code: Best practices: https://code.claude.com/docs/en/best-practices
-- AGENTS.md convention (related idea): https://agents.md
+- AGENTS.md (https://agents.md): wird von Claude Code gelesen, wenn es keine `CLAUDE.md` gibt; teilen mit `@AGENTS.md`
+- Weitere Ebenen: `~/.claude/CLAUDE.md` (User), `CLAUDE.local.md` (lokal, von Git ignoriert), Managed-Policy-Datei (IT)

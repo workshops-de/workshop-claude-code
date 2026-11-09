@@ -8,7 +8,7 @@ can drop into build scripts, pipelines, and automation. Learn non-interactive pr
 
 Claude Code follows the Unix philosophy: add `-p` (`--print`) to run any command
 non-interactively, read `stdin`, and write the result to `stdout`. `--bare` skips auto-discovery of
-hooks, skills, plugins, MCP servers, and `CLAUDE.md` so a script gets the same result on every
+hooks, skills, plugins, MCP servers, auto memory, subagents, commands, and `CLAUDE.md` so a script gets the same result on every
 machine. Because there is no human to answer prompts, you pre-approve tools with `--allowedTools`
 or pick a permission mode.
 
@@ -18,10 +18,12 @@ or pick a permission mode.
 2. **Pipe** data through Claude: feed a build log or a `git diff` into `claude -p` and redirect the
    explanation to a file.
 3. Get **structured output**: run a query with `--output-format json`, then again constrained with
-   `--json-schema`, and parse a field with `jq`.
+   `--json-schema`, and parse a field with `jq`. The fields are `.result`, `.structured_output` (check that it
+   exists) and `.total_cost_usd`.
 4. Add a **project script** that pipes the diff against the main branch into `claude -p` and asks
    it to report issues. Pre-approve only the tools it needs.
-5. Try `--bare` and explain what stops loading; discuss why that matters for CI reproducibility.
+5. Run `export ANTHROPIC_API_KEY=...` first, because `--bare` never reads your login. Then try
+   `--bare` and explain what stops loading; discuss why that matters for CI reproducibility.
 6. Reflect on which repetitive checks in your workflow could become headless Claude steps.
 
 ## Success Criteria

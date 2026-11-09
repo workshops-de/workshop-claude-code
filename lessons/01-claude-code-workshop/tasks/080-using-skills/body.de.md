@@ -68,7 +68,7 @@ Aufgabe gilt.
    Beispiel „Nutze den shadcn-Skill, um dem Katalog einen Skeleton-Ladezustand und einen leeren
    Zustand hinzuzufügen“. Vergleicht, wie sich das Ergebnis vom Lauf ohne Anleitung unterscheidet.
 6. Vergleicht: Was wusste der Skill, das der Agent allein wahrscheinlich falsch gemacht hätte?
-   Haltet die Antwort in einer Zeile eures Projekt-Gedächtnisses fest.
+   Haltet die Antwort in einer Zeile eurer `CLAUDE.md` fest.
 
 ## Erfolgskriterien
 

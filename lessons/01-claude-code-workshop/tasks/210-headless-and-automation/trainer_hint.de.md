@@ -9,8 +9,8 @@
 
 ## Hinweise zur Durchführung
 
-- Baut direkt auf dem Quality-Gate-Befehl der vorigen Aufgabe auf – ihn hier als das verwenden,
-  was in ein Skript eingebunden wird.
+- Das Skript verpackt ein Review des `git diff` (Schritt 4). Wenn Zeit bleibt, kann der
+  Quality-Gate-Befehl der vorigen Aufgabe als Zweites verpackt werden.
 - Sind API-Kosten ein Thema im Raum, auf `total_cost_usd` in der JSON-Ausgabe hinweisen, um die
   Ausgaben pro Aufruf zu verfolgen.
 

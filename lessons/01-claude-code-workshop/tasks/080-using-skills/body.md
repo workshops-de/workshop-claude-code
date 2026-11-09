@@ -64,7 +64,7 @@ comes from the running `bookmonkey-api`; your API-client rule from the previous 
    a skeleton loading state and an empty state to the catalogue". Compare how the result differs
    from the unguided run.
 6. Compare: what did the skill know that the agent alone probably would have gotten wrong? Record
-   the answer in one line of your project memory.
+   the answer in one line of your `CLAUDE.md`.
 
 ## Success Criteria
 
