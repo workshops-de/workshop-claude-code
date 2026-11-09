@@ -19,7 +19,8 @@ Mit zwei Remotes nimmt `gh` womöglich das Original-Repository. Übergebt jedem 
 <details>
 <summary>💡 Tipp 3: In der CI ist enger besser</summary>
 
-Auf einem Runner genehmigt niemand Tool-Aufrufe. Was `--allowedTools` erlaubt, darf Claude tun.
+Auf einem Runner genehmigt niemand Tool-Aufrufe. Was `--allowedTools` erlaubt, darf Claude tun,
+und Aufrufe ohne Freigabepflicht (etwa lesende Bash-Befehle) laufen auch ohne Eintrag.
 Fragt euch bei jedem Tool in der Liste: Braucht der Modus `analyse` es?
 
 </details>

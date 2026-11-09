@@ -18,7 +18,8 @@ command, or run `gh repo set-default` once and choose your fork.
 <details>
 <summary>💡 Hint 3: Tighter is better in CI</summary>
 
-Nobody approves tool calls on a runner. Whatever `--allowedTools` permits, Claude may do. Ask
+Nobody approves tool calls on a runner. Whatever `--allowedTools` permits, Claude may do, and
+calls that need no approval (such as read-only Bash commands) run without an entry. Ask
 yourself for each tool in the list: does the `analyse` mode need it?
 
 </details>

@@ -122,7 +122,7 @@ folgt für die Läufe auf GitHub der Live-Demo des Trainers.
    Issue-Events laufen vom Default-Branch.
 10. Wenn der erste Lauf rechtzeitig zurückkam: Entfernt das Label, fügt `analyse` erneut hinzu und
     vergleicht den neuen Kommentar mit dem ersten.
-11. **Räumt auf**, wenn ihr fertig seid, damit keine Zugangsdaten zurückbleiben:
+11. **Räumt auf**, wenn ihr fertig seid:
 
     ```bash
     gh secret delete CLAUDE_CODE_OAUTH_TOKEN --repo $FORK   # oder ANTHROPIC_API_KEY
@@ -131,8 +131,10 @@ folgt für die Läufe auf GitHub der Live-Demo des Trainers.
     Entfernt die Claude-App vom Fork: github.com → euer **Settings → Applications → Installed
     GitHub Apps → Claude → Configure**, dann den Fork aus den ausgewählten Repositories entfernen
     (oder die App deinstallieren). Wenn ihr den Fork nicht mehr braucht, löscht ihn:
-    einmal `gh auth refresh -s delete_repo`, dann `gh repo delete $FORK`. Das Token aus
-    `claude setup-token` ist ein Jahr gültig: Lasst keine Kopie davon herumliegen.
+    einmal `gh auth refresh -s delete_repo`, dann `gh repo delete $FORK`. Ein gelöschtes Secret
+    beendet die Zugangsdaten nicht: Löscht einen API-Key auch in der Claude Console. Ein Token aus
+    `claude setup-token` bleibt ein Jahr gültig, und die Doku nennt keinen Widerruf: Behaltet keine
+    Kopie.
 
 ## Erfolgskriterien
 
@@ -150,6 +152,7 @@ folgt für die Läufe auf GitHub der Live-Demo des Trainers.
 - [ ] Der Default-Branch eures Forks besteht weiterhin `npm test`; es wurde nichts gemergt, was ihr nicht geprüft habt
 - [ ] Nach dem Aufräumen zeigt `gh secret list --repo $FORK` kein Claude-Secret, und die Claude-App
       hat keinen Zugriff mehr auf den Fork (oder der Fork ist gelöscht)
+- [ ] Ihr habt keine Kopie des Tokens behalten, und ein API-Key ist auch in der Console gelöscht
 
 ## Referenzen
 

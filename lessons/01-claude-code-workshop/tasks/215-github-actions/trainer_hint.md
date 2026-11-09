@@ -24,8 +24,8 @@
   everyday shortcut.
 - Good discussion for step 1: the issue title and body are text from whoever opened the issue, and
   the workflow puts them into Claude's prompt. Who can trigger a run, and what could a malicious
-  issue ask for? The action only runs for users with write access by default; talk about why the
-  tool list is the real boundary.
+  issue ask for? The action only runs for users with write access by default; talk about what really
+  limits a run: the tool list, the workflow's `GITHUB_TOKEN` permissions, and that access check.
 - Do not comment on whether Claude's analysis of the ticket is correct. The debugging task (and
   the private trainer repo, `bookmonkey-legacy-trainer`, `SOLUTIONS.md`) covers that. Here the
   point is the setup and the review of the comment.
@@ -36,8 +36,9 @@
   room without grading them, then let participants tighten one of them in step 9.
 - Windows participants: the snippets are Bash. Git Bash works as is; in PowerShell only the
   `FORK=` variable line changes (`$FORK = "..."`).
-- Insist on the cleanup step (secret, app access, optional fork deletion). A forgotten secret
-  with a one-year token in a public fork is the real risk of this task.
+- Insist on the cleanup step (secret, app access, optional fork deletion, API key in the Console).
+  Deleting a secret does not end the credential: a copy of the one-year token in a shell history
+  or a chat is the real risk of this task.
 
 ## Time estimate
 
