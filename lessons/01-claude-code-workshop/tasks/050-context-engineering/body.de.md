@@ -22,7 +22,7 @@ Lies api/routes.js komplett mit dem Read-Tool und fasse jeden Abschnitt in zwei 
 Lies jetzt api/seed/books.json und danach jede Datei unter api/services, api/lib und api/test mit dem Read-Tool. Sag mir nur, wie viele Dateien du gelesen hast.
 ```
 
-In unseren Läufen waren das über 40 Dateien. Die Session ist jetzt deutlich größer als nach Schritt 1.
+In unserem Lauf waren das rund 40 Dateien. Die Session ist jetzt deutlich größer als nach Schritt 1.
 
 ### 3. Fragt noch einmal
 
@@ -38,7 +38,7 @@ Vergleicht mit Schritt 1. In unseren Läufen blieb die Antwort richtig, die Sess
 /compact Behalte die Verlängerungsregeln für Ausleihen und die Dateien, in denen sie stehen.
 ```
 
-Claude fasst das Gespräch zusammen und macht mit der Zusammenfassung weiter. Fragt danach, was nur im Gespräch stand, zum Beispiel: `Wie viele Dateien hast du vorhin unter api/test gelesen?` Prüft die Antwort mit `ls api/test`. Bei uns stand die Zahl vorher falsch im Gespräch, nach dem Kompaktieren stimmte sie. Ihr seht also, was die Zusammenfassung behält, und müsst Details nachprüfen.
+Claude fasst das Gespräch zusammen und macht mit der Zusammenfassung weiter. Fragt danach, was nur im Gespräch stand, zum Beispiel: `Wie viele Dateien hast du vorhin unter api/test gelesen?` Prüft die Antwort mit `ls api/test`. In einem Lauf nannte Claude vorher eine falsche Zahl und danach die richtige, das kann bei euch anders sein. Ihr seht also, was die Zusammenfassung behält, und müsst Details nachprüfen.
 
 ### 5. Startet neu
 

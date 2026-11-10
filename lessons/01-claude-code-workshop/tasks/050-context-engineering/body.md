@@ -22,7 +22,7 @@ Read api/routes.js completely with the Read tool and summarize each section in t
 Now read api/seed/books.json and then every file under api/services, api/lib and api/test with the Read tool. Only tell me how many files you read.
 ```
 
-In our runs that was over 40 files. The session is now much bigger than after step 1.
+In our run that was about 40 files. The session is now much bigger than after step 1.
 
 ### 3. Ask again
 
@@ -38,7 +38,7 @@ Compare with step 1. In our runs the answer stayed correct, the session was just
 /compact Keep the renewal rules for loans and the files they are in.
 ```
 
-Claude summarizes the conversation and continues with the summary. Afterwards ask about something that only existed in the conversation, for example: `How many files under api/test did you read earlier?` Check the answer with `ls api/test`. In our run the number in the conversation was wrong before compacting and right afterwards. So you see what the summary keeps, and you must verify details.
+Claude summarizes the conversation and continues with the summary. Afterwards ask about something that only existed in the conversation, for example: `How many files under api/test did you read earlier?` Check the answer with `ls api/test`. In one run Claude gave a wrong number before and the right one afterwards; this may differ for you. So you see what the summary keeps, and you must verify details.
 
 ### 5. Restart
 

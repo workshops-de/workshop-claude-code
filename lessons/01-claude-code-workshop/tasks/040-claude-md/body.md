@@ -38,7 +38,7 @@ Start a new session and ask `Welchen Port nutzt die API?`. The answer comes in G
 Lies api/package.json. Welchen Port nutzt die API?
 ```
 
-Now the answer comes in Italian. If you use Claude in the terminal, you also see the line `Loaded api/CLAUDE.md`. Afterwards ask Claude to replace the Italian rule with a real API rule from step 3.
+Now the answer comes in Italian. If you use Claude in the terminal, you also see the line `Loaded api/CLAUDE.md`. Now ask Claude to replace the Italian rule with a real API rule, otherwise it stays in place for the later tasks.
 
 ### 6. Ask the question from step 1 again
 

@@ -38,7 +38,7 @@ Startet eine neue Session und fragt `Welchen Port nutzt die API?`. Die Antwort k
 Lies api/package.json. Welchen Port nutzt die API?
 ```
 
-Jetzt kommt die Antwort auf Italienisch. Wer Claude im Terminal nutzt, sieht dabei die Zeile `Loaded api/CLAUDE.md`. Bittet Claude danach, die Italienisch-Regel durch eine echte Regel für die API aus Schritt 3 zu ersetzen.
+Jetzt kommt die Antwort auf Italienisch. Wer Claude im Terminal nutzt, sieht dabei die Zeile `Loaded api/CLAUDE.md`. Bittet Claude jetzt, die Italienisch-Regel durch eine echte Regel für die API zu ersetzen, sonst bleibt sie für die späteren Aufgaben stehen.
 
 ### 6. Stellt die Frage aus Schritt 1 noch einmal
 
