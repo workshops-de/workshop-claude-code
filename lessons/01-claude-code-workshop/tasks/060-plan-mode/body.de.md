@@ -14,7 +14,7 @@ Claude liest und prüft, zeigt einen Plan und legt keine Projektdateien an. Scha
 
 ### 2. Korrigiert den Plan
 
-Lest den Plan genau. In unseren Läufen enthielt er Dinge, die wir nicht wollten: einen `src`-Ordner, eine Umgebungsvariable mit anderem Namen, eine Login-Seite mit Cookie-Prüfung. Schickt:
+Lest den Plan genau. In unserem Lauf enthielt er Dinge, die wir nicht wollten: einen `src`-Ordner, eine Umgebungsvariable mit anderem Namen, eine Login-Seite mit Cookie-Prüfung. Schickt:
 
 ```text
 Ändere den Plan: Kein src-Ordner, die Seiten liegen direkt in app/. Die Umgebungsvariable heißt NEXT_PUBLIC_API_URL. Der geschützte Bereich ist vorerst nur eine Seite /library mit einer kurzen Überschrift, ohne Login und ohne Cookie. Ich ergänze die Anmeldung später selbst. Zeig mir den neuen Plan, ändere noch nichts.

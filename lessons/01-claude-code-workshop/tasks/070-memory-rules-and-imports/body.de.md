@@ -44,7 +44,7 @@ Claude kennt eure Regel noch nicht. Bittet es dann in derselben Session:
 Füge in lib/api.ts eine Funktion getBook hinzu, die ein Buch lädt, und wirf bei Fehlern einen Error.
 ```
 
-Sobald Claude `lib/api.ts` öffnet, lädt die Regel, und die neue Funktion folgt euren Konventionen. In unserem Lauf begannen alle neuen Fehlermeldungen mit `BookMonkey-API:`.
+Sobald Claude `lib/api.ts` öffnet, lädt die Regel, und die neue Funktion folgt euren Konventionen. In unserem Lauf folgten die neuen Fehlermeldungen dem Präfix, den wir in der Regel festgelegt hatten.
 
 ### Was gerade passiert ist
 

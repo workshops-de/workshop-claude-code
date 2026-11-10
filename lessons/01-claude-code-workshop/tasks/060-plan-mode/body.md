@@ -14,7 +14,7 @@ Claude reads and checks, shows a plan and creates no project files. Look at the 
 
 ### 2. Correct the plan
 
-Read the plan closely. In our runs it contained things we did not want: a `src` folder, an environment variable with a different name, a login page with a cookie check. Send:
+Read the plan closely. In our run it contained things we did not want: a `src` folder, an environment variable with a different name, a login page with a cookie check. Send:
 
 ```text
 Change the plan: no src folder, the pages live directly in app/. The environment variable is called NEXT_PUBLIC_API_URL. The protected area is for now just a page /library with a short heading, without login and without a cookie. I will add sign-in myself later. Show me the new plan, do not change anything yet.

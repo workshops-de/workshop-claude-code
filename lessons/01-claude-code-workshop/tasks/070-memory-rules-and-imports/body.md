@@ -44,7 +44,7 @@ Claude does not know your rule yet. Then ask it in the same session:
 Add a function getBook to lib/api.ts that loads a book and throws an Error on failure.
 ```
 
-As soon as Claude opens `lib/api.ts`, the rule loads and the new function follows your conventions. In our run all new error messages started with `BookMonkey-API:`.
+As soon as Claude opens `lib/api.ts`, the rule loads and the new function follows your conventions. In our run the new error messages followed the prefix we had set in the rule.
 
 ### What just happened
 

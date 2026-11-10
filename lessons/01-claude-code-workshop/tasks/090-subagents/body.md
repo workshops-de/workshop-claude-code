@@ -32,7 +32,7 @@ Claude starts the subagent, the reviewer reads the files and your conversation s
 
 ### 5. Judge the findings yourself
 
-Pick one finding that seems plausible to you and one you think is exaggerated. Tell Claude in your own words what you want to do with each: fix it, note it in the backlog or reject it with a reason. You write the prompt yourself.
+Pick one finding that seems plausible to you and one you think is exaggerated. Tell Claude in your own words what you want to do with each: fix it, do it later or reject it. You write the prompt yourself.
 
 ### What just happened
 
@@ -42,7 +42,7 @@ Pick one finding that seems plausible to you and one you think is exaggerated. T
 | Tools | all | only those in `tools` |
 | Returns | | a summary |
 
-Everything the reviewer reads along the way stays with it. Claude picks subagents by their `description`, with `@agent-name` you force one. A finding is a claim: you decide which parts are true.
+Everything the reviewer reads along the way stays with it. Claude picks subagents by their `description`, with `@agent-name` you force one. Whether a finding is true is for you to check.
 
 **Done when** you have called the `security-reviewer`, seen its findings and decided what happens with at least one of them.
 
