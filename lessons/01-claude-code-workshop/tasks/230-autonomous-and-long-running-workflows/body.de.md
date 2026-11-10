@@ -1,109 +1,77 @@
-## Überblick
+In dieser Aufgabe geht es um **autonome Läufe mit `/goal`**: Ihr nennt Claude eine Bedingung, die sich prüfen lässt, und Claude arbeitet Runde für Runde selbst daran, bis sie erfüllt ist. Dabei stellt es euer NestJS-Backend gegen die Contract-Tests fertig, in einem eigenen **Worktree** (ein zweiter Arbeitsordner mit eigenem Branch, so bleibt euer Hauptordner unberührt).
 
-Bringt alles zusammen, was ihr über Berechtigungen, Sicherheit und Kontext gelernt habt, und lasst
-**längere, weniger beaufsichtigte** Arbeit laufen. Kombiniert den Auto Mode (oder ein vorab
-freigegebenes Tool-Set) mit einem **Ziel**, auf das Claude hinarbeitet, in einem **isolierten
-Worktree** – und behaltet dort einen Menschen im Loop, wo es darauf ankommt.
+Ihr arbeitet in eurem `bookmonkey`-Repository mit Node.js 26. Startet in einem Terminal die API mit `npx bookmonkey-api` (http://localhost:4730) und in einem zweiten das Backend mit `cd backend && npm run start:dev` (http://localhost:3001).
 
-## Das Feature
+### 1. Schreibt das Ziel als Tests
 
-„Autonom“ heißt nicht „für immer unbeaufsichtigt“. Es heißt, den Agenten so aufzusetzen, dass er
-Routineentscheidungen innerhalb der von euch definierten Grenzen selbst trifft – und ihr danach das
-Ergebnis prüft.
+Euer Backend kann bisher nur einzelne Bücher lesen, anlegen und löschen. Claude soll die Liste `GET /books` bauen, und ihr legt vorher fest, wann sie fertig ist. Schreibt den Prompt selbst: Claude soll Contract-Tests für Suche (`q`), Paging (`_page`, `_limit`), Sortierung (`_sort`, `_order`) und den Header `X-Total-Count` ergänzen und sie gegen die Referenz-API auf Port 4730 prüfen.
 
-- **`/goal <condition>`**: Nach jedem Turn prüft ein separates Evaluator-Modell die Bedingung; gilt
-  sie noch nicht, startet Claude den nächsten Turn von selbst. Formuliert sie so, dass Claudes
-  eigene Ausgabe sie belegen kann: ein messbarer Endzustand, eine genannte Prüfung, Randbedingungen
-  und eine Obergrenze:
+Setzt vorher die Daten der API zurück, denn in der Skill-Aufgabe habt ihr dort Bücher angelegt: `curl -X POST http://localhost:4730/dev/reset`.
 
-  ```text
-  /goal npm run contract against API_URL=http://localhost:3001 exits 0,
-  no file under contract-tests/ is modified, or stop after 30 turns
-  ```
+Zum Beispiel:
 
-  `/goal` zeigt den Status, `/goal clear` stoppt es. Die Turn-Obergrenze ist kein hartes Limit: Der
-  Evaluator beurteilt sie anhand der Unterhaltung, wie den Rest der Bedingung. (Nur nicht
-  interaktive `claude -p`-Läufe haben ein hartes Limit, `--max-turns`.)
-- **Auto Mode** (oder ein kuratiertes `--allowedTools`-Set / `acceptEdits`) entfernt die Rückfragen
-  pro Tool; `/goal` entfernt die Rückfragen pro Turn. Beides ergänzt sich: Ein Ziel ändert euren
-  Permission Mode nicht.
-- **Isolation**: `claude --worktree <name>` startet die Session in einem eigenen Git-Worktree unter
-  `.claude/worktrees/<name>/` auf einem neuen Branch namens `worktree-<name>`. So bleibt euer
-  Haupt-Checkout unberührt, bis ihr geprüft und gemergt habt. Tragt `.claude/worktrees/` in die
-  `.gitignore` ein.
+```text
+Ergänze die Contract-Tests um GET /books: die Suche mit q, das Paging mit _page und _limit, die Sortierung mit _sort und _order und den Header X-Total-Count. Die Referenz-API hat 50 Bücher, ein Test soll das prüfen. Führe die Tests gegen http://localhost:4730 aus. Schlägt ein neuer Test fehl, korrigiere den Test, nicht die API. Ändere nichts am Backend.
+```
 
-## Anwendung auf BookMonkey
+In unserem Lauf kamen 14 neue Tests dazu, alle grün gegen die API.
 
-> **Repo / Ports:** euer `bookmonkey`-Repository (Node.js 26), Next.js-App auf
-> http://localhost:3000, `npx bookmonkey-api` auf http://localhost:4730, euer NestJS-Backend auf
-> http://localhost:3001
->
-> **Login:** Demo-User `admin@bookmonkey.api` / `password1!`
+### 2. Committet die Tests
 
-In der TDD-Aufgabe hat euer NestJS-Backend zwei Endpoints gelernt. Übungsfeld ist jetzt: es **ohne Handführung gegen den Vertrag fertigstellen**: die komplette Query-Oberfläche von
-`GET /books` (`q`, `_page`, `_limit`, `_sort`, `_order`, der `X-Total-Count`-Header), `PUT` /
-`PATCH` / `DELETE`, `/register` und `/login`, `/dev/reset` und die 50 Seed-Bücher. Die
-Contract-Test-Suite ist der messbare Endzustand des Ziels. Ist sie grün, richtet ihr das Frontend
-auf euer eigenes Backend: der Moment der Wahrheit für die gesamte Workshop-App.
+Ein Worktree startet beim letzten Commit, ungesicherte Dateien fehlen dort.
 
-## Voraussetzungen
+```text
+Committe die neuen Contract-Tests. Lies vorher den Diff.
+```
 
-- Die Contract-Test-Suite, das Skript `npm run contract` und das NestJS-Backend aus der
-  TDD-Aufgabe sind committet.
-- Die Seed-Daten der Referenz-API: `npm i -D bookmonkey-api`, dann
-  `node_modules/bookmonkey-api/dist/assets/db-original.json` lesen (50 Bücher und der Demo-User).
-  Die Cover-Bilder liegen in `node_modules/bookmonkey-api/dist/assets/public/covers/`; das Frontend
-  lädt sie von `<API_URL>/covers/<isbn>.png`, euer Backend muss sie also ebenfalls ausliefern.
-- Der Demo-User `admin@bookmonkey.api` / `password1!` muss sich an eurem Backend anmelden können.
-  Sein Seed-Passwort ist ein bcrypt-Hash, prüft also mit bcrypt (oder hasht es beim Seeden neu).
+### 3. Seht die Tests rot
 
-## Schritte
+Führt im Root-Ordner `API_URL=http://localhost:3001 npm run contract` aus (PowerShell: `$env:API_URL="http://localhost:3001"; npm run contract`). In unserem Lauf scheiterten 14 von 31 Tests.
 
-1. Erweitert zuerst die Contract-Test-Suite (in eurem Haupt-Checkout, von euch geprüft), sodass sie
-   die übrigen Endpoints abdeckt. Bestätigt, dass sie gegen die Referenz-API auf Port 4730 grün ist,
-   und committet sie. Falls euer protect-tests-Hook aus der TDD-Aufgabe jede Datei unter
-   `contract-tests/` blockiert, blockiert er auch diese **neuen** Dateien: Ändert ihn so, dass er
-   nur bestehende Dateien blockiert (siehe Bonus der TDD-Aufgabe), statt ihn zu umgehen. Die Suite
-   schreibt in die gemeinsame Referenz-API; `curl -X POST http://localhost:4730/dev/reset` stellt
-   sie wieder her.
-2. Ein Worktree startet normalerweise beim Standard-Branch, ohne eure Arbeit aus Schritt 1. Setzt
-   deshalb zuerst `"worktree": {"baseRef": "head"}` in `.claude/settings.json`. Startet dann eine
-   isolierte Session: `claude --worktree backend-contract` (Branch `worktree-backend-contract`) und
-   wechselt in den Auto Mode (oder startet, falls der Auto Mode nicht verfügbar ist, mit einem
-   kuratierten `--allowedTools`-Set). Der Worktree ist ein frischer Checkout ohne `node_modules`: Installiert zuerst die Abhängigkeiten in `backend/` und
-   `contract-tests/` oder macht es zum Teil des Ziels.
-3. Setzt das **Ziel** mit einer messbaren Bedingung, einer Randbedingung „Tests nicht anfassen“ und
-   einer Turn-Obergrenze. Beobachtet die Urteile des Evaluators (`Ctrl+O` zeigt die Begründung).
-4. Sobald das Ziel erreicht ist, prüft den Diff im Worktree wie einen Pull Request: Das ist euer
-   bewusster **Human-in-the-Loop**-Checkpoint. Mergt nur, was ihr unterschreiben würdet.
-5. Richtet das Frontend auf euer Backend (`NEXT_PUBLIC_API_URL=http://localhost:3001`), startet es
-   neu und spielt die Browser-Journey aus der MCP-Aufgabe noch einmal durch: Suche und Paging,
-   Reihen-Links eines Buchs vorwärts und rückwärts, Anmeldung als Demo-User, Buch anlegen und
-   bearbeiten, Cover sichtbar.
-6. Reflektiert: Welche eurer echten Aufgaben eignen sich für einen zielgesteuerten Lauf, und welche
-   nicht?
+### 4. Gebt Claude das Ziel
 
-## Erfolgskriterien
+Stoppt das Backend im zweiten Terminal, Claude startet im Worktree sein eigenes. Öffnet in der Desktop-App das Terminal im Projektordner und startet dort `claude --worktree contract-run --permission-mode auto`. Der **Auto-Modus** sorgt dafür, dass Claude nicht bei jedem Befehl fragt. Schickt dort:
 
-**Feature**
+```text
+/goal npm run contract mit API_URL=http://localhost:3001 endet mit Exit-Code 0. Installiere zuerst die Abhängigkeiten in backend/ und contract-tests/. Starte das Backend aus diesem Ordner selbst mit PORT=3001 und beende es danach wieder. Die Daten bleiben im Speicher: Beim Start lädt das Backend alle Bücher von http://localhost:4730/books. Dateien unter contract-tests/ bleiben unverändert. Stopp nach 20 Turns.
+```
 
-- [ ] Ein `/goal` mit messbarer Bedingung, Randbedingung und Obergrenze hat den Lauf bis zum Ende
-      getragen
-- [ ] Der Lauf fand in einem isolierten Worktree statt, mit deutlich weniger Rückfragen als sonst
-- [ ] Ihr habt den Diff vor dem Mergen geprüft und könnt den Human-in-the-Loop-Checkpoint benennen
-- [ ] Ihr könnt den Unterschied zwischen Auto Mode und `/goal` erklären
+Das Ziel hat drei Teile: ein messbarer Endzustand, eine Randbedingung (die Tests bleiben, wie sie sind) und eine Obergrenze für die Runden (Turns). Danach arbeitet Claude ohne Rückfragen. In unserem Lauf waren es 17 Schritte in knapp drei Minuten. Der Typecheck-Hook meldete dabei `PageProps` und `LayoutProps` aus dem Frontend, das hat mit dem Backend nichts zu tun.
 
-**App funktioniert weiterhin**
+### 5. Lest den Diff, dann sichert ihn
 
-- [ ] Die komplette Contract-Test-Suite ist sowohl gegen die Referenz-API als auch gegen euer
-      Backend grün
-- [ ] Das Frontend läuft gegen euer eigenes Backend; Katalog, Navigation durch Reihen, Anmeldung und
-      Anlegen/Bearbeiten funktionieren unverändert
-- [ ] Euer Backend liefert die 50 Seed-Bücher aus, und `/dev/reset` stellt sie wieder her
+Schaut euch zuerst selbst an, was Claude geändert hat. Schickt dann in derselben Session:
 
-## Referenzen
+```text
+Lies den Diff in diesem Worktree und fasse in drei Sätzen zusammen, was geändert wurde und was die Contract-Tests nicht abdecken. Committe die Änderungen danach auf diesem Branch.
+```
 
-- Claude Code: Keep Claude working toward a goal: https://code.claude.com/docs/en/goal
-- Claude Code: Permission modes (auto mode): https://code.claude.com/docs/en/permission-modes
-- Claude Code: Run parallel sessions with worktrees: https://code.claude.com/docs/en/worktrees
-- BookMonkey API: Querying guide: https://github.com/workshops-de/bookmonkey-api/blob/main/docs/querying.md
+### 6. Übernehmt die Arbeit
+
+Das ist euer Kontrollpunkt: Nur was ihr gelesen habt und verantworten würdet, kommt in `main`. Beendet die Session im Terminal mit `/exit`. Fragt Claude Code, ob der Worktree bleiben soll, behaltet ihn. Startet dann eine neue Session im Hauptordner und schickt:
+
+```text
+Merge den Branch worktree-contract-run in main und räume danach den Worktree auf.
+```
+
+### 7. Schaltet die Anwendung um
+
+Startet das Backend wieder (`cd backend && npm run start:dev`). Setzt in `.env.local` `NEXT_PUBLIC_API_URL=http://localhost:3001`, startet `npm run dev` neu und öffnet http://localhost:3000/books. Der Katalog zeigt jetzt die Bücher aus eurem eigenen Backend. In unserem Lauf kamen die Cover weiter von der API auf Port 4730, weil das Backend ihre Adressen übernommen hat, und `/login` antwortete mit 404. Anmelden geht dann erst wieder, wenn ihr den Wert zurück auf http://localhost:4730 setzt.
+
+### Was gerade passiert ist
+
+Die Contract-Tests waren das Ziel, `/goal` hat Claude dort gehalten, bis sie grün waren. Der **Auto-Modus** nimmt die Rückfragen pro Befehl weg, `/goal` die Rückfragen pro Runde. Beides läuft unabhängig voneinander. Grün heißt nur, dass der Vertrag erfüllt ist: Die Anmeldung stand nicht darin, deshalb fehlt sie. Wer das Ziel definiert, bestimmt, was am Ende fertig ist.
+
+**Fertig, wenn** `npm run contract` gegen Port 4730 und gegen euer Backend auf Port 3001 grün ist, der Branch gemergt ist und der Katalog Bücher von eurem Backend zeigt.
+
+<details>
+<summary>Mehr dazu</summary>
+
+Die Desktop-App hat laut [Docs](https://code.claude.com/docs/en/worktrees) eine eigene Option für Worktrees. Laut Docs prüft nach jeder Runde ein separates Modell, ob die Bedingung erfüllt ist, und die Obergrenze zählt es nach der Unterhaltung, sie ist kein hartes Limit. `/goal` zeigt den Stand, `/goal clear` bricht ab. `curl -X POST http://localhost:4730/dev/reset` stellt die Daten der API wieder her.
+
+- Goal: https://code.claude.com/docs/en/goal
+- Worktrees: https://code.claude.com/docs/en/worktrees
+- Permission Modes: https://code.claude.com/docs/en/permission-modes
+- BookMonkey API: https://github.com/workshops-de/bookmonkey-api/blob/main/docs/querying.md
+
+</details>

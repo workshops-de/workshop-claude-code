@@ -1,8 +1,8 @@
 <details>
 <summary>💡 Tipp 1: Kein Mensch heißt keine Rückfragen</summary>
 
-Gebt immer `--allowedTools` oder einen passenden `--permission-mode` an, sonst bricht der Lauf ab,
-sobald er auf eine Aktion trifft, die er nicht automatisch freigeben kann.
+Gebt in Skripten `--allowedTools` oder einen passenden `--permission-mode` an. Sonst wird alles
+abgelehnt, was eine Freigabe bräuchte.
 
 </details>
 
@@ -14,9 +14,8 @@ Wenn ihr den Diff per Pipe übergebt, müsst ihr Bash nicht freigeben, nur um ih
 </details>
 
 <details>
-<summary>💡 Tipp 3: Die JSON-Ausgabe erfasst auch die Kosten</summary>
+<summary>💡 Tipp 3: Kein Ergebnis im Skript?</summary>
 
-`--output-format json` enthält `total_cost_usd`, sodass Skripte die Ausgaben pro Aufruf verfolgen
-können.
+Gebt die komplette JSON-Antwort einmal ohne `jq` aus. Das Ergebnis nach Schema steht im Feld `structured_output`.
 
 </details>

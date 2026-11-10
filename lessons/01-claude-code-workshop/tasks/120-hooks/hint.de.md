@@ -1,35 +1,20 @@
 <details>
-<summary>💡 Tipp 1: Hooks schnell halten</summary>
+<summary>💡 Tipp 1: Der Hook blockiert nicht?</summary>
 
-Sie laufen bei jeder Änderung. Formatiert eine Datei und führt einen Typecheck aus – lasst nicht
-bei jedem Handgriff des Agenten die komplette Test-Suite laufen.
-
-</details>
-
-<details>
-<summary>💡 Tipp 2: Euer Guard blockiert nicht?</summary>
-
-Prüft den Exit-Code. Nur `exit 2` blockiert einen `PreToolUse`-Aufruf; `exit 1` loggt nur einen
-Fehler und lässt die Aktion durch.
-
-Dasselbe gilt für den Typecheck-Hook: Reagiert Claude nie auf Typfehler, beendet sich euer
-`PostToolUse`-Skript wahrscheinlich mit `0` oder `1`. Nur `exit 2` legt Claude den stderr vor.
+Startet eine neue Session, denn neue Hook-Einstellungen werden dort geladen. Hilft das nicht, sagt Claude, was ihr beobachtet, und bittet es, den Hook mit einem Beispielaufruf zu testen.
 
 </details>
 
 <details>
-<summary>💡 Tipp 3: Hooks von Hand debuggbar machen</summary>
+<summary>💡 Tipp 2: Der Typecheck-Hook meldet nichts?</summary>
 
-Schickt ein Beispiel-JSON per Pipe in euer Skript
-(`echo '{"tool_input":{"file_path":".env"}}' | ./guard.sh`) und prüft den Exit-Code mit `echo $?`.
+Der Hook muss die Fehler an Claude zurückgeben. Sagt Claude, dass es die Typfehler nach jedem Edit oder Write sehen soll. Danach hilft eine neue Session.
 
 </details>
 
 <details>
-<summary>💡 Tipp 4: Zulässige Übergänge vor dem Coden festlegen</summary>
+<summary>💡 Tipp 3: Hooks schnell halten</summary>
 
-Schreibt zuerst das Zustandsdiagramm auf und lehnt alles andere in der Domain-Funktion ab. Einen
-Button zu verstecken ist keine Regel – ruft die Funktion mit einem unzulässigen Übergang auf und
-prüft, dass sie ihn verweigert.
+Sie laufen bei jeder Änderung. Ein Typecheck genügt, die komplette Test-Suite gehört nicht dazu.
 
 </details>

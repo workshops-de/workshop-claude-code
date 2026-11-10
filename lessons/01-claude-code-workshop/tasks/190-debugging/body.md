@@ -1,95 +1,86 @@
-## Overview
+This task is about **debugging with Claude**: you get a bug ticket from users and work your way to the cause with evidence instead of guesses. You work in your `bookmonkey-legacy` clone with Node.js 24 or newer. Start the API with `npm run dev:api` (http://localhost:4780) and the web app with `npm run dev:web` (http://localhost:5180) in two terminals. If you are unsure whether the data is fresh, run `npm run db:reset` first.
 
-Use Claude Code as a debugging partner on a bug report from real users. You feed it evidence, not
-guesses, let it trace the problem through the Reason → Act → Observe loop, and do not accept a fix
-until you know the **root cause**, why it hides, and when it came in. Good debugging with an agent
-is mostly about supplying good context and refusing the first plausible patch.
-
-## The Feature
-
-Claude debugs well when it can _observe_: run a reproduction, read logs, inspect state, and dig
-through history. Your job is to set up that loop and keep it honest.
-
-- **Evidence in.** Paste the ticket, the exact steps, what you expected, and what you saw. Let
-  Claude reproduce it before it reads much code: a failing `curl` or test beats a theory.
-- **Hypotheses out.** Ask for two or three competing hypotheses and a cheap test for each. Make
-  Claude say which observation would rule each one out.
-- **History is evidence.** `git log -- <path>`, `git log -S '<text>'`, `git blame -L`, and
-  `git show <sha>` tell you when behaviour changed and why someone changed it. Claude can run all
-  of them for you.
-- **Root cause, not symptom.** A fix in the one place the ticket names is often the smallest
-  diff and the wrong one. Ask: which other paths go through the same code?
-- **Prove it.** A regression test that fails before the fix and passes after it.
-
-## Apply it to BookMonkey Legacy
-
-> **Repo / ports:** your `bookmonkey-legacy` clone (Node.js 24 or newer), API on
-> http://localhost:4780, web app on http://localhost:5180
->
-> **Login:** admin `admin@bookmonkey.example` / `admin2021`
-
-The practice ground is your [`bookmonkey-legacy`](https://github.com/andrekovac/bookmonkey-legacy)
-clone. This ticket arrived from the library team. It is all you get:
+This is the ticket, and all you know:
 
 > **Ticket #412: "Next volume" leads nowhere**
 >
-> Since a while the "next volume" link in The Lord of the Rings leads nowhere. Other series work
-> until someone saves a book in the admin.
+> Since a while the "next volume" link in The Lord of the Rings leads nowhere. Other series work until someone saves a book in the admin.
 
-## Prerequisites
+### 1. See the first sentence yourself
 
-- The `bookmonkey-legacy` clone with `npm install` and a fresh `npm run db:reset`
-- A fresh branch from `main`, not from your refactoring branch: commit or stash what is left, then
-  `git switch main && git switch -c fix/ticket-412`
-- API (`npm run dev:api`) and web app (`npm run dev:web`) running in two terminals
-- Admin login from the README's test logins table
-- Optional: the `legacy-ops` MCP server from the bonus of "MCP: Build Your Own MCP Server"
+Open http://localhost:5180 and "The Fellowship of the Ring" in the catalogue. The book page has a box about the series at the bottom with the link to the next volume. In our run it said "Nächster Band »: nicht gefunden" (not found).
 
-## Steps
+### 2. See the second sentence yourself
 
-1. **Reproduce the first sentence.** Open "The Fellowship of the Ring", the first volume of The
-   Lord of the Rings, in the web app and follow the series links forward and back. Then reproduce
-   it without the browser: let Claude find the API calls behind the page and run them with `curl`.
-   Write down the exact request that fails.
-2. **Reproduce the second sentence.** Pick a series that works, save one of its books in the web
-   admin at http://localhost:5180/admin/books (there is also an old admin at
-   http://localhost:4780/admin-old/; use the web admin here) without changing anything
-   meaningful, and check the series again. Capture exactly what you see before and after.
-3. **Hand over the evidence.** Give Claude the ticket and your two reproductions and ask for
-   competing hypotheses plus one cheap check for each, in plan mode, before it touches code.
-4. **Narrow it down.** Let Claude run the checks. Every time it states a cause, ask "which
-   observation proves that?".
-5. **Dig through history.** Ask Claude to find the commit that introduced the behaviour and to
-   explain, from the commit and its message, what the author wanted.
-6. **Name the root cause** in one or two sentences, with file, line, and commit. Then list every
-   code path that the same cause affects, not only the one in the ticket.
-7. **Fix with a regression test.** Write the test first (in `api/test/`, run with `npm test`) and
-   watch it fail, then fix, watch it pass, and run the full suite. Check the ticket's two
-   reproductions again by hand.
-8. Try a **rubber-duck** prompt at least once: describe what you did, what you expected, and
-   what you observed, and let Claude ask the questions.
+Log in at http://localhost:5180/login with `admin@bookmonkey.example` and `admin2021`. Open http://localhost:5180/admin/books, pick "A Game of Thrones", enter an x in the "Untertitel" (subtitle) field and click "Speichern" (save). Then look at the other volumes of this series in the catalogue.
 
-## Success Criteria
+### 3. Give Claude the evidence
 
-**Feature**
+Start a new session and set the mode to **Plan**. Stay in this session for steps 3 to 8. A hypothesis is a guess that can be checked. You want several of them before Claude touches code:
 
-- [ ] Both sentences of the ticket were reproduced, once in the browser and once with `curl` or a
-      test
-- [ ] Claude worked from evidence: hypotheses were tested, not guessed
-- [ ] You found the commit that introduced the behaviour and can explain the author's intent
-- [ ] You can state the root cause and every path it affects, not only the symptom
+```text
+Ticket #412 from the library team: The link "next volume" in The Lord of the Rings leads nowhere. Other series work until someone saves a book in the admin.
 
-**App still works**
+This is what I observed: On the page of The Fellowship of the Ring it says "Nächster Band: nicht gefunden". After I saved A Game of Thrones in the admin, the navigation in this series no longer works.
 
-- [ ] A regression test fails without your fix and passes with it; `npm test` is green
-- [ ] The Lord of the Rings series navigates forward and back, and saving a book in the admin
-      no longer breaks any series
-- [ ] Existing data still works after your fix
+Give me two or three competing hypotheses that could explain both observations, and one cheap check for each. Change nothing.
+```
 
-## References
+Claude reads the code and returns hypotheses with checks. In our run it only read and changed nothing.
 
-- Claude Code: Common workflows (fix bugs): https://code.claude.com/docs/en/common-workflows
-- Claude Code: Best practices: https://code.claude.com/docs/en/best-practices
-- Claude Code: Permission modes (plan mode): https://code.claude.com/docs/en/permission-modes
-- Git: `git log -S` (pickaxe): https://git-scm.com/docs/git-log#Documentation/git-log.txt--Sltstringgt
-- Git: `git blame`: https://git-scm.com/docs/git-blame
+### 4. Let the checks run
+
+Set the mode to Auto so Claude may run the checks:
+
+```text
+Run the checks now. Do not change any code yet. For every cause you name: which observation proves it, and which one rules out another hypothesis?
+```
+
+Claude queries the API and compares data. With the question about the observation you get evidence for every cause. A cause without evidence is only a guess.
+
+### 5. Ask the git history
+
+```text
+Use the git history to find out when this behaviour came into the code. Name the commit, read its message and explain what the author wanted to achieve at the time.
+```
+
+A commit message and the code around it often tell you what the author wanted to achieve.
+
+### 6. Ask for the cause and every affected place
+
+Write the prompt yourself. What you want to reach: the cause in one or two sentences with file and line, plus every place in the code that the same cause affects, not only the one from the ticket. Claude should not change anything yet.
+
+For example:
+
+```text
+Name the cause in one or two sentences with file and line. Then list every place in the code that is affected by the same cause, not only the one from the ticket. Change nothing yet.
+```
+
+### 7. Fix it with a test
+
+```text
+First write a test in api/test/ that shows the bug from the ticket, and run it. It must fail. Then fix the cause at every place on your list. Afterwards run all tests with npm test.
+```
+
+Claude writes the test, shows it red, fixes the bug and shows it green. Then stop the API with Ctrl+C, run `npm run db:reset`, restart it with `npm run dev:api` and repeat steps 1 and 2 in the browser.
+
+### 8. Commit your state
+
+```text
+Commit all changes from this task. Read the diff first.
+```
+
+### What just happened
+
+You did not guess at a bug, you proved it: first reproduced, then checked hypotheses, then read the history. A test that was red before the fix and green after it shows that the fix works. A fix only at the place named in the ticket would hide the symptom instead. That is why you asked for all affected places in step 6.
+
+**Done when** the "next volume" link of The Fellowship of the Ring works, saving a book in the admin no longer breaks a series, a new test covers the bug, `npm test` is green and everything is committed.
+
+<details>
+<summary>More</summary>
+
+- If you start a new session in between, Claude has lost the history. Then include the ticket and your observations again.
+- Claude's answers differ from run to run. Check a statement by running the check yourself.
+- [Common workflows: Fix bugs](https://code.claude.com/docs/en/common-workflows) · [Best practices](https://code.claude.com/docs/en/best-practices) · [Permission modes](https://code.claude.com/docs/en/permission-modes)
+
+</details>

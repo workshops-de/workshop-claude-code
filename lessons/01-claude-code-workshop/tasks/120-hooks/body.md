@@ -1,117 +1,98 @@
-## Overview
+This task is about **hooks**. A hook is a rule that Claude Code applies itself at certain tool calls, even when Claude does not think of it. You use hooks for everything that **must always happen**.
 
-Make quality and safety **deterministic** with hooks: commands that Claude Code runs on
-lifecycle events, every time, regardless of what the model decides. You set up a format/type-check
-hook and a secrets guard first, then build the most intricate feature of the app with both active.
+You work in your `bookmonkey` repository with Node.js 26 and only need to write prompts. For step 7 you need two servers: `npx bookmonkey-api` (http://localhost:4730) and `npm run dev` (http://localhost:3000). The demo user is `admin@bookmonkey.api` with `password1!`.
 
-## The Feature
+### 1. See what Claude may do without a hook
 
-Hooks are configured in settings (`.claude/settings.json` for the project, commit it) and fire on
-events such as `PreToolUse` (before a tool runs, can block), `PostToolUse` (after it ran),
-`Stop`, or `SessionStart`.
+You already have the file `.env.local`: since the subagents task it contains your `SESSION_SECRET`, and Git ignores it.
 
-- **Matchers** pick the tools a hook applies to, e.g. `"Edit|Write"`.
-- **Input** arrives as JSON on stdin; the edited file is at `.tool_input.file_path`:
+```text
+Read the file .env.local and show me the contents.
+```
 
-  ```json
-  {
-    "hooks": {
-      "PostToolUse": [
-        {
-          "matcher": "Edit|Write",
-          "hooks": [
-            {
-              "type": "command",
-              "command": "jq -r '.tool_input.file_path' | xargs npx --no-install prettier --write --ignore-unknown"
-            }
-          ]
-        }
-      ]
-    }
-  }
-  ```
+The contents appear, secrets included.
 
-- **Blocking**: in a `PreToolUse` hook, `exit 2` blocks the tool call and your stderr is shown to
-  Claude as the reason. Careful: `exit 1` does **not** block, it's treated as a non-blocking error.
-- **Feedback:** a `PostToolUse` hook can't undo the edit, but `exit 2` shows its stderr to Claude,
-  so it reacts to the errors. Its plain text output on exit `0` does not reach Claude (on
-  `SessionStart` and `UserPromptSubmit`, stdout does).
-- **Scripts**: keep longer logic in `.claude/hooks/*.sh` (executable) and reference it as
-  `"${CLAUDE_PROJECT_DIR}/.claude/hooks/guard.sh"`.
-- **Inspect**: `/hooks` shows every configured hook, its matcher, and which settings file it came
-  from.
+### 2. Let Claude build a hook
 
-Memory advises; hooks enforce.
+```text
+Set up a hook so that you can no longer read or change .env files. .env.example must stay readable.
+```
 
-## Apply it to BookMonkey
+Start a new session so the setting is loaded, and ask the question from step 1 again. Claude should say that a **hook** blocks the access.
 
-> **Repo / ports:** your `bookmonkey` repository (Node.js 26), Next.js app on
-> http://localhost:3000, `npx bookmonkey-api` on http://localhost:4730
->
-> **Login:** demo user `admin@bookmonkey.api` / `password1!`
+### 3. Check what Claude built
 
-The practice ground is BookMonkey's **reading list**: a signed-in user puts a book on their list
-(_want to read_), starts it (_reading_), and finishes it (_finished_), and may start a finished
-book again or remove it at any time. Nothing else is legal: no jumping from _want to read_
-straight to _finished_. The `bookmonkey-api` has no endpoint for this, so the list lives in the
-browser for now (per user, in `localStorage`); your own backend takes it over later. A small state
-machine touching a pure domain module, a client store, the detail page, a list page, and the
-header at once: exactly where a hook that formats and type-checks every edit keeps the agent
-honest.
+```text
+Run exactly this command: git commit --allow-empty -m "docs: mentioned .env.local"
+```
 
-## Prerequisites
+The commit is harmless, but in our runs it was blocked because the hook also searches the command text. If this happens to you, tell Claude what should change:
 
-- `jq` installed (used to read hook input).
-- On Windows: run hook scripts under Git Bash and install `jq` with `winget install jqlang.jq`.
-- Prettier in the project: `npm i -D prettier` (`create-next-app` doesn't add it). Add a small
-  `.prettierrc` that matches your current style, or the first hook run reformats code you didn't
-  touch.
-- Optional skill (nice to have, not required): `vercel-labs/agent-skills@vercel-react-best-practices`
+```text
+The hook blocks too much: a commit message that only mentions .env.local must go through. File access to .env files must stay blocked.
+```
 
-## Steps
+Then repeat the commit command and the question from step 1.
 
-1. Add a **`PostToolUse`** hook for `Edit|Write` that formats the changed file and runs a fast
-   type-check, as a script in `.claude/hooks/`. `tsc --noEmit` checks the whole project, not one
-   file (fine at this size). When it fails, print the errors to stderr and `exit 2`, otherwise
-   Claude never sees them. Make an edit with a deliberate type error and confirm Claude reacts.
-2. Add a **`PreToolUse`** guard script that blocks reads and writes to `.env*` files and key
-   material with `exit 2` (let `.env.example` through). Check the file path
-   (`.tool_input.file_path`), not just any text: a guard that also greps `Bash` command text blocks
-   harmless commands that merely mention `.env.local`, such as a commit message. Ask the agent to
-   read your `.env.local` and confirm it's blocked with your message. The guard only sees file
-   tools: `cat .env.local` through Bash still ran in our test. A deny rule `Read(./.env*)` also
-   covers commands like `cat`.
-3. Check both in `/hooks`.
-4. With the hooks active, state the **transitions** to the agent (add → _want to read_; start →
-   _reading_; finish → _finished_; start again → _reading_; remove from any state) and have it
-   restate them (and the illegal ones) before coding.
-5. Have it implement the state machine as a **pure function** (`transition(state, action)`) that
-   rejects illegal moves, a per-user store on top of it, reading-list buttons on the detail page,
-   a reading-list page in the authenticated area grouped by state, and a counter in the header.
-   Notice when the type-check hook pushes back on the agent mid-task.
-6. Verify with two accounts in the same browser (register a second one): each sees only their own
-   list, and illegal transitions are impossible from the UI.
+### 4. Let Claude build a second hook
 
-## Success Criteria
+Write one sentence yourself: after every `Edit` or `Write` a type check should run and Claude should see the type errors. For example:
 
-**Feature**
+```text
+Set up a second hook: after every Edit or Write a type check should run, and you should see the type errors and fix them.
+```
 
-- [ ] A post-edit hook formats and type-checks automatically, and you saw it fire during the build
-- [ ] A guard hook blocks access to at least one sensitive path with `exit 2`
-- [ ] Both hooks appear in `/hooks` from your project settings
-- [ ] You can explain why these belong in hooks rather than in `CLAUDE.md`
+### 5. Try the type-check hook
 
-**App still works**
+Start a new session and add a deliberate error:
 
-- [ ] Add, start, finish, start again, and remove work; the illegal jump to _finished_ is rejected
-      by the domain function, not just hidden in the UI
-- [ ] Two accounts on the same browser see separate reading lists; lists survive a reload
-- [ ] The reading-list page groups books by state and is only reachable when signed in
-- [ ] `npm run build` passes
+```text
+Create the file lib/typfehler-test.ts with exactly this content: export const x: number = "text";
+```
 
-## References
+Claude should name `TS2322`. If it also reports `PageProps` or `LayoutProps`, run `npx next typegen`. Then clean up:
 
-- Claude Code: Hooks reference: https://code.claude.com/docs/en/hooks
-- Claude Code: Hooks guide: https://code.claude.com/docs/en/hooks-guide
-- Claude Code: Settings: https://code.claude.com/docs/en/settings
-- MDN: Window.localStorage: https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
+```text
+Delete the file lib/typfehler-test.ts again.
+```
+
+### 6. Build the reading list with both hooks
+
+A reading list has states (want to read, reading, finished). A state machine defines which changes between the states are allowed. First you clarify the rules with Claude, then it builds them.
+
+```text
+We are building a reading list. Transitions: add leads to want to read, start to reading, finish to finished, start again to reading, remove works from every state. Repeat the allowed and the forbidden transitions before you write anything.
+```
+
+Then, in the same chat:
+
+```text
+Implement it now: the state machine as a pure function transition(state, action) that rejects forbidden transitions. Also a store per user in localStorage, reading list buttons on the detail page, a page /reading-list in the signed-in area, grouped by state, and a counter in the header. If there is no header yet, create one.
+```
+
+Both hooks run on every change.
+
+### 7. Try the reading list in the browser
+
+Start both servers, sign in on http://localhost:3000 as the demo user and put a book on the list. Sign out, register a second account (for example second@example.com with password1!) and open `/reading-list`. The list is empty.
+
+### 8. Commit your state
+
+```text
+Commit all changes from this task. Read the diff first.
+```
+
+### What just happened
+
+The first hook ran **before** the tool (`PreToolUse`) and stopped it, in our run with `exit 2`. The second ran **after** it (`PostToolUse`) and gave the errors back to Claude. An instruction in `CLAUDE.md` advises, a hook enforces.
+
+**Done when** a hook has denied you access to `.env.local`, Claude has named `TS2322` from the type-check hook, and the reading list shows separate lists for two accounts.
+
+<details>
+<summary>More</summary>
+
+Claude puts the hooks in `.claude/settings.json` and `.claude/hooks/`. To see them, open the terminal in the desktop app, start `claude` there and enter `/hooks`. Without `jq` a hook script fails silently and blocks nothing. If you registered users while testing, `curl -X POST http://localhost:4730/dev/reset` removes them again.
+
+[Hooks guide](https://code.claude.com/docs/en/hooks-guide)
+
+</details>

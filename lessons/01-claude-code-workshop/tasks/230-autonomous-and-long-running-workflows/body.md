@@ -1,101 +1,77 @@
-## Overview
+This task is about **autonomous runs with `/goal`**: you give Claude a condition that can be checked, and Claude keeps working turn after turn until it holds. It finishes your NestJS backend against the contract tests, inside its own **worktree** (a second working folder with its own branch, so your main folder stays untouched).
 
-Put together everything you've learned about permissions, safety, and context to run **longer,
-less-supervised** work. Combine auto mode (or a pre-approved tool set) with a **goal** Claude keeps
-working toward, in an **isolated worktree**, while keeping a human in the loop where it matters.
+You work in your `bookmonkey` repository with Node.js 26. Start the API in one terminal with `npx bookmonkey-api` (http://localhost:4730) and the backend in a second one with `cd backend && npm run start:dev` (http://localhost:3001).
 
-## The Feature
+### 1. Write the goal as tests
 
-"Autonomous" does not mean "unsupervised forever." It means setting the agent up to make routine
-decisions on its own within boundaries you define, then reviewing the result.
+So far your backend can only read, create and delete single books. Claude should build the list `GET /books`, and you decide beforehand when it is done. Write the prompt yourself: Claude should add contract tests for search (`q`), paging (`_page`, `_limit`), sorting (`_sort`, `_order`) and the `X-Total-Count` header, and check them against the reference API on port 4730.
 
-- **`/goal <condition>`**: after every turn, a separate evaluator model checks the condition; if
-  it doesn't hold yet, Claude starts the next turn by itself. Write it as something Claude's own
-  output can prove, with one measurable end state, a stated check, constraints, and a bound:
+First reset the API data, because you created books there in the skills task: `curl -X POST http://localhost:4730/dev/reset`.
 
-  ```text
-  /goal npm run contract against API_URL=http://localhost:3001 exits 0,
-  no file under contract-tests/ is modified, or stop after 30 turns
-  ```
+For example:
 
-  `/goal` shows status, `/goal clear` stops it. The turn bound is not a hard limit: the evaluator
-  judges it from the conversation, like the rest of the condition. (Only non-interactive `claude -p`
-  runs have a hard cap, `--max-turns`.)
-- **Auto mode** (or a curated `--allowedTools` set / `acceptEdits`) removes per-tool prompts;
-  `/goal` removes per-turn prompts. They're complementary: a goal doesn't change your permission
-  mode.
-- **Isolation**: `claude --worktree <name>` starts the session in its own git worktree under
-  `.claude/worktrees/<name>/` on a new branch named `worktree-<name>`, so your main checkout stays
-  untouched until you review and merge. Add `.claude/worktrees/` to `.gitignore`.
+```text
+Add contract tests for GET /books: search with q, paging with _page and _limit, sorting with _sort and _order, and the X-Total-Count header. The reference API has 50 books, one test should check that. Run the tests against http://localhost:4730. If a new test fails, fix the test, not the API. Do not change the backend.
+```
 
-## Apply it to BookMonkey
+In our run 14 new tests were added, all green against the API.
 
-> **Repo / ports:** your `bookmonkey` repository (Node.js 26), Next.js app on
-> http://localhost:3000, `npx bookmonkey-api` on http://localhost:4730, your NestJS backend on
-> http://localhost:3001
->
-> **Login:** demo user `admin@bookmonkey.api` / `password1!`
+### 2. Commit the tests
 
-In the TDD task your NestJS backend learned two endpoints. The practice ground now is **finishing
-it against the contract** without hand-holding: the full `GET /books` query surface (`q`,
-`_page`, `_limit`, `_sort`, `_order`, the `X-Total-Count` header), `PUT` / `PATCH` / `DELETE`,
-`/register` and `/login`, `/dev/reset`, and the 50 seed books. The contract suite is the goal's
-measurable end state. When it's green, you point the frontend at your own backend: the moment of
-truth for the whole workshop app.
+A worktree starts at the last commit, uncommitted files are missing there.
 
-## Prerequisites
+```text
+Commit the new contract tests. Read the diff first.
+```
 
-- The contract suite, the `npm run contract` script, and the NestJS backend from the TDD task are
-  committed.
-- The reference seed data: `npm i -D bookmonkey-api`, then read
-  `node_modules/bookmonkey-api/dist/assets/db-original.json` (50 books and the demo user). The
-  cover images are in `node_modules/bookmonkey-api/dist/assets/public/covers/`; the frontend
-  loads them from `<API_URL>/covers/<isbn>.png`, so your backend has to serve them too.
-- The demo user `admin@bookmonkey.api` / `password1!` must be able to sign in to your backend. Its
-  seed password is a bcrypt hash, so verify with bcrypt (or re-hash it when seeding).
+### 3. See the tests red
 
-## Steps
+In the root folder run `API_URL=http://localhost:3001 npm run contract` (PowerShell: `$env:API_URL="http://localhost:3001"; npm run contract`). In our run 14 of 31 tests failed.
 
-1. First, extend the contract suite (in your main checkout, reviewed by you) to cover the remaining
-   endpoints. Confirm it is green against the reference API on port 4730 and commit it. If your
-   protect-tests hook from the TDD task blocks every file under `contract-tests/`, it also blocks
-   these **new** files: change it to block existing files only (see the TDD task's bonus) rather
-   than working around it. The suite writes to the shared reference API;
-   `curl -X POST http://localhost:4730/dev/reset` restores it.
-2. A worktree normally starts at the default branch, without your work from step 1, so first set
-   `"worktree": {"baseRef": "head"}` in `.claude/settings.json`. Then start an isolated session:
-   `claude --worktree backend-contract` (branch `worktree-backend-contract`), and switch to auto
-   mode (or, if auto mode isn't available, start it with a curated `--allowedTools` set). The
-   worktree is a fresh checkout without `node_modules`: install dependencies in `backend/` and `contract-tests/` first, or make it part
-   of the goal.
-3. Set the **goal** with a measurable condition, a "don't touch the tests" constraint, and a turn
-   bound. Watch the evaluator's verdicts (`Ctrl+O` shows the reasoning).
-4. When the goal clears, review the diff in the worktree like a pull request: this is your
-   deliberate **human-in-the-loop** checkpoint. Merge only what you'd sign.
-5. Point the frontend at your backend (`NEXT_PUBLIC_API_URL=http://localhost:3001`), restart it, and
-   re-run the browser journey from the MCP task: search and paging, a book's series links forward
-   and back, sign-in as the demo user, create and edit a book, covers visible.
-6. Reflect: which of your real tasks are good candidates for a goal-driven run, and which are not?
+### 4. Give Claude the goal
 
-## Success Criteria
+Stop the backend in the second terminal, Claude starts its own in the worktree. In the desktop app, open the terminal in the project folder and run `claude --worktree contract-run --permission-mode auto` there. **Auto mode** means Claude does not ask for every command. Send there:
 
-**Feature**
+```text
+/goal npm run contract with API_URL=http://localhost:3001 exits with code 0. First install the dependencies in backend/ and contract-tests/. Start the backend yourself from this folder with PORT=3001 and stop it afterwards. The data stays in memory: on start the backend loads all books from http://localhost:4730/books. Files under contract-tests/ stay unchanged. Stop after 20 turns.
+```
 
-- [ ] A `/goal` with a measurable condition, a constraint, and a bound drove the run to completion
-- [ ] The run happened in an isolated worktree with meaningfully fewer prompts than usual
-- [ ] You reviewed the diff before merging and can name the human-in-the-loop checkpoint
-- [ ] You can explain the difference between auto mode and `/goal`
+The goal has three parts: a measurable end state, a constraint (the tests stay as they are) and a limit on rounds (turns). After that Claude works without questions. In our run it took 17 steps in just under three minutes. The type-check hook reported `PageProps` and `LayoutProps` from the frontend along the way, which has nothing to do with the backend.
 
-**App still works**
+### 5. Read the diff, then save it
 
-- [ ] The full contract suite is green against both the reference API and your backend
-- [ ] The frontend runs against your own backend; catalogue, series navigation, sign-in, and
-      create/edit work unchanged
-- [ ] Your backend serves the 50 seed books, and `/dev/reset` restores them
+First look at what Claude changed yourself. Then send in the same session:
 
-## References
+```text
+Read the diff in this worktree and summarize in three sentences what changed and what the contract tests do not cover. Then commit the changes on this branch.
+```
 
-- Claude Code: Keep Claude working toward a goal: https://code.claude.com/docs/en/goal
-- Claude Code: Permission modes (auto mode): https://code.claude.com/docs/en/permission-modes
-- Claude Code: Run parallel sessions with worktrees: https://code.claude.com/docs/en/worktrees
-- BookMonkey API: Querying guide: https://github.com/workshops-de/bookmonkey-api/blob/main/docs/querying.md
+### 6. Take over the work
+
+This is your checkpoint: only what you have read and would answer for goes into `main`. End the session in the terminal with `/exit`. If Claude Code asks whether to keep the worktree, keep it. Then start a new session in the main folder and send:
+
+```text
+Merge the branch worktree-contract-run into main and clean up the worktree afterwards.
+```
+
+### 7. Switch the app over
+
+Start the backend again (`cd backend && npm run start:dev`). Set `NEXT_PUBLIC_API_URL=http://localhost:3001` in `.env.local`, restart `npm run dev` and open http://localhost:3000/books. The catalog now shows the books from your own backend. In our run the covers still came from the API on port 4730, because the backend took over their addresses, and `/login` answered 404. Signing in only works again once you set the value back to http://localhost:4730.
+
+### What just happened
+
+The contract tests were the goal, `/goal` kept Claude working until they were green. **Auto mode** removes the question per command, `/goal` removes the question per round. They work independently of each other. Green only means the contract is met: login was not in it, so it is missing. Whoever defines the goal decides what "done" means.
+
+**Done when** `npm run contract` is green against port 4730 and against your backend on port 3001, the branch is merged and the catalog shows books from your backend.
+
+<details>
+<summary>More</summary>
+
+According to the [docs](https://code.claude.com/docs/en/worktrees) the desktop app has its own option for worktrees. According to the docs a separate model checks after every round whether the condition holds, and the turn limit is judged from the conversation, not a hard limit. `/goal` shows the status, `/goal clear` stops it. `curl -X POST http://localhost:4730/dev/reset` restores the API data.
+
+- Goal: https://code.claude.com/docs/en/goal
+- Worktrees: https://code.claude.com/docs/en/worktrees
+- Permission modes: https://code.claude.com/docs/en/permission-modes
+- BookMonkey API: https://github.com/workshops-de/bookmonkey-api/blob/main/docs/querying.md
+
+</details>

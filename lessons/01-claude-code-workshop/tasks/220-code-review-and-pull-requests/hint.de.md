@@ -2,7 +2,7 @@
 <summary>💡 Tipp 1: Das Feature reviewen, nicht nur die Zeilen</summary>
 
 Ein Diff zeigt, was sich geändert hat, nicht, wie das Feature genutzt wird. Fragt, was das Feature
-tut, wer es nutzt und was schiefgehen könnte, und prüft dann den Code gegen eure Antworten.
+tut und was schiefgehen könnte, und prüft dann den Code gegen eure Antworten.
 
 </details>
 

@@ -1,34 +1,20 @@
 <details>
-<summary>💡 Tipp 1: Label gesetzt, aber nichts passiert</summary>
+<summary>💡 Tipp 1: Der Lauf in Schritt 2 oder 3 fragt oder bricht ab</summary>
 
-Schaut in den Tab **Actions** eures Forks. Gar kein Lauf bedeutet meistens, dass Workflows im Fork
-noch deaktiviert sind oder dass der Label-Name nicht exakt zur `if:`-Bedingung passt. Ein Lauf, der
-früh fehlschlägt, bedeutet meistens, dass das Secret fehlt oder die Claude GitHub App nicht auf dem
-Fork installiert ist.
+Startet den Befehl im Projektordner von `bookmonkey-legacy`, im Terminal der Desktop-App. Unter Windows nehmt die Git Bash. Braucht ein Aufruf eine Freigabe und fehlt in `--allowedTools`, lehnt Claude ihn ab. Das ist gewollt.
 
 </details>
 
 <details>
-<summary>💡 Tipp 2: Das Issue oder der PR landet im falschen Repository</summary>
+<summary>💡 Tipp 2: In der CI ist enger besser</summary>
 
-Mit zwei Remotes nimmt `gh` womöglich das Original-Repository. Übergebt jedem `gh`-Befehl
-`--repo $FORK` oder führt einmal `gh repo set-default` aus und wählt euren Fork.
-
-</details>
-
-<details>
-<summary>💡 Tipp 3: In der CI ist enger besser</summary>
-
-Auf einem Runner genehmigt niemand Tool-Aufrufe. Was `--allowedTools` erlaubt, darf Claude tun.
-Fragt euch bei jedem Tool in der Liste: Braucht der Modus `analyse` es?
+Auf einem Server genehmigt niemand Tool-Aufrufe. Was `--allowedTools` nennt, läuft ohne Rückfrage. Fragt euch bei jedem Tool in der Liste: Braucht der Modus `analyse` es?
 
 </details>
 
 <details>
-<summary>💡 Tipp 4: Der Kommentar klingt selbstsicher</summary>
+<summary>💡 Tipp 3: Die Antwort klingt selbstsicher</summary>
 
-Behandelt ihn wie ein erstes Review von einem neuen Kollegen. Öffnet die Dateien, die er nennt. Ein
-falscher Zeilenbereich oder eine Ursache ohne Belege ist ein Signal, den Prompt zu schärfen, nicht,
-ihm mehr zu vertrauen.
+Behandelt sie wie ein erstes Review von einem neuen Kollegen. Öffnet die Dateien, die sie nennt. Ein falscher Zeilenbereich oder eine Ursache ohne Belege ist ein Signal, den Prompt zu schärfen, nicht, ihr mehr zu vertrauen.
 
 </details>

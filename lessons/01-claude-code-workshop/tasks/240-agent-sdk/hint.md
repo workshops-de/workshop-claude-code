@@ -9,7 +9,7 @@ no file.
 <details>
 <summary>💡 Hint 2: Scope your configuration</summary>
 
-The SDK reads your `.claude/` configuration by default — scope `settingSources` for a clean,
+The SDK reads your `.claude/` configuration by default. Scope `settingSources` for a clean,
 reproducible agent.
 
 </details>
@@ -17,7 +17,7 @@ reproducible agent.
 <details>
 <summary>💡 Hint 3: Authenticate correctly</summary>
 
-Use an API key (or Bedrock/Vertex/Foundry credentials) — claude.ai login is not for third-party
-SDK products.
+On an error like `Not logged in`, sign in to Claude Code first. For products that others use, the
+docs call for an API key (or Bedrock/Vertex/Foundry credentials).
 
 </details>

@@ -1,36 +1,65 @@
-## Overview
+This task is about the **Claude Agent SDK**: Claude Code as a library, so you can start an agent from your own TypeScript code. You work in a new, empty folder with Node.js 24 (18.14 and up also works) and need no server. You use the same login as in Claude Code, no API key needed.
 
-Move from _using_ Claude Code to _embedding_ it: the **Claude Agent SDK** gives you the same tools,
-agent loop, and context management as a library you can call from Python or TypeScript.
+### 1. Create a project
 
-## Background
+Open the terminal in the desktop app in a folder outside your other projects and run:
 
-The Agent SDK is the same engine that powers Claude Code, exposed as
-`@anthropic-ai/claude-agent-sdk` (TypeScript) and `claude-agent-sdk` (Python). It loads the same
-`.claude/` configuration and can return structured JSON. Use the CLI for interactive and one-off
-work; reach for the SDK when building custom applications, CI/CD automation, or reusable agents.
+```bash
+mkdir mein-agent && cd mein-agent
+npm init -y
+npm pkg set type=module
+npm install @anthropic-ai/claude-agent-sdk tsx
+```
 
-## Steps
+`tsx` runs TypeScript files directly. Then open the folder `mein-agent` as a project in a new session.
 
-1. Install the SDK for your language (Python 3.10+ or TypeScript) and set an API key from the
-   Console.
-2. Write a minimal agent that performs a real task on a small project — for example, "find all
-   TODO comments and summarize them" — using only the tools it needs (`Read`, `Glob`, `Grep`).
-3. Tighten it: set a permission mode, add a `PostToolUse` hook that logs every tool call, and set
-   `tools: ['Read', 'Glob', 'Grep']` (`allowedTools` only skips the prompt).
-4. Return **structured output** (a JSON schema / typed result) and consume it in your script.
-5. Optionally add a **subagent** definition and have the main agent delegate to it.
-6. Compare the experience to `claude -p`: when would you reach for the SDK instead of the CLI?
+### 2. Let Claude write the agent
 
-## Success Criteria
+```text
+Create utils.py with two small Python functions, each preceded by a TODO comment. Then write agent.ts: a script using the Claude Agent SDK (@anthropic-ai/claude-agent-sdk, query) that has the agent find and summarize all TODO comments in the folder. The agent only gets the tools Read, Glob and Grep, loads no .claude configuration (the setting for that is called settingSources, it stays empty), and the script prints text and tool names.
+```
 
-- [ ] A minimal SDK agent runs and completes a real, small task
-- [ ] With `tools: ['Read', 'Glob', 'Grep']`, a write task creates no file
-- [ ] The agent returns structured output your script consumes
-- [ ] You can explain when to reach for the SDK vs. the CLI
+Claude creates both files. Read through `agent.ts`: `query` starts the agent, `tools` defines what it can do at all.
 
-## References
+### 3. Start the agent
 
-- Claude Code — Agent SDK overview: https://code.claude.com/docs/en/agent-sdk/overview
-- Claude Code — Agent SDK quickstart: https://code.claude.com/docs/en/agent-sdk/quickstart
-- Example agents: https://github.com/anthropics/claude-agent-sdk-demos
+```bash
+npx tsx agent.ts
+```
+
+The agent searches and summarizes without you confirming anything. In our run, a list with both TODOs from `utils.py` appeared in the terminal after a few seconds.
+
+### 4. Give it a task it cannot do
+
+You write the prompt yourself. You want to see what happens when the agent should write something but may only read.
+
+For example:
+
+```text
+Change the prompt in agent.ts so the agent also writes the TODOs it finds into a new file notizen.txt. Change nothing else.
+```
+
+Run `npx tsx agent.ts` again. In our run, `notizen.txt` was not created, and the agent said it is missing a write tool.
+
+### 5. Get structured output
+
+```text
+The agent should return the TODOs as structured output (JSON schema with file, line and text per TODO). In the script, print them as a list with one line per TODO.
+```
+
+Run the script again. Your code now gets data it can process further, instead of free text.
+
+### What just happened
+
+The agent is the same loop as in Claude Code: read, search, answer. Your code decides what it may do through `tools`, and you do not have to answer prompts. That is why you use the CLI for daily work and the SDK when a script, a service or a CI pipeline should start the agent itself.
+
+**Done when** your script prints the TODOs as a structured list and the write request in step 4 created no file.
+
+<details>
+<summary>More</summary>
+
+Login: For the SDK, the docs describe the API key (`ANTHROPIC_API_KEY`) as well as Bedrock, Vertex and Foundry, and note that third-party developers may not offer claude.ai login to their users unless Anthropic approved it. In our test the script ran on a machine without `ANTHROPIC_API_KEY`, using the existing Claude Code login. For a product that others use, you need an API key from the Console.
+
+[Overview](https://code.claude.com/docs/en/agent-sdk/overview) · [Quickstart](https://code.claude.com/docs/en/agent-sdk/quickstart) · [Example agents](https://github.com/anthropics/claude-agent-sdk-demos) · [Python version](https://code.claude.com/docs/en/agent-sdk/python)
+
+</details>

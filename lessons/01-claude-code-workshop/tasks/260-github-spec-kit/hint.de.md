@@ -6,9 +6,9 @@ Das gehört in den Plan, nicht in die Spezifikation.
 </details>
 
 <details>
-<summary>💡 Tipp 2: Clarify und Analyze nicht überspringen</summary>
+<summary>💡 Tipp 2: Clarify und Analyze sind optional</summary>
 
-Sie kaufen Qualität günstig ein, auch wenn sie optional sind.
+Sie stehen unter Mehr dazu. Wir haben sie nicht ausgeführt.
 
 </details>
 

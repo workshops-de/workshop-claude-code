@@ -1,40 +1,78 @@
-## Overview
+This task is about **headless mode**: Claude runs without a chat window. You start it with `claude -p` in a terminal or from a script and get the answer back as text. This is how you build Claude into scripts and, later, into pipelines.
 
-Use Claude Code **without an interactive UI** — as a scriptable, composable command-line tool you
-can drop into build scripts, pipelines, and automation. Learn non-interactive print mode
-(`claude -p`), bare mode, structured output, and pre-approving tools for unattended runs.
+You work in your `bookmonkey-legacy` repository with Node.js 24, no server needs to run. Open the terminal in the desktop app. You type all `claude -p` commands there. On Windows use Git Bash. Check with `jq --version` that jq is installed, otherwise `brew install jq` or on Windows `winget install jqlang.jq`.
 
-## Background
+### 1. Ask a question without a chat
 
-Claude Code follows the Unix philosophy: add `-p` (`--print`) to run any command
-non-interactively, read `stdin`, and write the result to `stdout`. `--bare` skips auto-discovery of
-hooks, skills, plugins, MCP servers, auto memory, subagents, commands, and `CLAUDE.md` so a script gets the same result on every
-machine. Because there is no human to answer prompts, you pre-approve tools with `--allowedTools`
-or pick a permission mode.
+```text
+claude -p "How is this project structured? Answer in three sentences."
+```
 
-## Steps
+The answer appears in the terminal, then Claude exits.
 
-1. Run a one-off non-interactive query: ask a question about the codebase with `claude -p "..."`.
-2. **Pipe** data through Claude: feed a build log or a `git diff` into `claude -p` and redirect the
-   explanation to a file.
-3. Get **structured output**: run a query with `--output-format json`, then again constrained with
-   `--json-schema`, and parse a field with `jq`. The fields are `.result`, `.structured_output` (check that it
-   exists) and `.total_cost_usd`.
-4. Add a **project script** that pipes the diff against the main branch into `claude -p` and asks
-   it to report issues. Pre-approve only the tools it needs.
-5. Run `export ANTHROPIC_API_KEY=...` first (PowerShell: `$env:ANTHROPIC_API_KEY="..."`), because `--bare` never reads your login. Then try
-   `--bare` and explain what stops loading; discuss why that matters for CI reproducibility.
-6. Reflect on which repetitive checks in your workflow could become headless Claude steps.
+### 2. Pipe a diff in
 
-## Success Criteria
+```text
+git diff origin/main...origin/feature/admin-export-v2 | claude -p "Summarize this diff in three bullet points: what changed and what is risky?" > summary.md
+```
 
-- [ ] A non-interactive `claude -p` query ran successfully
-- [ ] Structured JSON output was produced and a field parsed from it
-- [ ] A project script wraps a headless Claude check with pre-approved tools
-- [ ] You can explain what `--bare` changes and why it matters for CI
+Whatever stands before the `|` is Claude's input. The `>` writes the answer into the file `summary.md`. Open it.
 
-## References
+### 3. Get an answer a script can read
 
-- Claude Code — Run Claude Code programmatically: https://code.claude.com/docs/en/headless
-- Claude Code — CLI reference: https://code.claude.com/docs/en/cli-reference
-- Claude Code — GitHub Actions: https://code.claude.com/docs/en/github-actions
+```text
+git diff origin/main...origin/feature/admin-export-v2 | claude -p "Check this diff for problems. Return a verdict and a list of problems." --output-format json --json-schema '{"type":"object","properties":{"urteil":{"type":"string","enum":["ok","bedenklich"]},"probleme":{"type":"array","items":{"type":"string"}}},"required":["urteil","probleme"]}' | jq .structured_output
+```
+
+The schema defines which fields the answer has. You get no running text, but a verdict (`urteil`) and a list (`probleme`) that `jq` reads out. The field is called `structured_output`.
+
+### 4. Let Claude build a script from it
+
+Start a new session in the desktop app and enter this prompt:
+
+```text
+Write a shell script review.sh in the project folder. It takes a branch as an argument, pipes the diff from origin/main to that branch into claude -p and lets Claude check it for problems. The answer must be JSON with a schema: urteil (ok or bedenklich) and probleme (list). The script prints the problems readably (jq is installed) and ends with exit code 1 if the verdict is bedenklich. Claude may only use Read, Grep and Glob in that run. Make the script executable.
+```
+
+Nobody answers questions inside a script. That is why the allowed tools are fixed in advance. Read the script before you run it.
+
+### 5. Run the script
+
+```text
+./review.sh origin/feature/admin-export-v2; echo "Exit code: $?"
+```
+
+You see the verdict, the problems and finally the **exit code**, a number other programs use to tell whether something succeeded. The script takes a moment.
+
+### 6. Build your own script
+
+Think of a check or task you repeat in daily work and let Claude write a script for it that uses `claude -p`. Then try it out.
+
+For example:
+
+```text
+Write a script commit-vorschlag.sh that pipes the staged changes (git diff --staged) into claude -p and suggests a short commit message. Make it executable.
+```
+
+For this example you need a staged change (`git add review.sh`).
+
+### 7. Commit your state
+
+```text
+Committe alle Änderungen aus dieser Aufgabe. Lies vorher den Diff.
+```
+
+### What just happened
+
+`claude -p` turns Claude into a command line program: input by pipe, output on the console, and with a schema and an exit code it fits into scripts. The same idea sits in every pipeline that calls Claude. The answers differ in every run, you check the verdict and the problems yourself.
+
+**Done when** `review.sh` prints a verdict with an exit code, you have built and tried your own script with `claude -p`, and both are committed.
+
+<details>
+<summary>More</summary>
+
+`claude -p` uses your normal login. Without `-p`, Claude stays interactive. If you want a run without your local settings and `CLAUDE.md` (for example in CI), the docs mention `--bare`; it does not read your login and needs an API key.
+
+[Run Claude Code programmatically](https://code.claude.com/docs/en/headless) and [CLI reference](https://code.claude.com/docs/en/cli-reference)
+
+</details>

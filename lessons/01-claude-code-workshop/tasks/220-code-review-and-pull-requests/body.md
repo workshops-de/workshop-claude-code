@@ -1,122 +1,100 @@
-## Overview
+In this task you review a colleague's pull request with **/code-review** and your own **security subagent**, a helper with its own context that may only read. Dana's branch `feature/admin-export-v2` adds a CSV export, the tests are green, and Dana is in a hurry.
 
-Review a colleague's pull request the professional way: an automated review for correctness, a
-separate security pass by a specialised subagent, and your own triage of every finding. The
-guiding principle is **"you push it, you own it"**, and for a reviewer: **you approve it, you own
-it**. The agent review assists, it does not absolve.
+You work in your `bookmonkey-legacy` clone (Node.js 24 or newer). If `git status` is not clean, run `git stash` first. If the API is still running from the debugging task, stop it first with Ctrl+C.
 
-## The Feature
+### 1. Get Dana's branch
 
-- **`/code-review`** reviews changes for correctness bugs. Without a target it reviews your
-  current branch; with a target it reviews that instead:
+```bash
+git fetch origin
+git switch -c review/admin-export-v2 origin/feature/admin-export-v2
+git merge --no-edit main
+npm run db:reset
+```
 
-  ```text
-  /code-review main...review/admin-export-v2
-  /code-review high main...review/admin-export-v2
-  ```
+The merge pulls your `CLAUDE.md` and settings from `main` into the review branch. The diff `main...review/admin-export-v2` with three dots still shows only what Dana changed. In a second terminal start the API with `npm run dev:api` (http://localhost:4780). You do not need the web app.
 
-  An effort level (`low` to `max`) trades confidence for coverage: `low` reports only the findings
-  it is most sure about. In a terminal session the review runs as a background subagent with its
-  own context, and the findings arrive in your conversation. `--fix` applies them, `--comment`
-  posts them on a GitHub PR. `/review` is an alias.
-- **`/security-review`** analyses the diff between your current branch and the default branch of
-  `origin` for vulnerabilities such as injection, auth issues, and data exposure.
-- **A security subagent** is your own reviewer with a focused prompt and no edit tools, in
-  `.claude/agents/`. Call it by name (`@agent-security-reviewer`) so the review runs in its own
-  context and only the findings come back.
-- **Triage** is yours. Every finding gets a verdict: real (with severity), false positive (with
-  the reason), or needs discussion.
+### 2. Create the security subagent
 
-## Apply it to BookMonkey Legacy
+Start a new session in this folder and send:
 
-> **Repo / ports:** your `bookmonkey-legacy` clone (Node.js 24 or newer), API on
-> http://localhost:4780, web app on http://localhost:5180
->
-> **Login:** admin `admin@bookmonkey.example` / `admin2021`
+```text
+Create a subagent security-reviewer as the file .claude/agents/security-reviewer.md. It may only read (Read, Grep, Glob), never change anything. It reviews a diff for security problems and gives, for each finding, the severity, file and line, how to exploit it, and a suggested fix.
+```
 
-The practice ground is your [`bookmonkey-legacy`](https://github.com/andrekovac/bookmonkey-legacy)
-clone. Dana has a pull request ready: the branch `feature/admin-export-v2` adds an export of
-reviews and loans as CSV, with a new box on the admin loans page and tests. The tests are green,
-the description is short, and Dana is in a hurry. You are the reviewer.
+Claude writes the file. A session loads subagents at start, so you need a new session afterwards.
 
-## Prerequisites
+### 3. Let Claude explain the change
 
-- The `bookmonkey-legacy` clone with `npm install` done, and the `CLAUDE.md` you committed on
-  `main` in the CLAUDE.md task
+Start a new session and send:
 
-## Steps
+```text
+Explain the changes of main...review/admin-export-v2 to me: what does the feature do, who uses it, which files are affected? Also run npm test.
+```
 
-1. **Get the branch, with your memory file.** First commit or stash what is left from the
-   refactoring, debugging and GitHub Actions tasks (`git status` must be clean; `git stash` is fine if you are not sure). Then
-   create a local review branch from Dana's branch and merge your `main` into it, so your
-   `CLAUDE.md` comes along:
+You get a summary, and the tests are green. Green only means that what is tested passes.
 
-   ```bash
-   git fetch origin
-   git switch -c review/admin-export-v2 origin/feature/admin-export-v2
-   git merge --no-edit main
-   npm run db:reset
-   ```
+### 4. Start the correctness review
 
-   The diff `main...review/admin-export-v2` still shows only Dana's changes.
+```text
+/code-review main...review/admin-export-v2
+```
 
-2. **Understand the change first.** Ask Claude for a summary of
-   `git log main..review/admin-export-v2` and `git diff --stat main...review/admin-export-v2`:
-   what the feature does and which files it touches. Run `npm test`.
-3. **Run the correctness review**: `/code-review main...review/admin-export-v2`. While it runs in
-   the background, read the diff yourself and note what you would flag.
-4. **Create a security subagent** in the clone, `.claude/agents/security-reviewer.md`, without
-   edit tools (or copy the one from the subagents task):
+This takes a while. Meanwhile read the diff yourself (`git diff main...review/admin-export-v2` in the terminal) and note what you would object to.
 
-   ```markdown
-   ---
-   name: security-reviewer
-   description: Reviews a diff for security issues.
-   tools: Read, Grep, Glob
-   ---
-   You are a security reviewer. Review only the files and changes you are given, in the context
-   of the code they call. For each finding give severity, file and line, an attack scenario in one sentence,
-   and a fix. Do not edit files.
-   ```
+### 5. Call the security subagent
 
-   Restart Claude Code (or wait for it to pick up the file), then ask
-   `@agent-security-reviewer review the changes of main...review/admin-export-v2` (the main session
-   passes it the diff). Optionally compare with
-   `/security-review` on the branch.
-5. **Triage** all findings from both reviews and your own list in one table: finding, source,
-   verdict (real / false positive / discuss), severity, and your reason. For every "real", ask
-   Claude to show you how to trigger it (a `curl`, a test, a crafted input) and check one yourself.
-6. **Write the review** as you would post it for Dana: blocking issues first, each with a
-   suggested fix; non-blocking remarks after. Ask Claude to draft it from your table, then edit it
-   in your own words.
-7. **Fix one blocking finding** on the branch with a test that proves it, and run `/code-review`
-   again on the branch to see how the findings change.
-8. Reflect: what did the agents catch that you missed, what did you catch that they missed, and
-   which finding was wrong?
-9. **Optional: security pass over `main`.** Switch to `main` of `bookmonkey-legacy` and ask the
-   same `security-reviewer` subagent to review the existing code, not only a diff. Triage its
-   findings the same way: verdict, severity, reason, and one reproduction for each "real".
+```text
+@agent-security-reviewer review the changes of main...review/admin-export-v2. Give it the diff.
+```
 
-## Success Criteria
+The subagent reads in its own context, and only its report comes back.
 
-**Feature**
+### 6. Check on the running code yourself
 
-- [ ] `/code-review` ran on `main...review/admin-export-v2` and you read its findings
-- [ ] A security subagent without edit tools reviewed the same diff in its own context
-- [ ] Every finding has a verdict and a reason, including at least one false positive or "discuss"
-- [ ] You reproduced at least one real finding yourself instead of trusting the report
+A diff shows what changes, not how the feature is used. Write a prompt yourself that makes Claude test Dana's assumptions on the running code, not only in the diff, and that forbids changing anything.
 
-**Review is useful**
+For example:
 
-- [ ] A written review exists with blocking issues first and a suggested fix for each
-- [ ] One blocking finding is fixed on the branch with a test; `npm test` is green
-- [ ] You can say whether you would approve the PR now, and why
+```text
+Which assumptions does Dana's code make? Check each one on the running code, not only in the diff. Change nothing.
+```
 
-## References
+### 7. Triage and reproduce
 
-- Claude Code: Review locally with `/code-review`: https://code.claude.com/docs/en/code-review-local
-- Claude Code: Commands (`/security-review`): https://code.claude.com/docs/en/commands
-- Claude Code: Subagents: https://code.claude.com/docs/en/sub-agents
-- Claude Code: Code Review for GitHub (managed service): https://code.claude.com/docs/en/code-review
+**Triage** means giving every finding a verdict: real, false positive or discuss. Send:
+
+```text
+Put all findings from this session into a table: finding, source, verdict (real, false positive or discuss), severity, reason. Only say "real" if you proved it on the running code.
+```
+
+Add your own list and anything missing from the table. For the most serious "real" one send:
+
+```text
+Show me, for the most serious real finding, a call that I can run myself in the terminal so I can see it with my own eyes. The API is already running. Run it once and show the output.
+```
+
+Run the call yourself in the terminal. Claude may create test data on the way. Stop the API and run `npm run db:reset`, then they are gone.
+
+### 8. Write the review for Dana
+
+```text
+From the table, write a review for Dana the way I would post it in the pull request: blocking points first, each with a suggested fix, then non-blocking remarks. End with one sentence: approve or not, and why. Do not change any code.
+```
+
+Rework the draft in your own words.
+
+### What just happened
+
+Three reviewers read the same diff: `/code-review`, the subagent and you. Each finds something different, and each can claim something wrong. A finding is only a hint, the reproduction turns it into a verdict. Whoever approves the pull request is responsible for it afterwards.
+
+**Done when** you have a written review with blocking points first, have reproduced at least one finding yourself in the terminal, and can say whether you would approve the PR.
+
+<details>
+<summary>More</summary>
+
+- `/code-review` (effort levels, `--fix`, `--comment`): https://code.claude.com/docs/en/code-review-local
+- `/security-review` (according to the docs, against the default branch of `origin`): https://code.claude.com/docs/en/commands
+- Subagents: https://code.claude.com/docs/en/sub-agents
 - OWASP Top Ten: https://owasp.org/www-project-top-ten/
-- GitHub: About pull request reviews: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/about-pull-request-reviews
+
+</details>

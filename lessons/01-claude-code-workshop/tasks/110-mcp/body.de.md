@@ -1,98 +1,76 @@
-## Überblick
+In dieser Aufgabe geht es um **MCP** (Model Context Protocol): Darüber bekommt Claude zusätzliche Werkzeuge, hier einen echten Browser. Damit prüft Claude nicht nur den Code, sondern sieht sich die BookMonkey-Seiten an, klickt durch und berichtet, was es gefunden hat.
 
-Verbindet Claude Code über das **Model Context Protocol (MCP)** mit einem echten Browser und lasst
-den Agenten prüfen, was er gebaut hat, indem er es sich ansieht: klicken, lesen und berichten.
-Manches lässt sich nicht durch Lesen des Codes prüfen: ob ein Cover wirklich angezeigt wird, ob sich das
-Paging auf dem Handy richtig anfühlt, ob ein Link in der Reihe beim richtigen Buch landet.
+Ihr arbeitet in eurem `bookmonkey`-Repository mit Node.js 26. Es müssen zwei Server laufen: die API mit `npx bookmonkey-api` (http://localhost:4730) und die App mit `npm run dev` (http://localhost:3000).
 
-## Das Feature
+### 1. Verbindet einen Browser-Server
 
-MCP ist ein offener Standard, um Agenten mit externen Tools und Daten zu verbinden: einem Browser,
-einer Datenbank, einem Issue-Tracker oder eurem eigenen Tooling.
+Öffnet in der Desktop-App das Terminal im Projektordner und fügt den Playwright-Server hinzu. Danach zeigt die Liste, ob er läuft:
 
-- **Einen Server hinzufügen**: Lokale (stdio-)Server starten einen Befehl nach `--`; Remote-Server
-  bekommen eine URL:
+```bash
+claude mcp add playwright -- npx -y @playwright/mcp@latest
+claude mcp list
+```
 
-  ```bash
-  claude mcp add playwright -- npx -y @playwright/mcp@latest
-  claude mcp add --transport http notion https://mcp.notion.com/mcp
-  ```
+In der Liste steht `playwright` mit `Connected`. Startet jetzt eine neue Session, damit Claude die Browser-Tools kennt. Fragt Claude vor dem ersten Browser-Aufruf nach, erlaubt ihn.
 
-- **Scopes**: Standard ist local (nur ihr, nur dieses Projekt). `--scope project` schreibt den
-  Server in die `.mcp.json` im Projektstamm, sodass euer Team ihn über Git bekommt; `--scope user`
-  macht ihn in allen euren Projekten verfügbar.
-- **Status prüfen**: `claude mcp list` zeigt den Zustand je Server; `/mcp` in einer Session zeigt
-  verbundene Server und ihre Tools und übernimmt die Anmeldung.
-- **Kontextkosten**: Tool Search (standardmäßig an) schiebt Tool-Definitionen auf, bis sie gebraucht
-  werden, aber die **Ergebnisse** von Tools landen trotzdem in eurem Kontext. Ein vollständiger
-  Browser-Snapshot ist groß; ein Status-Check mit `curl` ist winzig.
+### 2. Lasst Claude eine Journey durchgehen
 
-## Anwendung auf BookMonkey
+```text
+Öffne http://localhost:3000/books im Browser. Suche nach "of", geh auf Seite 2 und wieder zurück, öffne ein Harry-Potter-Buch mitten aus der Reihe und folge den Links zum vorherigen und nächsten Buch der Reihe. Melde bei jedem Schritt, was du auf der Seite siehst: Titel, Zahl der Karten und Adresszeile. Nur Beobachtungen, kein Urteil.
+```
 
-> **Repo / Ports:** euer `bookmonkey`-Repository (Node.js 26), Next.js-App auf
-> http://localhost:3000, `npx bookmonkey-api` auf http://localhost:4730
->
-> **Login:** Demo-User `admin@bookmonkey.api` / `password1!`
+Claude steuert den Browser selbst. In unserem Lauf stand danach eine Tabelle da, Schritt für Schritt. Die Frage nach Beobachtungen statt nach einem Urteil liefert etwas, das ihr nachprüfen könnt.
 
-Das Übungsfeld ist das **Katalogerlebnis**, das ihr bisher gebaut habt (Cover, Suche, Paging,
-Navigation durch Reihen, Anmeldung und die Create-/Edit-Formulare), plus eine kleine Ergänzung nur
-für den Client: ein **Cover-Fallback**. Manche Cover laden eventuell nicht (eine fehlende Datei,
-ein Host, den eure App nicht erlaubt, ein Buch ohne Cover); die Karte soll dann einen Platzhalter
-statt eines kaputten Bildes zeigen. Die Fehlerbehandlung `onError` für Bilder läuft nur im Browser,
-deshalb liegt sie in einer Client Component. Nennt diese Einschränkung gleich zu Beginn, und lasst
-den Agenten das Ergebnis dann in einem echten Browser belegen, statt darauf zu vertrauen, dass es
-kompiliert.
+### 3. Prüft die Handyansicht
 
-## Schritte
+```text
+Öffne http://localhost:3000/books in einem Browserfenster in Handygröße (390 × 844). Gehe den Katalog durch und öffne ein Buch. Melde, was auf der Seite abgeschnitten ist, übereinander liegt oder zu klein zum Antippen ist. Nenne zu jeder Beobachtung die Seite und das Element.
+```
 
-1. Fügt einen MCP-Server für Browser-Automatisierung hinzu (z. B. Playwright:
-   `claude mcp add playwright -- npx -y @playwright/mcp@latest`), startet eine Session und prüft
-   mit `/mcp`, dass er verbunden ist und seine Tools aufgelistet werden. Playwright MCP schreibt
-   Snapshots und Screenshots nach `.playwright-mcp/` in euer Repo: Tragt diesen Ordner in die
-   `.gitignore` ein.
-2. Nennt dem Agenten zuerst die **Einschränkung** (der Fallback ist eine kleine Client Component,
-   der Rest der Karte bleibt serverseitig gerendert) und lasst ihn den Cover-Fallback
-   implementieren. Legt ein Buch mit einer unsinnigen Cover-URL an, um einen Testfall zu haben.
-   Euer Create-Formular hat kein Cover-Feld, nutzt also direkt die API:
+In unserem Lauf kamen unter anderem abgeschnittene Titel und Links unter 44 px Höhe. Bei euch kann die Liste anders aussehen.
 
-   ```bash
-   curl -X POST http://localhost:4730/books -H "Content-Type: application/json" \
-     -d '{"isbn":"9990000000001","title":"Bogus Cover Test","author":"Test","cover":"https://nonexistent.invalid/cover.png"}'
-   ```
-3. Startet den Dev-Server und bittet den Agenten, **eine User Journey mit den Browser-Tools
-   durchzugehen**: nach „of“ suchen (46 Treffer, genug für eine Seite 2; „harry“ hat nur 7), auf
-   Seite 2 und zurück gehen, ein Buch öffnen, den Reihen-Links vor und zurück folgen, sich als
-   Demo-User anmelden (`admin@bookmonkey.api` / `password1!`), versuchen, ein Buch mit bereits
-   vorhandener ISBN anzulegen, und euer Buch mit dem unsinnigen Cover finden. Bittet ihn, konkrete
-   Beobachtungen zu berichten, kein Urteil.
-4. Wiederholt den Katalogteil in einem **Viewport in Handygröße** (z. B. 390 × 844) und lasst ihn
-   Layoutprobleme melden.
-5. Behebt, was der Browser-Check gefunden hat, und führt den Check danach erneut aus. Entfernt
-   anschließend die Testdaten aus der gemeinsamen API: `curl -X POST http://localhost:4730/dev/reset`.
-6. Findet eine Prüfung, bei der ein CLI-Befehl den Browser schlägt (z. B. „liefert `/books?q=harry`
-   200?“ oder „wie viele Bücher hat die API?“), und erklärt, warum er die schlankere Wahl ist.
+### 4. Behebt einen Fund und prüft ihn erneut
 
-## Erfolgskriterien
+Wählt einen Fund aus Schritt 3 aus. Claude soll ihn beheben und danach im Browser messen, ob es geklappt hat. Den Prompt schreibt ihr selbst.
 
-**Feature**
+Zum Beispiel, wenn bei euch auch der Link „Next“ im Paging gemeldet wurde:
 
-- [ ] Ein MCP-Server ist verbunden und seine Tools erscheinen in `/mcp`
-- [ ] Der Agent hat ihn genutzt, um die User Journey durchzugehen, und konkrete Beobachtungen
-      berichtet
-- [ ] Ihr wisst, welchen Scope ihr genutzt habt und wann ihr stattdessen `--scope project` wählen
-      würdet
-- [ ] Ihr habt mindestens eine Prüfung benannt, die besser mit einem CLI-Tool als über MCP geht
+```text
+Mach den Link „Next“ im Paging des Katalogs größer, sodass man ihn auf dem Handy gut antippen kann (mindestens 44 px hoch). Prüfe danach im Browser bei 390 × 844 auf http://localhost:3000/books, wie hoch der Link jetzt ist, und melde den gemessenen Wert.
+```
 
-**App funktioniert weiterhin**
+### 5. Vergleicht mit curl
 
-- [ ] Bücher ohne ladbares Cover zeigen einen Platzhalter, kein kaputtes Bild
-- [ ] Suche, Paging und Navigation durch Reihen verhalten sich so, wie der Agent berichtet hat, auf
-      Desktop- und Handybreite
-- [ ] Nur der Fallback ist eine Client Component; `npm run build` läuft durch
+```text
+Wie viele Bücher hat die API auf http://localhost:4730 insgesamt, und liefert dort /books?q=harry den Status 200? Antworte nur mit curl, ohne Browser.
+```
 
-## Referenzen
+Hier reicht curl: zwei Aufrufe, eine kurze Antwort und kein Browserfenster, dessen Inhalt in den Kontext kommt.
 
-- Claude Code: MCP: https://code.claude.com/docs/en/mcp
-- Claude Code: MCP quickstart: https://code.claude.com/docs/en/mcp-quickstart
-- Playwright MCP server: https://github.com/microsoft/playwright-mcp
-- Next.js: Server and Client Components: https://nextjs.org/docs/app/getting-started/server-and-client-components
+### 6. Committet euren Stand
+
+Die Browser-Tools legen Screenshots in `.playwright-mcp/` in eurem Projekt ab. Die gehören nicht ins Repository.
+
+```text
+Trage .playwright-mcp/ in die .gitignore ein, weil dort die Browser-Tools ihre Screenshots ablegen. Committe dann alle Änderungen aus dieser Aufgabe. Lies vorher den Diff.
+```
+
+### Was gerade passiert ist
+
+| | Browser per MCP | curl |
+|---|---|---|
+| Zeigt | was ein Nutzer sieht: Layout, Klicks, Navigation | Status, Header, Zahlen |
+| Kosten im Kontext | groß, jede Seite kommt als Text oder Bild | klein |
+
+Der MCP-Server gibt Claude Werkzeuge, die es von sich aus nicht hat. Die **Ergebnisse** dieser Werkzeuge landen in eurer Unterhaltung. Nehmt den Browser also dort, wo es auf das ankommt, was man sieht, und curl für alles, was eine Zahl oder ein Status beantwortet.
+
+**Fertig, wenn** `claude mcp list` den Server `playwright` als verbunden zeigt, Claude eine Journey und die Handyansicht im Browser durchgegangen ist, ihr einen Fund behoben und erneut gemessen habt und `.playwright-mcp/` in der `.gitignore` steht.
+
+<details>
+<summary>Mehr dazu</summary>
+
+`claude mcp add` speichert den Server standardmäßig nur für euch und dieses Projekt. Mit `--scope project` landet er in der `.mcp.json` im Projektordner, sodass euer Team ihn über Git bekommt. In der Standardeinstellung öffnet Playwright laut Doku ein sichtbares Browserfenster.
+
+[MCP in Claude Code](https://code.claude.com/docs/en/mcp), [Playwright MCP](https://github.com/microsoft/playwright-mcp)
+
+</details>

@@ -6,9 +6,9 @@ That belongs in the plan, not the specification.
 </details>
 
 <details>
-<summary>💡 Hint 2: Don't skip clarify and analyze</summary>
+<summary>💡 Hint 2: Clarify and Analyze are optional</summary>
 
-They buy quality cheaply, even though they're optional.
+They are listed under More. We did not run them.
 
 </details>
 

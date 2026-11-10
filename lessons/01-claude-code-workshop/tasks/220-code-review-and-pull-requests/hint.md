@@ -1,8 +1,8 @@
 <details>
 <summary>💡 Hint 1: Review the feature, not only the lines</summary>
 
-A diff shows what changed, not how the feature is used. Ask what the feature does, who uses
-it, and what could go wrong, then check the code against your answers.
+A diff shows what changed, not how the feature is used. Ask what the feature does and what
+could go wrong, then check the code against your answers.
 
 </details>
 

@@ -1,138 +1,69 @@
-## Überblick
+In dieser Aufgabe geht es um einen **eigenen Skill** (eine Anleitung, die Claude selbst lädt, wenn sie zur Aufgabe passt) und einen **eigenen Befehl** (ein Slash Command, den nur ihr startet). Ihr baut eine Seite von Hand, haltet fest, wie sie gebaut wurde, und lasst die nächsten Seiten daraus entstehen.
 
-Schreibt einen **eigenen Skill** und einen **eigenen Slash Command**, damit die Art, wie euer Team
-ein Feature baut, einmal festgehalten ist und überall wiederverwendet wird, ohne sie in jeder
-Session neu zu erklären. Ihr baut ein Feature von Hand, haltet seine Form fest und lasst die
-nächsten Features aus dem bauen, was ihr festgehalten habt.
+Ihr arbeitet in eurem `bookmonkey`-Repository mit Node.js 26. Die API (`npx bookmonkey-api`) läuft auf http://localhost:4730, die App startet ihr mit `npm run dev` auf http://localhost:3000. Der Demo-User ist `admin@bookmonkey.api` mit `password1!`.
 
-## Das Feature
+### 1. Baut die Leseseite von Hand
 
-Beide liegen am selben Ort und teilen ein Format: eine `SKILL.md` in `.claude/skills/<name>/`
-(ältere Command-Dateien in `.claude/commands/<name>.md` funktionieren weiterhin und erzeugen
-dasselbe `/name`). Der Unterschied: **Wer entscheidet, wann es läuft?**
+```text
+Baue die Leseseite des Katalogs. Auf /books: ein Suchfeld (q), Sortierung nach Titel oder Preis (_sort, _order) und Paging mit 12 Büchern pro Seite (_page, _limit, Gesamtzahl aus dem Header X-Total-Count). Alles bleibt in der URL. Dazu eine Detailseite unter /books/<isbn> mit den Links vorheriges und nächstes Buch der Reihe, aus predecessorIsbn und successorIsbn. Prüfe mit npm run build.
+```
 
-- **Skill (der Agent entscheidet)**: Eine `description` mit passenden Triggerwörtern lässt Claude
-  den Skill laden, sobald eine Aufgabe passt:
+Öffnet danach `/books`, sucht, sortiert und blättert, und öffnet ein Buch einer Reihe (zum Beispiel Harry Potter). Die Links vorheriges und nächstes führen zu den Nachbarbüchern.
 
-  ```markdown
-  ---
-  name: add-book-feature
-  description: Use when adding or changing a book screen or book API call - API client function, page, form, server action, revalidation
-  ---
+### 2. Haltet das Muster als Skill fest
 
-  1. Add or extend the typed API client function (address books by ISBN)
-  2. Read in a server component; keep filters and paging in the URL
-  3. Write through a server action that validates, calls the API, and maps errors
-  4. Signed-in screens: add the route to the `proxy.ts` matcher
-  5. Revalidate affected paths, then run type-check and npm run build
-  ```
+```text
+Schreibe aus dem, was du gerade gebaut hast, einen Skill unter .claude/skills/add-book-feature/SKILL.md. Er soll beschreiben, wie in diesem Projekt ein Buch-Feature gebaut wird: API-Client, Seite, URL-Zustand, Prüfung. Höchstens 8 nummerierte Schritte. Die description beginnt mit den Wörtern, die in einer Anfrage vorkommen würden (Buch, Detailseite, Katalog, Feld) und sagt, wann der Skill geladen wird.
+```
 
-- **Command (ihr entscheidet)**: Mit `disable-model-invocation: true` läuft er nur, wenn ihr ihn
-  eintippt. Für Eingaben nutzt ihr `$ARGUMENTS` (oder `$0`, `$1`, …):
+Lest die Datei. Claude sieht von jedem Skill zuerst nur die `description`, deshalb entscheidet sie, ob er geladen wird.
 
-  ```markdown
-  ---
-  name: new-book-view
-  description: Scaffold a new book screen following the add-book-feature skill
-  disable-model-invocation: true
-  argument-hint: "[create|edit]"
-  ---
+### 3. Testet den Skill in einer neuen Session
 
-  Build the "$ARGUMENTS" book screen following the add-book-feature skill.
-  ```
+Startet eine neue Session und bittet um eine kleine Änderung, ohne den Skill zu nennen. Ihr schreibt den Prompt selbst. Er soll eine Buchfunktion betreffen, die der Skill abdeckt. Zum Beispiel:
 
-  Speichert ihn als `.claude/skills/new-book-view/SKILL.md` und ruft ihn mit
-  `/new-book-view create` auf. (Eine ältere `.claude/commands/new-book-view.md` funktioniert auch,
-  aber Command-Dateien kennen das Feld `name` nicht.) Setzt `argument-hint` in Anführungszeichen:
-  Eckige Klammern ohne Anführungszeichen sind in YAML eine Liste, kein String.
+```text
+Zeige auf jeder Buchkarte im Katalog auch den Verlag an.
+```
 
-- **Haltet den Inhalt kurz und handlungsorientiert**: Nummerierte Schritte schlagen Fließtext, und
-  ein geladener Skill bleibt für den Rest der Session im Kontext.
+Schaut im Verlauf, ob Claude `add-book-feature` geladen hat. Seht ihr es nicht, fragt Claude: "Welche Skills hast du für diese Aufgabe geladen?" In unserem Lauf hat es den Skill geladen. Wenn nicht, ergänzt in der `description` die Wörter aus eurem Prompt.
 
-## Anwendung auf BookMonkey
+### 4. Legt einen Befehl an
 
-> **Repo / Ports:** euer `bookmonkey`-Repository (Node.js 26), Next.js-App auf
-> http://localhost:3000, `npx bookmonkey-api` auf http://localhost:4730
->
-> **Login:** Demo-User `admin@bookmonkey.api` / `password1!`
+```text
+Lege unter .claude/skills/new-book-view/SKILL.md einen Befehl /new-book-view an, den nur ich aufrufen kann (disable-model-invocation: true). Er bekommt ein Argument, create oder edit, und baut den Bildschirm nach dem Skill add-book-feature. create: Formular unter /books/new, schickt POST /books, zeigt bei 409 eine klare Meldung, dass die ISBN schon existiert. edit: Formular unter /books/<isbn>/edit mit den Werten des Buchs, schickt PATCH /books/<isbn> ohne id, createdAt, updatedAt. Beide teilen sich ein Formular, nur Aktion und Vorgabewerte unterscheiden sich. Beide Routen sind nur angemeldet erreichbar.
+```
 
-Das Übungsfeld sind die **Buch-Screens** von BookMonkey in einer Server-First-Architektur: **Lesen**
-in Server Components über euren typisierten API-Client, **Schreiben** über Server Actions, die
-validieren, die API aufrufen und revalidieren. Die Leseseite baut ihr von Hand (Katalogsuche,
-Sortierung und Paging sowie eine Detailseite, die durch eine Buchreihe navigiert). Die
-Schreibseite (anlegen, bearbeiten) lasst ihr aus dem erzeugen, was ihr festgehalten habt. Wenn
-euer Skill gut ist, bestehen der zweite und dritte Screen fast nur noch aus Feldern.
+### 5. Baut den Create-Bildschirm
 
-## Voraussetzungen
+Tippt `/new-book-view create`. Das Argument landet im Text des Befehls. Meldet euch danach im Browser an und legt unter http://localhost:3000/books/new ein Buch mit der ISBN 9990000000001 an. Probiert es dann mit der schon vorhandenen ISBN 9780747532699.
 
-- Die `bookmonkey-api` läuft; die Katalogseite aus der Skills-Aufgabe existiert.
-- **Erforderlich:** `find-skills` (`npx skills add vercel-labs/skills@find-skills -y`): Schaut
-  euch an, wie bestehende Skills aufgebaut sind, bevor ihr eigene schreibt.
-- Optionale Skills (nützlich, aber nicht nötig): `anthropics/skills@frontend-design`,
-  `vercel-labs/agent-skills@vercel-react-best-practices`
+### 6. Baut den Edit-Bildschirm
 
-## Schritte
+Tippt `/new-book-view edit`. In unserem Lauf nutzte Claude das Formular aus dem ersten Aufruf weiter, statt ein zweites zu bauen. Öffnet http://localhost:3000/books/9990000000001/edit und ändert das Buch.
 
-1. Baut mit dem Agenten die **Leseseite**: Suche (`q`), Sortierung (`_sort`/`_order`) und Paging
-   (`_page`/`_limit`, Gesamtzahl aus dem Header `X-Total-Count`) im Katalog, alles in der URL
-   gehalten; dazu eine Detailseite unter `/books/<isbn>` mit Links „vorheriges / nächstes in der
-   Reihe“ aus `predecessorIsbn` / `successorIsbn`. Prüft jeden Teil im Browser, bevor ihr weitergeht.
-2. Schaut zurück auf das, was ihr getan habt, und schreibt **`.claude/skills/add-book-feature/SKILL.md`**:
-   die Schritte in der richtigen Reihenfolge, mit einer Beschreibung, die mit Triggerwörtern beginnt.
-3. **Testet den Skill in einer frischen Session**: Bittet um eine kleine, passende Änderung (z. B.
-   „zeige die Seitenzahl auf der Detailseite an“), ohne den Skill zu nennen, und prüft, ob Claude
-   ihn lädt. Verfeinert die Beschreibung, falls nicht. Die Beispielbeschreibung oben ist nur ein
-   Ausgangspunkt und wird oft nicht so übernommen: Beginnt mit den Wörtern, die eure Prompts
-   enthalten (Buch, Detailseite, Katalog, Feldnamen wie Seitenzahl oder Preis).
-4. Schreibt den Command **`/new-book-view`** mit `disable-model-invocation: true` und
-   `$ARGUMENTS`.
-5. Führt `/new-book-view create` (`POST /books`) und danach `/new-book-view edit` (`PATCH
-   /books/<isbn>`) aus. Beide sind nur mit Anmeldung erreichbar, ihre Routen (zum Beispiel
-   `/books/new` und `/books/<isbn>/edit`) müssen also im `proxy.ts`-Matcher aus der
-   Subagents-Aufgabe stehen. Haltet fest, was sich zwischen beiden unterschied: idealerweise nur der
-   HTTP-Aufruf und die Formularvorgaben.
-6. Reflektiert: Welche eurer wiederkehrenden Anfragen sind Skills, welche Commands und welche
-   gehören in die `CLAUDE.md`?
+### 7. Committet euren Stand
 
-## Erfolgskriterien
+```text
+Committe alle Änderungen aus dieser Aufgabe. Lies vorher den Diff.
+```
 
-**Feature**
+### Was gerade passiert ist
 
-- [ ] `.claude/skills/add-book-feature/SKILL.md` existiert und Claude hat ihn in einer frischen
-      Session von selbst geladen
-- [ ] Ihr habt die Beschreibung des Skills mindestens einmal anhand des beobachteten Verhaltens
-      verfeinert
-- [ ] Ein Command nur für euch nimmt ein Argument entgegen und hat sowohl den Create- als auch den
-      Edit-Screen gebaut
-- [ ] Ihr könnt Skill, Command und `CLAUDE.md` in eigenen Worten voneinander abgrenzen
+| | Skill | Befehl | `CLAUDE.md` |
+|---|---|---|---|
+| Wer startet es | Claude, nach der `description` | ihr, mit `/name` | wird immer geladen |
+| Wofür | ein Vorgehen, das öfter vorkommt | ein Auftrag mit Argument | Fakten, die immer gelten |
 
-**App funktioniert weiterhin**
+Beide, Skill und Befehl, sind eine `SKILL.md`. `disable-model-invocation: true` macht aus dem Skill einen Befehl, den nur ihr startet.
 
-- [ ] Suche, Sortierung und Paging überstehen ein Neuladen der Seite (der Zustand liegt in der URL)
-- [ ] Die Detailseite navigiert in beide Richtungen durch eine Reihe (z. B. die Harry-Potter-Bücher)
-- [ ] Ein Buch mit bereits vorhandener ISBN zeigt eine klare Meldung für das `409` der API statt
-      eines Absturzes
-- [ ] Edit sendet nie `id`, `createdAt` oder `updatedAt`; Type-Check und `npm run build` laufen
-      durch
+**Fertig, wenn** `/books` Suche, Sortierung und Paging zeigt, `/books/<isbn>` durch die Reihe führt, ein neues Buch angemeldet angelegt und bearbeitet werden kann, Claude `add-book-feature` in einer neuen Session selbst geladen hat und alles committet ist.
 
-## Stolperfallen (aktuelles Framework)
+<details>
+<summary>Mehr dazu</summary>
 
-- `params` und `searchParams` sind in aktuellen Next.js-Versionen **Promises**: In Seiten mit
-  `await` auflösen.
-- Ergebnisse von serverseitigem `fetch` können gecacht sein: Stellt sicher, dass die Liste ein
-  frisch angelegtes Buch zeigt.
-- Eine ISBN an eine Server Action binden, ohne die Signatur `(prev, formData)` zu verlieren:
-  `action.bind(null, isbn)`.
-- Route-Type-Helper wie `PageProps<"/books/[isbn]">` gibt es erst, nachdem `next dev` oder
-  `next build` die Route-Typen erzeugt hat; bis dahin meldet `tsc` `TS2344`.
-- `/books/new` (Gruppe mit Anmeldung) und `/books/[isbn]` (öffentliche Gruppe) teilen sich einen
-  URL-Raum. Das statische Segment `new` gewinnt, es funktioniert also, aber denkt daran, falls
-  eine Route zu verschwinden scheint.
+- Ältere Befehle in `.claude/commands/<name>.md` funktionieren weiter und erzeugen dasselbe `/name`.
+- Weitere Felder wie `paths` (Skill nur für bestimmte Dateien) und `context: fork` stehen in den Docs: [Skills](https://code.claude.com/docs/en/skills)
+- Bücher, die ihr beim Testen angelegt habt, entfernt `curl -X POST http://localhost:4730/dev/reset` wieder.
 
-## Referenzen
-
-- Claude Code: Skills: https://code.claude.com/docs/en/skills
-- Claude Code: Control who invokes a skill: https://code.claude.com/docs/en/skills#control-who-invokes-a-skill
-- Claude Code: Pass arguments to skills: https://code.claude.com/docs/en/skills#pass-arguments-to-skills
-- BookMonkey API: Querying guide: https://github.com/workshops-de/bookmonkey-api/blob/main/docs/querying.md
-- Next.js: Server Actions and mutations: https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations
+</details>

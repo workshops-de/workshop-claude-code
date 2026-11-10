@@ -1,21 +1,20 @@
 <details>
-<summary>💡 Hint 1: Treat proxies as supply chain</summary>
+<summary>💡 Hint 1: The gateway sees everything</summary>
 
-Treat any third-party proxy as part of your supply chain — review and pin it.
-
-</details>
-
-<details>
-<summary>💡 Hint 2: Gateways buy governance, not new models</summary>
-
-Gateways shine for governance (auth, cost, audit), not for unlocking non-Claude models with full
-parity.
+Check in `audit.log` what comes before your prompt. A gateway is part of your supply chain, review and pin it like any provider.
 
 </details>
 
 <details>
-<summary>💡 Hint 3: Enterprise providers keep it in-cloud</summary>
+<summary>💡 Hint 2: Gateways bring governance, not new models</summary>
 
-Bedrock/Vertex/Foundry keep traffic and billing inside your own cloud account.
+Authentication, cost and audit in one place, but according to the docs no routing to non-Claude models.
+
+</details>
+
+<details>
+<summary>💡 Hint 3: Enterprise providers keep it in the cloud</summary>
+
+Bedrock, Vertex and Foundry keep traffic and billing in your own cloud account.
 
 </details>

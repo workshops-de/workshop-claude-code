@@ -1,34 +1,20 @@
 <details>
-<summary>💡 Hint 1: The server starts but /mcp says failed</summary>
+<summary>💡 Hint 1: /mcp does not show the server or shows "failed"</summary>
 
-Run the exact command from `.mcp.json` yourself in the repository root. A stdio server that
-prints anything to stdout (a `console.log` at startup) breaks the protocol; log to stderr with
-`console.error`. Also check that the API on port 4730 is running.
+Did you start a new session after registering? Is the API running on port 4730? Ask Claude: "Start the server from .mcp.json once yourself and tell me what it prints." A server that writes anything to stdout (for example a `console.log`) disturbs the connection; logs belong on stderr (`console.error`).
 
 </details>
 
 <details>
-<summary>💡 Hint 2: Claude calls the same tool again and again</summary>
+<summary>💡 Hint 2: Claude does not use the new tool</summary>
 
-Look at the tool descriptions and results, not at Claude. Does a description say what the tool
-returns? Does `get_series` really return the whole series, or only the next volume? A tool that
-answers a whole question saves many calls.
+Start a new session after every change to the server. Then look at the name and description of the tool: does the description say which questions it is meant for? Ask Claude to word it more precisely.
 
 </details>
 
 <details>
-<summary>💡 Hint 3: Results that are too big</summary>
+<summary>💡 Hint 3: The answer is very long</summary>
 
-If a tool returns full book objects with long abstracts, every call fills your context. Return
-only the fields the question needs, and let Claude ask for details with a second tool if it must.
-
-</details>
-
-<details>
-<summary>💡 Hint 4: The app build complains about the new folder</summary>
-
-If your Next.js type check or lint picks up `tools/bookmonkey-mcp`, exclude the folder in
-`tsconfig.json` (`"exclude"`) and in your ESLint config. The server is its own package with its own
-`package.json`.
+Ask Claude to let a tool return only the fields the question needs. Every result ends up in your context.
 
 </details>
