@@ -1,94 +1,66 @@
-## Überblick
+In dieser Aufgabe geht es um **Skills**: fertige Anleitungen für Claude, zum Beispiel für eine Library, die sich schnell ändert. Ihr installiert einen Skill für **shadcn/ui** und baut damit die Katalogseite von BookMonkey.
 
-Setzt **Skills** ein: Findet und installiert einen fertigen Skill für eine Library, die sich schnell
-ändert, beobachtet, wie Claude Code ihn von allein aufgreift, und vergleicht das mit dem expliziten
-Aufruf. Ihr seht, warum Skills das richtige Zuhause für prozedurales, aktuelles Know-how sind, das
-nicht die ganze Zeit im Kontext liegen soll.
+Ihr arbeitet in eurem `bookmonkey`-Repository mit Node.js 26. Die `bookmonkey-api` muss auf http://localhost:4730 laufen.
 
-## Das Feature
+### 1. Installiert den shadcn-Skill
 
-Ein Skill ist ein Ordner mit einer `SKILL.md` (plus optionalen Hilfsdateien). Nur sein **Name und
-seine Beschreibung** liegen im Kontext; die vollständigen Anweisungen werden geladen, wenn die
-Aufgabe passt oder wenn ihr ihn aufruft: das ist _Progressive Disclosure_.
+Öffnet in der Desktop-App das Terminal und führt im Projekt aus:
 
-- **Wo Skills liegen:** Projekt-Skills in `.claude/skills/<name>/SKILL.md` (committet sie für euer
-  Team), persönliche Skills in `~/.claude/skills/<name>/SKILL.md`.
-- **Skills von Dritten finden und installieren:** `npx skills find <thema>` durchsucht den
-  Community-Katalog; `npx skills add <owner>/<repo>@<skill> -y` installiert einen. Schaut euch an,
-  was auf der Platte landet, bevor ihr ihm vertraut.
-- **Sehen, was verfügbar ist:** `/skills` listet die Skills der aktuellen Session. Claude Code
-  übernimmt Änderungen an Skills live, aber nur in Skill-Verzeichnissen, die beim Start der Session
-  schon existierten: Führt nach dem ersten Skill des Projekts `/reload-skills` aus (oder startet neu).
-- **Zwei Wege, wie ein Skill läuft:** Claude ruft ihn automatisch auf, wenn euer Prompt zu seiner
-  Beschreibung passt, oder ihr ruft ihn direkt mit `/skill-name` auf. Das Transcript zeigt, wann ein
-  Skill geladen wurde. Ein Skill mit `user-invocable: false` im Frontmatter ist im `/`-Menü
-  verborgen, und `/name` zu tippen führt ihn nicht aus; ihr ruft ihn explizit auf, indem ihr Claude
-  bittet, ihn beim Namen zu verwenden.
+```text
+npx skills add shadcn-ui/ui@shadcn -y
+```
 
-Skills vs. Memory: `CLAUDE.md` und Regeln sind immer (oder pfadbezogen) geladene Fakten; Skills sind
-Abläufe, die bei Bedarf geladen werden.
+Die Ausgabe zeigt Sicherheitsbewertungen. Im Projekt liegen danach der Ordner `.agents/skills/shadcn`, ein Symlink `.claude/skills/shadcn` und die Datei `skills-lock.json`. Öffnet die `SKILL.md` und lest die ersten Zeilen: Dort steht, wofür der Skill gedacht ist.
 
-## Anwendung auf BookMonkey
+### 2. Baut die Katalogseite, ohne den Skill zu erwähnen
 
-> **Repo / Ports:** euer `bookmonkey`-Repository (Node.js 26), Next.js-App auf
-> http://localhost:3000, `npx bookmonkey-api` auf http://localhost:4730
->
-> **Login:** Demo-User `admin@bookmonkey.api` / `password1!`
+Startet eine neue Session, damit Claude den Skill kennt, und gebt diesen Prompt:
 
-Das Übungsfeld ist die **Katalogseite** von BookMonkey: ein Raster aus Buchkarten (Cover, Titel,
-Autor, Preis mit Währung), das auf eine Detailseite verlinkt, gebaut mit **shadcn/ui** auf eurem
-Tailwind-Scaffold. Die shadcn-CLI ist interaktiv und ihre Flags ändern sich häufig: genau die Art
-schnelllebigen Wissens, bei der ein gepflegter Skill die Trainingsdaten des Modells schlägt. Die
-Daten kommen weiterhin von der laufenden `bookmonkey-api`; eure API-Client-Regel aus der vorherigen
-Aufgabe gilt.
+```text
+Richte shadcn/ui in diesem Projekt ein und baue unter /books eine Katalogseite: eine Karte pro Buch von GET /books mit Cover, Titel, Autor und Preis. Jede Karte verlinkt auf /books/<isbn>.
+```
 
-## Voraussetzungen
+Schaut im Verlauf, ob Claude den Skill geladen hat. In unserem Lauf war `Skill shadcn` der erste Aufruf, noch vor dem Lesen des Projekts. Die Links auf `/books/<isbn>` führen noch ins Leere, die Detailseite baut ihr in einer späteren Aufgabe.
 
-- Die `bookmonkey-api` läuft auf `http://localhost:4730`.
-- Optionale Skills (nice to have, nicht erforderlich): `vercel-labs/agent-skills@vercel-react-best-practices`,
-  `anthropics/skills@frontend-design`.
+### 3. Fragt, was der Skill bewirkt hat
 
-## Schritte
+```text
+Nenne drei Stellen in der Katalogseite, die du wegen des Skills so gebaut hast. Ändere nichts.
+```
 
-1. Führt `npx skills find shadcn` aus und vergleicht die Ergebnisse: Wer veröffentlicht den jeweiligen
-   Skill, wie viele Installationen hat er, was verspricht er? Installiert den offiziellen:
-   `npx skills add shadcn-ui/ui@shadcn -y`.
-   Prüft, was gelandet ist: die Dateien in `.agents/skills/shadcn/`, ein Symlink `.claude/skills/shadcn`
-   und eine `skills-lock.json`. Committet alle drei zusammen.
-2. Öffnet die installierte `SKILL.md` und lest ihr Frontmatter: die Beschreibung und
-   `user-invocable: false`. Führt `/reload-skills` aus (oder startet eine neue Session), dann
-   `/skills`, und prüft, dass er aufgelistet ist.
-3. Bittet den Agenten, ohne den Skill zu erwähnen, **shadcn/ui** im Projekt **einzurichten** und die
-   Komponenten hinzuzufügen, die eine Buchkarte braucht. Beobachtet das Transcript: Hat er den Skill
-   von allein geladen?
-4. Lasst euch die **Katalogseite** unter `/books` bauen: eine Karte pro Buch von `GET /books` mit Cover,
-   Titel, Autor und formatiertem Preis; jede Karte verlinkt auf `/books/<isbn>`.
-5. Ruft den Skill für eine Folgeaufgabe **explizit** auf. Der shadcn-Skill ist
-   `user-invocable: false`, also funktioniert `/shadcn` nicht: Nennt ihn stattdessen im Prompt, zum
-   Beispiel „Nutze den shadcn-Skill, um dem Katalog einen Skeleton-Ladezustand und einen leeren
-   Zustand hinzuzufügen“. Vergleicht, wie sich das Ergebnis vom Lauf ohne Anleitung unterscheidet.
-6. Vergleicht: Was wusste der Skill, das der Agent allein wahrscheinlich falsch gemacht hätte?
-   Haltet die Antwort in einer Zeile eurer `CLAUDE.md` fest.
+In unserem Lauf nannte Claude die Regeln aus dem Skill: vollständiger Aufbau der Karte (`CardHeader`, `CardDescription`, `CardFooter`), `Badge` für den Preis, nur semantische Farben. Ohne Skill lief dieselbe Aufgabe bei uns auch durch, aber die Karte war anders aufgebaut: Das Cover stand in `CardContent` und der Preis im `CardHeader`.
 
-## Erfolgskriterien
+### 4. Ruft den Skill ausdrücklich auf
 
-**Feature**
+```text
+Nutze den shadcn-Skill, um dem Katalog einen Skeleton-Ladezustand und einen leeren Zustand hinzuzufügen.
+```
 
-- [ ] Ihr habt den Skill-Katalog durchsucht, bewusst einen Skill gewählt, und er erscheint in `/skills`
-- [ ] Ihr habt beobachtet, ob Claude den Skill von selbst geladen hat, und den Skill explizit beim Namen aufgerufen
-- [ ] Ihr könnt Progressive Disclosure erklären und warum dieses Wissen in einen Skill gehört und nicht in
-      die `CLAUDE.md`
+Claude lädt den Skill wieder, holt sich `skeleton` und `empty` mit der shadcn-CLI und baut beide Zustände mit diesen Komponenten, nicht mit selbstgebauten `div`s. In der `SKILL.md` steht `user-invocable: false`: Ihr nennt den Skill deshalb im Prompt, statt `/shadcn` zu tippen.
 
-**App funktioniert weiterhin**
+### 5. Gebt selbst eine Aufgabe mit dem Skill
 
-- [ ] Die Katalogseite rendert die Bücher aus der API mit Covern, Titeln, Autoren und Preisen
-- [ ] Karten-Links nutzen die ISBN (`/books/<isbn>`), nicht die `id`
-- [ ] Type-Check und `npm run build` laufen durch
+Formuliert einen eigenen Prompt, der den Skill nennt und die Seite um ein Suchfeld erweitert, das die Bücher nach Titel filtert. Ein Satz reicht, zum Beispiel: „Nutze den shadcn-Skill und baue über dem Raster ein Suchfeld ein, das die Bücher nach Titel filtert.“ Prüft die Seite danach im Browser.
 
-## Referenzen
+### 6. Was gerade passiert ist
 
-- Claude Code: Skills: https://code.claude.com/docs/en/skills
-- Skills catalogue: https://skills.sh
-- Agent skills (open format): https://agentskills.io
-- shadcn/ui: Installation (Next.js): https://ui.shadcn.com/docs/installation/next
-- BookMonkey API: https://github.com/workshops-de/bookmonkey-api
+Ein Skill ist ein Ordner mit einer `SKILL.md`. Claude sieht zuerst nur **Name und Beschreibung**. Passt eure Aufgabe zur Beschreibung, lädt Claude die ganze Anleitung. So bleibt der Kontext schlank.
+
+| | Skill | `CLAUDE.md` und Regeln |
+| --- | --- | --- |
+| Inhalt | Ablauf, der zu einer Aufgabe passt | Fakten, die immer gelten |
+| Geladen | bei Bedarf | immer oder pfadbezogen |
+
+Gut für einen Skill ist Wissen, das sich schnell ändert, wie die shadcn-CLI. Ein Skill ist Text, dem Claude folgt. Lest ihn deshalb vor der Installation und achtet darauf, wer ihn veröffentlicht.
+
+**Fertig, wenn** `/books` die Bücher als Karten mit Cover, Titel, Autor und Preis zeigt, der Skill in `.claude/skills/shadcn` liegt und ihr in zwei Läufen gesehen habt, dass Claude ihn lädt.
+
+<details>
+<summary>Mehr dazu</summary>
+
+Skills finden: `npx skills find <thema>` oder https://skills.sh. Den Ordner `.agents/skills/` und `skills-lock.json` solltet ihr mit committen, damit euer Team denselben Skill hat. In unseren Läufen hat Claude den Skill ohne Hinweis geladen, das kann bei anderen Formulierungen anders sein.
+
+- [Claude Code: Skills](https://code.claude.com/docs/en/skills)
+- [shadcn/ui: Installation für Next.js](https://ui.shadcn.com/docs/installation/next)
+
+</details>

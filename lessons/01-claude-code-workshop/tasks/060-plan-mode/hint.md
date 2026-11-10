@@ -7,10 +7,10 @@ the first scaffold minimal; the component library arrives in the skills task, on
 </details>
 
 <details>
-<summary>💡 Hint 2: Your edit beats a long correction prompt</summary>
+<summary>💡 Hint 2: Keep the correction short</summary>
 
-If you'd need three sentences to explain a change, it is often faster to open the plan with
-`Ctrl+G` and just write it the way you want.
+Name only what should change and end with "Do not change anything yet".
+That keeps it to one sentence, and Claude shows you the new plan first.
 
 </details>
 

@@ -1,109 +1,71 @@
-## Überblick
+In dieser Aufgabe geht es um **Regeldateien und Imports**: Ihr legt die Fachsprache und den API-Vertrag von BookMonkey einmal fest, damit jede neue Session sie kennt. Ihr arbeitet in eurem `bookmonkey`-Repository mit Node.js 26 und startet die API mit `npx bookmonkey-api`, falls sie noch nicht läuft.
 
-Baut eure Projekt-Anweisungen über eine einzelne `CLAUDE.md` hinaus aus: Teilt Anweisungen in
-fokussierte **Regeldateien** auf, beschränkt manche davon auf die Dateien, die sie betreffen, und
-holt gemeinsame Dokumente per **Imports** herein. Damit legt ihr eure Fachsprache und den
-API-Vertrag fest, sodass jede künftige Session sie spricht, ohne den Kontext jedes einzelnen Prompts
-aufzublähen.
+### 1. Lasst Claude die Fachsprache aufschreiben
 
-## Das Feature
+```text
+Die BookMonkey-API läuft auf http://localhost:4730. Speichere ihren Vertrag von /api-json in docs/openapi.json. Schreibe dann .claude/rules/domain.md: ein Glossar unserer Fachsprache (Buch, ISBN, id, Reihe, Autor) mit Entitätsmodell, servergeführten Feldern und Einschränkungen. Prüfe Aussagen mit echten Antworten der API statt sie zu raten. Neu dazu kommt die Leseliste mit den Zuständen want to read, reading und finished. Setze danach die API mit POST /dev/reset zurück.
+```
 
-Claude Code lädt mehr als eine Memory-Datei:
+Claude fragt die API selbst ab, legt Testbücher an und schreibt das Ergebnis in `domain.md`. In unseren Läufen standen dort zum Beispiel, dass eine doppelte ISBN mit `409` abgelehnt wird und dass Detail-Routen die ISBN verlangen, nicht die `id`. Lest die Datei und widersprecht, wenn etwas nicht stimmt.
 
-- **`.claude/rules/*.md`**: ein Thema pro Datei (z. B. `domain.md`, `testing.md`). Regeln ohne
-  Frontmatter werden beim Start geladen, genau wie `CLAUDE.md`. Dateien werden rekursiv gefunden,
-  Unterordner wie `frontend/` funktionieren also auch.
-- **Pfadbezogene Regeln**: Ergänzt ein `paths`-Feld, dann wird die Regel nur geladen, wenn Claude
-  passende Dateien liest:
+### 2. Importiert einen kompakten Vertrag
 
-  ```markdown
-  ---
-  paths:
-    - "lib/api*"
-    - "lib/api/**"
-  ---
+```text
+Schreibe eine kompakte docs/api-contract.md aus docs/openapi.json: Endpoints, Query-Parameter und Statuscodes, alles auf einem Bildschirm. Lege dann eine CLAUDE.md an, die diese Datei und die AGENTS.md per @-Import einbindet.
+```
 
-  # API-Client-Regeln
-  - Bücher werden über die ISBN angesprochen, nie über `id`
-  ```
+Die `CLAUDE.md` besteht danach im Kern aus zwei Zeilen: `@AGENTS.md` und `@docs/api-contract.md`. Die `AGENTS.md` hat `create-next-app` erzeugt, und Claude Code liest sie nur noch über diesen Import, sobald es eine `CLAUDE.md` gibt.
 
-- **Imports**: `@path/to/file` in der `CLAUDE.md` fügt eine andere Datei beim Start in den Kontext
-  ein (relativ zur importierenden Datei, bis zu vier Ebenen tief). Imports ordnen das Gedächtnis,
-  senken aber nicht seine Kosten, denn importierte Dateien werden ebenfalls beim Start geladen.
-- **`/memory`** listet jede aktive Memory-Datei auf und öffnet eine davon im Editor; **`/context all`**
-  listet die beim Start geladenen `CLAUDE.md`- und Regeldateien auf (das einfache `/context` zeigt
-  eventuell nur eine Anzahl).
+### 3. Fragt in einer neuen Session nach der Fachsprache
 
-Faustregel: Immer relevante Fakten gehören in die `CLAUDE.md` oder eine Regel ohne Pfadbezug;
-bereichsspezifische Konventionen in eine pfadbezogene Regel.
+Startet eine neue Session und fragt:
 
-## Anwendung auf BookMonkey
+```text
+Was ist bei uns der Unterschied zwischen id und isbn, und was ist eine Leseliste? Antworte in drei Sätzen.
+```
 
-> **Repo / Ports:** euer `bookmonkey`-Repository (Node.js 26), Next.js-App auf
-> http://localhost:3000, `npx bookmonkey-api` auf http://localhost:4730
->
-> **Login:** Demo-User `admin@bookmonkey.api` / `password1!`
+Claude antwortet mit euren Begriffen, ohne eine Datei zu lesen. Die Regeldatei und der Vertrag waren schon beim Start im Kontext.
 
-Das Übungsfeld ist die **Fachdomäne und der API-Vertrag** von BookMonkey. Die `bookmonkey-api`
-wirkt einfach, hat aber Fallen, in die ein Agent gern tappt: Ein Buch hat sowohl eine
-vom Server erzeugte `id` als auch eine `isbn`, doch jede Detail-Route wird über die ISBN
-angesprochen. `price` ist eine Zahl mit separater `currency`. Bücher einer Reihe verweisen über
-`predecessorIsbn` / `successorIsbn` aufeinander. `createdAt` / `updatedAt` verwaltet der Server und
-sie dürfen nicht mitgeschickt werden. Der Login liefert ein Token, das kein Endpoint prüft.
+### 4. Schreibt eine Regel, die nur für eine Datei gilt
 
-Diese Sprache vereinbart ihr einmal und legt sie dort ab, wo jede Session sie lesen kann. Der
-Vertrag selbst ist das OpenAPI-Dokument, das die API unter `/api-json` ausliefert, derselbe Vertrag,
-den euer eigenes Backend später einhalten muss.
+Jetzt bittet ihr Claude selbst um eine Regel in `.claude/rules/api-client.md`. Sie soll nur gelten, wenn Claude am API-Client `lib/api.ts` arbeitet. Überlegt euch zwei Konventionen, die nur dort zählen, zum Beispiel ein festes Präfix für Fehlermeldungen. Schreibt den Prompt in eigenen Worten.
 
-## Schritte
+### 5. Seht, wann die Regel greift
 
-1. Speichert bei laufender API den Vertrag: `curl -s http://localhost:4730/api-json >
-   docs/openapi.json`.
-2. Lasst den Agenten die Domäne **mit eigenen Worten wiedergeben**, auf Basis von
-   `docs/openapi.json` und ein paar echten Antworten (`GET /books?_limit=3`, `GET /books/<isbn>`):
-   Entitäten, Felder, Beziehungen und was der Server verwaltet. Korrigiert Abweichungen.
-3. Lasst ihn Begriffe auflisten, die unklar sind oder verwechselt werden könnten (`id` vs. `isbn`,
-   Autor vs. Co-Autoren, Vorgänger vs. Nachfolger), und löst jeden in eine vereinbarte Definition
-   auf. Ergänzt jetzt den Begriff **Leseliste** mit ihren Zuständen *want to read → reading →
-   finished*; sie baut ihr in der Hooks-Aufgabe.
-4. Lasst den Agenten das Ergebnis in **`.claude/rules/domain.md`** schreiben: Glossar, Entitätsmodell
-   und Einschränkungen wie „ISBN ist eindeutig: ein doppeltes `POST /books` liefert `409`“. Wenn ihr das
-   live ausprobiert, denkt daran, dass die API geteilter Zustand ist: `curl -X POST
-   http://localhost:4730/dev/reset` stellt die 50 Seed-Bücher wieder her.
-5. Lasst ihn eine **kompakte** `docs/api-contract.md` schreiben (Endpoints, Query-Parameter,
-   Statuscodes; ein Bildschirm, nicht das ganze JSON) und sie in der `CLAUDE.md` mit
-   `@docs/api-contract.md` **importieren**. Legt die `CLAUDE.md` an, falls sie fehlt, und ergänzt
-   neben diesem Import `@AGENTS.md`: `create-next-app` hat eine `AGENTS.md` erzeugt, und Claude Code
-   liest sie nicht mehr, sobald es eine `CLAUDE.md` gibt.
-6. Fügt eine **pfadbezogene Regel** `.claude/rules/api-client.md` hinzu, deren `paths` auf euren
-   API-Client-Code zeigen (im Scaffold aus der Plan-Mode-Aufgabe ist das `lib/api.ts`, es gibt kein
-   `src/`). Sie enthält die Konventionen, die nur dort zählen (per ISBN ansprechen, nie
-   servergeführte Felder senden, `X-Total-Count` fürs Paging lesen, `docs/openapi.json` ist die
-   Quelle der Wahrheit).
-7. Startet eine frische Session und führt `/context all` aus: Prüft, dass `domain.md` und der
-   importierte Vertrag geladen wurden und `api-client.md` **nicht**. Lasst Claude `lib/api.ts`
-   lesen: Der Beweis ist die Zeile `Loaded .claude/rules/api-client.md`, die nach dem Lesen im
-   Gespräch erscheint. Stellt dann eine Domänenfrage und prüft, ob die Antwort euer Glossar verwendet.
+Startet eine neue Session und fragt zuerst:
 
-## Erfolgskriterien
+```text
+Welche Regeln gelten für den API-Client in lib/api.ts? Lies die Datei nicht, antworte aus dem, was du schon weißt.
+```
 
-**Feature**
+Claude kennt eure Regel noch nicht. Bittet es dann in derselben Session:
 
-- [ ] `.claude/rules/domain.md` existiert und wird in einer frischen Session geladen (sichtbar in `/context all`)
-- [ ] `CLAUDE.md` importiert `docs/api-contract.md` per `@`
-- [ ] Mindestens eine Regel ist per `paths`-Frontmatter pfadbezogen und bleibt ungeladen, bis eine
-      passende Datei gelesen wird
-- [ ] Ihr könnt erklären, warum ihr eine kompakte Zusammenfassung statt der rohen `openapi.json` importiert habt
+```text
+Füge in lib/api.ts eine Funktion getBook hinzu, die ein Buch lädt, und wirf bei Fehlern einen Error.
+```
 
-**Domänenmodell**
+Sobald Claude `lib/api.ts` öffnet, lädt die Regel, und die neue Funktion folgt euren Konventionen. In unserem Lauf begannen alle neuen Fehlermeldungen mit `BookMonkey-API:`.
 
-- [ ] Das Glossar benennt jede Kernentität (Buch, User, Reihe, Leseliste) mit einer vereinbarten Definition
-- [ ] `id` vs. `isbn` und die servergeführten Felder sind ausdrücklich festgehalten
-- [ ] Die ISBN-Eindeutigkeit und die Zustände der Leseliste sind festgehalten
+### Was gerade passiert ist
 
-## Referenzen
+| Ort | Wann geladen | Wofür |
+|---|---|---|
+| `CLAUDE.md` und Imports | bei jedem Start | Fakten, die immer gelten |
+| `.claude/rules/*.md` ohne `paths` | bei jedem Start | ein Thema pro Datei, z. B. die Fachsprache |
+| `.claude/rules/*.md` mit `paths` | wenn Claude eine passende Datei liest | Konventionen für einen Bereich |
 
-- Claude Code: Memory, rules and imports: https://code.claude.com/docs/en/memory
-- Claude Code: Path-specific rules: https://code.claude.com/docs/en/memory#path-specific-rules
-- BookMonkey API (README and querying guide): https://github.com/workshops-de/bookmonkey-api
-- Ubiquitous language: https://martinfowler.com/bliki/UbiquitousLanguage.html
+Imports ordnen euer Gedächtnis, sie sparen aber keinen Kontext: Alles, was beim Start geladen wird, kostet bei jedem Prompt. Darum importiert ihr eine kompakte Zusammenfassung und keine rohe `openapi.json`. Die vollständige Datei bleibt auf der Platte, Claude liest sie bei Bedarf.
+
+**Fertig, wenn** eine neue Session eure Begriffe aus `domain.md` verwendet und `lib/api.ts` die Konventionen aus `api-client.md` erst befolgt, nachdem Claude die Datei geöffnet hat.
+
+<details>
+<summary>Mehr dazu</summary>
+
+Die Beispiel-`domain.md` enthält auch die Leseliste mit ihren Zuständen. Die baut ihr in der Hooks-Aufgabe. `docs/openapi.json` solltet ihr committen, denn sie dient später als Vertrag für ein eigenes Backend.
+
+Das `paths`-Feld steht als Frontmatter am Anfang der Regeldatei, zum Beispiel `paths: ["lib/api.ts"]`. Ob die geladenen Dateien in der Desktop-App sichtbar sind, haben wir nicht geprüft; wer nachsehen will, öffnet dort das Terminal, startet `claude` und tippt `/memory`.
+
+- [Memory, rules and imports](https://code.claude.com/docs/en/memory)
+- [Path-specific rules](https://code.claude.com/docs/en/memory#path-specific-rules)
+
+</details>

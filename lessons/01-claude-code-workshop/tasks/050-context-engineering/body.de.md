@@ -1,97 +1,74 @@
-## Überblick
+In dieser Aufgabe geht es um das **Kontextfenster**: Alles, was Claude in einer Session liest, bleibt darin und belegt Platz. Ihr füllt es absichtlich, **kompaktiert** es und startet danach mit einer **neuen Session** neu.
 
-Lernt, das **Kontextfenster als wertvollste, begrenzte Ressource** zu behandeln und gezielt zu
-verwalten. An einer echten Legacy-Codebasis füllt ihr das Fenster absichtlich, beobachtet, was das
-mit den Antworten macht, und kompaktiert oder leert es dann, damit der Agent bei längeren Aufgaben
-genau bleibt.
+Ihr arbeitet in eurem `bookmonkey-legacy`-Clone (Node.js 24). Hat das Projekt noch keine `CLAUDE.md`, schreibt in einer Session `/init`.
 
-## Das Feature
+### 1. Stellt eine Frage, die ihr später prüfen könnt
 
-Die Qualität eines Modells sinkt, wenn sein Kontext sich mit Rauschen, Widersprüchen oder reiner
-Länge füllt. Der „Lost in the Middle“-Effekt bedeutet: Informationen mitten in einem langen
-Kontext bekommen weniger Aufmerksamkeit, ein größerer Kontext ist also nicht automatisch besser.
-Claude Code gibt euch die Hebel dafür:
+```text
+Welche Datei und Funktion verlängern eine Ausleihe, und wie lauten die Verlängerungsregeln? Antworte kurz.
+```
 
-- **`/context`** zeigt das Fenster als farbiges Raster: System-Prompt, Memory-Dateien, Tools und
-  euer Gespräch, dazu Vorschläge, wenn etwas viel Platz belegt.
-- **`/compact [instructions]`** fasst das bisherige Gespräch zusammen und macht mit der
-  Zusammenfassung weiter. Gebt Fokus-Anweisungen mit, zum Beispiel
-  `/compact keep the list of routes and their files`.
-- **`/clear`** startet ein neues Gespräch mit leerem Kontext. Nutzt es für Aufgaben, die nichts
-  miteinander zu tun haben.
-- **`/btw <question>`** stellt eine Zwischenfrage, ohne sie dem Gespräch hinzuzufügen.
-- **Delegiert das Lesen.** Ein Subagent (oder der eingebaute Explore-Agent) liest in seinem
-  eigenen Kontext und liefert nur das Ergebnis zurück. Subagents lernt ihr in einer späteren
-  Aufgabe richtig kennen.
+Claude nennt eine Funktion mit Zeilenangabe und die Regeln. Kopiert die Antwort, sie ist euer Vergleichswert.
 
-## Anwendung auf BookMonkey Legacy
+### 2. Verschmutzt die Session
 
-> **Repo / Ports:** euer `bookmonkey-legacy`-Clone (Node.js 24 oder neuer), API auf
-> http://localhost:4780, Web-App auf http://localhost:5180
->
-> **Login:** Admin `admin@bookmonkey.example` / `admin2021`
+Bleibt in derselben Session und gebt Claude viel Lesestoff:
 
-Das Übungsfeld ist euer [`bookmonkey-legacy`](https://github.com/andrekovac/bookmonkey-legacy)-Clone.
-Bei Legacy-Code geht der Kontext zuerst aus: eine Route-Datei mit mehr als tausend Zeilen, eine
-große Seed-Datei sowie Test- und Server-Logs, die niemand kürzt. Genau das Material, das ein
-Fenster füllt, ohne dass es jemand merkt.
+```text
+Lies api/routes.js komplett mit dem Read-Tool und fasse jeden Abschnitt in zwei Sätzen zusammen.
+```
 
-## Voraussetzungen
+```text
+Lies jetzt api/seed/books.json und danach jede Datei unter api/services, api/lib und api/test mit dem Read-Tool. Sag mir nur, wie viele Dateien du gelesen hast.
+```
 
-- Der `bookmonkey-legacy`-Clone mit installierten Abhängigkeiten (`npm install`,
-  `npm run db:reset`)
+In unseren Läufen waren das über 40 Dateien. Die Session ist jetzt deutlich größer als nach Schritt 1.
 
-## Schritte
+### 3. Fragt noch einmal
 
-1. Startet eine frische Session im Manual oder Plan Mode (`claude --permission-mode default` oder
-   `claude --permission-mode plan`), damit das Repository sauber bleibt, und führt `/context` aus.
-   Notiert die Ausgangsbasis: Wie viel belegen System-Prompt, Tools und eure `CLAUDE.md`, bevor ihr
-   etwas getippt habt?
-2. Stellt eine präzise Frage, die ihr später prüfen könnt, zum Beispiel „Welche Datei und
-   Funktion verlängern eine Ausleihe, und wie lauten die Verlängerungsregeln?“. Schreibt die
-   Antwort auf.
-3. **Verschmutzt** die Session jetzt absichtlich und prüft nach jedem Schritt `/context`:
-   - Claude soll `api/routes.js` komplett lesen und jeden Abschnitt zusammenfassen
-   - Claude soll `api/seed/books.json` und dann viele weitere Dateien unter `api/` mit dem Read-Tool
-     lesen
-   - startet `npm run dev:api`, klickt durch ein paar Seiten der Web-App (oder führt `npm test`
-     aus) und fügt einen langen Ausschnitt des API-Logs in den Chat ein
+```text
+Welche Datei und Funktion verlängern eine Ausleihe, und wie lauten die Verlängerungsregeln? Antworte kurz. Und: Welche Zeilen von api/routes.js gehören zur Route POST /loans/:id/renew?
+```
 
-   Große Bash-Ausgaben (etwa `git log -p`) werden auf eine Vorschau gekürzt: Das Tool schützt euren
-   Kontext.
-4. Stellt die Frage aus Schritt 2 noch einmal, dazu eine zu einem Detail aus der allerersten Datei,
-   die Claude gelesen hat. Notiert Abweichungen, vage Antworten und vergessene Details.
-5. **Kompaktiert** mit `/compact` und Fokus-Anweisungen eurer Wahl. Stellt beide Fragen erneut und
-   vergleicht vorher und nachher. Was hat die Zusammenfassung behalten, was hat sie verworfen?
-6. Startet eine wirklich **neue, unabhängige Aufgabe** (zum Beispiel „erkläre das Routing der
-   Web-App“) mit `/clear`, statt die verschmutzte Session fortzusetzen. Vergleicht `/context` mit
-   eurer Ausgangsbasis.
-7. Macht das aufwendige Lesen auf die schlanke Art noch einmal: Lasst einen Subagent „jede
-   Migrationsdatei und die Tabellen, die sie anlegt, auflisten, eine Zeile pro Datei“, und
-   vergleicht, was in eurem Haupt-Kontext landet.
-8. Formuliert einen früheren Prompt so um, dass die wichtigste Randbedingung ganz am Anfang (oder
-   Ende) steht, und beobachtet, ob das Ergebnis besser wird.
+Vergleicht mit Schritt 1. In unseren Läufen blieb die Antwort richtig, die Session war nur viel größer. Fehler zeigen sich eher später, bei noch längeren Sessions.
 
-## Erfolgskriterien
+### 4. Kompaktiert
 
-**Feature**
+```text
+/compact Behalte die Verlängerungsregeln für Ausleihen und die Dateien, in denen sie stehen.
+```
 
-- [ ] Ihr habt eine Ausgangsbasis mit `/context` festgehalten und beobachtet, wie sie in der
-      verschmutzten Session wächst
-- [ ] Ihr habt eine Session mit Fokus-Anweisungen kompaktiert und mit dem kleineren Kontext
-      weitergemacht
-- [ ] Ihr habt für eine unabhängige Aufgabe mit `/clear` einen sauberen Kontext gestartet
-- [ ] Ihr könnt mindestens zwei Fehlerarten des Kontexts nennen, die ihr ausgelöst habt, und die
-      Gewohnheit, die jede behoben hat
+Claude fasst das Gespräch zusammen und macht mit der Zusammenfassung weiter. Fragt danach, was nur im Gespräch stand, zum Beispiel: `Wie viele Dateien hast du vorhin unter api/test gelesen?` Prüft die Antwort mit `ls api/test`. Bei uns stand die Zahl vorher falsch im Gespräch, nach dem Kompaktieren stimmte sie. Ihr seht also, was die Zusammenfassung behält, und müsst Details nachprüfen.
 
-**Repository weiterhin sauber**
+### 5. Startet neu
 
-- [ ] `git status` in `bookmonkey-legacy` zeigt keine Änderungen an getrackten Dateien
+Startet eine **neue Session** für eine Aufgabe, die mit der alten nichts zu tun hat:
 
-## Referenzen
+```text
+Erkläre kurz das Routing der Web-App.
+```
 
-- Claude Code: Commands (`/context`, `/compact`, `/clear`, `/btw`): https://code.claude.com/docs/en/commands
-- Claude Code: Costs and context usage: https://code.claude.com/docs/en/costs
-- Claude Code: Best practices (manage context): https://code.claude.com/docs/en/best-practices
-- Claude Code: Subagents: https://code.claude.com/docs/en/sub-agents
-- "Lost in the Middle" (Liu et al., 2023): https://cs.stanford.edu/~nfliu/papers/lost-in-the-middle.arxiv2023.pdf
+Die neue Session beginnt ohne den alten Lesestoff.
+
+### 6. Haltet das Lesen aus eurer Session heraus
+
+Schreibt selbst einen Prompt: Claude soll alle Migrationsdateien in `api/migrations` durchgehen und euch pro Datei eine Zeile liefern, ohne dass der ganze Inhalt in eurer Session landet.
+
+### Was gerade passiert ist
+
+| Hebel | Wann |
+|---|---|
+| `/compact` mit Fokus | Dieselbe Aufgabe läuft weiter, das Fenster wird voll |
+| Neue Session | Die nächste Aufgabe ist unabhängig |
+| Subagent | Viel lesen, wenig Ergebnis |
+
+Ein Subagent liest in seinem eigenen Kontext und gibt nur die Antwort zurück. In unserem Lauf lieferte er eine Tabelle mit einer Zeile pro Migration.
+
+**Fertig, wenn** ihr die Session verschmutzt, kompaktiert und neu gestartet habt und für jeden Hebel sagen könnt, wann ihr ihn nutzt.
+
+<details>
+<summary>Mehr dazu</summary>
+
+Den Füllstand zeigt `/context` (wir haben es hier nicht getestet, siehe Docs). `/btw` stellt eine Zwischenfrage, ohne sie dem Gespräch hinzuzufügen. Mehr in den Docs: [Commands](https://code.claude.com/docs/en/commands), [Costs and context usage](https://code.claude.com/docs/en/costs), [Best practices](https://code.claude.com/docs/en/best-practices).
+
+</details>

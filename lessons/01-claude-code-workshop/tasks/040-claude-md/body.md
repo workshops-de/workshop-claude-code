@@ -1,83 +1,68 @@
-## Overview
+This task is about **CLAUDE.md**, the memory of your project: a Markdown file Claude reads at the start of every session. You work in your `bookmonkey-legacy` clone, in a new session in the mode that asks before changes.
 
-Give a project a durable, curated memory that steers every Claude Code session. You generate a
-`CLAUDE.md` for the codebase you explored in the fundamentals task, cut it down to what matters,
-and prove in a fresh session that it works. The lesson is that **long-term memory is curated, not
-dumped**: every line costs context on each turn.
+### 1. Ask a question without memory
 
-## The Feature
+```text
+Auf welchem Port läuft die API, und wie setze ich die Datenbank zurück? Woher weißt du das?
+```
 
-`CLAUDE.md` is a Markdown file Claude Code reads at the start of every session: your project's
-long-term memory.
+Claude answers correctly but says it read the repo to find out. There is no `CLAUDE.md` yet.
 
-- **Bootstrap it** with `/init`. Claude analyses the codebase and writes a first draft with build
-  commands, test instructions, and the conventions it found. If a `CLAUDE.md` already exists,
-  `/init` suggests improvements instead of overwriting it.
-- **Curate it.** Keep what Claude cannot infer by itself: exact commands, architectural rules,
-  traps, a short glossary, a review checklist. Delete what it already knows.
-- **Scope it.** A `CLAUDE.md` in a subdirectory (for example `api/CLAUDE.md`) is not loaded at
-  launch. It loads once Claude reads or edits a file in that directory.
-- **Personal notes** go into `CLAUDE.local.md` (add it to `.gitignore`). `/memory` shows and edits
-  the loaded memory files.
+### 2. Let Claude create a memory
 
-## Apply it to BookMonkey Legacy
+Type `/init` and confirm the questions. In our runs Claude asks several times before it writes the file. Read the draft calmly before you continue.
 
-> **Repo / ports:** your `bookmonkey-legacy` clone (Node.js 24 or newer), API on
-> http://localhost:4780, web app on http://localhost:5180
->
-> **Login:** admin `admin@bookmonkey.example` / `admin2021`
+### 3. Check the draft against README and code
 
-The practice ground is the [`bookmonkey-legacy`](https://github.com/andrekovac/bookmonkey-legacy)
-clone from the fundamentals task. It has no `CLAUDE.md` yet, only a README that several people
-edited over the years. A new teammate (human or agent) would read both, so both had better be
-right. Your memory file should hold the facts the next session needs, checked against the code.
+```text
+Erstelle eine Tabelle: jede Aussage der README, was /init dazu geschrieben hat, was der Code sagt. Markiere Widersprüche.
+```
 
-## Prerequisites
+Check every marked contradiction yourself by opening the file or running the command. Do the same for the commands in the draft (`npm install`, `npm run db:reset`, `npm test`).
 
-- The `bookmonkey-legacy` clone from the fundamentals task
-- Node.js 24 or newer, so you can run the commands you write down
+### 4. Shorten the file yourself
 
-## Steps
+Tell Claude in your own words what stays in `CLAUDE.md` and what goes. The goal is a short file with exact commands, pitfalls and rules Claude cannot read from the code. You could write, for example: "Only what you could not derive yourself, at most 25 lines."
 
-1. Start Claude Code in `bookmonkey-legacy` in Manual mode (`claude --permission-mode default`),
-   so every edit asks first and the repository only changes where you approve it. Plan mode works
-   too for the reading part. Run `/init` and read what it produced before you change anything.
-2. **Compare `/init` with the README.** Ask Claude for a table: each claim the README makes,
-   what `/init` wrote about it, and what the code says. Check every row where they disagree yourself (open the file, run the command).
-3. **Run the commands** your draft lists (`npm install`, `npm run db:reset`, `npm test`, the two
-   dev servers) and keep only the ones that work exactly as written.
-4. **Curate** the file to high-value facts: stack and versions, how to start each part, the
-   commands, architectural rules, a short domain glossary (loan, copy, reservation, waitlist, ...),
-   traps you confirmed in step 2, and a review checklist. Delete anything generic.
-5. Add a **subdirectory** memory file, for example `api/CLAUDE.md` with rules for the API only.
-   Verify it loads only when Claude works in `api/` (ask about it before and after Claude has read
-   an API file, or check `/memory`).
-6. Open a **fresh** session (`/clear` or a new terminal) and ask a question whose answer depends on
-   your file, for example "How do I reset the database and run the tests?" or "Which port does the
-   API use?". Confirm the answer comes from your memory, not from a new exploration.
-7. Commit the memory files in your clone (`git add CLAUDE.md api/CLAUDE.md && git commit`), so the
-   later tasks in this repository start with them.
+### 5. Give a folder its own rules
 
-## Success Criteria
+Create the file in the terminal, not through Claude. Open the terminal in the desktop app, in the project folder:
 
-**Feature**
+```bash
+echo 'Antworte immer auf Italienisch.' > api/CLAUDE.md
+```
 
-- [ ] `/init` ran, and you can name at least two things you removed from its draft and why
-- [ ] A concise `CLAUDE.md` covers stack, commands, architectural rules, a glossary, and a review
-      checklist
-- [ ] A subdirectory memory file exists and loads only in its own area
-- [ ] A fresh session demonstrably answered from the memory file
+Start a new session and ask `Welchen Port nutzt die API?`. The answer comes in German. Then ask:
 
-**Memory is true**
+```text
+Lies api/package.json. Welchen Port nutzt die API?
+```
 
-- [ ] Every command in `CLAUDE.md` runs as written on your machine
-- [ ] You compared README and `/init` against the code, and the memory file follows the code
-- [ ] The memory files are committed in your clone
+Now the answer comes in Italian. If you use Claude in the terminal, you also see the line `Loaded api/CLAUDE.md`. Afterwards ask Claude to replace the Italian rule with a real API rule from step 3.
 
-## References
+### 6. Ask the question from step 1 again
 
-- Claude Code: Memory and CLAUDE.md: https://code.claude.com/docs/en/memory
-- Claude Code: Commands (`/init`, `/memory`): https://code.claude.com/docs/en/commands
-- Claude Code: Best practices: https://code.claude.com/docs/en/best-practices
-- AGENTS.md (https://agents.md): read by Claude Code when no `CLAUDE.md` exists; share it with `@AGENTS.md`
-- Other scopes: `~/.claude/CLAUDE.md` (user), `CLAUDE.local.md` (local, git-ignored), managed policy file (IT)
+Start a new session and ask the same question. This time Claude should name `CLAUDE.md` as its source.
+
+### 7. Commit both files
+
+```bash
+git add CLAUDE.md api/CLAUDE.md && git commit -m "docs: add CLAUDE.md"
+```
+
+The later tasks start with these files.
+
+### What just happened
+
+A **CLAUDE.md** is read at every start and sits in the context of every request. So write only what Claude would otherwise get wrong. A `CLAUDE.md` in a subfolder is loaded only when Claude reads a file there, so rules apply only where they are needed.
+
+**Done when** `CLAUDE.md` and `api/CLAUDE.md` are committed in your clone and Claude answers the question from step 1 with `CLAUDE.md` as its source.
+
+<details>
+<summary>More</summary>
+
+- Personal notes belong in `CLAUDE.local.md` (add it to `.gitignore`). Claude reads an `AGENTS.md` only if there is no `CLAUDE.md`.
+- Open the terminal in the desktop app and start `claude` there: `/memory` shows the loaded files, `/context all` shows them with token counts.
+- The docs recommend under 200 lines per file: [Memory](https://code.claude.com/docs/en/memory) · [Best practices](https://code.claude.com/docs/en/best-practices)
+
+</details>

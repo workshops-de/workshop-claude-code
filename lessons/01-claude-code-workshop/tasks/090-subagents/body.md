@@ -1,112 +1,56 @@
-## Overview
+This task is about **subagents**. A subagent is a second Claude with its own context. It does a task apart from your conversation and hands back only the result. You build the sign-in for BookMonkey and let your own security reviewer check it.
 
-Use **subagents** to hand focused work to a separate context: first a built-in one for noisy
-exploration, then your own **security reviewer** with restricted tools. You delegate the digging,
-you keep a lean main session, and you still own every finding you act on.
+Work in your `bookmonkey` repository with Node.js 26. The API (`npx bookmonkey-api`) runs on http://localhost:4730, the demo user is `admin@bookmonkey.api` with `password1!`.
 
-## The Feature
+### 1. Build the sign-in
 
-A subagent runs with its **own context window**, its own system prompt, and optionally a
-restricted set of tools. The main session hands it a task; it works elsewhere and returns only a
-summary. Its intermediate reading doesn't pollute your context.
+```text
+Build sign-in, sign-up and sign-out against the bookmonkey-api (POST /login and POST /register). The token goes into a signed http-only cookie set on the server, not into localStorage. A guard in proxy.ts redirects the area under /library to /login. Keep it small, check with npm run build.
+```
 
-- **Built-in subagents**: e.g. **Explore**, which Claude uses for read-only codebase research.
-- **Custom subagents**: Markdown files in `.claude/agents/` (project, commit them) or
-  `~/.claude/agents/` (personal). Ask Claude to create one, or write the file yourself:
+Start the app with `npm run dev`, open http://localhost:3000/library and sign in. Without signing in you land on `/login`.
 
-  ```markdown
-  ---
-  name: security-reviewer
-  description: Reviews auth, session, and secret handling for security issues. Use proactively after changes to authentication code.
-  tools: Read, Grep, Glob
-  model: inherit
-  ---
+### 2. Let Claude create a reviewer
 
-  You are a security reviewer. Report findings by severity with file and line.
-  Never edit files.
-  ```
+```text
+Create a subagent security-reviewer in .claude/agents/. It checks sign-in, session cookie and guard for security problems, may only read and must never change files. Its description should say that it is used after changes to the sign-in code.
+```
 
-- **Invocation**: Claude delegates automatically based on the `description`; to force a specific
-  one, @-mention it (`@agent-security-reviewer`), or run a whole session as it with
-  `claude --agent security-reviewer`.
-- **Tool restriction**: `tools` is an allowlist, `disallowedTools` a denylist. A reviewer that
-  can't write can't "helpfully" fix things behind your back. It can't run `curl` either: without
-  `Bash` it only reads code, so live probes happen in your main session.
-- **Loading:** Claude Code watches `.claude/agents/` and picks up new or edited files within
-  seconds, but only if that directory existed when the session started. After creating the
-  project's first agent file, restart (`claude --continue` keeps your conversation).
+Then open the new file `.claude/agents/security-reviewer.md`. In our runs, `tools` lists only `Read`, `Grep` and `Glob`. Without `Edit`, `Write` and `Bash` the reviewer cannot change anything.
 
-## Apply it to BookMonkey
+### 3. Start a new session
 
-> **Repo / ports:** your `bookmonkey` repository (Node.js 26), Next.js app on
-> http://localhost:3000, `npx bookmonkey-api` on http://localhost:4730
->
-> **Login:** demo user `admin@bookmonkey.api` / `password1!`
+A new session loads the reviewer. In our runs it was not known yet in the session where the file was created.
 
-The practice ground is **sign-in** for BookMonkey. The `bookmonkey-api` already offers
-`POST /register` and `POST /login`, both returning `{ accessToken, user }`; your job is the
-frontend side: forms, storing the token safely, sign-out, and a guard for the authenticated area.
-There is a catch worth finding: **the API does not check the token on any endpoint**. Your guard
-protects pages, not data. That is exactly the kind of gap an independent reviewer should surface,
-and it is the reason you'll build your own backend later.
+### 4. Call the reviewer
 
-## Prerequisites
+```text
+@agent-security-reviewer Review the sign-in. List the findings by severity with file and line, and say for each whether the fix belongs in the frontend or the backend.
+```
 
-- The `bookmonkey-api` is running; demo user `admin@bookmonkey.api` / `password1!`.
-- Optional skill (nice to have, not required): `vercel-labs/agent-skills@vercel-react-best-practices`.
+Claude starts the subagent, the reviewer reads the files and your conversation stays small. At the end there is a list of findings. The details differ from run to run.
 
-## Steps
+### 5. Judge the findings yourself
 
-1. Ask Claude (plan first) to implement sign-up, sign-in, and sign-out against the API: the token
-   ends up in a signed or encrypted **http-only cookie** set on the server (not in `localStorage`),
-   and one guard redirects the authenticated area to sign-in. Test it end to end in the browser.
-2. **Explore with a subagent**: ask a research question about your auth flow ("trace a request to
-   a protected page: where is the token checked, and by whom?") and have it delegated to Explore.
-   Run `/context` before and after and note that the main context stayed lean.
-3. Create the **`security-reviewer`** subagent in `.claude/agents/` with read-only tools. If
-   `.claude/agents/` is new in this session, restart with `claude --continue` so it loads.
-4. Probe the API yourself in the main session: `curl -i -X DELETE
-   http://localhost:4730/books/<isbn>` without a token is a fair test. Then invoke the reviewer
-   explicitly with `@agent-security-reviewer` on your auth code and paste the probe's status line
-   into the prompt, so it can include the API's behaviour in its review.
-5. **Triage** the findings yourself: fix what's real in your code, record what only the backend can
-   fix (in `docs/backlog.md` or similar), and reject what isn't a problem, with a reason for at
-   least one of each. Re-run the reviewer after your fixes.
-6. Restore the seed after the probe: `curl -X POST http://localhost:4730/dev/reset` (it also
-   removes users you registered while testing).
+Pick one finding that seems plausible to you and one you think is exaggerated. Tell Claude in your own words what you want to do with each: fix it, note it in the backlog or reject it with a reason. You write the prompt yourself.
 
-## Success Criteria
+### What just happened
 
-**Feature**
+| | Main session | Subagent |
+|---|---|---|
+| Context | your conversation | its own, empty context |
+| Tools | all | only those in `tools` |
+| Returns | | a summary |
 
-- [ ] You delegated a research question to a subagent and saw the main context stay lean
-- [ ] A custom `security-reviewer` exists in `.claude/agents/` with a restricted `tools` list
-- [ ] You invoked it explicitly and triaged its findings (at least one fixed, one rejected with a
-      reason)
+Everything the reviewer reads along the way stays with it. Claude picks subagents by their `description`, with `@agent-name` you force one. A finding is a claim: you decide which parts are true.
 
-**App still works**
+**Done when** you have called the `security-reviewer`, seen its findings and decided what happens with at least one of them.
 
-- [ ] Sign-up, sign-in, and sign-out work end to end; the session persists across reloads
-- [ ] The token lives in an http-only cookie (secure in production), never in `localStorage`
-- [ ] The guard redirects every page of the authenticated area to sign-in
-- [ ] The unenforced token on the API side is documented as a known backend gap
-- [ ] Type-check and `npm run build` pass
+<details>
+<summary>More</summary>
 
-## Pitfalls (current framework)
+If the reviewer is reported as unknown, start a new session. If you registered users while testing, `curl -X POST http://localhost:4730/dev/reset` removes them again.
 
-- `cookies()` / `headers()` from `next/headers` are **async** on recent Next.js: `await` them.
-- A `redirect()` inside a Server Action works by **throwing**: don't swallow it in `try/catch`.
-- Setting a cookie works in Server Actions and Route Handlers, not in Server Components.
-- Next.js 16 renamed `middleware.ts` to **`proxy.ts`**. Its `matcher` must cover every protected
-  route, including ones you add in later tasks.
-- With Cache Components on, reading `cookies()` directly in a layout fails the build (`Next.js
-  encountered uncached or runtime data during prerendering`). Do the check in a small async
-  component inside `<Suspense>`.
+[Subagents](https://code.claude.com/docs/en/sub-agents)
 
-## References
-
-- Claude Code: Subagents: https://code.claude.com/docs/en/sub-agents
-- Claude Code: Invoke subagents explicitly: https://code.claude.com/docs/en/sub-agents#invoke-subagents-explicitly
-- BookMonkey API: Auth: https://github.com/workshops-de/bookmonkey-api#auth
-- Next.js: Authentication guide: https://nextjs.org/docs/app/building-your-application/authentication
-- OWASP: Session management cheat sheet: https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html
+</details>

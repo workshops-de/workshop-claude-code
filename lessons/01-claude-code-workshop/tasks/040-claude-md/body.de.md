@@ -1,93 +1,68 @@
-## Überblick
+In dieser Aufgabe geht es um die **CLAUDE.md**, das Gedächtnis eures Projekts: eine Markdown-Datei, die Claude am Anfang jeder Session liest. Ihr arbeitet in eurem `bookmonkey-legacy`-Clone, in einer neuen Session im Modus, der vor Änderungen nachfragt.
 
-Gebt einem Projekt ein dauerhaftes, kuratiertes Gedächtnis, das jede Claude-Code-Session steuert.
-Ihr erzeugt eine `CLAUDE.md` für die Codebasis, die ihr in der Grundlagen-Aufgabe erkundet habt,
-kürzt sie auf das Wesentliche und beweist in einer frischen Session, dass sie wirkt. Die Lektion:
-**Das Langzeitgedächtnis wird kuratiert, nicht abgeladen**, denn jede Zeile kostet bei jedem Turn
-Kontext.
+### 1. Stellt eine Frage ohne Gedächtnis
 
-## Das Feature
+```text
+Auf welchem Port läuft die API, und wie setze ich die Datenbank zurück? Woher weißt du das?
+```
 
-`CLAUDE.md` ist eine Markdown-Datei, die Claude Code zu Beginn jeder Session liest: das
-Langzeitgedächtnis eures Projekts.
+Claude antwortet richtig, sagt aber, dass es im Repo nachgelesen hat. Eine `CLAUDE.md` gibt es noch nicht.
 
-- **Startet sie** mit `/init`. Claude analysiert die Codebasis und schreibt einen ersten Entwurf
-  mit Build-Befehlen, Testanleitung und den Konventionen, die es gefunden hat. Existiert schon eine
-  `CLAUDE.md`, schlägt `/init` Verbesserungen vor, statt sie zu überschreiben.
-- **Kuratiert sie.** Behaltet, was Claude nicht von selbst ableiten kann: exakte Befehle,
-  Architekturregeln, Stolperfallen, ein kurzes Glossar, eine Review-Checkliste. Löscht, was es
-  ohnehin schon weiß.
-- **Gebt ihr einen Geltungsbereich.** Eine `CLAUDE.md` in einem Unterverzeichnis (zum Beispiel
-  `api/CLAUDE.md`) wird nicht beim Start geladen. Sie wird geladen, sobald Claude eine Datei in
-  diesem Verzeichnis liest oder ändert.
-- **Persönliche Notizen** gehören in `CLAUDE.local.md` (in die `.gitignore` aufnehmen). `/memory`
-  zeigt und bearbeitet die geladenen Memory-Dateien.
+### 2. Lasst Claude ein Gedächtnis anlegen
 
-## Anwendung auf BookMonkey Legacy
+Tippt `/init` und bestätigt die Rückfragen. In unseren Läufen fragt Claude mehrmals nach, bevor es die Datei schreibt. Lest den Entwurf in Ruhe, bevor ihr weitermacht.
 
-> **Repo / Ports:** euer `bookmonkey-legacy`-Clone (Node.js 24 oder neuer), API auf
-> http://localhost:4780, Web-App auf http://localhost:5180
->
-> **Login:** Admin `admin@bookmonkey.example` / `admin2021`
+### 3. Prüft den Entwurf gegen README und Code
 
-Das Übungsfeld ist der [`bookmonkey-legacy`](https://github.com/andrekovac/bookmonkey-legacy)-Clone
-aus der Grundlagen-Aufgabe. Er hat noch keine `CLAUDE.md`, nur eine README, die über die Jahre
-mehrere Leute bearbeitet haben. Ein neues Teammitglied (Mensch oder Agent) würde beides lesen,
-also sollte beides stimmen. Eure Memory-Datei soll die Fakten enthalten, die die nächste Session
-braucht, geprüft am Code.
+```text
+Erstelle eine Tabelle: jede Aussage der README, was /init dazu geschrieben hat, was der Code sagt. Markiere Widersprüche.
+```
 
-## Voraussetzungen
+Prüft jeden markierten Widerspruch selbst, indem ihr die Datei öffnet oder den Befehl ausführt. Das Gleiche gilt für die Befehle im Entwurf (`npm install`, `npm run db:reset`, `npm test`).
 
-- Der `bookmonkey-legacy`-Clone aus der Grundlagen-Aufgabe
-- Node.js 24 oder neuer, damit ihr die Befehle ausführen könnt, die ihr aufschreibt
+### 4. Kürzt die Datei selbst
 
-## Schritte
+Sagt Claude in eigenen Worten, was in der `CLAUDE.md` bleiben soll und was raus muss. Ziel ist eine kurze Datei mit exakten Befehlen, Stolperfallen und Regeln, die Claude nicht aus dem Code ablesen kann. Ihr könnt zum Beispiel schreiben: „Nur das, was du nicht selbst ableiten könntest, maximal 25 Zeilen.“
 
-1. Startet Claude Code in `bookmonkey-legacy` im Manual Mode (`claude --permission-mode default`),
-   damit jede Änderung erst nachfragt und das Repository sich nur dort ändert, wo ihr zustimmt.
-   Für den Leseteil geht auch der Plan Mode. Führt `/init` aus und lest, was entstanden ist, bevor
-   ihr etwas ändert.
-2. **Vergleicht `/init` mit der README.** Verlangt von Claude eine Tabelle: jede Aussage der
-   README, was `/init` dazu geschrieben hat und was der Code sagt. Prüft jede Zeile, in der sie
-   sich widersprechen, selbst (Datei öffnen, Befehl ausführen).
-3. **Führt die Befehle aus**, die euer Entwurf auflistet (`npm install`, `npm run db:reset`,
-   `npm test`, die beiden Dev-Server), und behaltet nur die, die genau wie geschrieben
-   funktionieren.
-4. **Kuratiert** die Datei auf wertvolle Fakten: Stack und Versionen, wie jeder Teil gestartet
-   wird, die Befehle, Architekturregeln, ein kurzes Domänen-Glossar (Ausleihe, Exemplar,
-   Reservierung, Warteliste, ...), Stolperfallen, die ihr in Schritt 2 bestätigt habt, und eine
-   Review-Checkliste. Löscht alles Generische.
-5. Fügt eine **Unterverzeichnis**-Memory-Datei hinzu, zum Beispiel `api/CLAUDE.md` mit Regeln nur
-   für die API. Prüft, dass sie nur geladen wird, wenn Claude in `api/` arbeitet (fragt danach,
-   bevor und nachdem Claude eine API-Datei gelesen hat, oder schaut in `/memory`).
-6. Öffnet eine **frische** Session (`/clear` oder ein neues Terminal) und stellt eine Frage, deren
-   Antwort von eurer Datei abhängt, zum Beispiel „Wie setze ich die Datenbank zurück und führe die
-   Tests aus?“ oder „Welchen Port nutzt die API?“. Bestätigt, dass die Antwort aus eurem Memory
-   kommt und nicht aus einer neuen Erkundung.
-7. Committet die Memory-Dateien in eurem Clone (`git add CLAUDE.md api/CLAUDE.md && git commit`),
-   damit die späteren Aufgaben in diesem Repository mit ihnen starten.
+### 5. Gebt einem Ordner eigene Regeln
 
-## Erfolgskriterien
+Legt die Datei im Terminal an, nicht über Claude. Öffnet in der Desktop-App das Terminal im Projektordner:
 
-**Feature**
+```bash
+echo 'Antworte immer auf Italienisch.' > api/CLAUDE.md
+```
 
-- [ ] `/init` lief, und ihr könnt mindestens zwei Dinge nennen, die ihr aus dem Entwurf entfernt
-      habt, und warum
-- [ ] Eine knappe `CLAUDE.md` deckt Stack, Befehle, Architekturregeln, ein Glossar und eine
-      Review-Checkliste ab
-- [ ] Eine Unterverzeichnis-Memory-Datei existiert und wird nur in ihrem eigenen Bereich geladen
-- [ ] Eine frische Session hat nachweislich aus der Memory-Datei geantwortet
+Startet eine neue Session und fragt `Welchen Port nutzt die API?`. Die Antwort kommt auf Deutsch. Fragt dann:
 
-**Die Memory-Datei stimmt**
+```text
+Lies api/package.json. Welchen Port nutzt die API?
+```
 
-- [ ] Jeder Befehl in der `CLAUDE.md` läuft auf eurem Rechner wie geschrieben
-- [ ] Ihr habt README und `/init` mit dem Code verglichen, und die Memory-Datei folgt dem Code
-- [ ] Die Memory-Dateien sind in eurem Clone committet
+Jetzt kommt die Antwort auf Italienisch. Wer Claude im Terminal nutzt, sieht dabei die Zeile `Loaded api/CLAUDE.md`. Bittet Claude danach, die Italienisch-Regel durch eine echte Regel für die API aus Schritt 3 zu ersetzen.
 
-## Referenzen
+### 6. Stellt die Frage aus Schritt 1 noch einmal
 
-- Claude Code: Memory and CLAUDE.md: https://code.claude.com/docs/en/memory
-- Claude Code: Commands (`/init`, `/memory`): https://code.claude.com/docs/en/commands
-- Claude Code: Best practices: https://code.claude.com/docs/en/best-practices
-- AGENTS.md (https://agents.md): wird von Claude Code gelesen, wenn es keine `CLAUDE.md` gibt; teilen mit `@AGENTS.md`
-- Weitere Ebenen: `~/.claude/CLAUDE.md` (User), `CLAUDE.local.md` (lokal, von Git ignoriert), Managed-Policy-Datei (IT)
+Startet eine neue Session und stellt dieselbe Frage. Diesmal sollte Claude die `CLAUDE.md` als Quelle nennen.
+
+### 7. Committet beide Dateien
+
+```bash
+git add CLAUDE.md api/CLAUDE.md && git commit -m "docs: add CLAUDE.md"
+```
+
+Die späteren Aufgaben starten mit diesen Dateien.
+
+### Was gerade passiert ist
+
+Eine **CLAUDE.md** wird bei jedem Start gelesen und liegt bei jeder Anfrage im Kontext. Schreibt deshalb nur hinein, was Claude sonst falsch machen würde. Eine `CLAUDE.md` in einem Unterordner wird erst geladen, wenn Claude dort eine Datei liest. So gelten Regeln nur da, wo sie gebraucht werden.
+
+**Fertig, wenn** `CLAUDE.md` und `api/CLAUDE.md` in eurem Clone committet sind und Claude die Frage aus Schritt 1 mit der `CLAUDE.md` als Quelle beantwortet.
+
+<details>
+<summary>Mehr dazu</summary>
+
+- Persönliche Notizen gehören in `CLAUDE.local.md` (in die `.gitignore`). Eine `AGENTS.md` liest Claude nur, wenn es keine `CLAUDE.md` gibt.
+- Öffnet in der Desktop-App das Terminal und startet dort `claude`: `/memory` zeigt die geladenen Dateien, `/context all` zeigt sie mit Token-Zahl.
+- Die Docs empfehlen unter 200 Zeilen pro Datei: [Memory](https://code.claude.com/docs/en/memory) · [Best practices](https://code.claude.com/docs/en/best-practices)
+
+</details>
