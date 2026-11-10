@@ -58,7 +58,18 @@ Committe alle Änderungen aus dieser Aufgabe. Lies vorher den Diff.
 |---|---|---|
 | `CLAUDE.md` und Imports | bei jedem Start | Fakten, die immer gelten |
 | `.claude/rules/*.md` ohne `paths` | bei jedem Start | ein Thema pro Datei, z. B. die Fachsprache |
-| `.claude/rules/*.md` mit `paths` | wenn Claude eine passende Datei liest | Konventionen für einen Bereich |
+| `.claude/rules/*.md` mit `paths` | wenn Claude eine passende Datei liest, schreibt oder ändert | Konventionen für einen Bereich |
+
+Eine Regel mit `paths` und eine Regel ohne `paths` unterscheiden sich nur darin, wann sie bei Claude ankommen. Das haben wir in einem Lauf mit einer Regel für `lib/api*` gesehen:
+
+| Was in der Session passiert | Regel ohne `paths` | Regel mit `paths` |
+|---|---|---|
+| Die Session startet | geladen | nicht geladen |
+| Euer Prompt erwähnt `lib/api.ts`, Claude öffnet die Datei aber nicht | geladen | nicht geladen |
+| Claude liest `app/page.tsx` | geladen | nicht geladen |
+| Claude liest `lib/api.ts` oder schreibt eine neue Datei `lib/api-extra.ts` | geladen | geladen |
+
+Eure Fachsprache gehört deshalb in eine Regel ohne `paths`, denn sie zählt überall. Die Konventionen für den API-Client gehören in eine Regel mit `paths`, denn sie zählen nur in `lib/api.ts` und kosten bis dahin keinen Kontext.
 
 Imports ordnen euer Gedächtnis, sie sparen aber keinen Kontext: Alles, was beim Start geladen wird, kostet bei jedem Prompt. Darum importiert ihr eine kompakte Zusammenfassung und keine rohe `openapi.json`. Die vollständige Datei bleibt auf der Platte, Claude liest sie bei Bedarf.
 

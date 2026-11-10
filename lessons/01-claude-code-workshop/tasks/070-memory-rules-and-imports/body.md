@@ -58,7 +58,18 @@ Commit all changes from this task. Read the diff first.
 |---|---|---|
 | `CLAUDE.md` and imports | at every start | facts that always apply |
 | `.claude/rules/*.md` without `paths` | at every start | one topic per file, e.g. the domain language |
-| `.claude/rules/*.md` with `paths` | when Claude reads a matching file | conventions for one area |
+| `.claude/rules/*.md` with `paths` | when Claude reads, writes or edits a matching file | conventions for one area |
+
+A rule with `paths` and a rule without it differ only in when they reach Claude. This is what we saw in a run with a rule limited to `lib/api*`:
+
+| What happens in the session | Rule without `paths` | Rule with `paths` |
+|---|---|---|
+| The session starts | loaded | not loaded |
+| Your prompt mentions `lib/api.ts`, but Claude does not open it | loaded | not loaded |
+| Claude reads `app/page.tsx` | loaded | not loaded |
+| Claude reads `lib/api.ts` or writes a new file `lib/api-extra.ts` | loaded | loaded |
+
+So your domain language goes in a rule without `paths`, because it matters everywhere. The API client conventions go in a rule with `paths`, because they only matter in `lib/api.ts` and cost no context until then.
 
 Imports organise your memory, but they do not save context: everything loaded at startup costs tokens on every prompt. That is why you import a compact summary and not the raw `openapi.json`. The full file stays on disk and Claude reads it when needed.
 
