@@ -30,6 +30,12 @@ Claude answers with your terms without reading a file. The rule file and the con
 
 Now ask Claude yourself for a rule in `.claude/rules/api-client.md`. It should apply only when Claude works on the API client `lib/api.ts`. Think of two conventions that matter only there, for example a fixed prefix for error messages. Write the prompt in your own words.
 
+For example:
+
+```text
+Create .claude/rules/api-client.md. The rule applies only to lib/api.ts. Error messages start with BookMonkey-API:, and every function returns typed data.
+```
+
 ### 5. See when the rule applies
 
 Start a new session and ask first:

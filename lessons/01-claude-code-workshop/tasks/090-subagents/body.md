@@ -36,6 +36,12 @@ Claude starts the subagent, the reviewer reads the files and your conversation s
 
 Pick one finding that seems plausible to you and one you think is exaggerated. Tell Claude in your own words what you want to do with each: fix it, do it later or reject it. You write the prompt yourself.
 
+For example:
+
+```text
+Fix the first finding. The second one we do later, add it to docs/backlog.md. The third one we reject, explain in one sentence why that is acceptable here.
+```
+
 ### 6. Commit your state
 
 ```text

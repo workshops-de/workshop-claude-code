@@ -30,6 +30,12 @@ Claude antwortet mit euren Begriffen, ohne eine Datei zu lesen. Die Regeldatei u
 
 Jetzt bittet ihr Claude selbst um eine Regel in `.claude/rules/api-client.md`. Sie soll nur gelten, wenn Claude am API-Client `lib/api.ts` arbeitet. Überlegt euch zwei Konventionen, die nur dort zählen, zum Beispiel ein festes Präfix für Fehlermeldungen. Schreibt den Prompt in eigenen Worten.
 
+Zum Beispiel:
+
+```text
+Lege .claude/rules/api-client.md an. Die Regel gilt nur für lib/api.ts. Fehlermeldungen beginnen mit BookMonkey-API:, und jede Funktion gibt typisierte Daten zurück.
+```
+
 ### 5. Seht, wann die Regel greift
 
 Startet eine neue Session und fragt zuerst:

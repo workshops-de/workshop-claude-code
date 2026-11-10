@@ -54,6 +54,12 @@ Die neue Session beginnt ohne den alten Lesestoff.
 
 Claude kann einen **Subagent** starten, der in seinem eigenen Kontext liest und nur das Ergebnis zurückgibt. Schreibt selbst einen Prompt: Ein Subagent soll alle Dateien in `api/migrations` durchgehen und euch pro Datei eine Zeile liefern.
 
+Zum Beispiel:
+
+```text
+Starte einen Subagent, der alle Dateien in api/migrations liest. Gib mir pro Datei eine Zeile mit Name und Zweck.
+```
+
 ### Was gerade passiert ist
 
 | Hebel | Wann |

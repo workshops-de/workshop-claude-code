@@ -36,6 +36,12 @@ Claude startet den Subagent, der Reviewer liest die Dateien und eure Unterhaltun
 
 Sucht euch ein Finding aus, das euch plausibel vorkommt, und eines, das ihr für übertrieben haltet. Sagt Claude in eigenen Worten, was ihr mit jedem tun wollt: beheben, später machen oder ablehnen. Ihr schreibt den Prompt selbst.
 
+Zum Beispiel:
+
+```text
+Behebe das erste Finding. Das zweite machen wir später, trage es in docs/backlog.md ein. Das dritte lehnen wir ab, begründe in einem Satz, warum das hier vertretbar ist.
+```
+
 ### 6. Committet euren Stand
 
 ```text

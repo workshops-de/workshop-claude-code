@@ -26,6 +26,12 @@ Claude zeigt einen neuen Plan, der eure Punkte übernimmt. Der Ordner ist weiter
 
 Findet im neuen Plan etwas, das ihr anders haben wollt, und schreibt die Korrektur selbst. Weil spätere Aufgaben darauf aufbauen, solltet ihr dabei erreichen: Die beiden Route Groups heißen `(public)` und `(app)`, und die Funktion für die API liegt in `lib/api.ts`. Schreibt auch dazu, dass Claude noch nichts ändern soll.
 
+Zum Beispiel:
+
+```text
+Die beiden Route Groups sollen (public) und (app) heißen, und die Funktion für die API soll in lib/api.ts liegen. Zeig mir den neuen Plan, ändere noch nichts.
+```
+
 ### 4. Gebt den Plan frei
 
 Jetzt vertraut ihr dem Plan. Gebt ihn frei, falls die App das anbietet, oder stellt den Modus von Plan auf Auto, damit Claude Dateien ändern darf. Schickt dann:
