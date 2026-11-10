@@ -1,104 +1,68 @@
-## Überblick
+In dieser Aufgabe geht es um den **Plan Mode**: Claude schlägt zuerst einen Plan vor und ändert nichts, ihr korrigiert den Plan, und erst dann wird gebaut.
 
-Nutzt den **Plan Mode** als echtes Steuerungswerkzeug und nicht nur als Schalter, der Änderungen sperrt: Lasst euch
-einen Plan erstellen, diskutiert mit ihm, ändert ihn und entscheidet erst dann, wie viel Autonomie
-der Agent bei der Ausführung bekommt. Den Plan Mode habt ihr in der Grundlagen-Aufgabe kurz kennengelernt;
-hier setzt ihr ihn für eine Änderung ein, bei der es wirklich darauf ankommt.
+Ihr arbeitet in einem neuen, leeren Ordner `bookmonkey` mit Node.js 26 (zum Beispiel `mkdir bookmonkey && cd bookmonkey && git init`). Öffnet ihn in der Desktop-App und startet dort eine neue Session. Startet in einem Terminal die API mit `npx bookmonkey-api`, sie läuft dann unter http://localhost:4730.
 
-## Das Feature
+### 1. Lasst Claude einen Plan machen
 
-Im Plan Mode liest und recherchiert Claude Code und schreibt nur seine Plan-Datei. Euer Code bleibt
-unverändert, bis ihr freigebt. Das Ergebnis ist ein **Plan**, den ihr prüft.
+Stellt den Modus auf **Plan** und schickt:
 
-- **Aktivieren** mit `Shift+Tab` (so oft drücken, bis die Statuszeile den Plan Mode anzeigt), mit
-  `/plan` vor einem einzelnen Prompt oder direkt beim Start: `claude --permission-mode plan`.
-- **Den Plan im Gespräch verfeinern**: fragen, warum ein Schritt nötig ist, unerwünschte Schritte
-  streichen, fehlende Rahmenbedingungen ergänzen. Ein Plan ist billig zu ändern, ein Scaffold nicht.
-- **Den Plan selbst bearbeiten**: Sobald der Plan angezeigt wird, öffnet `Ctrl+G` ihn im
-  Standard-Texteditor. Ändern, speichern, und der Agent macht mit eurer Version weiter.
-- **Die Ausführung wählen**: Der Bestätigungsdialog bietet **Yes, and use auto mode** (bzw.
-  **Yes, auto-accept edits**, wo der Auto Mode nicht verfügbar ist), **Yes, manually approve edits**
-  und **No, keep planning**. Wählt passend dazu, wie sehr ihr dem Plan vertraut.
+```text
+Plane ein neues Next.js-Projekt mit TypeScript und Tailwind für BookMonkey, einen Buchkatalog. Es soll einen öffentlichen und einen geschützten Bereich geben, getrennt durch Route Groups. Die Startseite zeigt die Titel der ersten fünf Bücher von http://localhost:4730/books?_limit=5. Ändere noch nichts, ich will erst den Plan sehen.
+```
 
-Die Gewohnheit dahinter: Der günstigste Moment, eine falsche Richtung zu korrigieren, ist vor der
-ersten Dateiänderung.
+Claude liest und prüft, zeigt einen Plan und legt keine Projektdateien an. Schaut in den Ordner: Er ist noch leer.
 
-## Anwendung auf BookMonkey
+### 2. Korrigiert den Plan
 
-> **Repo / Ports:** ein neues, leeres `bookmonkey`-Repository (Node.js 26), Next.js-App auf
-> http://localhost:3000, `npx bookmonkey-api` auf http://localhost:4730
->
-> **Login:** Demo-User `admin@bookmonkey.api` / `password1!` (wird ab der Subagents-Aufgabe gebraucht)
+Lest den Plan genau. In unseren Läufen enthielt er Dinge, die wir nicht wollten: einen `src`-Ordner, eine Umgebungsvariable mit anderem Namen, eine Login-Seite mit Cookie-Prüfung. Schickt:
 
-Im gesamten Workshop baut ihr **BookMonkey**, einen kleinen Buchkatalog. Das Backend gibt es
-schon: Die fertige [`bookmonkey-api`](https://github.com/workshops-de/bookmonkey-api) liefert
-50 Bücher mit Covern, Reihen-Verknüpfungen und einem Demo-Login. Das Frontend baut ihr jetzt dagegen;
-später (in den Aufgaben zu TDD und autonomen Workflows) ersetzt ihr die API durch ein eigenes
-Backend, das denselben Vertrag einhält.
+```text
+Ändere den Plan: Kein src-Ordner, die Seiten liegen direkt in app/. Die Umgebungsvariable heißt NEXT_PUBLIC_API_URL. Der geschützte Bereich ist vorerst nur eine Seite /library mit einer kurzen Überschrift, ohne Login und ohne Cookie. Ich ergänze die Anmeldung später selbst. Zeig mir den neuen Plan, ändere noch nichts.
+```
 
-Übungsfeld ist hier: aus einem leeren Repository ein lauffähiges Next.js-App-Router-Projekt mit
-TypeScript und Tailwind CSS machen, mit einem **öffentlichen Bereich** (Katalog, später Anmeldung)
-und einem **geschützten Bereich** (später eure Leseliste), getrennt durch Route Groups, sowie einer
-Seite, die die API-Anbindung beweist. Scaffolding ist repetitiv und gut dokumentiert, ideal zum
-Delegieren, solange ihr steuert.
+Claude zeigt einen neuen Plan, der eure Punkte übernimmt. Der Ordner ist weiterhin leer.
 
-## Voraussetzungen
+### 3. Korrigiert selbst
 
-- Node.js 26 (aktuelles LTS). `bookmonkey-api` deklariert `node >=26` in den `engines`.
-- Startet die API in einem separaten Terminal und lasst sie laufen: `npx bookmonkey-api`. Sie
-  lauscht auf `http://localhost:4730`; die interaktive Doku liegt unter `http://localhost:4730/api`.
-- Optionale Skills (nice to have, nicht erforderlich):
-  `npx skills add vercel-labs/agent-skills@vercel-react-best-practices -y` und
-  `npx skills add anthropics/skills@frontend-design -y`.
+Findet im neuen Plan etwas, das ihr anders haben wollt, und schreibt die Korrektur selbst. Weil spätere Aufgaben darauf aufbauen, solltet ihr dabei erreichen: Die beiden Route Groups heißen `(public)` und `(app)`, und die Funktion für die API liegt in `lib/api.ts`. Schreibt auch dazu, dass Claude noch nichts ändern soll.
 
-## Schritte
+### 4. Gebt den Plan frei
 
-1. Legt ein neues, leeres Repository für euer BookMonkey neben dem `bookmonkey-legacy`-Clone an
-   (`mkdir bookmonkey && cd bookmonkey && git init`). Startet dort Claude Code im Plan Mode
-   (`claude --permission-mode plan`) und
-   lasst das Scaffold planen: Stack, Route Groups für öffentliche vs. geschützte Bereiche, Styling,
-   die API-Basis-URL als Umgebungsvariable (`NEXT_PUBLIC_API_URL=http://localhost:4730`) und
-   eine Startseite, die die Titel der ersten fünf Bücher von `GET /books?_limit=5` auflistet.
-   Das Repository ist bis auf `.git` leer, also sollte der Plan **in das aktuelle Verzeichnis**
-   scaffolden, mit nicht-interaktiven Flags, zum Beispiel
-   `npx create-next-app@latest . --ts --tailwind --eslint --app --no-src-dir --import-alias "@/*" --use-npm --yes`.
-   Allein die Installation kann mehrere Minuten dauern.
-2. **Hinterfragt den Plan** mindestens zweimal: Wählt **No, keep planning** und stellt jede
-   Library infrage, die ihr nicht angefordert habt (Data-Fetching-Library, UI-Kit, State Manager),
-   oder lasst den Agenten einen Schritt begründen, bei dem ihr unsicher seid. Beobachtet, wie sich
-   der Plan ändert.
-3. Sobald der überarbeitete Plan angezeigt wird, drückt `Ctrl+G`, ändert selbst ein Detail (zum
-   Beispiel einen Routennamen) und speichert. Prüft, dass der Agent eure Version übernimmt.
-4. Bestätigt den Plan und **wählt bewusst** die Ausführungsoption: Auto Mode / auto-accept oder
-   Änderungen manuell bestätigen. Beobachtet die Befehle, die er ausführt.
-5. **Prüfen**: Startet den Entwicklungsserver und öffnet die App im Browser: Fünf echte Buchtitel
-   sollten erscheinen.
-6. Prüft die Änderungen und macht euren ersten Commit mit einer Commit-Nachricht, die ihr
-   gelesen habt. Committet eine `.env.example` neben der per Git ignorierten `.env.local`: Die
-   `.gitignore` der Vorlage ignoriert `.env*`, ergänzt also `!.env.example`.
+Jetzt vertraut ihr dem Plan. Stellt den Modus zurück, damit Claude Dateien ändern darf, und schickt:
 
-## Erfolgskriterien
+```text
+Der Plan passt. Setze ihn um und prüfe am Ende mit npm run build, dass alles läuft.
+```
 
-**Feature**
+Die Installation dauert einige Minuten. In unserem Lauf scheiterte der erste Build an der Next.js-Funktion Cache Components, Claude hat das selbst behoben.
 
-- [ ] Ihr habt eine Session im Plan Mode gestartet und einen Plan erhalten, bevor sich eine Datei geändert hat
-- [ ] Der Plan hat sich mindestens einmal geändert, weil ihr widersprochen habt
-- [ ] Ihr habt den Plan über `Ctrl+G` im Editor bearbeitet und der Agent hat mit eurer Änderung weitergemacht
-- [ ] Ihr könnt erklären, welchen Ausführungsmodus ihr nach der Bestätigung gewählt habt und warum
+### 5. Seht euch das Ergebnis an
 
-**App funktioniert weiterhin**
+```text
+Starte den Entwicklungsserver und sag mir die URL.
+```
 
-- [ ] `npm run dev` liefert die App aus; eine öffentliche und eine geschützte Route Group werden beide gerendert
-- [ ] Die Startseite zeigt fünf Buchtitel, geladen von der laufenden `bookmonkey-api`
-- [ ] Die API-Basis-URL kommt aus einer Umgebungsvariable, nicht aus einem hartcodierten String, und
-      eine committete `.env.example` dokumentiert sie
-- [ ] Type-Check und `npm run build` laufen durch; das Scaffold ist committet
+Öffnet die Adresse im Browser: Fünf Buchtitel erscheinen. Unter `/library` seht ihr die Überschrift des geschützten Bereichs.
 
-## Referenzen
+### 6. Committet, was ihr gelesen habt
 
-- Claude Code: Plan mode: https://code.claude.com/docs/en/permission-modes#analyze-before-you-edit-with-plan-mode
-- Claude Code: Common workflows: https://code.claude.com/docs/en/common-workflows
-- Claude Code: Interactive mode (shortcuts): https://code.claude.com/docs/en/interactive-mode
+```text
+Mach den ersten Commit. Lies vorher die Änderungen und schreib eine passende Commit-Nachricht.
+```
+
+Claude committet das Projekt samt `.env.example`, `.env.local` bleibt draußen.
+
+### Was gerade passiert ist
+
+Im Plan Mode liest Claude nur und ändert euren Code nicht. Ihr habt den Plan zweimal geändert, bevor die erste Datei existierte. Einen Plan ändert ihr mit einem Satz, ein fertiges Projekt aufzuräumen dauert länger. Merkt euch: **erst Plan prüfen und korrigieren, dann bauen lassen**.
+
+**Fertig, wenn** `/` fünf Buchtitel von der API zeigt, `/library` erreichbar ist und das Projekt committet ist.
+
+<details>
+<summary>Mehr dazu</summary>
+
+- Plan Mode: https://code.claude.com/docs/en/permission-modes#analyze-before-you-edit-with-plan-mode
 - BookMonkey API: https://github.com/workshops-de/bookmonkey-api
-- Next.js: Route groups: https://nextjs.org/docs/app/building-your-application/routing/route-groups
-- Next.js: Environment variables: https://nextjs.org/docs/app/building-your-application/configuring/environment-variables
+- Route Groups: https://nextjs.org/docs/app/building-your-application/routing/route-groups
+
+</details>

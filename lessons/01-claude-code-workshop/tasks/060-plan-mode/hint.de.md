@@ -8,10 +8,10 @@ Skills-Aufgabe.
 </details>
 
 <details>
-<summary>💡 Tipp 2: Eure Änderung schlägt einen langen Korrektur-Prompt</summary>
+<summary>💡 Tipp 2: Die Korrektur wird lang</summary>
 
-Wenn ihr drei Sätze bräuchtet, um eine Änderung zu erklären, ist es oft schneller, den Plan mit
-`Ctrl+G` zu öffnen und es einfach so hinzuschreiben, wie ihr es wollt.
+Nennt in der Korrektur nur das, was sich ändern soll, und schließt mit „Ändere noch nichts“.
+So bleibt es ein Satz, und Claude zeigt euch erst den neuen Plan.
 
 </details>
 
