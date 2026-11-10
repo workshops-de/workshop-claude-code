@@ -35,7 +35,7 @@ events such as `PreToolUse` (before a tool runs, can block), `PostToolUse` (afte
   Claude as the reason. Careful: `exit 1` does **not** block, it's treated as a non-blocking error.
 - **Feedback:** a `PostToolUse` hook can't undo the edit, but `exit 2` shows its stderr to Claude,
   so it reacts to the errors. Its plain text output on exit `0` does not reach Claude (on
-  `SessionStart` and `UserPromptSubmit`, stdout does).
+  `SessionStart`, `UserPromptSubmit`, `UserPromptExpansion` and `PostModelSwitch`, stdout does).
 - **Scripts**: keep longer logic in `.claude/hooks/*.sh` (executable) and reference it as
   `"${CLAUDE_PROJECT_DIR}/.claude/hooks/guard.sh"`.
 - **Inspect**: `/hooks` shows every configured hook, its matcher, and which settings file it came

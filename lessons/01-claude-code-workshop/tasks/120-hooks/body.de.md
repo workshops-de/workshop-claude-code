@@ -37,7 +37,8 @@ es gelaufen ist), `Stop` oder `SessionStart`.
   nicht blockierender Fehler.
 - **Feedback:** Ein `PostToolUse`-Hook kann die Änderung nicht rückgängig machen, aber bei `exit 2`
   sieht Claude seinen stderr und reagiert auf die Fehler. Seine Klartext-Ausgabe bei `exit 0`
-  erreicht Claude nicht (bei `SessionStart` und `UserPromptSubmit` erreicht stdout Claude schon).
+  erreicht Claude nicht (bei `SessionStart`, `UserPromptSubmit`, `UserPromptExpansion` und `PostModelSwitch` erreicht stdout
+  Claude schon).
 - **Skripte**: Längere Logik gehört nach `.claude/hooks/*.sh` (ausführbar) und wird mit
   `"${CLAUDE_PROJECT_DIR}/.claude/hooks/guard.sh"` referenziert.
 - **Prüfen**: `/hooks` zeigt jeden konfigurierten Hook, seinen Matcher und aus welcher
