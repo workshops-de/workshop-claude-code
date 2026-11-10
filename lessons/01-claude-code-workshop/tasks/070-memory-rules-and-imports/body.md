@@ -60,7 +60,27 @@ Commit all changes from this task. Read the diff first.
 | `.claude/rules/*.md` without `paths` | at every start | one topic per file, e.g. the domain language |
 | `.claude/rules/*.md` with `paths` | when Claude reads, writes or edits a matching file | conventions for one area |
 
-A rule with `paths` and a rule without it differ only in when they reach Claude. This is what we saw in a run with a rule limited to `lib/api*`:
+`paths` is an entry in the frontmatter at the very top of the rule file and names the files the rule applies to. Without it, the rule loads at every start, even if you only forgot it. Your rules from this task look roughly like this.
+
+`.claude/rules/domain.md` has no `paths` and loads at every start:
+
+```markdown
+# Domain language
+- Detail routes need the ISBN, not the id.
+```
+
+`.claude/rules/api-client.md` has `paths` and loads only when Claude reads, writes or edits `lib/api.ts`:
+
+```markdown
+---
+paths:
+  - "lib/api.ts"
+---
+# API client
+- Error messages start with "[api]".
+```
+
+This is what it looked like in a run with a rule limited to `lib/api*`:
 
 | What happens in the session | Rule without `paths` | Rule with `paths` |
 |---|---|---|
@@ -80,7 +100,7 @@ Imports organise your memory, but they do not save context: everything loaded at
 
 Your `domain.md` also contains the reading list with its states. You build it in the hooks task. You should commit `docs/openapi.json`, because it serves later as the contract for your own backend.
 
-The `paths` field is frontmatter at the top of the rule file, for example `paths: ["lib/api.ts"]`. We did not check whether the desktop app shows which files were loaded; to look, open the terminal there, start `claude` and type `/memory`.
+We did not check whether the desktop app shows which files were loaded; to look, open the terminal there, start `claude` and type `/memory`.
 
 - [Memory, rules and imports](https://code.claude.com/docs/en/memory)
 - [Path-specific rules](https://code.claude.com/docs/en/memory#path-specific-rules)
