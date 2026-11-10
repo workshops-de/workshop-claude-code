@@ -1,44 +1,50 @@
-This task is about **CLAUDE.md**, the memory of your project: a Markdown file Claude reads at the start of every session. You work in your `bookmonkey-legacy` clone, in a new session in the mode that asks before changes.
+This task is about **CLAUDE.md**, the memory of your project: a Markdown file Claude reads at the start of every session. You work in your `bookmonkey-legacy` clone (Node.js 24 or newer), in a new session in the mode that asks before changes.
 
 ### 1. Ask a question without memory
 
 ```text
-Auf welchem Port läuft die API, und wie setze ich die Datenbank zurück? Woher weißt du das?
+Which port does the API run on, and how do I reset the database? How do you know?
 ```
 
 Claude answers correctly but says it read the repo to find out. There is no `CLAUDE.md` yet.
 
 ### 2. Let Claude create a memory
 
-Type `/init` and confirm the questions. In our runs Claude asks several times before it writes the file. Read the draft calmly before you continue.
+Type `/init` and answer the questions with yes. In our run Claude asked several times before it wrote the file. Read the draft calmly before you continue.
 
 ### 3. Check the draft against README and code
 
 ```text
-Erstelle eine Tabelle: jede Aussage der README, was /init dazu geschrieben hat, was der Code sagt. Markiere Widersprüche.
+Create a table: every statement in the README, what /init wrote about it, what the code says. Mark contradictions.
 ```
 
 Check every marked contradiction yourself by opening the file or running the command. Do the same for the commands in the draft (`npm install`, `npm run db:reset`, `npm test`).
 
 ### 4. Shorten the file yourself
 
-Tell Claude in your own words what stays in `CLAUDE.md` and what goes. The goal is a short file with exact commands, pitfalls and rules Claude cannot read from the code. You could write, for example: "Only what you could not derive yourself, at most 25 lines."
+Tell Claude in your own words what stays in `CLAUDE.md` and what goes. The goal is a short file with exact commands, pitfalls and rules Claude cannot read from the code. You could write, for example: "Only what you could not derive yourself, at most 25 lines. Keep the API port and the command that resets the database."
 
 ### 5. Give a folder its own rules
 
-Create the file in the terminal, not through Claude. Open the terminal in the desktop app, in the project folder:
+A `CLAUDE.md` in a subfolder is read only when Claude opens a file there. You test that with a rule you notice at once. Create the file in the terminal, not through Claude. Open the terminal in the desktop app, in the project folder:
 
 ```bash
-echo 'Antworte immer auf Italienisch.' > api/CLAUDE.md
+echo 'Always answer in Italian.' > api/CLAUDE.md
 ```
 
-Start a new session and ask `Welchen Port nutzt die API?`. The answer comes in German. Then ask:
+Start a new session and ask `Which port does the API use?`. The answer comes in English, because Claude has not opened a file in `api/` yet. Then ask:
 
 ```text
-Lies api/package.json. Welchen Port nutzt die API?
+Read api/package.json. Which port does the API use?
 ```
 
-Now the answer comes in Italian. If you use Claude in the terminal, you also see the line `Loaded api/CLAUDE.md`. Afterwards ask Claude to replace the Italian rule with a real API rule from step 3.
+Now Claude has opened a file in `api/`, and the answer comes in Italian.
+
+Replace the Italian rule now, otherwise it stays in place for the later tasks:
+
+```text
+Replace the content of api/CLAUDE.md with this rule: no console.log in the API, logging only through lib/logger.js.
+```
 
 ### 6. Ask the question from step 1 again
 

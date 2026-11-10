@@ -1,5 +1,5 @@
 <details>
-<summary>💡 Hint 1: The bootstrap output is long</summary>
+<summary>💡 Hint 1: The draft from /init is long</summary>
 
 That's normal. Your job is to cut it to what matters, not to keep everything. A good test for each
 line: would a new teammate need this, and would Claude get it wrong without it?
@@ -25,8 +25,7 @@ verbatim.
 <details>
 <summary>💡 Hint 4: Proving the subdirectory file</summary>
 
-Start a fresh session, ask about an API rule from `api/CLAUDE.md` before Claude has opened any
-API file, then ask it to read one file in `api/` and ask again.
+Start a new session and ask something that needs no file in `api/`: the answer stays in your language. Then let it read a file in `api/` and ask again.
 
 </details>
 

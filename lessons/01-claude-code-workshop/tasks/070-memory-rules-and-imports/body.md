@@ -6,7 +6,7 @@ This task is about **rule files and imports**: you define the domain language an
 The BookMonkey API runs on http://localhost:4730. Save its contract from /api-json to docs/openapi.json. Then write .claude/rules/domain.md: a glossary of our domain language (book, ISBN, id, series, author) with the entity model, server-managed fields and constraints. Check statements against real API responses instead of guessing. New is the reading list with the states want to read, reading and finished. Afterwards reset the API with POST /dev/reset.
 ```
 
-Claude queries the API itself, creates test books and writes the result to `domain.md`. In our runs it recorded, for example, that a duplicate ISBN is rejected with `409` and that detail routes need the ISBN, not the `id`. Read the file and object if something is wrong.
+Claude queries the API itself, creates test books and writes the result to `domain.md`. In our runs it recorded, for example, that a duplicate ISBN is rejected with `409` and that detail routes need the ISBN, not the `id`. The reading list does not exist in the API yet, you plan it for later. The reset removes the test books again. Read the file and object if something is wrong.
 
 ### 2. Import a compact contract
 
@@ -44,7 +44,13 @@ Claude does not know your rule yet. Then ask it in the same session:
 Add a function getBook to lib/api.ts that loads a book and throws an Error on failure.
 ```
 
-As soon as Claude opens `lib/api.ts`, the rule loads and the new function follows your conventions. In our run all new error messages started with `BookMonkey-API:`.
+As soon as Claude opens `lib/api.ts`, the rule loads and the new function follows your conventions. In our run the new error messages followed the prefix we had set in the rule.
+
+### 6. Commit your state
+
+```text
+Commit all changes from this task. Read the diff first.
+```
 
 ### What just happened
 
@@ -56,12 +62,12 @@ As soon as Claude opens `lib/api.ts`, the rule loads and the new function follow
 
 Imports organise your memory, but they do not save context: everything loaded at startup costs tokens on every prompt. That is why you import a compact summary and not the raw `openapi.json`. The full file stays on disk and Claude reads it when needed.
 
-**Done when** a new session uses your terms from `domain.md` and `lib/api.ts` follows the conventions from `api-client.md` only after Claude has opened the file.
+**Done when** a new session uses your terms from `domain.md`, Claude does not know your rule from `api-client.md` before opening `lib/api.ts`, and `getBook` then follows your conventions.
 
 <details>
 <summary>More</summary>
 
-The example `domain.md` also contains the reading list with its states. You build it in the hooks task. You should commit `docs/openapi.json`, because it serves later as the contract for your own backend.
+Your `domain.md` also contains the reading list with its states. You build it in the hooks task. You should commit `docs/openapi.json`, because it serves later as the contract for your own backend.
 
 The `paths` field is frontmatter at the top of the rule file, for example `paths: ["lib/api.ts"]`. We did not check whether the desktop app shows which files were loaded; to look, open the terminal there, start `claude` and type `/memory`.
 

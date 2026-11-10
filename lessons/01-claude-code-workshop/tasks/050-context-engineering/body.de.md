@@ -1,6 +1,6 @@
 In dieser Aufgabe geht es um das **Kontextfenster**: Alles, was Claude in einer Session liest, bleibt darin und belegt Platz. Ihr füllt es absichtlich, **kompaktiert** es und startet danach mit einer **neuen Session** neu.
 
-Ihr arbeitet in eurem `bookmonkey-legacy`-Clone (Node.js 24). Hat das Projekt noch keine `CLAUDE.md`, schreibt in einer Session `/init`.
+Ihr arbeitet in eurem `bookmonkey-legacy`-Clone (Node.js 24). Hat das Projekt noch keine `CLAUDE.md`, schreibt in einer Session `/init`. Startet dann eine neue Session.
 
 ### 1. Stellt eine Frage, die ihr später prüfen könnt
 
@@ -22,7 +22,7 @@ Lies api/routes.js komplett mit dem Read-Tool und fasse jeden Abschnitt in zwei 
 Lies jetzt api/seed/books.json und danach jede Datei unter api/services, api/lib und api/test mit dem Read-Tool. Sag mir nur, wie viele Dateien du gelesen hast.
 ```
 
-In unseren Läufen waren das über 40 Dateien. Die Session ist jetzt deutlich größer als nach Schritt 1.
+In unserem Lauf waren das rund 40 Dateien. Die Session ist jetzt deutlich größer als nach Schritt 1.
 
 ### 3. Fragt noch einmal
 
@@ -38,11 +38,11 @@ Vergleicht mit Schritt 1. In unseren Läufen blieb die Antwort richtig, die Sess
 /compact Behalte die Verlängerungsregeln für Ausleihen und die Dateien, in denen sie stehen.
 ```
 
-Claude fasst das Gespräch zusammen und macht mit der Zusammenfassung weiter. Fragt danach, was nur im Gespräch stand, zum Beispiel: `Wie viele Dateien hast du vorhin unter api/test gelesen?` Prüft die Antwort mit `ls api/test`. Bei uns stand die Zahl vorher falsch im Gespräch, nach dem Kompaktieren stimmte sie. Ihr seht also, was die Zusammenfassung behält, und müsst Details nachprüfen.
+Claude fasst das Gespräch zusammen und macht mit der Zusammenfassung weiter. Fragt danach, was nur im Gespräch stand, zum Beispiel: `Wie viele Dateien hast du vorhin unter api/test gelesen?` Prüft die Antwort mit `ls api/test`. In unserem Lauf stand die Zahl nicht mehr in der Zusammenfassung, und Claude hat sie neu ermittelt. Details aus dem Gespräch können nach dem Kompaktieren weg sein, darum prüft ihr sie nach.
 
 ### 5. Startet neu
 
-Startet eine **neue Session** für eine Aufgabe, die mit der alten nichts zu tun hat:
+Startet eine **neue Session** und fragt etwas Neues:
 
 ```text
 Erkläre kurz das Routing der Web-App.
@@ -52,7 +52,7 @@ Die neue Session beginnt ohne den alten Lesestoff.
 
 ### 6. Haltet das Lesen aus eurer Session heraus
 
-Schreibt selbst einen Prompt: Claude soll alle Migrationsdateien in `api/migrations` durchgehen und euch pro Datei eine Zeile liefern, ohne dass der ganze Inhalt in eurer Session landet.
+Claude kann einen **Subagent** starten, der in seinem eigenen Kontext liest und nur das Ergebnis zurückgibt. Schreibt selbst einen Prompt: Ein Subagent soll alle Dateien in `api/migrations` durchgehen und euch pro Datei eine Zeile liefern.
 
 ### Was gerade passiert ist
 

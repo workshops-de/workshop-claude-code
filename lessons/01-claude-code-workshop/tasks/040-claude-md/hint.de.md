@@ -1,5 +1,5 @@
 <details>
-<summary>💡 Tipp 1: Die Ausgabe des Bootstraps ist lang</summary>
+<summary>💡 Tipp 1: Der Entwurf von /init ist lang</summary>
 
 Das ist normal. Eure Aufgabe ist, sie auf das Wesentliche zu kürzen, nicht alles zu behalten. Ein
 guter Test für jede Zeile: Würde ein neues Teammitglied das brauchen, und würde Claude es ohne sie
@@ -27,8 +27,7 @@ wortwörtlich.
 <details>
 <summary>💡 Tipp 4: Die Unterverzeichnis-Datei nachweisen</summary>
 
-Startet eine frische Session, fragt nach einer API-Regel aus `api/CLAUDE.md`, bevor Claude eine
-API-Datei geöffnet hat, lasst es dann eine Datei in `api/` lesen und fragt erneut.
+Startet eine neue Session und stellt eine Frage, für die Claude nichts in `api/` öffnen muss: Die Antwort bleibt auf Deutsch. Lasst es dann eine Datei in `api/` lesen und fragt erneut.
 
 </details>
 

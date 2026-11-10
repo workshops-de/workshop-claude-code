@@ -1,8 +1,7 @@
 <details>
-<summary>💡 Hint 1: Treat /context as a fuel gauge</summary>
+<summary>💡 Hint 1: Big files cost the most</summary>
 
-Check it after every big read, not just when things start to break. A single large file or a long
-log can cost more than all your questions together.
+A single large file or a long log can cost more than all your questions together. Let Claude read only what the task needs.
 
 </details>
 

@@ -14,7 +14,7 @@ Claude liest und prüft, zeigt einen Plan und legt keine Projektdateien an. Scha
 
 ### 2. Korrigiert den Plan
 
-Lest den Plan genau. In unseren Läufen enthielt er Dinge, die wir nicht wollten: einen `src`-Ordner, eine Umgebungsvariable mit anderem Namen, eine Login-Seite mit Cookie-Prüfung. Schickt:
+Lest den Plan genau. In unserem Lauf enthielt er Dinge, die wir nicht wollten: einen `src`-Ordner, eine Umgebungsvariable mit anderem Namen, eine Login-Seite mit Cookie-Prüfung. Die Korrektur legt fest, was spätere Aufgaben brauchen. Bietet die App an, den Plan freizugeben, tut das noch nicht und schreibt eure Änderung ins Eingabefeld. Schickt:
 
 ```text
 Ändere den Plan: Kein src-Ordner, die Seiten liegen direkt in app/. Die Umgebungsvariable heißt NEXT_PUBLIC_API_URL. Der geschützte Bereich ist vorerst nur eine Seite /library mit einer kurzen Überschrift, ohne Login und ohne Cookie. Ich ergänze die Anmeldung später selbst. Zeig mir den neuen Plan, ändere noch nichts.
@@ -28,7 +28,7 @@ Findet im neuen Plan etwas, das ihr anders haben wollt, und schreibt die Korrekt
 
 ### 4. Gebt den Plan frei
 
-Jetzt vertraut ihr dem Plan. Stellt den Modus zurück, damit Claude Dateien ändern darf, und schickt:
+Jetzt vertraut ihr dem Plan. Gebt ihn frei, falls die App das anbietet, oder stellt den Modus von Plan auf Auto, damit Claude Dateien ändern darf. Schickt dann:
 
 ```text
 Der Plan passt. Setze ihn um und prüfe am Ende mit npm run build, dass alles läuft.
@@ -50,7 +50,7 @@ Starte den Entwicklungsserver und sag mir die URL.
 Mach den ersten Commit. Lies vorher die Änderungen und schreib eine passende Commit-Nachricht.
 ```
 
-Claude committet das Projekt samt `.env.example`, `.env.local` bleibt draußen.
+Prüft in der Commit-Übersicht, dass `.env.local` nicht dabei ist. In unserem Lauf kam eine `.env.example` mit.
 
 ### Was gerade passiert ist
 

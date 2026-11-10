@@ -5,10 +5,12 @@ Ihr arbeitet in eurem `bookmonkey`-Repository mit Node.js 26. Die API (`npx book
 ### 1. Baut die Anmeldung
 
 ```text
-Bau Anmeldung, Registrierung und Abmeldung gegen die bookmonkey-api (POST /login und POST /register). Das Token kommt in einen signierten http-only Cookie, der auf dem Server gesetzt wird, nicht in localStorage. Ein Guard in proxy.ts leitet den Bereich unter /library auf /login um. Halte es klein und prüfe mit npm run build.
+Bau Anmeldung, Registrierung und Abmeldung gegen die bookmonkey-api (POST /login und POST /register). Das Token kommt in einen signierten http-only Cookie, der auf dem Server gesetzt wird, nicht in localStorage. Fehlt in .env.local ein SESSION_SECRET, erzeuge einen und trage ihn dort und ohne Wert in .env.example ein. Ein Guard in proxy.ts leitet den Bereich unter /library auf /login um. Halte es klein und prüfe mit npm run build.
 ```
 
-Startet die App mit `npm run dev`, öffnet http://localhost:3000/library und meldet euch an. Ohne Anmeldung landet ihr auf `/login`.
+Der Cookie speichert die Anmeldung so, dass JavaScript im Browser ihn nicht lesen kann. Der Guard schickt alle, die nicht angemeldet sind, zu `/login`.
+
+Beendet einen noch laufenden Dev-Server und startet die App mit `npm run dev` neu, damit sie die neue `.env.local` liest. Öffnet http://localhost:3000/library: Ohne Anmeldung landet ihr auf `/login`. Meldet euch dort an.
 
 ### 2. Lasst Claude einen Reviewer anlegen
 
@@ -20,12 +22,12 @@ Erstelle einen Subagent security-reviewer in .claude/agents/. Er prüft Anmeldun
 
 ### 3. Startet eine neue Session
 
-Eine neue Session lädt den Reviewer. In unseren Läufen war er in der Session, in der die Datei entstand, noch nicht bekannt.
+Eine neue Session stellt sicher, dass der Reviewer geladen ist.
 
 ### 4. Ruft den Reviewer auf
 
 ```text
-@agent-security-reviewer Prüfe die Anmeldung. Nenne die Findings nach Schweregrad mit Datei und Zeile und sag bei jedem, ob der Fix ins Frontend oder ins Backend gehört.
+@agent-security-reviewer Prüfe die Anmeldung. Nenne die Findings nach Schweregrad mit Datei und Zeile und sag bei jedem, ob die Stelle in unserem Code liegt oder in der bookmonkey-api, die wir nicht ändern können.
 ```
 
 Claude startet den Subagent, der Reviewer liest die Dateien und eure Unterhaltung bleibt klein. Am Ende steht eine Liste mit Findings. Die Details unterscheiden sich in jedem Lauf.
@@ -33,6 +35,12 @@ Claude startet den Subagent, der Reviewer liest die Dateien und eure Unterhaltun
 ### 5. Bewertet die Findings selbst
 
 Sucht euch ein Finding aus, das euch plausibel vorkommt, und eines, das ihr für übertrieben haltet. Sagt Claude in eigenen Worten, was ihr mit jedem tun wollt: beheben, später machen oder ablehnen. Ihr schreibt den Prompt selbst.
+
+### 6. Committet euren Stand
+
+```text
+Committe alle Änderungen aus dieser Aufgabe. Lies vorher den Diff.
+```
 
 ### Was gerade passiert ist
 
