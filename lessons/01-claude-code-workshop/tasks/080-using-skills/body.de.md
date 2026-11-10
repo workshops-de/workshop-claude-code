@@ -1,6 +1,6 @@
 In dieser Aufgabe geht es um **Skills**: fertige Anleitungen für Claude, zum Beispiel für eine Library, die sich schnell ändert. Ihr installiert einen Skill für **shadcn/ui** und baut damit die Katalogseite von BookMonkey.
 
-Ihr arbeitet in eurem `bookmonkey`-Repository mit Node.js 26. Die `bookmonkey-api` muss auf http://localhost:4730 laufen.
+Ihr arbeitet in eurem `bookmonkey`-Repository mit Node.js 26. Die `bookmonkey-api` muss auf http://localhost:4730 laufen. Startet in einem Terminal die App mit `npm run dev`, falls sie noch nicht läuft. Ihr findet sie unter http://localhost:3000.
 
 ### 1. Installiert den shadcn-Skill
 
@@ -10,7 +10,7 @@ Ihr arbeitet in eurem `bookmonkey`-Repository mit Node.js 26. Die `bookmonkey-ap
 npx skills add shadcn-ui/ui@shadcn -y
 ```
 
-Die Ausgabe zeigt Sicherheitsbewertungen. Im Projekt liegen danach der Ordner `.agents/skills/shadcn`, ein Symlink `.claude/skills/shadcn` und die Datei `skills-lock.json`. Öffnet die `SKILL.md` und lest die ersten Zeilen: Dort steht, wofür der Skill gedacht ist.
+Die Ausgabe zeigt Sicherheitsbewertungen. Ein Skill ist Text, dem Claude folgt, schaut deshalb kurz darauf. Im Projekt liegen danach der Ordner `.agents/skills/shadcn`, ein Symlink `.claude/skills/shadcn` und die Datei `skills-lock.json`. Öffnet die `SKILL.md` und lest die ersten Zeilen: Dort steht, wofür der Skill gedacht ist.
 
 ### 2. Baut die Katalogseite, ohne den Skill zu erwähnen
 
@@ -28,7 +28,7 @@ Schaut im Verlauf, ob Claude den Skill geladen hat. In unserem Lauf war `Skill s
 Nenne drei Stellen in der Katalogseite, die du wegen des Skills so gebaut hast. Ändere nichts.
 ```
 
-In unserem Lauf nannte Claude die Regeln aus dem Skill: vollständiger Aufbau der Karte (`CardHeader`, `CardDescription`, `CardFooter`), `Badge` für den Preis, nur semantische Farben. Ohne Skill lief dieselbe Aufgabe bei uns auch durch, aber die Karte war anders aufgebaut: Das Cover stand in `CardContent` und der Preis im `CardHeader`.
+In unserem Lauf nannte Claude die Regeln aus dem Skill: vollständiger Aufbau der Karte (`CardHeader`, `CardDescription`, `CardFooter`), `Badge` für den Preis, nur semantische Farben.
 
 ### 4. Ruft den Skill ausdrücklich auf
 
@@ -36,13 +36,19 @@ In unserem Lauf nannte Claude die Regeln aus dem Skill: vollständiger Aufbau de
 Nutze den shadcn-Skill, um dem Katalog einen Skeleton-Ladezustand und einen leeren Zustand hinzuzufügen.
 ```
 
-Claude lädt den Skill wieder, holt sich `skeleton` und `empty` mit der shadcn-CLI und baut beide Zustände mit diesen Komponenten, nicht mit selbstgebauten `div`s. In der `SKILL.md` steht `user-invocable: false`: Ihr nennt den Skill deshalb im Prompt, statt `/shadcn` zu tippen.
+Claude holt sich `skeleton` und `empty` mit der shadcn-CLI und baut beide Zustände mit diesen Komponenten, nicht mit selbstgebauten `div`s. In der `SKILL.md` steht `user-invocable: false`: Ihr nennt den Skill deshalb im Prompt, statt `/shadcn` zu tippen.
 
 ### 5. Gebt selbst eine Aufgabe mit dem Skill
 
 Formuliert einen eigenen Prompt, der den Skill nennt und die Seite um ein Suchfeld erweitert, das die Bücher nach Titel filtert. Ein Satz reicht, zum Beispiel: „Nutze den shadcn-Skill und baue über dem Raster ein Suchfeld ein, das die Bücher nach Titel filtert.“ Prüft die Seite danach im Browser.
 
-### 6. Was gerade passiert ist
+### 6. Committet euren Stand
+
+```text
+Committe alle Änderungen aus dieser Aufgabe. Lies vorher den Diff.
+```
+
+### Was gerade passiert ist
 
 Ein Skill ist ein Ordner mit einer `SKILL.md`. Claude sieht zuerst nur **Name und Beschreibung**. Passt eure Aufgabe zur Beschreibung, lädt Claude die ganze Anleitung. So bleibt der Kontext schlank.
 
@@ -53,7 +59,7 @@ Ein Skill ist ein Ordner mit einer `SKILL.md`. Claude sieht zuerst nur **Name un
 
 Gut für einen Skill ist Wissen, das sich schnell ändert, wie die shadcn-CLI. Ein Skill ist Text, dem Claude folgt. Lest ihn deshalb vor der Installation und achtet darauf, wer ihn veröffentlicht.
 
-**Fertig, wenn** `/books` die Bücher als Karten mit Cover, Titel, Autor und Preis zeigt, der Skill in `.claude/skills/shadcn` liegt und ihr in zwei Läufen gesehen habt, dass Claude ihn lädt.
+**Fertig, wenn** `/books` die Bücher als Karten mit Cover, Titel, Autor und Preis zeigt, der Skill in `.claude/skills/shadcn` liegt und ihr im Verlauf gesehen habt, dass Claude ihn geladen hat.
 
 <details>
 <summary>Mehr dazu</summary>

@@ -5,10 +5,12 @@ Work in your `bookmonkey` repository with Node.js 26. The API (`npx bookmonkey-a
 ### 1. Build the sign-in
 
 ```text
-Build sign-in, sign-up and sign-out against the bookmonkey-api (POST /login and POST /register). The token goes into a signed http-only cookie set on the server, not into localStorage. A guard in proxy.ts redirects the area under /library to /login. Keep it small, check with npm run build.
+Build sign-in, sign-up and sign-out against the bookmonkey-api (POST /login and POST /register). The token goes into a signed http-only cookie set on the server, not into localStorage. If .env.local has no SESSION_SECRET, generate one and add it there, and without a value to .env.example. A guard in proxy.ts redirects the area under /library to /login. Keep it small, check with npm run build.
 ```
 
-Start the app with `npm run dev`, open http://localhost:3000/library and sign in. Without signing in you land on `/login`.
+The cookie stores the sign-in so that JavaScript in the browser cannot read it. The guard sends everyone who is not signed in to `/login`.
+
+Stop any dev server that is still running and start the app with `npm run dev`, so it reads the new `.env.local`. Open http://localhost:3000/library: without signing in you land on `/login`. Sign in there.
 
 ### 2. Let Claude create a reviewer
 
@@ -20,12 +22,12 @@ Then open the new file `.claude/agents/security-reviewer.md`. In our runs, `tool
 
 ### 3. Start a new session
 
-A new session loads the reviewer. In our runs it was not known yet in the session where the file was created.
+A new session makes sure the reviewer is loaded.
 
 ### 4. Call the reviewer
 
 ```text
-@agent-security-reviewer Review the sign-in. List the findings by severity with file and line, and say for each whether the fix belongs in the frontend or the backend.
+@agent-security-reviewer Review the sign-in. List the findings by severity with file and line, and say for each whether the spot is in our code or in the bookmonkey-api, which we cannot change.
 ```
 
 Claude starts the subagent, the reviewer reads the files and your conversation stays small. At the end there is a list of findings. The details differ from run to run.
@@ -33,6 +35,12 @@ Claude starts the subagent, the reviewer reads the files and your conversation s
 ### 5. Judge the findings yourself
 
 Pick one finding that seems plausible to you and one you think is exaggerated. Tell Claude in your own words what you want to do with each: fix it, do it later or reject it. You write the prompt yourself.
+
+### 6. Commit your state
+
+```text
+Commit all changes from this task. Read the diff first.
+```
 
 ### What just happened
 

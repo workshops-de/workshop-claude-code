@@ -14,7 +14,7 @@ Claude reads and checks, shows a plan and creates no project files. Look at the 
 
 ### 2. Correct the plan
 
-Read the plan closely. In our run it contained things we did not want: a `src` folder, an environment variable with a different name, a login page with a cookie check. Send:
+Read the plan closely. In our run it contained things we did not want: a `src` folder, an environment variable with a different name, a login page with a cookie check. The correction sets what later tasks need. If the app offers to approve the plan, do not do that yet and type your change into the input field. Send:
 
 ```text
 Change the plan: no src folder, the pages live directly in app/. The environment variable is called NEXT_PUBLIC_API_URL. The protected area is for now just a page /library with a short heading, without login and without a cookie. I will add sign-in myself later. Show me the new plan, do not change anything yet.
@@ -28,7 +28,7 @@ Find something in the new plan that you want differently and write the correctio
 
 ### 4. Approve the plan
 
-Now you trust the plan. Switch the mode back so Claude may change files, and send:
+Now you trust the plan. Approve it if the app offers that, or switch the mode from Plan to Auto so Claude may change files. Then send:
 
 ```text
 The plan is fine. Implement it and run npm run build at the end to check that everything works.
@@ -50,7 +50,7 @@ Open the address in the browser: five book titles appear. Under `/library` you s
 Make the first commit. Read the changes first and write a fitting commit message.
 ```
 
-Claude commits the project including `.env.example`; `.env.local` stays out.
+Check in the commit summary that `.env.local` is not included. In our run a `.env.example` was included.
 
 ### What just happened
 

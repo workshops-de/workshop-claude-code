@@ -1,6 +1,6 @@
 This task is about the **context window**: everything Claude reads in a session stays in it and takes up space. You fill it on purpose, **compact** it, and then restart with a **new session**.
 
-You work in your `bookmonkey-legacy` clone (Node.js 24). If the project has no `CLAUDE.md` yet, type `/init` in a session.
+You work in your `bookmonkey-legacy` clone (Node.js 24). If the project has no `CLAUDE.md` yet, type `/init` in a session. Then start a new session.
 
 ### 1. Ask a question you can check later
 
@@ -38,11 +38,11 @@ Compare with step 1. In our runs the answer stayed correct, the session was just
 /compact Keep the renewal rules for loans and the files they are in.
 ```
 
-Claude summarizes the conversation and continues with the summary. Afterwards ask about something that only existed in the conversation, for example: `How many files under api/test did you read earlier?` Check the answer with `ls api/test`. In one run Claude gave a wrong number before and the right one afterwards; this may differ for you. So you see what the summary keeps, and you must verify details.
+Claude summarizes the conversation and continues with the summary. Afterwards ask about something that only existed in the conversation, for example: `How many files under api/test did you read earlier?` Check the answer with `ls api/test`. In our run the number was no longer in the summary and Claude worked it out again. Details from the conversation can be gone after compacting, so verify them.
 
 ### 5. Restart
 
-Start a **new session** for a task that has nothing to do with the old one:
+Start a **new session** and ask something new:
 
 ```text
 Briefly explain the routing of the web app.
@@ -52,7 +52,7 @@ The new session begins without the old reading material.
 
 ### 6. Keep the reading out of your session
 
-Write a prompt yourself: Claude should go through all migration files in `api/migrations` and give you one line per file, without the full content landing in your session.
+Claude can start a **subagent** that reads in its own context and returns only the result. Write a prompt yourself: a subagent should go through all files in `api/migrations` and give you one line per file.
 
 ### What just happened
 

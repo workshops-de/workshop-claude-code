@@ -1,8 +1,7 @@
 <details>
-<summary>💡 Tipp 1: Betrachtet /context als Tankanzeige</summary>
+<summary>💡 Tipp 1: Große Dateien kosten am meisten</summary>
 
-Schaut nach jedem großen Lesevorgang hinein, nicht erst, wenn etwas anfängt zu kippen. Eine einzige
-große Datei oder ein langes Log kann mehr kosten als alle eure Fragen zusammen.
+Eine einzige große Datei oder ein langes Log kann mehr kosten als alle eure Fragen zusammen. Lasst Claude nur lesen, was die Aufgabe braucht.
 
 </details>
 
