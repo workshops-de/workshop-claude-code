@@ -1,34 +1,28 @@
 <details>
 <summary>💡 Tipp 1: Testet, was ist, nicht, was sein sollte</summary>
 
-Ein Characterisation-Test hält die heutige Ausgabe fest, auch wenn sie seltsam aussieht. Wenn ihr
-beim Schreiben des Tests den erwarteten Wert „korrigiert“, könnt ihr nicht mehr erkennen, ob das
-Refactoring das Verhalten geändert hat. Notiert die Auffälligkeit und haltet den Test ehrlich.
+Ein Characterisation-Test hält die heutige Ausgabe fest, auch wenn sie seltsam aussieht. Wenn ihr beim Schreiben des Tests den erwarteten Wert „korrigiert“, könnt ihr nicht mehr erkennen, ob das Refactoring das Verhalten geändert hat. Notiert die Auffälligkeit und haltet den Test ehrlich.
 
 </details>
 
 <details>
-<summary>💡 Tipp 2: Das Inventar ist die eigentliche Arbeit</summary>
+<summary>💡 Tipp 2: Gleiches Verhalten schließt die Fehlerpfade ein</summary>
 
-Lasst euch das Inventar zweimal auf unterschiedliche Weise geben: einmal durch Durchsuchen des
-Codes, einmal durch Verfolgen der Daten (woher kommt dieser Wert, wohin geht er als Nächstes?).
-Die Stellen, die nur eine der beiden Methoden findet, sind die, die später kaputtgehen.
+„Verhält sich wie zuvor“ umfasst mehr als den Happy Path. Die Tests sollen auch Anfragen ohne Login und fehlerhafte Eingaben festhalten, nicht nur die, die gelingen.
 
 </details>
 
 <details>
-<summary>💡 Tipp 3: Gleiches Verhalten schließt die Fehlerpfade ein</summary>
+<summary>💡 Tipp 3: Claude will nebenbei aufräumen?</summary>
 
-„Verhält sich wie zuvor“ umfasst mehr als den Happy Path. Deckt auch die Fehlerpfade des Codes ab,
-den ihr anfasst, nicht nur die Requests, die gelingen.
+Sagt es klar: Verhalten bleibt, Auffälligkeiten kommen nur in eine Liste. Ein Fix im selben Diff wie das Verschieben macht beides unlesbar.
 
 </details>
 
 <details>
-<summary>💡 Tipp 4: Lasst manchmal die IDE gewinnen</summary>
+<summary>💡 Tipp 4: Ein Test ist rot</summary>
 
-„Dieses Symbol überall umbenennen“ und „diese Methode extrahieren“ gehen in der IDE meist
-schneller. Spart euch den Agenten für die Teile auf, die Lesen und Urteilsvermögen brauchen.
+Haltet an und entscheidet: Hat der Schritt das Verhalten geändert, dann macht ihn rückgängig (`git restore .` für ungespeicherte Änderungen). Hat der Test etwas Falsches festgehalten, korrigiert den Test in einem eigenen Commit.
 
 </details>
 

@@ -54,6 +54,12 @@ The new session begins without the old reading material.
 
 Claude can start a **subagent** that reads in its own context and returns only the result. Write a prompt yourself: a subagent should go through all files in `api/migrations` and give you one line per file.
 
+For example:
+
+```text
+Start a subagent that reads all files in api/migrations. Give me one line per file with name and purpose.
+```
+
 ### What just happened
 
 | Lever | When |

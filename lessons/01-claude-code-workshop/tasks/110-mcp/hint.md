@@ -1,23 +1,13 @@
 <details>
-<summary>💡 Hint 1: Confirm the tools appear first</summary>
+<summary>💡 Hint 1: Confirm the server is connected first</summary>
 
-After adding a server, check `/mcp` before asking the agent to use it. A server that failed to
-start looks exactly like "the agent ignores my instructions".
-
-</details>
-
-<details>
-<summary>💡 Hint 2: Keep the client boundary small</summary>
-
-If the agent turns the whole card or page into a client component just to catch an image error,
-push back. Only the piece that needs the browser should run in the browser.
+After adding the server, run `claude mcp list` in the terminal before asking Claude to use the browser. A server that failed to start looks exactly like "Claude ignores my instructions". You also need a new session after adding it.
 
 </details>
 
 <details>
-<summary>💡 Hint 3: Ask for observations, not a verdict</summary>
+<summary>💡 Hint 2: Ask for observations, not a verdict</summary>
 
-"Report the title on page 2's first card and where the 'next in series' link leads" gives you
-something checkable. "Does it work?" gives you a yes.
+"Report the title on page 2's first card and where the 'next in series' link leads" gives you something checkable. "Does it work?" gives you a yes.
 
 </details>

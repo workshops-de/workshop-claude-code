@@ -1,106 +1,84 @@
-## Überblick
+In dieser Aufgabe geht es um **Test-Driven Development (TDD) mit einem Agenten**: Erst kommen die Tests, dann der Code, und die Tests sagen Claude, wann es fertig ist. Ihr schreibt Tests für das Verhalten der fertigen API und baut damit ein eigenes NestJS-Backend.
 
-Übt **Test-Driven Development** mit einem Agenten und nutzt Tests als eingebautes „Fertig“-Signal.
-Ihr haltet das Verhalten der fertigen API in Contract-Tests fest, startet dann euer **eigenes
-Backend** und treibt es Test für Test voran, bis es sich genauso verhält.
+Ihr arbeitet in eurem `bookmonkey`-Repository mit Node.js 26. Die API läuft in einem Terminal mit `npx bookmonkey-api` unter http://localhost:4730. Sie bleibt die ganze Aufgabe an.
 
-## Das Feature
+### 1. Lasst Claude die Tests schreiben
 
-Agenten schreiben gute Tests und können sie selbst ausführen. Damit sind Tests die
-zuverlässigste Feedbackschleife, die ihnen zur Verfügung steht. Aber TDD machen sie nur dann
-zuverlässig, wenn ihr es ausdrücklich verlangt:
+```text
+Nutze TDD. Richte ein Package contract-tests/ ein (Vitest, fetch), das die Basis-URL aus der Umgebungsvariable API_URL liest. Schreibe Tests für GET /books/:isbn (200 mit Buchstruktur, 404 bei unbekannter ISBN) und POST /books (201 mit vom Server gesetzten id, createdAt und updatedAt, 409 bei doppelter ISBN, 400 bei fehlendem Titel). Jeder Test nutzt eine eigene ISBN und löscht sein Buch danach wieder mit DELETE. Schließe contract-tests/ in der Root-tsconfig.json aus. Lege in der Root-package.json das Skript "contract" an: cd contract-tests && npx vitest run. Schreibe noch keine Implementierung und führe die Tests noch nicht aus.
+```
 
-- **Sagt es und trennt die Phasen**: „Use TDD. Schreibe zuerst fehlschlagende Tests für X. Schreibe
-  noch keine Implementierung.“ Prüft die Tests, führt sie aus, seht sie fehlschlagen; erst dann
-  bittet ihr um die Implementierung.
-- **Lasst den Agenten Randfälle suchen**, bevor er implementiert: Er soll sie aufzählen, dann
-  ergänzt ihr die, die er übersehen hat.
-- **Schützt die Tests**: Sagt dem Agenten, dass er Tests nicht ändern darf, um sie grün zu machen.
-  Ein `PreToolUse`-Hook aus der Hooks-Aufgabe kann das für euren Test-Ordner erzwingen. Er sollte
-  nur Änderungen an **bestehenden** Testdateien blockieren, damit ihr weiter neue anlegen könnt
-  (die Test-Suite erweitert ihr in der Aufgabe zu autonomen Workflows).
-- **Ein Gate-Befehl** (Type-Check, Lint, Build, Tests), den der Agent selbstständig ausführen kann
-  und der in der `CLAUDE.md` steht, damit jede Session weiß, was „fertig“ bedeutet.
+Es entstehen nur Tests. Sie heißen **Contract-Tests**, weil sie festhalten, wie die API sich verhält.
 
-## Anwendung auf BookMonkey
+### 2. Prüft die Tests gegen die echte API
 
-> **Repo / Ports:** euer `bookmonkey`-Repository (Node.js 26), Next.js-App auf
-> http://localhost:3000, `npx bookmonkey-api` auf http://localhost:4730, euer NestJS-Backend auf
-> http://localhost:3001
->
-> **Login:** Demo-User `admin@bookmonkey.api` / `password1!`
+```text
+Installiere, was für contract-tests/ fehlt, und führe die Tests mit API_URL=http://localhost:4730 npm run contract gegen die laufende bookmonkey-api aus. Wenn ein Test fehlschlägt, ist der Test falsch und nicht die API: Prüfe mit curl, was die API wirklich antwortet, und korrigiere den Test.
+```
 
-Bisher spricht euer Frontend mit der fertigen `bookmonkey-api`. Jetzt ersetzt ihr sie Schritt für
-Schritt durch ein eigenes **NestJS**-Backend, ohne das Frontend kaputt zu machen. Das Sicherheitsnetz
-ist eine **Contract-Test-Suite**, die nur über HTTP spricht und ihre Basis-URL aus `API_URL` liest:
+Ein Test, der schon gegen die echte API rot ist, beschreibt einen Wunsch und keinen Vertrag. In unserem Lauf war einer rot, weil Claude etwas über die Antwort angenommen hatte, das die API so nicht liefert. Am Ende sind alle grün.
 
-- Läuft sie gegen `http://localhost:4730`, dokumentiert die Suite, wie sich die Referenz-API
-  verhält. Schlägt dort ein Test fehl, ist der Test falsch, nicht die API.
-- Läuft sie gegen euer Backend, zeigt dieselbe Suite dem Agenten genau, was noch fehlt.
+### 3. Ergänzt Randfälle
 
-`docs/openapi.json` aus der Rules-Aufgabe ist der Vertrag, den beide Seiten teilen.
+Randfälle sind ungewöhnliche Eingaben, an die man nicht sofort denkt. Ihr schreibt den Prompt selbst: Claude soll aufzählen, was in den Tests fehlt, die wichtigsten Fälle ergänzen und sie gegen die API auf Port 4730 prüfen.
 
-## Voraussetzungen
+Zum Beispiel:
 
-- Die `bookmonkey-api` läuft auf Port 4730; `docs/openapi.json` ist committet.
-- Die NestJS-CLI ist über `npx @nestjs/cli` verfügbar (keine globale Installation nötig).
-- Optionale Skills, falls ihr Prisma + SQLite für die Persistenz wählt:
-  `npx skills add prisma/skills@prisma-cli -y` und `npx skills add prisma/skills@prisma-database-setup -y`.
+```text
+Welche Randfälle fehlen in den Contract-Tests für GET /books/:isbn und POST /books? Zähle sie kurz auf, ergänze die wichtigsten als Tests und führe die Suite gegen http://localhost:4730 aus. Schlägt ein neuer Test fehl, korrigiere den Test, nicht die API.
+```
 
-## Schritte
+### 4. Legt das Backend an
 
-1. Bittet den Agenten, ein Package `contract-tests/` einzurichten (Vitest + `fetch` oder
-   `supertest` gegen eine URL), das `API_URL` liest. Weist ihn an, **TDD** zu nutzen: Tests für
-   `GET /books/:isbn` (200 mit der Buchstruktur, 404 bei unbekannter ISBN) und `POST /books` (201,
-   vom Server gesetzte `id` / `createdAt` / `updatedAt`, **409 bei doppelter ISBN**, 400 bei
-   fehlendem Titel) schreiben, nirgends eine Implementierung. Legt ein Root-Skript an, damit ein
-   Befehl die Suite ausführt (die Aufgabe zu autonomen Workflows setzt darauf auf):
-   `"contract": "cd contract-tests && npx vitest run"` in der Root-`package.json`, verwendet als
-   `API_URL=http://localhost:4730 npm run contract` (PowerShell:
-   `$env:API_URL="http://localhost:4730"; npm run contract`).
-2. Prüft die Tests, bittet den Agenten, weitere **Randfälle** aufzuzählen, und ergänzt die, die er
-   übersehen hat. Führt die Suite gegen die Referenz-API aus: Alles muss grün sein. Korrigiert die
-   Tests, nie die API.
-3. Richtet das Backend im Plan Mode ein:
-   `npx @nestjs/cli new backend --package-manager npm --skip-git` (ohne die Flags wartet die CLI auf
-   eine Abfrage zum Paketmanager und legt ein verschachteltes Git-Repository an), mit einem
-   Books-Modul und einer Persistenz-Entscheidung, die ihr begründen könnt (SQLite über Prisma ist
-   ein guter Standard). Nutzt eine Wegwerf-Testdatenbank, nie eure Entwicklungsdaten. NestJS 12
-   erzeugt **ESM mit Vitest und oxlint**; ältere Tutorials mit Jest und CommonJS passen nicht. Der
-   „Hello World“-E2E-Test für die Beispielroute `GET /` wird rot, sobald ihr die Beispielroute
-   entfernt: Löscht oder passt ihn an.
-   Bevor ihr das Backend zum ersten Mal ändert, **beschränkt das Frontend-Tooling auf das
-   Frontend**: Fügt `"exclude": ["node_modules", "backend", "contract-tests"]` in die
-   Root-`tsconfig.json` ein und ignoriert beide Ordner in der Root-`eslint.config.mjs`. Sonst lässt
-   der Type-Check-Hook aus der Hooks-Aufgabe das Root-`tsc` über die neuen Packages laufen und
-   scheitert (`TS1241`, `TS2582 Cannot find name 'describe'`).
-4. Führt die Contract-Suite gegen euer Backend aus (`API_URL=http://localhost:3001`) und seht sie
-   fehlschlagen. Lasst den Agenten dann **gerade genug** implementieren, damit die Tests aus
-   Schritt 1 grün werden, und sagt ihm, dass er die Tests nicht anfassen darf.
-5. Bindet die **Quality Gates** (Type-Check, Lint, Build, Unit-Tests, Contract-Tests) in einen
-   Befehl ein und haltet ihn in der `CLAUDE.md` fest.
-6. Reflektiert: Wie hat eine lauffähige, fehlschlagende Test-Suite das Verhalten des Agenten
-   verändert, verglichen mit einer Anfrage in Textform?
+Startet eine neue Session und schickt:
 
-## Erfolgskriterien
+```text
+Lege mit npx @nestjs/cli new backend --package-manager npm --skip-git ein NestJS-Backend in backend/ an. Es soll auf Port 3001 laufen, wenn die Umgebungsvariable PORT nicht gesetzt ist. Entferne die Beispielroute samt ihrem Test, es gibt noch keine Books-Endpunkte. Schließe backend/ und contract-tests/ in der Root-tsconfig.json und in der Root-eslint.config.mjs vom Frontend-Tooling aus. Starte das Backend noch nicht.
+```
 
-**Feature**
+Der Type-Check-Hook aus der Hooks-Aufgabe läuft im Hauptprojekt bei jeder Änderung. `backend/` und `contract-tests/` haben ihre eigene Einstellung, deshalb schließt ihr sie dort aus. Startet das Backend danach in einem zweiten Terminal mit `cd backend && npm run start:dev`.
 
-- [ ] Die Tests wurden geschrieben und geprüft, bevor es irgendeine Backend-Implementierung gab
-- [ ] Ihr habt mindestens einen Randfall ergänzt, an den der Agent nicht gedacht hat
-- [ ] Der Agent hat gegen fehlschlagende Tests implementiert, ohne sie zu ändern
-- [ ] Ein einzelner Befehl führt alle Quality Gates aus und steht in der `CLAUDE.md`
+### 5. Seht die Tests rot
 
-**App funktioniert weiterhin**
+Führt im Root-Ordner `API_URL=http://localhost:3001 npm run contract` aus (PowerShell: `$env:API_URL="http://localhost:3001"; npm run contract`). In unserem Lauf schlugen 14 von 17 Tests fehl, denn das Backend kennt noch keine Books.
 
-- [ ] Die Contract-Suite ist grün gegen die Referenz-API auf Port 4730
-- [ ] Dieselbe Suite ist für `GET /books/:isbn` und `POST /books` gegen euer NestJS-Backend grün
-- [ ] Das Frontend läuft unverändert weiter gegen die Referenz-API
+### 6. Lasst Claude gerade genug implementieren
 
-## Referenzen
+Startet eine neue Session und schickt:
 
-- Claude Code: Common workflows (testing): https://code.claude.com/docs/en/common-workflows
-- Claude Code: Best practices: https://code.claude.com/docs/en/best-practices
-- NestJS: First steps: https://docs.nestjs.com/first-steps
-- Vitest: Getting started: https://vitest.dev/guide/
-- Consumer-driven contracts (Martin Fowler): https://martinfowler.com/articles/consumerDrivenContracts.html
+```text
+Das Backend in backend/ läuft im Watch-Modus unter http://localhost:3001. Implementiere ein Books-Modul gerade so weit, dass die Contract-Tests in contract-tests/ grün werden, die Daten liegen im Speicher. Die Tests brauchen auch DELETE /books/:isbn zum Aufräumen. Ändere nichts in contract-tests/, wenn ein Test rot bleibt, sag mir warum. Prüfe mit API_URL=http://localhost:3001 npm run contract.
+```
+
+Claude implementiert und führt die Suite selbst aus, bis sie grün ist.
+
+### 7. Baut einen Gate-Befehl
+
+Ein **Gate** ist ein einzelner Befehl, der alle Prüfungen ausführt. Claude kann ihn selbst starten und weiß so, was „fertig“ heißt.
+
+```text
+Lege in der Root-package.json ein Skript "gate" an, das nacheinander Type-Check, Lint, Build, die vorhandenen Tests und die Contract-Tests gegen das Backend ausführt (API_URL standardmäßig http://localhost:3001) und beim ersten Fehler abbricht. Trage in die CLAUDE.md ein, dass vor jedem "fertig" npm run gate grün sein muss und dass dafür die bookmonkey-api (Port 4730) und das Backend laufen müssen. Führe das Gate einmal aus.
+```
+
+### 8. Committet euren Stand
+
+```text
+Committe alle Änderungen aus dieser Aufgabe. Lies vorher den Diff.
+```
+
+### Was gerade passiert ist
+
+Eine laufende, fehlschlagende Test-Suite zeigt Claude genauer als ein Text, was fehlt, und wann es fertig ist. Dafür wurden die Tests **zuerst gegen die Realität** geprüft, und Claude durfte sie nicht ändern. Das Gate braucht die laufende API und das laufende Backend.
+
+**Fertig, wenn** `npm run contract` gegen Port 4730 und gegen euer Backend auf Port 3001 grün ist, `npm run gate` in der `CLAUDE.md` steht und alles committet ist.
+
+<details>
+<summary>Mehr dazu</summary>
+
+Mit `curl -X POST http://localhost:4730/dev/reset` stellt ihr die Daten der API wieder her. Einen Hook, der bestehende Testdateien schützt, zeigt der Bonus.
+
+- Common workflows: https://code.claude.com/docs/en/common-workflows
+- NestJS: https://docs.nestjs.com/first-steps
+- Vitest: https://vitest.dev/guide/
+
+</details>

@@ -1,114 +1,93 @@
-## Overview
+This task is about **refactoring with a safety net**: you change the structure of code without changing its behaviour. The net is **characterisation tests**, tests that record what the code does today, even when it looks odd. You work in your `bookmonkey-legacy` clone (Node.js 24 or newer). The tests run without a server.
 
-Use Claude Code for a refactor that a real team would hesitate to start: large, spread across many
-files, in code you did not write. You pin down today's behaviour with tests first, plan the change
-in plan mode, let the agent do the heavy lifting, and prove that nothing changed that should not
-have. Refactoring with an agent is about **intent backed by a safety net**.
+### 1. Create a branch
 
-## The Feature
+In the desktop app, open the terminal in the project folder:
 
-Agents excel at refactors that need understanding and judgement: restructuring a tangled module,
-applying one pattern across many call sites, finding every place that does the same thing a little
-differently. They are _not_ the fastest tool for mechanical edits your IDE does instantly (rename a
-symbol, extract a method).
+```bash
+git switch -c refactor/split-routes
+```
 
-- **Characterisation tests first.** Before you change structure, ask Claude to write tests that
-  record what the code does _today_, right or wrong, through the public interface (HTTP endpoints,
-  exported functions). They must pass before and after the refactor.
-- **Plan mode for the change** (`claude --permission-mode plan` or `Shift+Tab`): get an inventory
-  of every affected place, a step order that keeps the tests green after each step, and a list of
-  risks. Push back before any file changes.
-- **Small verified steps.** Let Claude run the tests after every step and commit when green, so a
-  wrong turn costs one step, not the afternoon. Read each step with `/diff`; `/rewind` and git
-  are your undo. `/rewind` does not bring back files that only Bash changed (an `mv`): use git there.
-- **Code intelligence (optional).** A language-server plugin gives Claude go-to-definition and
-  find-references instead of grep (see the bonus).
+Everything else happens on this branch, so `main` stays untouched.
 
-## Apply it to BookMonkey Legacy
+### 2. Map the ground
 
-> **Repo / ports:** your `bookmonkey-legacy` clone (Node.js 24 or newer), API on
-> http://localhost:4780, web app on http://localhost:5180
->
-> **Login:** admin `admin@bookmonkey.example` / `admin2021`
+Start a new session and set the mode to Plan. Claude then only reads and changes nothing.
 
-The practice ground is your [`bookmonkey-legacy`](https://github.com/andrekovac/bookmonkey-legacy)
-clone. The product owner has two requests on the board. Pick **one**:
+```text
+We want to split api/routes.js by resource, the way api/routes/ has already started. Do not change anything yet. Show me a table of every endpoint of the resources books, reviews and cart, with file and line.
+```
 
-- **(a) "Prices must be consistent everywhere."** Every place that shows, sums, stores, or exports
-  a price goes through one pricing path. The customer sees the same price for the same book on
-  every screen, in the cart, at checkout, and in exports. How prices are represented is yours to
-  decide in plan mode.
-  **In this task:** pick three places where a price shows up and cover those. The rest is a bonus
-  if you have time left.
-- **(b) "Split the big v1 routes file by resource, without changing behaviour."** `api/routes.js`
-  becomes one file per resource, following the pattern that `api/routes/` already started. Every
-  endpoint answers exactly as before: same status codes, same bodies, same access rules.
-  **In this task:** move two resources first, for example books and cart. The rest can follow the
-  same pattern later.
+You get a table of all endpoints. The order in the file is part of the behaviour. Note anything Claude reports as odd. You do not change it in this task.
 
-Your team allows it? Then you may refactor a part of **your own codebase** instead, with the same
-steps: characterisation tests, plan, small verified steps.
+### 3. Write the characterisation tests
 
-Nobody finishes a real refactor in an hour. **A clean partial step with green tests counts as
-success**: it is exactly the state a real team would merge and continue tomorrow.
+Start a new session in Auto mode.
 
-## Prerequisites
+```text
+Write characterisation tests for every endpoint in api/routes.js whose path starts with /books, /reviews or /cart. The tests record what the code does today, even if it looks odd: status code and response shape, also for errors, with and without login, as a normal user and as admin. Use the existing node:test setup in api/test/ and do not change production code. Then run npm test and report briefly.
+```
 
-- The `bookmonkey-legacy` clone with `npm install` and `npm run db:reset` done, and your
-  `CLAUDE.md` from the CLAUDE.md task
-- A branch for the work: `git switch -c refactor/prices` or `git switch -c refactor/split-routes`
+In our run this produced one new test file with 58 tests, all green. Then ask Claude to commit the tests. Only now do you have a net.
 
-## Steps
+### 4. Have a plan written
 
-1. **Map the territory** in plan mode. For (a): every place that computes, shows, sums, stores,
-   or exports a price, in the API and in the web app. For (b): every endpoint in `api/routes.js`,
-   grouped by resource, with the middleware that applies to it. Ask for file and line for each.
-2. **Write characterisation tests** for what you are about to touch, using the existing
-   `node:test` setup in `api/test/` (run with `npm test`). For (a): what the three places you picked
-   show today for a few books. For (b): status code
-   and response shape of each endpoint of the two resources you move first, including the error
-   cases. Commit the tests while they are green.
-3. **Plan the refactor.** Ask for a plan with steps that each keep `npm test` green, then challenge
-   it at least once (a step that's too big, a place it missed, a behaviour it wants to "fix" on the
-   way). Edit the plan with `Ctrl+G` if needed.
-4. **Execute step by step.** Approve the plan, let Claude run the tests after each step, run
-   `/diff` to read what the step changed, and commit after each green step. If a test fails, stop
-   and decide: refactoring mistake, or did the test capture something wrong? On a wrong turn, use
-   `/rewind` (or `Esc` twice) to go back to the last good checkpoint instead of patching forward.
-5. **Verify** beyond the tests: read the full diff (`git diff main --stat`, then the files), start
-   both dev servers, and check a few pages in the browser. For (a), compare the price of the same
-   book on the list, the detail page, and in the export. For (b), click through the pages that use
-   the two resources you moved.
-6. Now try a deliberately **mechanical** change (rename a helper, move a function) once with
-   Claude and once with your IDE, and notice which is faster.
-7. Reflect: where did the agent's understanding pay off, and where did the tests catch it?
+Start a new session in Plan mode.
 
-## Success Criteria
+```text
+Plan the split of api/routes.js. Every endpoint whose path starts with /books, /reviews or /cart should move into its own files in api/routes/, following the pattern of the existing files there. The behaviour must not change. Give me small steps, each one leaving npm test green. Do not change anything yet.
+```
 
-**Feature**
+### 5. Push back on the plan
 
-- [ ] Characterisation tests existed and passed **before** the first structural change
-- [ ] The refactor was planned in plan mode, and the plan changed at least once because you pushed
-      back
-- [ ] The work landed as several small commits, each with green tests, and you read `/diff`
-      after each step
-- [ ] You used `/rewind` (or a `git` reset) at least once, or can say when you would
-- [ ] You identified at least one mechanical change that was faster in the IDE
+Read the plan and write yourself what should be better, in the same session. The plan is a proposal, and now is the cheapest time to correct it. For example:
 
-**App still works**
+```text
+The plan is too coarse. Do not change the order of routes, and anything that looks odd stays as it is and only goes on a list. Split the steps so that each step creates exactly one new file, and afterwards npm test is green and a commit is possible.
+```
 
-- [ ] `npm test` passes, including your new tests
-- [ ] For (a): one book shows the same price on the list, the detail page, and in the export
-      (cart and checkout too, if you did the bonus); for (b): the two resources you moved live in
-      their own files, and their endpoints behave as before
-- [ ] If you stopped early, the last commit is a clean partial step with green tests
-- [ ] Behaviour that looked wrong but was not part of the request is written down, not silently
-      changed
+The plan comes back in smaller steps. Route order is part of the behaviour, so it stays the same.
 
-## References
+### 6. Carry out the plan
 
-- Claude Code: Common workflows (refactor code): https://code.claude.com/docs/en/common-workflows
-- Claude Code: Best practices: https://code.claude.com/docs/en/best-practices
-- Claude Code: Checkpointing (`/rewind`): https://code.claude.com/docs/en/checkpointing
-- Michael Feathers: Characterization testing: https://michaelfeathers.silvrback.com/characterization-testing
-- Refactoring catalogue (Martin Fowler): https://refactoring.com/catalog/
+Set the mode to Auto and stay in the same session.
+
+```text
+Carry out the plan now, step by step. Run npm test after each step and commit when green. If it is red, stop and ask me.
+```
+
+In our run this produced six commits with new files in `api/routes/`, and `npm test` stayed green after each. If a test turns red, you decide: did the refactoring break something, or did the test record something wrong?
+
+### 7. Check the diff
+
+Start a new session so Claude reads without bias.
+
+```text
+Read the diff of this branch against main (git diff main). Was anything about behaviour changed besides the moving, including the order of routes? Name every deviation with file, or say clearly that you found none.
+```
+
+Check the answer yourself: `git log --oneline` shows the commits, and `npm test` must be green.
+
+### 8. Return to main
+
+```bash
+git switch main
+```
+
+The later tasks start from `main`. Your branch is kept.
+
+### What just happened
+
+The tests were written before the structure changed, so every green run means the behaviour stayed the same. Plan mode broke the work into steps you could correct beforehand. A refactoring that also changes behaviour is no longer a refactoring. What looked odd therefore belongs on a list, not in the diff.
+
+**Done when** `refactor/split-routes` has several commits with the tests and the new files in `api/routes/`, `npm test` is green there, and you are back on `main`.
+
+<details>
+<summary>More</summary>
+
+- Renaming a single symbol or extracting a method is usually faster in the IDE than with an agent. The agent pays off where reading and judgement are needed.
+- Code intelligence: with a language server plugin Claude can, according to the docs, jump to definitions and find references instead of searching. This task does not use LSP or such a plugin: [Code intelligence plugins](https://code.claude.com/docs/en/plugins/code-intelligence)
+- Undo: [Checkpointing](https://code.claude.com/docs/en/checkpointing) and git. Refactoring patterns: [Fowler, Refactoring catalog](https://refactoring.com/catalog/)
+- Characterization testing: [Michael Feathers](https://michaelfeathers.silvrback.com/characterization-testing)
+
+</details>

@@ -1,43 +1,89 @@
-## Overview
+This task is about **LLM gateways**: a gateway is a server that Claude Code sends its requests to instead of talking directly to Anthropic. You build a small gateway to try things out, look at what Claude Code sends to it, and derive a recommendation for your company.
 
-Explore running Claude Code against models and endpoints **other than the default Anthropic API** —
-through enterprise providers and LLM gateways — and weigh the benefits, limitations, and
-trade-offs.
+Work in a new, empty folder `gateway-test` (for example `mkdir gateway-test && cd gateway-test`), opened in the desktop app, with Node.js 22 or newer. You need no account and no API key.
 
-> This is primarily an investigation-and-discussion task; you do not need a production gateway to
-> complete it.
+### 1. Let Claude write a test gateway
 
-## Background
+Start a new session and send:
 
-Claude Code talks to an Anthropic-compatible API. You can route that traffic elsewhere: enterprise
-providers like Amazon Bedrock, Google Vertex AI, and Microsoft Foundry run Claude under your cloud
-account; an **LLM gateway** sits between Claude Code and the provider, set via
-`ANTHROPIC_BASE_URL`. Gateways centralize authentication, track and cap spend, and log
-interactions — but you are still running Claude behind a compatible surface, not arbitrary
-third-party or local models with full feature parity.
+```text
+Write mock-gateway.js: a Node script without dependencies that imitates an Anthropic-compatible endpoint on port 3420. It answers POST /v1/messages as a stream in the format of the Anthropic Messages API with the fixed text 'Hallo vom Mock-Gateway.' For every request it prints one line to the terminal: path, requested model, number of tools, whether it streams, and which header carried the authentication (only the name of the header, never the value).
+```
 
-## Steps
+Claude creates `mock-gateway.js`. It always answers with the same sentence, there is no real model behind it.
 
-1. Map the routes: list the ways to change where Claude Code sends requests and what each
-   requires.
-2. Read how an LLM gateway is configured and summarize what it provides an organization.
-3. Identify the **limitation** clearly: why isn't this the same as plugging in any
-   OpenAI-compatible or local model with full feature parity?
-4. Evaluate **benefits, limitations, and trade-offs** for a concrete constraint (for example, "we
-   must keep all traffic inside our cloud account and track per-team spend").
-5. Write a short recommendation for that constraint, citing the relevant configuration.
-6. Optionally, if you have access, set `ANTHROPIC_BASE_URL` against a sanctioned gateway and
-   confirm a session connects.
+### 2. Start the gateway
 
-## Success Criteria
+In the desktop app, open a terminal in the project folder and run:
 
-- [ ] You listed the main routing options (enterprise providers vs. gateway) and what each requires
-- [ ] You can explain the core limitation of "alternative models" in Claude Code
-- [ ] You wrote a short, concrete recommendation for a given organizational constraint
+```bash
+node mock-gateway.js
+```
 
-## References
+Leave it open, it will show every request in a moment.
 
-- Claude Code — LLM gateway configuration: https://code.claude.com/docs/en/llm-gateway
-- Claude Code — Amazon Bedrock: https://code.claude.com/docs/en/amazon-bedrock
-- Claude Code — Google Vertex AI: https://code.claude.com/docs/en/google-vertex-ai
-- Claude Code — Enterprise deployment overview: https://code.claude.com/docs/en/third-party-integrations
+### 3. Send a request through the gateway
+
+Open a second terminal in the same folder. `ANTHROPIC_BASE_URL` tells Claude Code where to send its requests, `ANTHROPIC_AUTH_TOKEN` is a made-up token here. On Windows use Git Bash:
+
+```bash
+ANTHROPIC_BASE_URL=http://localhost:3420 ANTHROPIC_AUTH_TOKEN=test-token claude -p "Sag Hallo"
+```
+
+The answer is your fixed sentence, not a real Claude. The first terminal shows lines with `/v1/messages`. In our run there were three: one request with 13 tools and two small ones without tools.
+
+### 4. Change the model name
+
+The same line, with a model name that does not exist:
+
+```bash
+ANTHROPIC_BASE_URL=http://localhost:3420 ANTHROPIC_AUTH_TOKEN=test-token ANTHROPIC_MODEL=firma-modell-1 claude -p "Sag Hallo"
+```
+
+The gateway terminal now shows `firma-modell-1`. In our run Claude Code reported that it does not know the model and carried on anyway. This is how a company sets which model names its gateway offers.
+
+### 5. Write it yourself: the gateway keeps a log
+
+A gateway can write requests down for audits. Stop it with Ctrl+C, tell Claude in your own words that every request should go into a file, restart the gateway, and repeat step 3 with a different prompt.
+
+For example:
+
+```text
+Extend mock-gateway.js: for every request with stream=true, the gateway appends a line to audit.log with the time and the text of the last user message.
+```
+
+Open `audit.log`. In our run the line was about 19 KB long: before the prompt came the content of our own CLAUDE.md files. Claude Code sends your prompt together with context, and the gateway sees everything in plain text.
+
+### 6. Write it yourself: a recommendation from the docs
+
+Formulate a constraint like one from your company and have Claude read the docs for it. Ask for the docs page behind every statement so you can check.
+
+For example:
+
+```text
+Unsere Rahmenbedingung: Aller Verkehr muss in unserem eigenen AWS-Account bleiben, und wir wollen die Kosten pro Team sehen. Lies https://code.claude.com/docs/en/llm-gateway und https://code.claude.com/docs/en/amazon-bedrock und empfiehl uns eine Routing-Option mit den Umgebungsvariablen, die wir dafür setzen. Nenne bei jeder Aussage die Docs-Seite, auf der sie steht.
+```
+
+In our run Claude separated what the docs say from its own knowledge and asked us to check the latter. Check two variable names yourself on the page it names.
+
+### 7. Clean up
+
+Stop the gateway with Ctrl+C and delete `audit.log`, the file contains your prompts and configuration files.
+
+### What just happened
+
+A gateway sees every request completely. That is why it can handle authentication, cost and audit in one place, and why your company has to trust it like the model provider. With a gateway you only change the route to Claude. According to the docs, Anthropic does not support routing Claude Code to non-Claude models.
+
+**Done when** you have seen requests with the model name in the gateway terminal, `audit.log` contained your prompt, and you have a recommendation in which two variable names appear on the docs page named.
+
+<details>
+<summary>More</summary>
+
+Everything here is according to the docs, not tried by us, because it needs a provider account.
+
+- The desktop app does not read `ANTHROPIC_BASE_URL`, it has its own configuration for third-party inference. That is why this test uses the terminal: [Connect Claude Code to an LLM gateway](https://code.claude.com/docs/en/llm-gateway-connect)
+- A gateway offers credentials, usage tracking per developer or team, cost limits and audit logs: [LLM gateway](https://code.claude.com/docs/en/llm-gateway)
+- Bedrock, Vertex AI and Foundry are routes straight into your cloud account without your own gateway: [Amazon Bedrock](https://code.claude.com/docs/en/amazon-bedrock), [Google Vertex AI](https://code.claude.com/docs/en/google-vertex-ai), [Overview](https://code.claude.com/docs/en/third-party-integrations)
+- Data protection: for Team, Enterprise, API and third-party providers, Anthropic does not train on code and prompts according to the docs. Metrics, error reports and `/feedback` are off by default on Bedrock, Vertex and Foundry, and `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` switches off side traffic. Whether that meets your requirements is for your data protection office: [Data usage](https://code.claude.com/docs/en/data-usage)
+
+</details>

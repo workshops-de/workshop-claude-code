@@ -1,8 +1,8 @@
 <details>
 <summary>💡 Hint 1: No human means no prompts</summary>
 
-Always pass `--allowedTools` or a suitable `--permission-mode`, or the run aborts when it hits an
-action it can't auto-approve.
+In scripts, pass `--allowedTools` or a suitable `--permission-mode`. Otherwise anything that needs
+approval is refused.
 
 </details>
 
@@ -14,8 +14,8 @@ Piping the diff avoids granting Bash permission just to read it.
 </details>
 
 <details>
-<summary>💡 Hint 3: JSON output tracks cost too</summary>
+<summary>💡 Hint 3: No result in the script?</summary>
 
-`--output-format json` includes `total_cost_usd`, so scripts can track spend per invocation.
+Print the full JSON answer once without `jq`. The result that follows the schema is in the `structured_output` field.
 
 </details>

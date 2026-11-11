@@ -19,6 +19,6 @@ backend.
 <summary>💡 Hint 3: A finding is a claim, not a verdict</summary>
 
 Check each finding against the code and against the running API. "The guard can be bypassed" is
-only a real finding if you can show what an attacker gets — try it.
+only a real finding if you can show what an attacker gets, try it.
 
 </details>

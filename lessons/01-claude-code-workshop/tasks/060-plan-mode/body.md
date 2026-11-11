@@ -26,6 +26,12 @@ Claude shows a new plan that takes over your points. The folder is still empty.
 
 Find something in the new plan that you want differently and write the correction yourself. Later tasks build on this, so make sure you reach this: the two route groups are called `(public)` and `(app)`, and the function for the API lives in `lib/api.ts`. Also say that Claude should not change anything yet.
 
+For example:
+
+```text
+The two route groups should be called (public) and (app), and the function for the API should live in lib/api.ts. Show me the new plan, do not change anything yet.
+```
+
 ### 4. Approve the plan
 
 Now you trust the plan. Approve it if the app offers that, or switch the mode from Plan to Auto so Claude may change files. Then send:

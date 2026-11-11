@@ -1,40 +1,79 @@
-## Overview
+This task is about the **BMAD Method**. It gives you skills that take an idea through fixed steps (brief, requirements, architecture, build), and each step has its own named role. You build a small, new packing-list app.
 
-Experience the **BMAD Method** — a team of specialized agent personas running a facilitated agile
-workflow — by taking a brief from idea to a working application. This contrasts both with ad-hoc
-prompting and with the spec-centric Spec Kit flow.
+You work in a **new, empty folder** with Node.js 22 or newer. No server needs to run.
 
-## Background
+### 1. Install BMAD
 
-BMAD ("Breakthrough Method for Agile AI-Driven Development") provides specialized agents
-(analyst, product manager, architect, developer, UX designer) plus facilitated workflows that
-adapt planning depth to project complexity. A "party mode" brings several personas into one session
-to resolve trade-offs. Build a **new, small application** here. Suggested brief: a reusable
-packing-list app (templates, trips generated from templates, check-off progress).
+Create the folder, open it in the desktop app and open the terminal there:
 
-## Steps
+```text
+git init
+npx bmad-method@6.12.4 install
+```
 
-1. Install BMAD (`npx bmad-method install`, Version 6.12) and choose Claude Code as the tool;
-   confirm the agents and workflows are available.
-2. Produce a short **product brief** using the analyst/PM persona.
-3. Have the **product manager** persona turn the brief into a product requirements document.
-4. Have the **architect** persona choose a stack and produce an architecture and key decisions.
-5. Break the work into **stories**, then run the **developer** persona's dev loop — reviewing
-   diffs and running the app as it builds.
-6. Do a **QA** pass: run the skill `bmad-qa-generate-e2e-tests`, which generates automated API and
-   end-to-end tests for your features. Use **party mode** at least once to resolve a cross-cutting
-   trade-off.
-7. Use the method's **help** whenever you're unsure what comes next.
+In the installer choose **Claude Code** as the tool and the module **BMad Method**. Accept the defaults for the rest. Afterwards `.claude/skills` holds the BMAD skills and `_bmad` the configuration. Then start a new session in this folder so the skills are loaded.
 
-## Success Criteria
+### 2. Ask the help
 
-- [ ] BMAD is installed and configured for Claude Code
-- [ ] A brief, PRD, and architecture exist as artifacts from their respective personas
-- [ ] Stories were implemented via the developer persona's dev loop and the app runs
-- [ ] Party mode was used at least once for a cross-cutting decision
+```text
+/bmad-help I have a new idea: a packing-list app. What is the first step?
+```
 
-## References
+The help looks at the folder, sees that nothing exists yet, and recommends the next skill. In our run it was the brief, with the order brief, PRD, architecture, epics and stories, build.
 
-- BMAD Method — Repository & README: https://github.com/bmad-code-org/BMAD-METHOD
-- BMAD Method: Documentation (V6.12 branch): https://github.com/bmad-code-org/BMAD-METHOD/tree/V6.12
-- BMAD Method: docs site (V7, not for this task): https://docs.bmad-method.org/
+### 3. Write the product brief
+
+```text
+/bmad-product-brief A reusable packing-list app: templates, trips generated from templates, check-off progress. Runs locally in the browser.
+```
+
+The skill asks you questions, for example who uses the app and what it must do. Answer briefly in your own words, made-up answers are fine. If you do not know something, say "You decide". At the end a brief is in `_bmad-output/planning-artifacts/briefs/`.
+
+From here on we did not run the flow ourselves; the skills exist in version 6.12.4.
+
+### 4. Turn it into the PRD
+
+The PRD (product requirements document) states what the app must do. Start a new session for this step.
+
+```text
+/bmad-prd Create the PRD from the brief in _bmad-output/planning-artifacts/briefs/.
+```
+
+### 5. Decide the architecture
+
+Again a new session. The skill records the decisions that keep all parts of the app consistent later.
+
+```text
+/bmad-architecture Create the architecture for the PRD in _bmad-output/planning-artifacts/.
+```
+
+### 6. Plan and build yourself
+
+Ask `/bmad-help` what comes after the architecture and run the skills it names in that order, each in a new session. Then tell the developer (the role Amelia) what to build. You write the prompt yourself and want to reach: the first story is implemented and the app runs in the browser.
+
+For example:
+
+```text
+/bmad-build Implement the first story from the epics. Start the app with npm run dev on port 3440 and tell me what I can check in the browser.
+```
+
+### 7. Commit your state
+
+```text
+Committe alle Änderungen aus dieser Aufgabe. Lies vorher den Diff.
+```
+
+### What just happened
+
+BMAD consists of **skills**, each guiding one step and writing a document to `_bmad-output`. The next document builds on the previous one. That is why you may start new sessions between steps: the knowledge lives in the files. In the installation the roles are called Mary (analyst), John (product manager), Winston (architect) and Amelia (developer).
+
+**Done when** BMAD is installed, brief, PRD and architecture exist as files in `_bmad-output`, the first story is implemented and the app runs in the browser.
+
+<details>
+<summary>More</summary>
+
+The skills `bmad-party-mode` (several roles discuss a decision) and `bmad-qa-generate-e2e-tests` (generates API and end-to-end tests) also exist. Try them if time is left. With `--yes --tools claude-code --modules bmm` the installer runs without questions.
+
+[BMAD Method, version 6.12](https://github.com/bmad-code-org/BMAD-METHOD/tree/V6.12)
+
+</details>

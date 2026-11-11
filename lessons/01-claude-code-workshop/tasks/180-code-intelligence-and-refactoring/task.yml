@@ -1,5 +1,5 @@
 # Task Configuration
-title: 'Code Intelligence & Refactoring: Refactor a Legacy Codebase Behind a Safety Net'
+title: 'Refactoring Behind a Safety Net: Restructure a Legacy Codebase'
 position: 180
 category: 'Quality & Automation'
 preparation: false
@@ -18,4 +18,4 @@ always_unlocked: false
 
 translations:
   de:
-    title: 'Code Intelligence & Refactoring: Eine Legacy-Codebasis mit Sicherheitsnetz refaktorieren'
+    title: 'Refactoring mit Sicherheitsnetz: Eine Legacy-Codebasis umbauen'
