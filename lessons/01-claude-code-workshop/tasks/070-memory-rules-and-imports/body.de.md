@@ -64,7 +64,38 @@ Committe alle Änderungen aus dieser Aufgabe. Lies vorher den Diff.
 |---|---|---|
 | `CLAUDE.md` und Imports | bei jedem Start | Fakten, die immer gelten |
 | `.claude/rules/*.md` ohne `paths` | bei jedem Start | ein Thema pro Datei, z. B. die Fachsprache |
-| `.claude/rules/*.md` mit `paths` | wenn Claude eine passende Datei liest | Konventionen für einen Bereich |
+| `.claude/rules/*.md` mit `paths` | wenn Claude eine passende Datei liest, schreibt oder ändert | Konventionen für einen Bereich |
+
+`paths` ist ein Eintrag im Frontmatter ganz oben in der Regeldatei und nennt die Dateien, für die die Regel gilt. Fehlt er, lädt die Regel bei jedem Start, auch wenn ihr ihn nur vergessen habt. Eure Regeln aus dieser Aufgabe sehen ungefähr so aus.
+
+`.claude/rules/domain.md` hat kein `paths` und lädt bei jedem Start:
+
+```markdown
+# Fachsprache
+- Detail-Routen verlangen die ISBN, nicht die id.
+```
+
+`.claude/rules/api-client.md` hat `paths` und lädt erst, wenn Claude `lib/api.ts` liest, schreibt oder ändert:
+
+```markdown
+---
+paths:
+  - "lib/api.ts"
+---
+# API-Client
+- Fehlermeldungen beginnen mit "[api]".
+```
+
+So sah das in einem Lauf mit einer Regel für `lib/api*` aus:
+
+| Was in der Session passiert | Regel ohne `paths` | Regel mit `paths` |
+|---|---|---|
+| Die Session startet | geladen | nicht geladen |
+| Euer Prompt erwähnt `lib/api.ts`, Claude öffnet die Datei aber nicht | geladen | nicht geladen |
+| Claude liest `app/page.tsx` | geladen | nicht geladen |
+| Claude liest `lib/api.ts` oder schreibt eine neue Datei `lib/api-extra.ts` | geladen | geladen |
+
+Eure Fachsprache gehört deshalb in eine Regel ohne `paths`, denn sie zählt überall. Die Konventionen für den API-Client gehören in eine Regel mit `paths`, denn sie zählen nur in `lib/api.ts` und kosten bis dahin keinen Kontext.
 
 Imports ordnen euer Gedächtnis, sie sparen aber keinen Kontext: Alles, was beim Start geladen wird, kostet bei jedem Prompt. Darum importiert ihr eine kompakte Zusammenfassung und keine rohe `openapi.json`. Die vollständige Datei bleibt auf der Platte, Claude liest sie bei Bedarf.
 
@@ -75,7 +106,7 @@ Imports ordnen euer Gedächtnis, sie sparen aber keinen Kontext: Alles, was beim
 
 Eure `domain.md` enthält auch die Leseliste mit ihren Zuständen. Die baut ihr in der Hooks-Aufgabe. `docs/openapi.json` solltet ihr committen, denn sie dient später als Vertrag für ein eigenes Backend.
 
-Das `paths`-Feld steht als Frontmatter am Anfang der Regeldatei, zum Beispiel `paths: ["lib/api.ts"]`. Ob die geladenen Dateien in der Desktop-App sichtbar sind, haben wir nicht geprüft; wer nachsehen will, öffnet dort das Terminal, startet `claude` und tippt `/memory`.
+Ob die geladenen Dateien in der Desktop-App sichtbar sind, haben wir nicht geprüft; wer nachsehen will, öffnet dort das Terminal, startet `claude` und tippt `/memory`.
 
 - [Memory, rules and imports](https://code.claude.com/docs/en/memory)
 - [Path-specific rules](https://code.claude.com/docs/en/memory#path-specific-rules)
