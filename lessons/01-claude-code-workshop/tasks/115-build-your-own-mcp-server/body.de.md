@@ -1,3 +1,5 @@
+> **⚠️ Zuerst die API starten:** Öffnet ein **separates Terminalfenster** und startet dort `npx bookmonkey-api`. Lasst es während der ganzen Aufgabe offen, damit der Server lokal auf http://localhost:4730 läuft.
+
 In dieser Aufgabe baut Claude einen **eigenen MCP-Server**: ein kleines Programm, das Claude ein paar fertige Werkzeuge (Tools) für den BookMonkey-Katalog gibt. Dazu müsst ihr keinen Code selbst schreiben.
 
 Ihr arbeitet in eurem `bookmonkey`-Repository mit Node.js 26. Die API muss laufen: `npx bookmonkey-api` auf http://localhost:4730.

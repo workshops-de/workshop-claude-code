@@ -1,3 +1,5 @@
+> **⚠️ Zuerst die API starten:** Öffnet ein **separates Terminalfenster** und startet dort `npx bookmonkey-api`. Lasst es während der ganzen Aufgabe offen, damit der Server lokal auf http://localhost:4730 läuft.
+
 In dieser Aufgabe geht es um **Skills**: fertige Anleitungen für Claude, zum Beispiel für eine Library, die sich schnell ändert. Ihr installiert einen Skill für **shadcn/ui** und baut damit die Katalogseite von BookMonkey.
 
 Ihr arbeitet in eurem `bookmonkey`-Repository mit Node.js 26. Die `bookmonkey-api` muss auf http://localhost:4730 laufen. Startet in einem Terminal die App mit `npm run dev`, falls sie noch nicht läuft. Ihr findet sie unter http://localhost:3000.

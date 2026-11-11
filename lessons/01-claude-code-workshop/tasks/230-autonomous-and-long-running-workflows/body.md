@@ -1,3 +1,5 @@
+> **⚠️ Start the API first:** Open a **separate terminal window** and run `npx bookmonkey-api` there. Keep it open for the whole task, so the server runs locally on http://localhost:4730.
+
 This task is about **autonomous runs with `/goal`**: you give Claude a condition that can be checked, and Claude keeps working turn after turn until it holds. It finishes your NestJS backend against the contract tests, inside its own **worktree** (a second working folder with its own branch, so your main folder stays untouched).
 
 You work in your `bookmonkey` repository with Node.js 26. Start the API in one terminal with `npx bookmonkey-api` (http://localhost:4730) and the backend in a second one with `cd backend && npm run start:dev` (http://localhost:3001).

@@ -1,3 +1,5 @@
+> **⚠️ Start the API first:** Open a **separate terminal window** and run `npx bookmonkey-api` there. Keep it open for the whole task, so the server runs locally on http://localhost:4730.
+
 This task is about **rule files and imports**: you define the domain language and the API contract of BookMonkey once, so every new session knows them. You work in your `bookmonkey` repository with Node.js 26 and start the API with `npx bookmonkey-api` if it is not running yet.
 
 ### 1. Let Claude write down the domain language

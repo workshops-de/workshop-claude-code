@@ -1,3 +1,5 @@
+> **⚠️ Zuerst die API starten:** Öffnet ein **separates Terminalfenster** und startet dort `npx bookmonkey-api`. Lasst es während der ganzen Aufgabe offen, damit der Server lokal auf http://localhost:4730 läuft.
+
 In dieser Aufgabe geht es um **Hooks**. Ein Hook ist eine Regel, die Claude Code bei bestimmten Tool-Aufrufen selbst anwendet, auch wenn Claude nicht daran denkt. Ihr nutzt Hooks für alles, was **immer passieren muss**.
 
 Ihr arbeitet in eurem `bookmonkey`-Repository mit Node.js 26 und müsst nur Prompts schreiben. Für Schritt 7 braucht ihr zwei Server: `npx bookmonkey-api` (http://localhost:4730) und `npm run dev` (http://localhost:3000). Der Demo-User ist `admin@bookmonkey.api` mit `password1!`.

@@ -1,3 +1,5 @@
+> **⚠️ Start the API first:** Open a **separate terminal window** and run `npx bookmonkey-api` there. Keep it open for the whole task, so the server runs locally on http://localhost:4730.
+
 This task is about a **custom skill** (a guide that Claude loads on its own when it fits the job) and a **custom command** (a slash command that only you start). You build one page by hand, record how it was built, and let the next pages come from that.
 
 You work in your `bookmonkey` repository with Node.js 26. The API (`npx bookmonkey-api`) runs on http://localhost:4730, and you start the app with `npm run dev` on http://localhost:3000. The demo user is `admin@bookmonkey.api` with `password1!`.
