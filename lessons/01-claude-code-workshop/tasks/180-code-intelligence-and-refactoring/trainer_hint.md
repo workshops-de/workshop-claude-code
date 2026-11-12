@@ -61,7 +61,9 @@ failed with a `SyntaxError`. Have the group check `node -v` in a session before 
 unknown folder with a hook in `.claude/settings.local.json` triggered the app's "Trust this
 workspace?" prompt. The participants' own clone is already trusted.
 
-Not tested: `/rewind` (interactive only).
+`/rewind` (desktop app, test folder): "Restore code" brought back Edit and Write changes, even on an
+already committed file (afterwards an uncommitted change). Bash changes (`sed`, `echo`, `rm`) and the
+commit stayed. So it works for step 4, because Claude changes the file with Edit there.
 
 ## Time estimate
 

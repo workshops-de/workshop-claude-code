@@ -63,7 +63,9 @@ Tests und Hook mit einem `SyntaxError`. Lasst die Gruppe vor Schritt 3 in einer 
 prüfen. Ein neuer, unbekannter Ordner mit Hook in `.claude/settings.local.json` löste in der App
 die Abfrage „Trust this workspace?“ aus. Im eigenen Clone ist der Ordner schon vertraut.
 
-Nicht getestet: `/rewind` (nur interaktiv).
+`/rewind` (Desktop-App, Testordner): „Restore code“ holte Änderungen per Edit und Write zurück, auch an
+einer schon committeten Datei (danach eine uncommittete Änderung). Änderungen per Bash (`sed`, `echo`,
+`rm`) und der Commit blieben. Für Schritt 4 funktioniert es also, weil Claude dort mit Edit ändert.
 
 ## Zeitbedarf
 
