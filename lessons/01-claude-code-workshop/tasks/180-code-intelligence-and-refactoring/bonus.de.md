@@ -1,6 +1,6 @@
 ## Bonus: Das Refactoring in der Sandbox
 
-Im Modus Auto führt Claude Befehle ohne Nachfrage aus. Eine Sandbox begrenzt, worauf diese Befehle zugreifen dürfen (Aufgabe 030, Schritt 7). Hier seht ihr, was sie bei einem echten Projekt blockiert und wie ihr genau das eine freigebt. Macht den Bonus vor Schritt 10, solange der Stop-Hook noch eingetragen ist.
+Im Modus Auto führt Claude Befehle ohne Nachfrage aus. Eine Sandbox begrenzt, worauf diese Befehle zugreifen dürfen (Aufgabe 030, Schritt 7). Hier seht ihr, was sie bei einem echten Projekt blockiert und wie ihr genau das eine freigebt. Macht den Bonus vor Schritt 8, solange der Stop-Hook noch eingetragen ist.
 
 1. **Sandbox nur für dieses Repo einschalten.** Das geht in der Desktop-App und im Terminal gleich, über die Datei aus Schritt 5:
 

@@ -1,6 +1,6 @@
 ## Bonus: the refactoring in the sandbox
 
-In Auto mode Claude runs commands without asking. A sandbox limits what those commands may access (task 030, step 7). Here you see what it blocks in a real project and how to allow exactly that one thing. Do the bonus before step 10, while the Stop hook is still in place.
+In Auto mode Claude runs commands without asking. A sandbox limits what those commands may access (task 030, step 7). Here you see what it blocks in a real project and how to allow exactly that one thing. Do the bonus before step 8, while the Stop hook is still in place.
 
 1. **Turn the sandbox on for this repo only.** This works the same in the desktop app and in the terminal, through the file from step 5:
 

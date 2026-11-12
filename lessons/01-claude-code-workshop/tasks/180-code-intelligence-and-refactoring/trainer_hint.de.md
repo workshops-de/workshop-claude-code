@@ -23,13 +23,13 @@
 - Schritt 5 knüpft an Aufgabe 120 an: Dort hat Claude Hooks gebaut, hier bekommen die
   Teilnehmenden einen fertigen. Grund: Als wir Claude den Stop-Hook selbst bauen ließen, legte es
   eine Debug-Datei in `/tmp` an und baute keinen Schutz gegen Endlosschleifen ein. Der vorgegebene
-  Hook lässt den zweiten Stopp durch (`stop_hook_active`), damit Claude in Schritt 8 bei Rot noch
+  Hook lässt den zweiten Stopp durch (`stop_hook_active`), damit Claude in Schritt 7 bei Rot noch
   fragen kann.
 - `.claude/settings.local.json` ist im Repo nicht in `.gitignore`. Achtet darauf, dass niemand die
-  Datei committet, und dass in Schritt 10 alle den Hook wieder entfernen. Sonst läuft `npm test` in
+  Datei committet, und dass in Schritt 8 alle den Hook wieder entfernen. Sonst läuft `npm test` in
   den späteren Aufgaben bei jedem Ende, auch in der Debugging-Aufgabe.
-- `/rewind` (oder zweimal `Esc`) in Schritt 4 einmal live zeigen: Die Teilnehmenden nutzen es erst,
-  nachdem sie es einmal gesehen haben. Wer lieber git nutzt: `git restore api/routes.js`.
+- Die Aufgabe nimmt mit `git restore` zurück. Optional `/rewind` (oder zweimal `Esc`) in Schritt 4
+  einmal live zeigen, als Alternative für Änderungen über Claudes Datei-Tools.
 - Die Liste der auffälligen Stellen nicht herausgeben. Das Inventar ist das Lernen. Die
   vollständige Liste und die Hinweise, was die Tests zutage fördern sollten, stehen im privaten
   Trainer-Repo (`bookmonkey-legacy-trainer`, `SOLUTIONS.md`).
@@ -60,7 +60,6 @@ die Sandbox-Einträge aus `.claude/settings.local.json` genauso liest wie die CL
 
 ## Zeitbedarf
 
-~75 Minuten: 10 Inventar, 15 Characterisation-Tests, 15 Netz prüfen und Hook, 25 Refactoring in
-Schritten, 10 Prüfen und Nachbesprechung. Wird es knapp, lasst Schritt 9 weg und sagt laut, dass ein
-sauberer Teilschritt mit grünen Tests als Erfolg gilt. Gruppen, die früher fertig sind, nehmen den
-Bonus vor Schritt 10.
+~70 Minuten: 10 Inventar, 15 Characterisation-Tests, 15 Netz prüfen und Hook, 25 Plan und
+Refactoring, 5 Nachbesprechung. Wird es knapp, sagt laut, dass ein sauberer Teilschritt mit grünen
+Tests als Erfolg gilt. Gruppen, die früher fertig sind, nehmen den Bonus vor Schritt 8.

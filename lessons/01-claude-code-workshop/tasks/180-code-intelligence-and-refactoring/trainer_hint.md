@@ -23,12 +23,12 @@
 - Step 5 builds on task 120: there Claude built hooks, here participants get a finished one.
   Reason: when we let Claude build the Stop hook itself, it wrote a debug file to `/tmp` and added
   no protection against endless loops. The given hook lets the second stop through
-  (`stop_hook_active`), so Claude can still ask when red in step 8.
+  (`stop_hook_active`), so Claude can still ask when red in step 7.
 - `.claude/settings.local.json` is not in the repo's `.gitignore`. Make sure nobody commits the
-  file and that everyone removes the hook in step 10. Otherwise `npm test` runs at every stop in
+  file and that everyone removes the hook in step 8. Otherwise `npm test` runs at every stop in
   later tasks, including the debugging task.
-- Show `/rewind` (or `Esc` twice) once live in step 4: participants only use it after they have
-  seen it once. Those who prefer git: `git restore api/routes.js`.
+- The task undoes with `git restore`. Optionally show `/rewind` (or `Esc` twice) once live in step 4
+  as the alternative that also works for uncommitted edits by Claude's file tools.
 - Do not hand out the list of odd places. The inventory is the learning. The complete list and the
   notes on what the tests should reveal are in the private trainer repo
   (`bookmonkey-legacy-trainer`, `SOLUTIONS.md`).
@@ -58,6 +58,6 @@ reads the sandbox entries from `.claude/settings.local.json` the same way as the
 
 ## Time estimate
 
-~75 minutes: 10 inventory, 15 characterisation tests, 15 testing the net and the hook, 25 refactor in
-steps, 10 verify and debrief. If time runs short, skip step 9 and say out loud that a clean partial
-step with green tests counts as success. Groups that finish early take the bonus before step 10.
+~70 minutes: 10 inventory, 15 characterisation tests, 15 testing the net and the hook, 25 plan and
+refactor, 5 debrief. If time runs short, say out loud that a clean partial step with green tests
+counts as success. Groups that finish early take the bonus before step 8.

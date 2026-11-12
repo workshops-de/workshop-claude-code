@@ -3,7 +3,7 @@ title: 'Refactoring Behind a Safety Net: Restructure a Legacy Codebase'
 position: 180
 category: 'Quality & Automation'
 preparation: false
-estimated_time_in_minutes: 75
+estimated_time_in_minutes: 70
 always_unlocked: false
 
 # No git integration fields: practice ground is the participant's bookmonkey-legacy clone.
