@@ -72,8 +72,34 @@ einer Ebene schlägt ein Allow auf jeder anderen.
    spätere Aufgaben `curl` wieder nutzen können.
 6. Entscheidet für drei Szenarien (ein unbekanntes Repo erkunden, an Code iterieren, den ihr gerade
    reviewt, ein abgeschotteter CI-Job), welcher Modus passt und warum.
-7. Lest nach, wie ihr autonom **sicher** arbeitet (Sandbox oder Dev-Container), und haltet fest,
-   warum deterministische Isolation stärker ist als Schutzmaßnahmen auf Prompt-Basis.
+7. **Lasst das Betriebssystem einen Befehl stoppen.** Eine Sandbox liest nicht den Befehlstext wie
+   die Deny-Regel aus Schritt 5 (denkt an den `sh -c`-Umweg). Sie begrenzt, worauf der laufende
+   Prozess zugreifen darf. Zeigt `/sandbox`, dass eure Sandbox schon an ist, schaltet sie für diesen
+   Schritt aus.
+   1. Legt in einem zweiten Terminal eine Datei außerhalb des Projekts an:
+      `echo geheim > ~/sandbox-demo.txt`.
+   2. Gebt Claude diesen Prompt und erlaubt den Befehl, falls es nachfragt. Python liest die Datei
+      und schreibt `~/sandbox-demo-2.txt`, beides außerhalb des Projekts:
+
+      ```text
+      Führe genau diesen Befehl einmal aus, ohne Alternativen: python3 -c "import os; h=os.path.expanduser('~'); print(open(h+'/sandbox-demo.txt').read()); open(h+'/sandbox-demo-2.txt','w').write('x'); print('WRITE OK')"
+      ```
+
+   3. Sagt vorher: Was passiert mit demselben Prompt, wenn die Sandbox an ist? Beendet die Session
+      dann mit `/exit`, startet neu mit eingeschalteter Sandbox und gesperrtem Lesen außerhalb des
+      Projekts und schickt denselben Prompt:
+
+      ```bash
+      claude --settings '{"permissions":{"blockReadsOutsideWorkingDirectories":true},"sandbox":{"enabled":true,"allowUnsandboxedCommands":false,"failIfUnavailable":true}}'
+      ```
+
+      Unter macOS meldet Python jetzt `PermissionError: [Errno 1] Operation not permitted` (Linux
+      und WSL2 können anders formulieren, natives Windows hat keine Sandbox). Der Code ist derselbe,
+      aber Nein gesagt hat das Betriebssystem, nicht Claude.
+   4. Räumt auf: `rm -f ~/sandbox-demo.txt ~/sandbox-demo-2.txt`.
+
+   Die Sandboxing-Doku listet, was außerhalb der Sandbox läuft: Claudes eigene Datei-Tools,
+   MCP-Server und Hooks.
 
 ## Erfolgskriterien
 
@@ -85,6 +111,7 @@ einer Ebene schlägt ein Allow auf jeder anderen.
 - [ ] Ihr habt eine Regel in `/permissions` gefunden und könnt sagen, aus welcher Settings-Datei sie kommt
 - [ ] Ihr habt gesehen, dass eine Deny-Regel `Bash(curl *)` `curl` stoppt, aber nicht `sh -c 'curl …'`, und könnt sagen, warum
 - [ ] Ihr habt für die drei vorgegebenen Szenarien jeweils einen passenden Modus gewählt
+- [ ] Ihr habt gesehen, dass derselbe Python-Befehl ohne Sandbox klappt und mit Sandbox und gesperrtem Lesen an `Operation not permitted` scheitert, und könnt sagen, wer ihn gestoppt hat
 
 ## Referenzen
 

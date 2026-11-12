@@ -29,10 +29,18 @@
 - This pairs directly with the "you push it, you own it" theme used throughout the workshop: call
   that connection out explicitly.
 - If you have the trainer's private demo hub, show its `/permissions` page before the exercise (4
-  minutes: "Who wins?", "A rule is not a fence", live demo). Let the group predict step 5 first:
+  minutes: "Who wins?", "What a deny rule does not cover", live demo). Let the group predict step 5 first:
   deny beats allow, in any order and any file.
 - If Claude takes a detour by itself after a blocked `curl` (a script, WebFetch), let it happen.
-  That is the lesson: a Bash rule matches command text, it is not a fence. Sandboxes are.
+  That is the lesson: a Bash rule only checks the command text, it does not lock anything. A
+  sandbox does, as step 7 shows.
+- Step 7 also works as a 5-minute trainer demo (hub: Permissions, card "How to keep Claude in the
+  project folder", fold "Demo"; the Day 4 run sheet links to it). Let the group predict the second run first. Tested on 12 Nov with
+  Claude Code 2.1.319 and Haiku 5.5 through `claude -p`: without the sandbox the command read and
+  wrote in the home folder; with only `sandbox.enabled` it could read but not write; with
+  `blockReadsOutsideWorkingDirectories` as well, the read failed too. Not tested in an interactive
+  auto mode session: if the classifier blocks the first run, switch to Manual and confirm the
+  prompt.
 - Check that everyone deleted both `curl` rules at the end of step 5; a leftover deny rule breaks
   later tasks.
 - A good live moment: deliberately test whether a stated boundary survives a `/compact`. In short
@@ -40,4 +48,4 @@
 
 ## Time estimate
 
-~40 minutes, less if the group already cycled modes during the install task.
+~45 minutes, less if the group already cycled modes during the install task.

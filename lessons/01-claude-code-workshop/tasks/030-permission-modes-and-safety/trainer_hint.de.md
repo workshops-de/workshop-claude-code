@@ -31,11 +31,18 @@
 - Das passt direkt zum Motto „You push it, you own it“, das sich durch den ganzen Workshop zieht:
   benennt diesen Zusammenhang ausdrücklich.
 - Falls ihr den privaten Demo-Hub des Trainers habt, zeigt vor der Übung dessen Seite `/permissions`
-  (4 Minuten: „Wer gewinnt?“, „Eine Regel ist kein Zaun“, Live-Demo). Lasst die Gruppe Schritt 5
+  (4 Minuten: „Wer gewinnt?“, „Was eine Deny-Regel nicht abdeckt“, Live-Demo). Lasst die Gruppe Schritt 5
   erst vorhersagen: Deny schlägt Allow, in jeder Reihenfolge und in jeder Datei.
 - Nimmt Claude nach einem geblockten `curl` von selbst einen Umweg (ein Skript, WebFetch), haltet es
-  nicht auf. Genau das ist die Lehre: Eine Bash-Regel passt auf den Befehlstext, sie ist kein Zaun.
-  Das leisten Sandboxes.
+  nicht auf. Genau das ist die Lehre: Eine Bash-Regel prüft nur den Befehlstext, sie sperrt nichts
+  ab. Das leistet eine Sandbox, wie Schritt 7 zeigt.
+- Schritt 7 funktioniert auch als 5-Minuten-Demo des Trainers (Hub: Permissions, Karte „So bleibt
+  Claude im Projektordner“, Aufklapper „Demo“; der Ablauf von Tag 4 verlinkt ihn). Lasst die Gruppe den zweiten Lauf erst vorhersagen.
+  Getestet am 12. Nov mit Claude Code 2.1.319 und Haiku 5.5 über `claude -p`: Ohne Sandbox las und
+  schrieb der Befehl im Home-Ordner; mit nur `sandbox.enabled` konnte er lesen, aber nicht schreiben;
+  mit zusätzlich `blockReadsOutsideWorkingDirectories` scheiterte auch das Lesen. Nicht getestet in
+  einer interaktiven Auto-Mode-Session: Blockt der Klassifikator den ersten Lauf, wechselt zu Manual
+  und bestätigt die Nachfrage.
 - Prüft, dass alle am Ende von Schritt 5 beide `curl`-Regeln gelöscht haben; eine übrig gebliebene
   Deny-Regel stört spätere Aufgaben.
 - Ein guter Live-Moment: Testet bewusst, ob eine formulierte Grenze ein `/compact` überlebt. In
@@ -43,5 +50,5 @@
 
 ## Zeitbedarf
 
-~40 Minuten, weniger, wenn die Gruppe die Modi schon in der Installationsaufgabe durchgeschaltet
+~45 Minuten, weniger, wenn die Gruppe die Modi schon in der Installationsaufgabe durchgeschaltet
 hat.

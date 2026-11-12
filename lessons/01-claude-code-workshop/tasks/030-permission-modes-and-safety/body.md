@@ -66,8 +66,31 @@ beats an allow on any other.
    use `curl` again.
 6. Decide, for three scenarios (exploring an unfamiliar repo, iterating on code you're reviewing, a
    locked-down CI job), which mode fits and why.
-7. Read how to run autonomously **safely** (a sandbox or dev container) and note why deterministic
-   isolation is stronger than prompt-based safeguards.
+7. **Let the operating system stop a command.** A sandbox does not read the command text like the
+   deny rule in step 5 (remember the `sh -c` detour). It limits what the running process may touch.
+   If `/sandbox` shows that your sandbox is already on, turn it off for this step.
+   1. In a second terminal, create a file outside the project: `echo secret > ~/sandbox-demo.txt`.
+   2. Give Claude this prompt and allow the command if it asks. Python reads the file and writes
+      `~/sandbox-demo-2.txt`, both outside the project:
+
+      ```text
+      Run exactly this command once, no alternatives: python3 -c "import os; h=os.path.expanduser('~'); print(open(h+'/sandbox-demo.txt').read()); open(h+'/sandbox-demo-2.txt','w').write('x'); print('WRITE OK')"
+      ```
+
+   3. Predict: what happens to the same prompt with the sandbox on? Then leave with `/exit`, start
+      again with the sandbox on and reads outside the project blocked, and send the same prompt:
+
+      ```bash
+      claude --settings '{"permissions":{"blockReadsOutsideWorkingDirectories":true},"sandbox":{"enabled":true,"allowUnsandboxedCommands":false,"failIfUnavailable":true}}'
+      ```
+
+      On macOS, Python now reports `PermissionError: [Errno 1] Operation not permitted` (Linux and
+      WSL2 may word it differently, native Windows has no sandbox). The code is the same, but the
+      operating system said no, not Claude.
+   4. Clean up: `rm -f ~/sandbox-demo.txt ~/sandbox-demo-2.txt`.
+
+   The sandboxing page lists what stays outside the sandbox: Claude's own file tools, MCP servers
+   and hooks.
 
 ## Success Criteria
 
@@ -79,6 +102,7 @@ beats an allow on any other.
 - [ ] You found a rule in `/permissions` and can say which settings file it comes from
 - [ ] You saw a `Bash(curl *)` deny rule stop `curl` but not `sh -c 'curl …'`, and can say why
 - [ ] You picked an appropriate mode for each of the three given scenarios
+- [ ] You saw the same Python command work without the sandbox and fail with `Operation not permitted` with the sandbox and blocked reads, and can say who stopped it
 
 ## References
 

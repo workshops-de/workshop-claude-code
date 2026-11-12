@@ -3,7 +3,7 @@ title: 'Permission Modes: State a Boundary and Test the Modes'
 position: 30
 category: 'Foundations'
 preparation: false
-estimated_time_in_minutes: 40
+estimated_time_in_minutes: 45
 always_unlocked: false
 
 # No git integration: there is no prepared repository or solution branch.
