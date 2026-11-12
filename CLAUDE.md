@@ -125,7 +125,9 @@ other file changes needed for the numbering itself.
   server, a task that needs none says so instead (`> **✅ No server needed:** …` /
   `> **✅ Kein Server nötig:** …`). The intro below the box does not repeat the server commands.
   Tasks before the first server use (010 to 050) get no box. When a step changes which servers a
-  task needs, update the box too.
+  task needs, update the box too. A horizontal rule (`---`) follows the box, so it reads as setup
+  and not as part of the task (the platform shows quotes without a frame, trainer's request
+  2026-11-12).
 - Hints: 2–4 collapsible `<details>` blocks, each nudging without giving away the solution.
 - Trainer notes: learning goals, facilitation notes (common pitfalls, timing, what to watch for),
   time estimate.

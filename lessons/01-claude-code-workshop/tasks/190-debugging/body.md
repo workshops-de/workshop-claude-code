@@ -3,6 +3,8 @@
 > - Web app: `npm run dev:web` (http://localhost:5180)
 > - Before that, if you are unsure whether the data is fresh: `npm run db:reset`
 
+---
+
 This task is about **debugging with Claude**: you get a bug ticket from users and work your way to the cause with evidence instead of guesses. You work in your `bookmonkey-legacy` clone with Node.js 24 or newer.
 
 This is the ticket, and all you know:

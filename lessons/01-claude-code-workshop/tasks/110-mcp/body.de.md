@@ -2,6 +2,8 @@
 > - API: `npx bookmonkey-api` (http://localhost:4730)
 > - App: `npm run dev` (http://localhost:3000)
 
+---
+
 In dieser Aufgabe geht es um **MCP** (Model Context Protocol): Darüber bekommt Claude zusätzliche Werkzeuge, hier einen echten Browser. Damit prüft Claude nicht nur den Code, sondern sieht sich die BookMonkey-Seiten an, klickt durch und berichtet, was es gefunden hat.
 
 Ihr arbeitet in eurem `bookmonkey`-Repository mit Node.js 26.

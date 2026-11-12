@@ -2,6 +2,8 @@
 > - API: `npx bookmonkey-api` (http://localhost:4730)
 > - App: `npm run dev` (http://localhost:3000)
 
+---
+
 In dieser Aufgabe geht es um **Hooks**. Ein Hook ist eine Regel, die Claude Code bei bestimmten Tool-Aufrufen selbst anwendet, auch wenn Claude nicht daran denkt. Ihr nutzt Hooks für alles, was **immer passieren muss**.
 
 Ihr arbeitet in eurem `bookmonkey`-Repository mit Node.js 26 und müsst nur Prompts schreiben. Der Demo-User ist `admin@bookmonkey.api` mit `password1!`.

@@ -1,5 +1,7 @@
 > **⚠️ Stop first:** if the API is still running from the debugging task, stop it with Ctrl+C. You restart it in step 1.
 
+---
+
 In this task you review a colleague's pull request with **/code-review** and your own **security subagent**, a helper with its own context that may only read. Dana's branch `feature/admin-export-v2` adds a CSV export, the tests are green, and Dana is in a hurry.
 
 You work in your `bookmonkey-legacy` clone (Node.js 24 or newer). If `git status` is not clean, run `git stash` first.

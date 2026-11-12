@@ -1,6 +1,8 @@
 > **⚠️ Vorher starten:** jeweils in einem eigenen Terminal, während der ganzen Aufgabe offen lassen.
 > - API: `npx bookmonkey-api` (http://localhost:4730)
 
+---
+
 In dieser Aufgabe geht es um **Regeldateien und Imports**: Ihr legt die Fachsprache und den API-Vertrag von BookMonkey einmal fest, damit jede neue Session sie kennt. Ihr arbeitet in eurem `bookmonkey`-Repository mit Node.js 26.
 
 ### 1. Lasst Claude die Fachsprache aufschreiben

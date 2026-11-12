@@ -2,6 +2,8 @@
 > - API: `npx bookmonkey-api` (http://localhost:4730)
 > - App: `npm run dev` (http://localhost:3000)
 
+---
+
 This task is about a **custom skill** (a guide that Claude loads on its own when it fits the job) and a **custom command** (a slash command that only you start). You build one page by hand, record how it was built, and let the next pages come from that.
 
 You work in your `bookmonkey` repository with Node.js 26. The demo user is `admin@bookmonkey.api` with `password1!`.

@@ -1,6 +1,8 @@
 > **⚠️ Vorher starten:** jeweils in einem eigenen Terminal, während der ganzen Aufgabe offen lassen.
 > - API: `npx bookmonkey-api` (http://localhost:4730)
 
+---
+
 In dieser Aufgabe geht es um **Test-Driven Development (TDD) mit einem Agenten**: Erst kommen die Tests, dann der Code, und die Tests sagen Claude, wann es fertig ist. Ihr schreibt Tests für das Verhalten der fertigen API und baut damit ein eigenes NestJS-Backend.
 
 Ihr arbeitet in eurem `bookmonkey`-Repository mit Node.js 26.

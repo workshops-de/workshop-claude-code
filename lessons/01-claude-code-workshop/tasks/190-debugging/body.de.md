@@ -3,6 +3,8 @@
 > - Web-App: `npm run dev:web` (http://localhost:5180)
 > - Davor, falls ihr unsicher seid, ob die Daten frisch sind: `npm run db:reset`
 
+---
+
 In dieser Aufgabe geht es um **Debugging mit Claude**: Ihr bekommt ein Fehlerticket von Nutzern und arbeitet euch mit Belegen statt Vermutungen bis zur Ursache vor. Ihr arbeitet in eurem `bookmonkey-legacy`-Clone mit Node.js 24 oder neuer.
 
 Das ist das Ticket, mehr wisst ihr nicht:

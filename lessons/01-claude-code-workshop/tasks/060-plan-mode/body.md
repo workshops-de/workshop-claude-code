@@ -1,6 +1,8 @@
 > **⚠️ Start first:** each in its own terminal, keep it open for the whole task.
 > - API: `npx bookmonkey-api` (http://localhost:4730)
 
+---
+
 This task is about **Plan Mode**: Claude first proposes a plan and changes nothing, you correct the plan, and only then does it build.
 
 You work in a new, empty folder `bookmonkey` with Node.js 26 (for example `mkdir bookmonkey && cd bookmonkey && git init`). Open it in the desktop app and start a new session there.

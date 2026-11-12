@@ -2,6 +2,8 @@
 > - API: `npx bookmonkey-api` (http://localhost:4730)
 > - App: `npm run dev` (http://localhost:3000)
 
+---
+
 This task is about **subagents**. A subagent is a second Claude with its own context. It does a task apart from your conversation and hands back only the result. You build the sign-in for BookMonkey and let your own security reviewer check it.
 
 Work in your `bookmonkey` repository with Node.js 26. The demo user is `admin@bookmonkey.api` with `password1!`.

@@ -1,5 +1,7 @@
 > **✅ Kein Server nötig:** Für diese Aufgabe müsst ihr vorher nichts starten.
 
+---
+
 In dieser Aufgabe geht es um den **Headless-Modus**: Claude läuft ohne Chatfenster, ihr startet ihn mit `claude -p` in einem Terminal oder aus einem Skript und bekommt die Antwort als Text zurück. So baut ihr Claude in Skripte und später in Pipelines ein.
 
 Ihr arbeitet in eurem `bookmonkey-legacy`-Repository mit Node.js 24. Öffnet in der Desktop-App das Terminal. Alle Befehle mit `claude -p` tippt ihr dort ein. Unter Windows nehmt die Git Bash. Prüft mit `jq --version`, ob jq installiert ist, sonst `brew install jq` oder unter Windows `winget install jqlang.jq`.

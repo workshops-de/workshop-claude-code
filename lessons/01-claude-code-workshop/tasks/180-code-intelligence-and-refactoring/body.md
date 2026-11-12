@@ -1,5 +1,7 @@
 > **✅ No server needed:** you do not have to start anything before this task.
 
+---
+
 This task is about **refactoring with a safety net**: you change the structure of code without changing its behaviour. The net is **characterisation tests**, tests that record what the code does today, even when it looks odd. You work in your `bookmonkey-legacy` clone (Node.js 24 or newer).
 
 ### 1. Create a branch

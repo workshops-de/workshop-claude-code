@@ -1,5 +1,7 @@
 > **✅ Kein Server nötig:** Für diese Aufgabe müsst ihr vorher nichts starten.
 
+---
+
 In dieser Aufgabe geht es um ein **Refactoring mit Sicherheitsnetz**: Ihr baut die Struktur von Code um, ohne dass sich sein Verhalten ändert. Das Netz sind **Characterisation-Tests**, Tests, die festhalten, was der Code heute tut, auch wenn es seltsam aussieht. Ihr arbeitet in eurem `bookmonkey-legacy`-Clone (Node.js 24 oder neuer).
 
 ### 1. Legt einen Branch an

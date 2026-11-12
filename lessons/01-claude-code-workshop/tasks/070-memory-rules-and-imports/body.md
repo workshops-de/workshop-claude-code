@@ -1,6 +1,8 @@
 > **⚠️ Start first:** each in its own terminal, keep it open for the whole task.
 > - API: `npx bookmonkey-api` (http://localhost:4730)
 
+---
+
 This task is about **rule files and imports**: you define the domain language and the API contract of BookMonkey once, so every new session knows them. You work in your `bookmonkey` repository with Node.js 26.
 
 ### 1. Let Claude write down the domain language

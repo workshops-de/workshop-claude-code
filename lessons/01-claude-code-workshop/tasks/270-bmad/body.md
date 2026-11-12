@@ -1,5 +1,7 @@
 > **✅ No server needed:** you do not have to start anything before this task.
 
+---
+
 This task is about the **BMAD Method**. It gives you skills that take an idea through fixed steps (brief, requirements, architecture, build), and each step has its own named role. You build a small, new packing-list app.
 
 You work in a **new, empty folder** with Node.js 22 or newer.

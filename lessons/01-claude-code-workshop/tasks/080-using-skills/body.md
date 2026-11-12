@@ -2,6 +2,8 @@
 > - API: `npx bookmonkey-api` (http://localhost:4730)
 > - App: `npm run dev` (http://localhost:3000)
 
+---
+
 This task is about **skills**: ready-made instructions for Claude, for example for a library that changes quickly. You install a skill for **shadcn/ui** and use it to build the BookMonkey catalogue page.
 
 You work in your `bookmonkey` repository with Node.js 26.
