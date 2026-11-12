@@ -18,3 +18,10 @@ The hook has to give the errors back to Claude. Tell Claude that it should see t
 They run on every change. One type check is enough, the full test suite does not belong there.
 
 </details>
+
+<details>
+<summary>💡 Hint 4: After the rebuild the hook blocks everything?</summary>
+
+Then the hook script itself has a bug. Tell Claude what you see, for example: "Your hook blocks every command, fix it." Claude can still change the script with its file tools.
+
+</details>

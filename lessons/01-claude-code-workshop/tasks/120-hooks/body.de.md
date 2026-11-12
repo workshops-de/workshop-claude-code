@@ -8,96 +8,108 @@ In dieser Aufgabe geht es um **Hooks**. Ein Hook ist eine Regel, die Claude Code
 
 Ihr arbeitet in eurem `bookmonkey`-Repository mit Node.js 26 und müsst nur Prompts schreiben. Der Demo-User ist `admin@bookmonkey.api` mit `password1!`.
 
+Claudes Antworten sind bei jedem Lauf anders. Was unter „in unserem Lauf“ steht, ist ein Beispiel. Weicht etwas ab, sagt Claude, was ihr seht und was ihr stattdessen erwartet.
+
 ### 1. Schaut, was Claude ohne Hook darf
 
 Die Datei `.env.local` habt ihr schon: Sie enthält seit der Subagents-Aufgabe euren `SESSION_SECRET`, und Git ignoriert sie.
 
 ```text
-Lies die Datei .env.local und zeig mir den Inhalt.
+Was steht in meiner .env.local?
 ```
 
-Der Inhalt erscheint, auch Secrets.
+Der Inhalt erscheint, auch das Secret. So landet es im Verlauf der Session.
 
 ### 2. Lasst Claude einen Hook bauen
 
+Eine Zeile in der `CLAUDE.md` würde Claude nur bitten. Ein Hook läuft immer, auch wenn Claude es vergisst. Sagt Claude, was ihr wollt und warum. Wie der Hook gebaut wird, entscheidet Claude.
+
 ```text
-Richte einen Hook ein, damit du keine .env-Dateien mehr lesen oder ändern kannst. .env.example soll lesbar bleiben.
+Ich will nicht, dass du .env-Dateien liest oder änderst, auch nicht aus Versehen, denn darin stehen unsere Secrets. Sorg mit einem Hook dafür, dass das garantiert nicht passiert. .env.example darfst du weiter lesen, da steht nichts Geheimes drin.
 ```
 
 Startet eine neue Session, damit die Einstellung geladen wird, und stellt die Frage aus Schritt 1 noch einmal. Claude sollte sagen, dass ein **Hook** den Zugriff blockiert.
 
-### 3. Prüft, was Claude gebaut hat
+### 3. Lasst Claude den Hook testen
+
+Ein Hook, der zu viel blockiert, stört bei der Arbeit. Ein Hook mit Lücken gibt falsche Sicherheit. Lasst Claude das selbst prüfen, in derselben Session:
 
 ```text
-Führe genau diesen Befehl aus: git commit --allow-empty -m "docs: .env.local erwähnt"
+Teste deinen .env-Hook, bevor wir ihm vertrauen, aber ohne echte Secrets anzufassen: Gib dem Hook-Skript Beispielaufrufe und zeig mir für jeden, ob er blockiert. Dabei sein sollen: .env.local lesen, .env.example lesen, ein Commit, dessen Message .env.local nur erwähnt (soll durchgehen), und ein Commit, der den Inhalt der Datei mit $(cat .env.local) in die Message holt (soll blockiert sein). Führ die Befehle dabei nicht aus.
 ```
 
-Der Commit ist harmlos, wurde in unseren Läufen aber blockiert, weil der Hook auch den Befehlstext durchsucht. Passiert das bei euch, sagt Claude, was anders werden soll:
+Claude zeigt eine Tabelle. In unserem Lauf blockierte der Hook auch die harmlose Commit-Message, weil er nur nach dem Text `.env.local` sucht. Claude fand außerdem selbst Schreibweisen, die durchkommen (zum Beispiel `cat .e*.local`), und schlug eine Korrektur vor. Zeigt eure Tabelle auch einen Fehlalarm, sagt Claude, was anders werden soll:
 
 ```text
-Der Hook blockiert zu viel: Eine Commit-Message, die .env.local nur erwähnt, soll durchgehen. Dateizugriffe auf .env-Dateien sollen weiter blockiert sein.
+Der Hook blockiert zu viel: Eine Commit-Message, die .env.local nur erwähnt, soll durchgehen. Der Inhalt der Datei darf aber nie in einer Message landen. Bau das um und teste danach alle Fälle noch einmal.
 ```
 
-Wiederholt danach den Commit-Befehl und die Frage aus Schritt 1.
+Startet danach eine neue Session und stellt die Frage aus Schritt 1 noch einmal.
 
 ### 4. Lasst Claude einen zweiten Hook bauen
 
-Schreibt selbst einen Satz: Nach jedem `Edit` oder `Write` soll ein Typecheck laufen und Claude soll die Typfehler sehen. Zum Beispiel:
-
 ```text
-Richte einen zweiten Hook ein: Nach jedem Edit oder Write soll ein Typecheck laufen, und du sollst die Typfehler sehen und beheben.
+Immer wenn du eine Datei änderst, sollen die Typen sofort geprüft werden, nicht erst am Ende. Bau dafür einen zweiten Hook, der dir die Typfehler zurückmeldet, damit du sie gleich behebst.
 ```
+
+Meldet der Hook `PageProps` oder `LayoutProps`, fehlen die Next-Typen. In unserem Lauf hat Claude dafür selbst `next typegen` ausgeführt. Sonst bittet Claude darum.
 
 ### 5. Probiert den Typecheck-Hook aus
 
-Startet eine neue Session und baut einen absichtlichen Fehler ein:
+Startet eine neue Session:
 
 ```text
-Lege die Datei lib/typfehler-test.ts mit genau diesem Inhalt an: export const x: number = "text";
+Zeig mir, dass der Typecheck-Hook anschlägt: Bau absichtlich einen kleinen Typfehler in eine neue Testdatei, zeig mir, was der Hook dir meldet, und lösch die Datei danach wieder.
 ```
 
-Claude sollte `TS2322` nennen. Meldet es auch `PageProps` oder `LayoutProps`, führt `npx next typegen` aus. Räumt danach auf:
-
-```text
-Lösche die Datei lib/typfehler-test.ts wieder.
-```
+Claude zeigt die Meldung des Hooks, in unserem Lauf `error TS2322: Type 'string' is not assignable to type 'number'`.
 
 ### 6. Baut mit beiden Hooks die Leseliste
 
-Eine Leseliste hat Zustände (want to read, reading, finished). Eine State Machine legt fest, welche Wechsel zwischen den Zuständen erlaubt sind. Erst klärt ihr die Regeln mit Claude, dann baut es sie.
+Eine Leseliste hat Zustände (want to read, reading, finished). Eine State Machine legt fest, welche Wechsel zwischen den Zuständen erlaubt sind. Die Leseliste ist das Übungsfeld: Hier sollen beide Hooks bei echter Arbeit mitlaufen. Erst klärt ihr die Regeln mit Claude, dann baut es sie.
 
 ```text
-Wir bauen eine Leseliste. Übergänge: hinzufügen führt zu want to read, beginnen zu reading, abschließen zu finished, erneut beginnen zu reading, entfernen geht aus jedem Zustand. Wiederhole die zulässigen und die unzulässigen Übergänge, bevor du etwas schreibst.
+Wir bauen eine Leseliste. Ein Buch auf der Liste ist entweder "want to read", "reading" oder "finished". Hinzufügen führt zu want to read, beginnen zu reading, abschließen zu finished, und ein fertiges Buch kann man erneut beginnen. Entfernen geht immer. Bevor du loslegst: Erklär mir in eigenen Worten, welche Wechsel erlaubt sind und welche nicht, damit wir sicher dasselbe meinen. Frag nach, wenn etwas unklar ist.
 ```
 
-Dann im selben Chat:
+Claude zählt die erlaubten und verbotenen Wechsel auf und nennt seine Annahmen, in unserem Lauf zum Beispiel, dass ein Buch nicht zweimal auf die Liste kann. Bestätigt sie oder widersprecht. Dann in derselben Session:
 
 ```text
-Setze das jetzt um: die State Machine als reine Funktion transition(state, action), die unzulässige Übergänge ablehnt. Dazu ein Store pro User in localStorage, Leselisten-Buttons auf der Detailseite, eine Seite /reading-list im angemeldeten Bereich, nach Zustand gruppiert, und ein Zähler im Header. Gibt es noch keinen Header, lege einen an.
+Bau das jetzt. Auf der Detailseite eines Buchs will ich es auf meine Leseliste setzen und den Zustand wechseln. Unter /reading-list sehe ich meine Bücher nach Zustand gruppiert, und oben im Header steht, wie viele es sind. Die Seite ist nur für angemeldete User erreichbar, und jeder User hat seine eigene Liste. Die API kann noch keine Leselisten, speichere sie deshalb vorerst im Browser. Halte die Regeln für die Wechsel an einer Stelle und unabhängig vom Speicher, damit wir sie später ins eigene Backend mitnehmen können.
 ```
 
-Beide Hooks laufen bei jeder Änderung mit.
+Beide Hooks laufen bei jeder Änderung mit. Fragt danach:
+
+```text
+Hat dir der Typecheck-Hook beim Bauen etwas gemeldet? Zeig mir, was es war und wie du es behoben hast.
+```
+
+In unserem Lauf meldete er fünfmal. Viermal waren es Zwischenstände (ein Import kam erst im nächsten Edit), einmal ein echter Fehler, den Claude sofort behob.
 
 ### 7. Probiert die Leseliste im Browser aus
 
-Startet die beiden Server, meldet euch auf http://localhost:3000 als Demo-User an und setzt ein Buch auf die Liste. Meldet euch ab, registriert einen zweiten Account (zum Beispiel zweiter@example.com mit password1!) und öffnet `/reading-list`. Die Liste ist leer.
+Startet die beiden Server, meldet euch auf http://localhost:3000 als Demo-User an und setzt ein Buch auf die Liste. Meldet euch ab, registriert einen zweiten Account (zum Beispiel zweiter@example.com mit password1!) und öffnet `/reading-list`. Die Liste ist leer. Seht ihr die Bücher des ersten Accounts, sagt Claude das und dass jeder User eine eigene Liste haben soll.
 
 ### 8. Committet euren Stand
 
+Die Hooks liegen in `.claude/` im Repo. Sind sie committet, gelten sie für alle im Team.
+
 ```text
-Committe alle Änderungen aus dieser Aufgabe. Lies vorher den Diff.
+Schau dir an, was wir in dieser Aufgabe geändert haben, und committe es.
 ```
 
 ### Was gerade passiert ist
 
-Der erste Hook lief **vor** dem Tool (`PreToolUse`) und stoppte es, in unserem Lauf mit `exit 2`. Der zweite lief **danach** (`PostToolUse`) und gab Claude die Fehler zurück. Eine Anweisung in der `CLAUDE.md` berät, ein Hook erzwingt.
+Der erste Hook lief **vor** dem Tool (`PreToolUse`) und stoppte es, in unserem Lauf mit `exit 2`. Der zweite lief **danach** (`PostToolUse`, Matcher `Edit|Write`) und gab Claude die Fehler zurück. Getestet hat Claude die Hooks, indem es dem Skript Beispielaufrufe als JSON gab, so wie Claude Code sie beim echten Aufruf schickt. Eine Anweisung in der `CLAUDE.md` berät, ein Hook erzwingt.
 
-**Fertig, wenn** ein Hook euch den Zugriff auf `.env.local` verweigert hat, Claude `TS2322` aus dem Typecheck-Hook genannt hat und die Leseliste mit zwei Accounts getrennte Listen zeigt.
+Ein Hook, der Befehlstext durchsucht, fängt Versehen ab, aber keinen absichtlichen Umweg über die Shell. Das hat Claude in unserem Lauf selbst gesagt. Für echte Sicherheit kommen `permissions.deny`-Regeln und die Sandbox dazu.
+
+**Fertig, wenn** ein Hook euch den Zugriff auf `.env.local` verweigert hat, Claude die Meldung des Typecheck-Hooks gezeigt hat und die Leseliste mit zwei Accounts getrennte Listen zeigt.
 
 <details>
 <summary>Mehr dazu</summary>
 
-Claude legt die Hooks in `.claude/settings.json` und `.claude/hooks/` an. Die Hooks seht ihr im Terminal: öffnet in der Desktop-App das Terminal, startet dort `claude` und gebt `/hooks` ein. Ohne `jq` schlägt ein Hook-Skript still fehl und blockiert nichts. Habt ihr beim Testen User registriert, entfernt `curl -X POST http://localhost:4730/dev/reset` sie wieder.
+Claude legt die Hooks in `.claude/settings.json` und `.claude/hooks/` an. Die Hooks seht ihr im Terminal: öffnet in der Desktop-App das Terminal, startet dort `claude` und gebt `/hooks` ein. Nutzt ein Hook-Skript `jq` und `jq` fehlt, blockiert es je nach Bauart alles oder nichts. Prüft vorher `jq --version`. `exit 2` blockiert einen Aufruf, `exit 1` meldet nur einen Fehler und lässt ihn durch. Eine Sperre unabhängig vom Befehlstext ist eine Regel in `.claude/settings.json`: `{"permissions": {"deny": ["Read(./.env*)"]}}`. Habt ihr beim Testen User registriert, entfernt `curl -X POST http://localhost:4730/dev/reset` sie wieder.
 
 [Hooks guide](https://code.claude.com/docs/en/hooks-guide)
 

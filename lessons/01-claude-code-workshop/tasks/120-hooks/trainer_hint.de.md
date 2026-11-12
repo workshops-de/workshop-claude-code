@@ -11,16 +11,20 @@
 
 - Knüpft an die `CLAUDE.md`-Aufgabe an: Memory berät, Hooks erzwingen – den Kontrast ausdrücklich
   aufzeigen.
-- In die Falle `exit 1` vs. `exit 2` tappen die meisten bei ihrem ersten Guard; sie ruhig
-  hineinlaufen lassen und dann auf den Tipp verweisen.
+- Claude baut die Hooks selbst, die Falle `exit 1` vs. `exit 2` sehen die Teilnehmenden deshalb
+  kaum. Fragt in der Runde, warum ihr Hook mit `exit 2` endet (`exit 1` meldet nur).
+- Schritt 3 ist der neue Aha-Moment: Im Lauf vom 2026-11-12 (Sonnet 5.5) blockierte der Hook die
+  harmlose Commit-Message, und Claude fand selbst Umgehungen wie `cat .e*.local`. Der Umbau kann
+  groß werden (im Lauf ein Perl-Filter) und kurz alle Bash-Aufrufe blockieren, wenn das Skript
+  einen Fehler hat. Gute Gelegenheit für „Einfach halten, Rest über `permissions.deny`“.
 - Auf langsame Hooks achten (komplette Test-Suite pro Änderung) – zurück zu schnellen, gezielten
   Befehlen lenken.
 - Der Aha-Moment ist der Typecheck-Hook, der mitten im Feature zurückpfeift; jemanden bitten, ihn
   zu zeigen.
 - `localStorage` ist bewusst eine Übergangslösung, weil die API keinen Leselisten-Endpoint hat.
   Fragt jemand „ist das nicht unsicher / nicht geräteübergreifend?“: Ja, und genau das kann das
-  eigene Backend in den Aufgaben 200/230 lösen. Die reine `transition`-Funktion behalten: Sie zieht
-  unverändert ins Backend um.
+  eigene Backend in den Aufgaben 200/230 lösen. Die Regeldatei behalten (im Lauf
+  `lib/reading-list/rules.ts`, ohne Speicher und ohne React): Sie zieht unverändert ins Backend um.
 - Hydration-Mismatches sind häufig, wenn der Header-Zähler `localStorage` während des Renderns
   liest – ein gutes Debugging-Beispiel, falls es auftritt.
 - Der Typecheck-Hook läuft nach jeder einzelnen Änderung. Bei einer Änderung über mehrere Edits

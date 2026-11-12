@@ -61,7 +61,7 @@ Merge the branch worktree-contract-run into main and clean up the worktree after
 
 ### 7. Switch the app over
 
-Start the backend again (`cd backend && npm run start:dev`). Set `NEXT_PUBLIC_API_URL=http://localhost:3001` in `.env.local`, restart `npm run dev` and open http://localhost:3000/books. The catalog now shows the books from your own backend. In our run the covers still came from the API on port 4730, because the backend took over their addresses, and `/login` answered 404. Signing in only works again once you set the value back to http://localhost:4730.
+Start the backend again (`cd backend && npm run start:dev`). Set `NEXT_PUBLIC_API_URL=http://localhost:3001` in `.env.local` yourself in the editor (the .env hook from the hooks task blocks Claude from doing it), restart `npm run dev` and open http://localhost:3000/books. The catalog now shows the books from your own backend. In our run the covers still came from the API on port 4730, because the backend took over their addresses, and `/login` answered 404. Signing in only works again once you set the value back to http://localhost:4730.
 
 ### What just happened
 

@@ -18,3 +18,10 @@ Der Hook muss die Fehler an Claude zurückgeben. Sagt Claude, dass es die Typfeh
 Sie laufen bei jeder Änderung. Ein Typecheck genügt, die komplette Test-Suite gehört nicht dazu.
 
 </details>
+
+<details>
+<summary>💡 Tipp 4: Nach dem Umbau blockiert der Hook alles?</summary>
+
+Dann hat das Hook-Skript selbst einen Fehler. Sagt Claude, was ihr seht, zum Beispiel: „Dein Hook blockiert jeden Befehl, repariere ihn.“ Claude kann das Skript weiter mit seinen Datei-Werkzeugen ändern.
+
+</details>

@@ -116,6 +116,13 @@ other file changes needed for the numbering itself.
   learner will see comes from a real run of that step (throwaway copy of the practice repo, no
   personal settings, note version and model). The docs alone are not enough. If a step cannot be
   run, leave the claim out or link to the docs instead of stating it as fact.
+- **Prompts sound like talking to a colleague** (participant feedback 2026-11-11, trainer's request
+  2026-11-12). Each prompt says the goal, the reason, a limit and how to check it, and leaves the
+  "how" to Claude. No "Führe genau diesen Befehl aus", no file name plus exact content, no function
+  signatures or storage details unless they are the point of the step. Feature terms (PreToolUse,
+  matcher, `Edit|Write`, `exit 2`) go into the explanation text, not into the prompt. Let Claude
+  test its own work ("zeig mir die Ausgabe") instead of scripting the test. Expected results say
+  what you see, marked "in unserem Lauf", plus what to do when Claude answers differently.
 - Write like a trainer talking to colleagues: full, plain sentences. No punchlines, no emoji
   markers in the task body, no dramatic words.
 - **Server box at the very top of `body.md` and `body.de.md`** (trainer's request, 2026-11-12).
