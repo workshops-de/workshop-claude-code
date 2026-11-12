@@ -1,4 +1,6 @@
-In dieser Aufgabe geht es um das **Claude Agent SDK**: Das ist Claude Code als Bibliothek, mit der ihr einen Agenten aus eigenem TypeScript-Code startet. Ihr arbeitet in einem neuen, leeren Ordner mit Node.js 24 (ab 18.14 geht es auch) und braucht keinen Server. Ihr nutzt dieselbe Anmeldung wie in Claude Code, einen API-Key braucht ihr nicht.
+> **✅ Kein Server nötig:** Für diese Aufgabe müsst ihr vorher nichts starten.
+
+In dieser Aufgabe geht es um das **Claude Agent SDK**: Das ist Claude Code als Bibliothek, mit der ihr einen Agenten aus eigenem TypeScript-Code startet. Ihr arbeitet in einem neuen, leeren Ordner mit Node.js 24 (ab 18.14 geht es auch). Ihr nutzt dieselbe Anmeldung wie in Claude Code, einen API-Key braucht ihr nicht.
 
 ### 1. Legt ein Projekt an
 

@@ -1,3 +1,5 @@
+> **✅ Kein Server nötig:** Für diese Aufgabe müsst ihr vorher nichts starten.
+
 In dieser Aufgabe geht es um **Spec-Driven Development** mit GitHub **Spec Kit**: Ihr schreibt zuerst auf, was gebaut werden soll, und lasst Claude daraus Plan, Aufgabenliste und Code ableiten. Spec Kit bringt dafür Skills mit, also Anweisungen, die ihr als `/speckit-...` in den Chat tippt. Ihr baut einen kleinen Habit-Tracker in einem neuen Ordner `habits`, ohne BookMonkey.
 
 Ihr braucht [uv](https://docs.astral.sh/uv/) (installiert Python-Tools) und Node.js 22 oder neuer für die Tests. Der Habit-Tracker wird später auf http://localhost:3430 ausgeliefert.

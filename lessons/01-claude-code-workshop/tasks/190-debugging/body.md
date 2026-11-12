@@ -1,4 +1,9 @@
-This task is about **debugging with Claude**: you get a bug ticket from users and work your way to the cause with evidence instead of guesses. You work in your `bookmonkey-legacy` clone with Node.js 24 or newer. Start the API with `npm run dev:api` (http://localhost:4780) and the web app with `npm run dev:web` (http://localhost:5180) in two terminals. If you are unsure whether the data is fresh, run `npm run db:reset` first.
+> **⚠️ Start first, in your `bookmonkey-legacy` clone:** each in its own terminal, keep it open for the whole task.
+> - API: `npm run dev:api` (http://localhost:4780)
+> - Web app: `npm run dev:web` (http://localhost:5180)
+> - Before that, if you are unsure whether the data is fresh: `npm run db:reset`
+
+This task is about **debugging with Claude**: you get a bug ticket from users and work your way to the cause with evidence instead of guesses. You work in your `bookmonkey-legacy` clone with Node.js 24 or newer.
 
 This is the ticket, and all you know:
 

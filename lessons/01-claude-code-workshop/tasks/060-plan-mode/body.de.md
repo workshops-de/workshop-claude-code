@@ -1,8 +1,9 @@
-> **⚠️ Zuerst die API starten:** Öffnet ein **separates Terminalfenster** und startet dort `npx bookmonkey-api`. Lasst es während der ganzen Aufgabe offen, damit der Server lokal auf http://localhost:4730 läuft.
+> **⚠️ Vorher starten:** jeweils in einem eigenen Terminal, während der ganzen Aufgabe offen lassen.
+> - API: `npx bookmonkey-api` (http://localhost:4730)
 
 In dieser Aufgabe geht es um den **Plan Mode**: Claude schlägt zuerst einen Plan vor und ändert nichts, ihr korrigiert den Plan, und erst dann wird gebaut.
 
-Ihr arbeitet in einem neuen, leeren Ordner `bookmonkey` mit Node.js 26 (zum Beispiel `mkdir bookmonkey && cd bookmonkey && git init`). Öffnet ihn in der Desktop-App und startet dort eine neue Session. Startet in einem Terminal die API mit `npx bookmonkey-api`, sie läuft dann unter http://localhost:4730.
+Ihr arbeitet in einem neuen, leeren Ordner `bookmonkey` mit Node.js 26 (zum Beispiel `mkdir bookmonkey && cd bookmonkey && git init`). Öffnet ihn in der Desktop-App und startet dort eine neue Session.
 
 ### 1. Lasst Claude einen Plan machen
 

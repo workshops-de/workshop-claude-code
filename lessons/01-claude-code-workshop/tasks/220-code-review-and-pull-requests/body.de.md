@@ -1,6 +1,8 @@
+> **⚠️ Vorher beenden:** Läuft die API noch aus der Debugging-Aufgabe, beendet sie mit Ctrl+C. In Schritt 1 startet ihr sie neu.
+
 In dieser Aufgabe reviewt ihr den Pull Request eines Kollegen mit **/code-review** und einem eigenen **Security-Subagent**, einem Helfer mit eigenem Kontext, der nur lesen darf. Danas Branch `feature/admin-export-v2` fügt einen CSV-Export hinzu, die Tests sind grün, und Dana hat es eilig.
 
-Ihr arbeitet in eurem `bookmonkey-legacy`-Clone (Node.js 24 oder neuer). Ist `git status` nicht sauber, führt zuerst `git stash` aus. Läuft die API noch aus der Debugging-Aufgabe, beendet sie zuerst mit Ctrl+C.
+Ihr arbeitet in eurem `bookmonkey-legacy`-Clone (Node.js 24 oder neuer). Ist `git status` nicht sauber, führt zuerst `git stash` aus.
 
 ### 1. Holt Danas Branch
 

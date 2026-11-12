@@ -1,3 +1,5 @@
+> **✅ No server needed:** you do not have to start anything before this task.
+
 This task is about **spec-driven development** with GitHub **Spec Kit**: you first write down what should be built, and Claude derives the plan, the task list and the code from it. Spec Kit ships skills for this, instructions you type into the chat as `/speckit-...`. You build a small habit tracker in a new folder `habits`, not BookMonkey.
 
 You need [uv](https://docs.astral.sh/uv/) (installs Python tools) and Node.js 22 or newer for the tests. The habit tracker is served later at http://localhost:3430.

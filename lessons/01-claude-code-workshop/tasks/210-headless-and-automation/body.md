@@ -1,6 +1,8 @@
+> **✅ No server needed:** you do not have to start anything before this task.
+
 This task is about **headless mode**: Claude runs without a chat window. You start it with `claude -p` in a terminal or from a script and get the answer back as text. This is how you build Claude into scripts and, later, into pipelines.
 
-You work in your `bookmonkey-legacy` repository with Node.js 24, no server needs to run. Open the terminal in the desktop app. You type all `claude -p` commands there. On Windows use Git Bash. Check with `jq --version` that jq is installed, otherwise `brew install jq` or on Windows `winget install jqlang.jq`.
+You work in your `bookmonkey-legacy` repository with Node.js 24. Open the terminal in the desktop app. You type all `claude -p` commands there. On Windows use Git Bash. Check with `jq --version` that jq is installed, otherwise `brew install jq` or on Windows `winget install jqlang.jq`.
 
 ### 1. Ask a question without a chat
 

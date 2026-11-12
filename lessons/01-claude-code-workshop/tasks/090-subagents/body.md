@@ -1,8 +1,10 @@
-> **⚠️ Start the API first:** Open a **separate terminal window** and run `npx bookmonkey-api` there. Keep it open for the whole task, so the server runs locally on http://localhost:4730.
+> **⚠️ Start first:** each in its own terminal, keep it open for the whole task.
+> - API: `npx bookmonkey-api` (http://localhost:4730)
+> - App: `npm run dev` (http://localhost:3000)
 
 This task is about **subagents**. A subagent is a second Claude with its own context. It does a task apart from your conversation and hands back only the result. You build the sign-in for BookMonkey and let your own security reviewer check it.
 
-Work in your `bookmonkey` repository with Node.js 26. The API (`npx bookmonkey-api`) runs on http://localhost:4730, the demo user is `admin@bookmonkey.api` with `password1!`.
+Work in your `bookmonkey` repository with Node.js 26. The demo user is `admin@bookmonkey.api` with `password1!`.
 
 ### 1. Build the sign-in
 

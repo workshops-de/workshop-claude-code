@@ -1,8 +1,10 @@
-> **⚠️ Zuerst die API starten:** Öffnet ein **separates Terminalfenster** und startet dort `npx bookmonkey-api`. Lasst es während der ganzen Aufgabe offen, damit der Server lokal auf http://localhost:4730 läuft.
+> **⚠️ Vorher starten:** jeweils in einem eigenen Terminal, während der ganzen Aufgabe offen lassen.
+> - API: `npx bookmonkey-api` (http://localhost:4730)
+> - App: `npm run dev` (http://localhost:3000)
 
 In dieser Aufgabe geht es um **Subagents**. Ein Subagent ist ein zweiter Claude mit eigenem Kontext, der eine Aufgabe getrennt von eurer Unterhaltung erledigt und nur das Ergebnis zurückgibt. Ihr baut die Anmeldung für BookMonkey und lasst sie von einem eigenen Security-Reviewer prüfen.
 
-Ihr arbeitet in eurem `bookmonkey`-Repository mit Node.js 26. Die API (`npx bookmonkey-api`) läuft auf http://localhost:4730, der Demo-User ist `admin@bookmonkey.api` mit `password1!`.
+Ihr arbeitet in eurem `bookmonkey`-Repository mit Node.js 26. Der Demo-User ist `admin@bookmonkey.api` mit `password1!`.
 
 ### 1. Baut die Anmeldung
 

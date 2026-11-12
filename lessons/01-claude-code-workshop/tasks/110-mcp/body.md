@@ -1,8 +1,10 @@
-> **⚠️ Start the API first:** Open a **separate terminal window** and run `npx bookmonkey-api` there. Keep it open for the whole task, so the server runs locally on http://localhost:4730.
+> **⚠️ Start first:** each in its own terminal, keep it open for the whole task.
+> - API: `npx bookmonkey-api` (http://localhost:4730)
+> - App: `npm run dev` (http://localhost:3000)
 
 This task is about **MCP** (Model Context Protocol): it gives Claude extra tools, here a real browser. With it, Claude does not only check the code, it looks at the BookMonkey pages, clicks through them and reports what it found.
 
-You work in your `bookmonkey` repository with Node.js 26. Two servers must run: the API with `npx bookmonkey-api` (http://localhost:4730) and the app with `npm run dev` (http://localhost:3000).
+You work in your `bookmonkey` repository with Node.js 26.
 
 ### 1. Connect a browser server
 

@@ -1,6 +1,8 @@
+> **✅ No server needed:** you do not have to start anything before this task.
+
 This task is about the **GitHub Action for Claude Code**: a workflow starts Claude on a GitHub server as soon as someone puts a label on an issue, and Claude replies in the issue. The trainer shows the run on GitHub live. You rebuild it locally, see what Claude may do there, and restrict it.
 
-You work in your `bookmonkey-legacy` clone with Node.js 24, no server needs to run. You type the `claude -p` commands in the terminal of the desktop app (on Windows in Git Bash).
+You work in your `bookmonkey-legacy` clone with Node.js 24. You type the `claude -p` commands in the terminal of the desktop app (on Windows in Git Bash).
 
 ### 1. Let Claude explain the workflow
 

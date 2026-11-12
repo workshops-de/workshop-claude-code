@@ -1,3 +1,5 @@
+> **✅ No server needed:** you do not have to start anything before this task.
+
 This task is about **LLM gateways**: a gateway is a server that Claude Code sends its requests to instead of talking directly to Anthropic. You build a small gateway to try things out, look at what Claude Code sends to it, and derive a recommendation for your company.
 
 Work in a new, empty folder `gateway-test` (for example `mkdir gateway-test && cd gateway-test`), opened in the desktop app, with Node.js 22 or newer. You need no account and no API key.

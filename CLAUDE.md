@@ -118,6 +118,14 @@ other file changes needed for the numbering itself.
   run, leave the claim out or link to the docs instead of stating it as fact.
 - Write like a trainer talking to colleagues: full, plain sentences. No punchlines, no emoji
   markers in the task body, no dramatic words.
+- **Server box at the very top of `body.md` and `body.de.md`** (trainer's request, 2026-11-12).
+  Every task that needs a running server starts with one quote box that lists each server on its
+  own line with command and URL (`> **⚠️ Start first:** each in its own terminal, …` /
+  `> **⚠️ Vorher starten:** jeweils in einem eigenen Terminal, …`). Once earlier tasks have used a
+  server, a task that needs none says so instead (`> **✅ No server needed:** …` /
+  `> **✅ Kein Server nötig:** …`). The intro below the box does not repeat the server commands.
+  Tasks before the first server use (010 to 050) get no box. When a step changes which servers a
+  task needs, update the box too.
 - Hints: 2–4 collapsible `<details>` blocks, each nudging without giving away the solution.
 - Trainer notes: learning goals, facilitation notes (common pitfalls, timing, what to watch for),
   time estimate.

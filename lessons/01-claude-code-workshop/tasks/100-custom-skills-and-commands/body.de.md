@@ -1,8 +1,10 @@
-> **⚠️ Zuerst die API starten:** Öffnet ein **separates Terminalfenster** und startet dort `npx bookmonkey-api`. Lasst es während der ganzen Aufgabe offen, damit der Server lokal auf http://localhost:4730 läuft.
+> **⚠️ Vorher starten:** jeweils in einem eigenen Terminal, während der ganzen Aufgabe offen lassen.
+> - API: `npx bookmonkey-api` (http://localhost:4730)
+> - App: `npm run dev` (http://localhost:3000)
 
 In dieser Aufgabe geht es um einen **eigenen Skill** (eine Anleitung, die Claude selbst lädt, wenn sie zur Aufgabe passt) und einen **eigenen Befehl** (ein Slash Command, den nur ihr startet). Ihr baut eine Seite von Hand, haltet fest, wie sie gebaut wurde, und lasst die nächsten Seiten daraus entstehen.
 
-Ihr arbeitet in eurem `bookmonkey`-Repository mit Node.js 26. Die API (`npx bookmonkey-api`) läuft auf http://localhost:4730, die App startet ihr mit `npm run dev` auf http://localhost:3000. Der Demo-User ist `admin@bookmonkey.api` mit `password1!`.
+Ihr arbeitet in eurem `bookmonkey`-Repository mit Node.js 26. Der Demo-User ist `admin@bookmonkey.api` mit `password1!`.
 
 ### 1. Baut die Leseseite von Hand
 

@@ -1,6 +1,8 @@
+> **✅ Kein Server nötig:** Für diese Aufgabe müsst ihr vorher nichts starten.
+
 In dieser Aufgabe geht es um die **GitHub Action für Claude Code**: Ein Workflow startet Claude auf einem GitHub-Server, sobald jemand ein Issue mit einem Label versieht, und Claude antwortet im Issue. Den Lauf auf GitHub zeigt der Trainer live. Ihr baut ihn lokal nach, seht, was Claude dort darf, und schränkt es ein.
 
-Ihr arbeitet in eurem `bookmonkey-legacy`-Clone mit Node.js 24, es muss kein Server laufen. Die Befehle mit `claude -p` tippt ihr im Terminal der Desktop-App ein (unter Windows in der Git Bash).
+Ihr arbeitet in eurem `bookmonkey-legacy`-Clone mit Node.js 24. Die Befehle mit `claude -p` tippt ihr im Terminal der Desktop-App ein (unter Windows in der Git Bash).
 
 ### 1. Lasst Claude den Workflow erklären
 

@@ -1,4 +1,9 @@
-In dieser Aufgabe geht es um **Debugging mit Claude**: Ihr bekommt ein Fehlerticket von Nutzern und arbeitet euch mit Belegen statt Vermutungen bis zur Ursache vor. Ihr arbeitet in eurem `bookmonkey-legacy`-Clone mit Node.js 24 oder neuer. Startet in zwei Terminals die API mit `npm run dev:api` (http://localhost:4780) und die Web-App mit `npm run dev:web` (http://localhost:5180). Falls ihr unsicher seid, ob die Daten frisch sind, führt vorher `npm run db:reset` aus.
+> **⚠️ Vorher starten, im `bookmonkey-legacy`-Clone:** jeweils in einem eigenen Terminal, während der ganzen Aufgabe offen lassen.
+> - API: `npm run dev:api` (http://localhost:4780)
+> - Web-App: `npm run dev:web` (http://localhost:5180)
+> - Davor, falls ihr unsicher seid, ob die Daten frisch sind: `npm run db:reset`
+
+In dieser Aufgabe geht es um **Debugging mit Claude**: Ihr bekommt ein Fehlerticket von Nutzern und arbeitet euch mit Belegen statt Vermutungen bis zur Ursache vor. Ihr arbeitet in eurem `bookmonkey-legacy`-Clone mit Node.js 24 oder neuer.
 
 Das ist das Ticket, mehr wisst ihr nicht:
 

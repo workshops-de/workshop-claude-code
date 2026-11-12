@@ -1,6 +1,8 @@
+> **✅ Kein Server nötig:** Für diese Aufgabe müsst ihr vorher nichts starten.
+
 In dieser Aufgabe geht es um die **BMAD Method**. Sie liefert euch Skills, mit denen ihr eine Idee in festen Schritten (Brief, Anforderungen, Architektur, Umsetzung) plant und baut, und jeder Schritt hat eine eigene Rolle mit Namen. Ihr baut eine kleine, neue Packlisten-App.
 
-Ihr arbeitet in einem **neuen, leeren Ordner** mit Node.js 22 oder neuer. Es muss kein Server laufen.
+Ihr arbeitet in einem **neuen, leeren Ordner** mit Node.js 22 oder neuer.
 
 ### 1. Installiert BMAD
 

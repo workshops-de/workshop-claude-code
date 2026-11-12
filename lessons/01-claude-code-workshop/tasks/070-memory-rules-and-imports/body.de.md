@@ -1,6 +1,7 @@
-> **⚠️ Zuerst die API starten:** Öffnet ein **separates Terminalfenster** und startet dort `npx bookmonkey-api`. Lasst es während der ganzen Aufgabe offen, damit der Server lokal auf http://localhost:4730 läuft.
+> **⚠️ Vorher starten:** jeweils in einem eigenen Terminal, während der ganzen Aufgabe offen lassen.
+> - API: `npx bookmonkey-api` (http://localhost:4730)
 
-In dieser Aufgabe geht es um **Regeldateien und Imports**: Ihr legt die Fachsprache und den API-Vertrag von BookMonkey einmal fest, damit jede neue Session sie kennt. Ihr arbeitet in eurem `bookmonkey`-Repository mit Node.js 26 und startet die API mit `npx bookmonkey-api`, falls sie noch nicht läuft.
+In dieser Aufgabe geht es um **Regeldateien und Imports**: Ihr legt die Fachsprache und den API-Vertrag von BookMonkey einmal fest, damit jede neue Session sie kennt. Ihr arbeitet in eurem `bookmonkey`-Repository mit Node.js 26.
 
 ### 1. Lasst Claude die Fachsprache aufschreiben
 
