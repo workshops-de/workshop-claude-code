@@ -6,6 +6,8 @@ You restructure code without changing its behaviour. The safety net is **charact
 
 ### 1. Create a branch
 
+Use your existing clone. `git diff origin/main --stat` should show at most your `CLAUDE.md` files.
+
 ```bash
 git switch -c refactor/split-routes
 ```

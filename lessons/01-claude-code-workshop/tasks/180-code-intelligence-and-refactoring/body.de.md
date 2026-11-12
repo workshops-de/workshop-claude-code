@@ -6,6 +6,8 @@ Ihr baut Code um, ohne sein Verhalten zu ändern. Das Sicherheitsnetz sind **Cha
 
 ### 1. Legt einen Branch an
 
+Ihr nehmt euren bisherigen Clone. `git diff origin/main --stat` sollte höchstens eure `CLAUDE.md`-Dateien zeigen.
+
 ```bash
 git switch -c refactor/split-routes
 ```
