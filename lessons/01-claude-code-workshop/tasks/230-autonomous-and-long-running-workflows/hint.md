@@ -26,6 +26,6 @@ read why before you widen the permissions.
 <details>
 <summary>💡 Hint 4: What is not committed is missing in the worktree</summary>
 
-A worktree starts at the last commit. If the new tests are missing there, you did not commit them in step 2. If your repository has a remote, the worktree in our test started at the state of `origin`, not at the local commit: push first.
+If the new tests are missing in the worktree, you did not commit or push them in step 2. With a remote, the worktree starts at the state of `main` on `origin`, not at the local commit.
 
 </details>

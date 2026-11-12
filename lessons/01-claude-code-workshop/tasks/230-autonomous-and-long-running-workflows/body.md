@@ -18,12 +18,12 @@ Add contract tests for GET /books: search with q, paging with _page and _limit, 
 
 In our run 14 new tests were added, all green against the API.
 
-### 2. Commit the tests
+### 2. Commit and push the tests
 
-A worktree starts at the last commit, uncommitted files are missing there.
+A worktree starts at the state of `main` on `origin`, or at the last local commit if there is no remote. Uncommitted or unpushed files are missing there.
 
 ```text
-Commit the new contract tests. Read the diff first.
+Commit the new contract tests on main and push if there is a remote. Read the diff first.
 ```
 
 ### 3. See the tests red

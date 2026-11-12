@@ -27,6 +27,6 @@ Fehler, lest nach, warum, bevor ihr die Berechtigungen erweitert.
 <details>
 <summary>💡 Tipp 4: Im Worktree fehlt, was nicht committet ist</summary>
 
-Ein Worktree startet beim letzten Commit. Fehlen dort die neuen Tests, habt ihr sie in Schritt 2 nicht committet. Hat euer Repository ein Remote, startete der Worktree in unserem Test beim Stand von `origin`, nicht beim lokalen Commit: Pusht dann vorher.
+Fehlen die neuen Tests im Worktree, habt ihr sie in Schritt 2 nicht committet oder nicht gepusht. Mit Remote startet der Worktree beim Stand von `main` auf `origin`, nicht beim lokalen Commit.
 
 </details>

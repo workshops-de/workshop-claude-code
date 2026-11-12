@@ -18,12 +18,12 @@ Ergänze die Contract-Tests um GET /books: die Suche mit q, das Paging mit _page
 
 In unserem Lauf kamen 14 neue Tests dazu, alle grün gegen die API.
 
-### 2. Committet die Tests
+### 2. Committet und pusht die Tests
 
-Ein Worktree startet beim letzten Commit, ungesicherte Dateien fehlen dort.
+Ein Worktree startet beim Stand von `main` auf `origin`, ohne Remote beim letzten lokalen Commit. Ungesicherte oder nicht gepushte Dateien fehlen dort.
 
 ```text
-Committe die neuen Contract-Tests. Lies vorher den Diff.
+Committe die neuen Contract-Tests auf main und pushe, falls es ein Remote gibt. Lies vorher den Diff.
 ```
 
 ### 3. Seht die Tests rot
