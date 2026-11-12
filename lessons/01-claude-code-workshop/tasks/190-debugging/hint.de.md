@@ -17,7 +17,7 @@ keiner.
 </details>
 
 <details>
-<summary>💡 Tipp 3: Die Historie fragen</summary>
+<summary>💡 Tipp 3 (optional): Die Historie fragen</summary>
 
 Sobald ihr wisst, welcher Code beteiligt ist, fragt, wann er sich zuletzt geändert hat und warum.
 Eine Commit-Message verrät oft, was der Autor erreichen wollte und woran er nicht gedacht hat.

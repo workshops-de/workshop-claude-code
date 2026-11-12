@@ -16,7 +16,7 @@ Differences you can name are evidence; "something is off" is not.
 </details>
 
 <details>
-<summary>💡 Hint 3: Ask the history</summary>
+<summary>💡 Hint 3 (optional): Ask the history</summary>
 
 Once you know which code is involved, ask when it last changed and why. A commit message often
 tells you what the author tried to achieve, and what they didn't think of.
