@@ -39,10 +39,10 @@ In unserem Lauf nannte Claude die Regeln aus dem Skill: vollständiger Aufbau de
 ### 4. Ruft den Skill ausdrücklich auf
 
 ```text
-Nutze den shadcn-Skill, um dem Katalog einen Skeleton-Ladezustand und einen leeren Zustand hinzuzufügen.
+Nutze den shadcn-Skill, damit der Katalog einen verständlichen Hinweis zeigt, wenn die API nicht erreichbar ist.
 ```
 
-Claude holt sich `skeleton` und `empty` mit der shadcn-CLI und baut beide Zustände mit diesen Komponenten, nicht mit selbstgebauten `div`s. In der `SKILL.md` steht `user-invocable: false`: Ihr nennt den Skill deshalb im Prompt, statt `/shadcn` zu tippen.
+Stoppt danach die API mit Ctrl+C und ladet `/books` neu: Statt einer Fehlerseite erscheint ein Hinweis. Claude holt sich dafür `alert` mit der shadcn-CLI, statt einen eigenen Kasten zu bauen. Startet die API wieder. Skeleton-Ladezustand und leeren Zustand hat Claude in unseren Läufen schon in Schritt 2 gebaut, weil der Skill sie vorschreibt. In der `SKILL.md` steht `user-invocable: false`: Ihr nennt den Skill deshalb im Prompt, statt `/shadcn` zu tippen.
 
 ### 5. Gebt selbst eine Aufgabe mit dem Skill
 

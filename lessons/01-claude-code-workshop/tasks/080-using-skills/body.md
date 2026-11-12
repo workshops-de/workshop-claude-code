@@ -39,10 +39,10 @@ In our run Claude named rules from the skill: the full card structure (`CardHead
 ### 4. Call the skill explicitly
 
 ```text
-Use the shadcn skill to add a skeleton loading state and an empty state to the catalogue.
+Use the shadcn skill so that the catalogue shows a clear message when the API cannot be reached.
 ```
 
-Claude fetches `skeleton` and `empty` with the shadcn CLI and builds both states with these components, not with hand-made `div`s. The `SKILL.md` says `user-invocable: false`, so you name the skill in the prompt instead of typing `/shadcn`.
+Then stop the API with Ctrl+C and reload `/books`: instead of an error page you see a message. Claude fetches `alert` with the shadcn CLI for it instead of building its own box. Start the API again. In our runs Claude had already built the skeleton loading state and the empty state in step 2, because the skill asks for them. The `SKILL.md` says `user-invocable: false`, so you name the skill in the prompt instead of typing `/shadcn`.
 
 ### 5. Give your own task with the skill
 

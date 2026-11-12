@@ -7,6 +7,8 @@ In dieser Aufgabe geht es um den **Plan Mode**: Claude schlägt zuerst einen Pla
 
 Ihr arbeitet in einem neuen, leeren Ordner `bookmonkey` mit Node.js 26 (zum Beispiel `mkdir bookmonkey && cd bookmonkey && git init`). Öffnet ihn in der Desktop-App und startet dort eine neue Session.
 
+**Modell:** Wählt für die BookMonkey-Aufgaben **Sonnet**. In unseren Probeläufen war es etwa doppelt so schnell wie Opus und hat alle Aufgaben geschafft. Für einen wichtigen Plan oder einen hartnäckigen Fehler wechselt ihr kurz auf **Opus**.
+
 ### 1. Lasst Claude einen Plan machen
 
 Stellt den Modus auf **Plan** und schickt:

@@ -7,6 +7,8 @@ This task is about **Plan Mode**: Claude first proposes a plan and changes nothi
 
 You work in a new, empty folder `bookmonkey` with Node.js 26 (for example `mkdir bookmonkey && cd bookmonkey && git init`). Open it in the desktop app and start a new session there.
 
+**Model:** pick **Sonnet** for the BookMonkey tasks. In our dry runs it was about twice as fast as Opus and finished every task. For an important plan or a stubborn bug, switch to **Opus** for a while.
+
 ### 1. Let Claude make a plan
 
 Set the mode to **Plan** and send:

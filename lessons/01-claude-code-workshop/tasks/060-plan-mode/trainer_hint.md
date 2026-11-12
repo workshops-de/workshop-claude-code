@@ -20,8 +20,11 @@
   example `code --wait`). Have a quick fix ready if nothing opens.
 - `bookmonkey-api` declares Node.js >=26: everyone should run Node 26 (current LTS). Check this
   before the session. Port conflicts on 4730 are fixed with `npx bookmonkey-api --port <n>` plus a matching `NEXT_PUBLIC_API_URL`.
-- Expect agents to propose shadcn/ui or a data-fetching library unprompted — a good thing to push
+- Expect agents to propose shadcn/ui or a data-fetching library unprompted. That is a good thing to push
   back on here; shadcn arrives deliberately in the skills task.
+- Model: clean dry run on 2026-11-12, tasks 060 to 230: Sonnet 36 min, Opus 67 min, both finished
+  everything. Opus took about 13 min instead of 4 to 7 on 080, 100 and 120. So Sonnet is the
+  default, Opus for plans and hard bugs. Opus also uses up subscription limits faster.
 - Next.js 16 pitfalls seen in the dry run: Cache Components is on by default, so
   `export const dynamic` fails the build with `Route segment config "dynamic" is not compatible
   with nextConfig.cacheComponents` (fix: request-time fetch inside `<Suspense>`, see hint 4).

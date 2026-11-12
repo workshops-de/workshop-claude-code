@@ -23,6 +23,9 @@
   dazu passenden `NEXT_PUBLIC_API_URL`.
 - Rechnet damit, dass Agenten ungefragt shadcn/ui oder eine Data-Fetching-Library vorschlagen –
   genau hier ein guter Anlass zu widersprechen; shadcn kommt bewusst erst in der Skills-Aufgabe.
+- Modell: Sauberer Probelauf am 12.11.2026, Aufgaben 060 bis 230: Sonnet 36 min, Opus 67 min, beide
+  haben alles geschafft. Opus brauchte bei 080, 100 und 120 je etwa 13 min statt 4 bis 7. Deshalb
+  Sonnet als Standard, Opus für Plan und harte Fehler. Opus leert auch die Abo-Limits schneller.
 - Next.js-16-Stolperfallen aus dem Probelauf: Cache Components ist standardmäßig an, daher bricht
   `export const dynamic` den Build mit `Route segment config "dynamic" is not compatible
   with nextConfig.cacheComponents` (Fix: Fetch zur Anfragezeit innerhalb von `<Suspense>`, siehe Tipp 4).
