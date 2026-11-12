@@ -55,8 +55,15 @@ Am 12. Nov mit Claude Code 2.1.319 und Sonnet über `claude -p` in einer Kopie v
 - Bonus: Sandbox an ergibt `listen EPERM`, mit `allowLocalBinding` sind alle Tests grün. Der
   Stop-Hook blieb in der Sandbox grün.
 
-Nicht getestet: `/rewind` (nur interaktiv), die Schritte in der Desktop-App, und ob die Desktop-App
-die Sandbox-Einträge aus `.claude/settings.local.json` genauso liest wie die CLI.
+Desktop-App (12. Nov, Sonnet, Kopie des Repos): Der Stop-Hook aus `.claude/settings.local.json`
+griff und blockierte bei Rot. Die Sandbox war aktiv (Schreiben im Home-Ordner scheiterte), und mit
+`allowLocalBinding` aus der Datei liefen alle Tests grün. Die App nutzt die Standard-Node-Version
+der Shell (bei nvm: `nvm alias default`), nicht die des Terminals. War das Node 22, scheiterten
+Tests und Hook mit einem `SyntaxError`. Lasst die Gruppe vor Schritt 3 in einer Session `node -v`
+prüfen. Ein neuer, unbekannter Ordner mit Hook in `.claude/settings.local.json` löste in der App
+die Abfrage „Trust this workspace?“ aus. Im eigenen Clone ist der Ordner schon vertraut.
+
+Nicht getestet: `/rewind` (nur interaktiv).
 
 ## Zeitbedarf
 

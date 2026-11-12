@@ -53,8 +53,15 @@ on macOS, Node 24.11, without personal settings (`--setting-sources project,loca
 - Bonus: sandbox on gives `listen EPERM`, with `allowLocalBinding` all tests are green. The Stop
   hook stayed green inside the sandbox.
 
-Not tested: `/rewind` (interactive only), the steps in the desktop app, and whether the desktop app
-reads the sandbox entries from `.claude/settings.local.json` the same way as the CLI.
+Desktop app (12 Nov, Sonnet, copy of the repo): the Stop hook from `.claude/settings.local.json`
+fired and blocked when red. The sandbox was active (writing to the home folder failed), and with
+`allowLocalBinding` from the file all tests were green. The app uses the shell's default Node
+version (with nvm: `nvm alias default`), not the terminal's. When that was Node 22, tests and hook
+failed with a `SyntaxError`. Have the group check `node -v` in a session before step 3. A new,
+unknown folder with a hook in `.claude/settings.local.json` triggered the app's "Trust this
+workspace?" prompt. The participants' own clone is already trusted.
+
+Not tested: `/rewind` (interactive only).
 
 ## Time estimate
 
