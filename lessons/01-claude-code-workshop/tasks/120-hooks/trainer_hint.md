@@ -26,6 +26,7 @@
   it out when someone wonders why the hook stayed quiet.
 - "Per user" needs a user key on the client, but the session cookie is http-only. Expect the
   agent to pass the signed-in email or id from the server into the client store.
+- Bonus `SessionStart` hook (a participant's idea): if the session hangs at start, the hook keeps the server's stdout open. The fix is `> .claude/logs/x.log 2>&1 &` (or `nohup`), so the hook returns at once. Good moment for "side effects in hooks": check and report is the safe default, starting processes is a choice.
 - Two-account testing is the step people skip — check for it during the room walk.
 
 ## Time estimate

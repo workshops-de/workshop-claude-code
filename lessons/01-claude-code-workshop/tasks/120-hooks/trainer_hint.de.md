@@ -31,6 +31,7 @@
 - „Pro User“ braucht auf dem Client einen User-Schlüssel, aber das Session-Cookie ist http-only.
   Rechnet damit, dass der Agent die E-Mail oder ID des angemeldeten Users vom Server in den
   Client-Store reicht.
+- Bonus `SessionStart`-Hook (Idee aus dem Kurs): Hängt die Session beim Start, hält der Hook die Standardausgabe des Servers offen. Die Lösung ist `> .claude/logs/x.log 2>&1 &` (oder `nohup`), dann kehrt der Hook sofort zurück. Guter Moment für „Nebenwirkungen in Hooks“: Prüfen und melden ist der sichere Standard, Prozesse starten eine bewusste Wahl.
 - Der Test mit zwei Accounts ist der Schritt, den viele überspringen – beim Gang durch den Raum
   darauf achten.
 
