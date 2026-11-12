@@ -1,6 +1,5 @@
-> **⚠️ Start first:** each in its own terminal, keep it open for the whole task.
+> **⚠️ Must be running:** each in its own terminal. Start what is not running yet and keep it open for the whole task.
 > - API: `npx bookmonkey-api` (http://localhost:4730)
-> - Backend: `cd backend && npm run start:dev` (http://localhost:3001)
 
 ---
 

@@ -1,4 +1,4 @@
-> **⚠️ Vorher starten:** jeweils in einem eigenen Terminal, während der ganzen Aufgabe offen lassen.
+> **⚠️ Muss laufen:** jeweils in einem eigenen Terminal. Startet, was noch nicht läuft, und lasst es während der ganzen Aufgabe offen.
 > - API: `npx bookmonkey-api` (http://localhost:4730)
 > - App: `npm run dev` (http://localhost:3000)
 
@@ -14,7 +14,7 @@ Ihr arbeitet in eurem `bookmonkey`-Repository mit Node.js 26. Der Demo-User ist 
 Baue die Leseseite des Katalogs. Auf /books: ein Suchfeld (q), Sortierung nach Titel oder Preis (_sort, _order) und Paging mit 12 Büchern pro Seite (_page, _limit, Gesamtzahl aus dem Header X-Total-Count). Alles bleibt in der URL. Dazu eine Detailseite unter /books/<isbn> mit den Links vorheriges und nächstes Buch der Reihe, aus predecessorIsbn und successorIsbn. Prüfe mit npm run build.
 ```
 
-Öffnet danach `/books`, sucht, sortiert und blättert, und öffnet ein Buch einer Reihe (zum Beispiel Harry Potter). Die Links vorheriges und nächstes führen zu den Nachbarbüchern.
+Öffnet danach `/books`, sucht, sortiert und blättert, und öffnet ein Buch einer Reihe (zum Beispiel Harry Potter). Die Links vorheriges und nächstes führen zu den Nachbarbüchern. Die Titelsuche aus der Skills-Aufgabe ersetzt Claude dabei durch die Suche über die API.
 
 ### 2. Haltet das Muster als Skill fest
 
@@ -42,7 +42,7 @@ Lege unter .claude/skills/new-book-view/SKILL.md einen Befehl /new-book-view an,
 
 ### 5. Baut den Create-Bildschirm
 
-Tippt `/new-book-view create`. Das Argument landet im Text des Befehls. Meldet euch danach im Browser an und legt unter http://localhost:3000/books/new ein Buch mit der ISBN 9990000000001 an. Probiert es dann mit der schon vorhandenen ISBN 9780747532699.
+Tippt `/new-book-view create`. Das Argument landet im Text des Befehls. Meldet euch danach im Browser an und legt unter http://localhost:3000/books/new ein Buch mit der ISBN 9990000000001 an. Probiert es dann mit der schon vorhandenen ISBN 9780747532699. Landet ihr ohne Anmeldung auf dem Formular, fehlen die neuen Routen im Matcher von `proxy.ts`.
 
 ### 6. Baut den Edit-Bildschirm
 
@@ -70,6 +70,6 @@ Beide, Skill und Befehl, sind eine `SKILL.md`. `disable-model-invocation: true` 
 
 - Ältere Befehle in `.claude/commands/<name>.md` funktionieren weiter und erzeugen dasselbe `/name`.
 - Weitere Felder wie `paths` (Skill nur für bestimmte Dateien) und `context: fork` stehen in den Docs: [Skills](https://code.claude.com/docs/en/skills)
-- Bücher, die ihr beim Testen angelegt habt, entfernt `curl -X POST http://localhost:4730/dev/reset` wieder.
+- Bücher, die ihr beim Testen angelegt habt, entfernt `curl -X POST http://localhost:4730/dev/reset` am Ende wieder. Schreibt den Reset nicht in den Skill: In unserem Lauf hat der Edit-Aufruf so das Buch aus Schritt 5 gelöscht.
 
 </details>

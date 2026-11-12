@@ -1,4 +1,4 @@
-> **⚠️ Start first:** each in its own terminal, keep it open for the whole task.
+> **⚠️ Must be running:** each in its own terminal. Start what is not running yet and keep it open for the whole task.
 > - API: `npx bookmonkey-api` (http://localhost:4730)
 
 ---
@@ -45,7 +45,7 @@ Now you trust the plan. Approve it if the app offers that, or switch the mode fr
 The plan is fine. Implement it and run npm run build at the end to check that everything works.
 ```
 
-The installation takes a few minutes. In our run the first build failed because of the Next.js feature Cache Components, and Claude fixed that itself.
+The installation takes a few minutes. The first build can fail because of the Next.js feature Cache Components. Claude usually fixes that itself. Make sure it does not simply turn the feature off: the clean fix is a `<Suspense>` around the fetch.
 
 ### 5. Look at the result
 
@@ -53,7 +53,7 @@ The installation takes a few minutes. In our run the first build failed because 
 Start the development server and tell me the URL.
 ```
 
-Open the address in the browser: five book titles appear. Under `/library` you see the heading of the protected area.
+Open the address in the browser: five book titles appear. Under `/library` you see the heading of the protected area. It only becomes protected in the subagents task.
 
 ### 6. Commit what you have read
 
@@ -61,7 +61,7 @@ Open the address in the browser: five book titles appear. Under `/library` you s
 Make the first commit. Read the changes first and write a fitting commit message.
 ```
 
-Check in the commit summary that `.env.local` is not included. In our run a `.env.example` was included.
+Check in the commit summary that `.env.local` is not included. The `.env.example` should be included. The template ignores all `.env*` files, so the `.gitignore` needs the line `!.env.example`.
 
 ### What just happened
 

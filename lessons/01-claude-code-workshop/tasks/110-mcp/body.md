@@ -1,4 +1,4 @@
-> **⚠️ Start first:** each in its own terminal, keep it open for the whole task.
+> **⚠️ Must be running:** each in its own terminal. Start what is not running yet and keep it open for the whole task.
 > - API: `npx bookmonkey-api` (http://localhost:4730)
 > - App: `npm run dev` (http://localhost:3000)
 
@@ -75,7 +75,7 @@ The MCP server gives Claude tools it does not have by itself. The **results** of
 <details>
 <summary>More on this</summary>
 
-By default `claude mcp add` stores the server only for you and this project. With `--scope project` it goes into the `.mcp.json` in the project folder, so your team gets it through Git. By default Playwright opens a visible browser window, according to its docs.
+By default `claude mcp add` stores the server only for you and this project. With `--scope project` it goes into the `.mcp.json` in the project folder, so your team gets it through Git. Then `claude mcp list` first shows "Pending approval": start `claude` once in the project and approve the server. By default Playwright opens a visible browser window, according to its docs.
 
 [MCP in Claude Code](https://code.claude.com/docs/en/mcp), [Playwright MCP](https://github.com/microsoft/playwright-mcp)
 

@@ -1,4 +1,4 @@
-> **⚠️ Start first:** each in its own terminal, keep it open for the whole task.
+> **⚠️ Must be running:** each in its own terminal. Start what is not running yet and keep it open for the whole task.
 > - API: `npx bookmonkey-api` (http://localhost:4730)
 > - App: `npm run dev` (http://localhost:3000)
 
@@ -14,7 +14,7 @@ You work in your `bookmonkey` repository with Node.js 26. The demo user is `admi
 Build the read side of the catalogue. On /books: a search field (q), sorting by title or price (_sort, _order) and paging with 12 books per page (_page, _limit, total count from the X-Total-Count header). Everything stays in the URL. Also a detail page at /books/<isbn> with links to the previous and next book of the series, from predecessorIsbn and successorIsbn. Check with npm run build.
 ```
 
-Then open `/books`, search, sort and page, and open a book from a series (for example Harry Potter). The previous and next links lead to the neighbouring books.
+Then open `/books`, search, sort and page, and open a book from a series (for example Harry Potter). The previous and next links lead to the neighbouring books. Claude replaces the title search from the skills task with the search through the API.
 
 ### 2. Record the pattern as a skill
 
@@ -42,7 +42,7 @@ Create a command /new-book-view at .claude/skills/new-book-view/SKILL.md that on
 
 ### 5. Build the create screen
 
-Type `/new-book-view create`. The argument ends up in the text of the command. Then sign in in the browser and create a book at http://localhost:3000/books/new with the ISBN 9990000000001. Then try it with the existing ISBN 9780747532699.
+Type `/new-book-view create`. The argument ends up in the text of the command. Then sign in in the browser and create a book at http://localhost:3000/books/new with the ISBN 9990000000001. Then try it with the existing ISBN 9780747532699. If you reach the form without signing in, the new routes are missing from the matcher in `proxy.ts`.
 
 ### 6. Build the edit screen
 
@@ -70,6 +70,6 @@ Skill and command are both a `SKILL.md`. `disable-model-invocation: true` turns 
 
 - Older commands in `.claude/commands/<name>.md` still work and create the same `/name`.
 - More fields such as `paths` (skill only for certain files) and `context: fork` are in the docs: [Skills](https://code.claude.com/docs/en/skills)
-- Remove books you created while testing with `curl -X POST http://localhost:4730/dev/reset`.
+- Remove books you created while testing with `curl -X POST http://localhost:4730/dev/reset` at the end. Do not put the reset into the skill: in our run the edit call deleted the book from step 5 that way.
 
 </details>

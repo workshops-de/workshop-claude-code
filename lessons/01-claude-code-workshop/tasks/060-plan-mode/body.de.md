@@ -1,4 +1,4 @@
-> **⚠️ Vorher starten:** jeweils in einem eigenen Terminal, während der ganzen Aufgabe offen lassen.
+> **⚠️ Muss laufen:** jeweils in einem eigenen Terminal. Startet, was noch nicht läuft, und lasst es während der ganzen Aufgabe offen.
 > - API: `npx bookmonkey-api` (http://localhost:4730)
 
 ---
@@ -45,7 +45,7 @@ Jetzt vertraut ihr dem Plan. Gebt ihn frei, falls die App das anbietet, oder ste
 Der Plan passt. Setze ihn um und prüfe am Ende mit npm run build, dass alles läuft.
 ```
 
-Die Installation dauert einige Minuten. In unserem Lauf scheiterte der erste Build an der Next.js-Funktion Cache Components, Claude hat das selbst behoben.
+Die Installation dauert einige Minuten. Der erste Build kann an der Next.js-Funktion Cache Components scheitern. Claude behebt das meist selbst. Achtet darauf, dass es die Funktion nicht einfach abschaltet: Die saubere Lösung ist ein `<Suspense>` um den Abruf.
 
 ### 5. Seht euch das Ergebnis an
 
@@ -53,7 +53,7 @@ Die Installation dauert einige Minuten. In unserem Lauf scheiterte der erste Bui
 Starte den Entwicklungsserver und sag mir die URL.
 ```
 
-Öffnet die Adresse im Browser: Fünf Buchtitel erscheinen. Unter `/library` seht ihr die Überschrift des geschützten Bereichs.
+Öffnet die Adresse im Browser: Fünf Buchtitel erscheinen. Unter `/library` seht ihr die Überschrift des geschützten Bereichs. Geschützt ist er erst ab der Aufgabe zu Subagents.
 
 ### 6. Committet, was ihr gelesen habt
 
@@ -61,7 +61,7 @@ Starte den Entwicklungsserver und sag mir die URL.
 Mach den ersten Commit. Lies vorher die Änderungen und schreib eine passende Commit-Nachricht.
 ```
 
-Prüft in der Commit-Übersicht, dass `.env.local` nicht dabei ist. In unserem Lauf kam eine `.env.example` mit.
+Prüft in der Commit-Übersicht, dass `.env.local` nicht dabei ist. Die `.env.example` soll mit. Das Template ignoriert alle `.env*`-Dateien, dafür braucht die `.gitignore` die Zeile `!.env.example`.
 
 ### Was gerade passiert ist
 

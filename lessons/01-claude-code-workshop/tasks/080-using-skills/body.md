@@ -1,4 +1,4 @@
-> **⚠️ Start first:** each in its own terminal, keep it open for the whole task.
+> **⚠️ Must be running:** each in its own terminal. Start what is not running yet and keep it open for the whole task.
 > - API: `npx bookmonkey-api` (http://localhost:4730)
 > - App: `npm run dev` (http://localhost:3000)
 
@@ -16,7 +16,7 @@ Open the terminal in the desktop app and run this in the project:
 npx skills add shadcn-ui/ui@shadcn -y
 ```
 
-The output shows safety ratings. A skill is text Claude follows, so take a quick look. Afterwards the project contains the folder `.agents/skills/shadcn`, a symlink `.claude/skills/shadcn` and the file `skills-lock.json`. Open the `SKILL.md` and read the first lines: they say what the skill is for.
+The output shows safety ratings. A skill is text Claude follows, so take a quick look. Afterwards the project contains the folder `.agents/skills/shadcn`, a symlink `.claude/skills/shadcn` and the file `skills-lock.json`. Open the `SKILL.md` and read the first lines: they say what the skill is for. Also look at `allowed-tools` and at the line with `!`: when it loads, the skill runs `npx shadcn@latest info` itself and may start `npx shadcn@latest` without asking.
 
 ### 2. Build the catalogue page without mentioning the skill
 
@@ -51,7 +51,7 @@ Write your own prompt that names the skill and extends the page with a search fi
 ### 6. Commit your state
 
 ```text
-Commit all changes from this task. Read the diff first.
+Commit all changes from this task, including .agents/skills/, .claude/skills/ and skills-lock.json. Read the diff first.
 ```
 
 ### What just happened
@@ -70,7 +70,7 @@ A skill is a good home for knowledge that changes quickly, like the shadcn CLI. 
 <details>
 <summary>More</summary>
 
-Find skills: `npx skills find <topic>` or https://skills.sh. Commit the folder `.agents/skills/` and `skills-lock.json` so your team has the same skill. In our runs Claude loaded the skill without a hint; with other wording this can differ.
+Find skills: `npx skills find <topic>` or https://skills.sh. Commit the folder `.agents/skills/` and `skills-lock.json` so your team has the same skill. In our runs Claude loaded the skill without a hint; with other wording this can differ. With shadcn 4.23 the package `cn` came in instead of `clsx` and `tailwind-merge`, and `init` wrote `--font-sans: var(--font-sans);` into `globals.css`. That breaks the font, and Claude repaired it itself.
 
 - [Claude Code: Skills](https://code.claude.com/docs/en/skills)
 - [shadcn/ui: Installation for Next.js](https://ui.shadcn.com/docs/installation/next)

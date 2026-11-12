@@ -120,8 +120,11 @@ other file changes needed for the numbering itself.
   markers in the task body, no dramatic words.
 - **Server box at the very top of `body.md` and `body.de.md`** (trainer's request, 2026-11-12).
   Every task that needs a running server starts with one quote box that lists each server on its
-  own line with command and URL (`> **⚠️ Start first:** each in its own terminal, …` /
-  `> **⚠️ Vorher starten:** jeweils in einem eigenen Terminal, …`). Once earlier tasks have used a
+  own line with command and URL (`> **⚠️ Must be running:** each in its own terminal. Start what is
+  not running yet, …` / `> **⚠️ Muss laufen:** jeweils in einem eigenen Terminal. Startet, was noch
+  nicht läuft, …`; servers may still run from the last task, and a second start fails on the port).
+  List only servers that run for the whole task: one the steps start and stop goes into the steps,
+  not the box. Once earlier tasks have used a
   server, a task that needs none says so instead (`> **✅ No server needed:** …` /
   `> **✅ Kein Server nötig:** …`). The intro below the box does not repeat the server commands.
   Tasks before the first server use (010 to 050) get no box. When a step changes which servers a
