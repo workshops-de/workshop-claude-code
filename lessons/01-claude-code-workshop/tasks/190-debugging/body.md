@@ -1,5 +1,8 @@
 > **⚠️ Start first, in your `bookmonkey-legacy` clone:** each in its own terminal, keep it open for the whole task.
-> - Branch: `git switch main`, not the refactoring branch from task 180
+> - First in Claude, so you do not work on the refactoring branch from task 180:
+>   ```text
+>   Switch to the main branch. If there are uncommitted changes, ask me first. If the Stop hook from task 180 is still in .claude/settings.local.json, remove it.
+>   ```
 > - API: `npm run dev:api` (http://localhost:4780)
 > - Web app: `npm run dev:web` (http://localhost:5180)
 > - Before that, if you are unsure whether the data is fresh: `npm run db:reset`
