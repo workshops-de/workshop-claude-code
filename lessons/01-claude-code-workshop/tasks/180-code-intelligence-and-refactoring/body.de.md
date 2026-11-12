@@ -38,13 +38,13 @@ In derselben Session:
 Ändere in api/routes.js bei GET /books/:isbn den Statuscode für ein unbekanntes Buch von 404 auf 410. Ändere keine Tests und führe keine Tests aus.
 ```
 
-Claude meldet „fertig“. Führt selbst `npm test` aus: In unserem Lauf wurde genau ein Test rot. Bleibt alles grün, fehlt eurem Netz dieser Fall, lasst Claude ihn ergänzen. Zurücknehmen: `git restore api/routes.js`.
+Claude meldet „fertig“. Führt selbst `npm test` aus. In unserem Lauf wurde ein Test rot. Bleibt alles grün, fehlt dieser Fall im Netz. Zurücknehmen: `git restore api/routes.js`.
 
 ### 5. Lasst die Tests automatisch laufen
 
-Ein **Stop-Hook** läuft jedes Mal, wenn Claude aufhören will, egal was im Prompt steht. Dieser führt `npm test` aus, blockiert bei Rot (`exit 2`, siehe Aufgabe 120) und lässt den zweiten Versuch durch, damit Claude nicht in einer Schleife hängt. Ihr müsst ihn nicht lesen, nur einfügen lassen:
+Ein **Stop-Hook** führt `npm test` aus, sobald Claude aufhören will. Bei Rot darf Claude nicht aufhören (`exit 2`, Aufgabe 120). Lasst ihn einfügen:
 
-````text
+```text
 Füge in .claude/settings.local.json genau diesen Stop-Hook ein und lass vorhandene Einträge stehen:
 
 {
@@ -62,9 +62,9 @@ Füge in .claude/settings.local.json genau diesen Stop-Hook ein und lass vorhand
     ]
   }
 }
-````
+```
 
-Neue Session, Modus Auto, derselbe Prompt wie in Schritt 4. Sagt vorher, was passiert. In unserem Lauf meldete Claude „Erledigt“, dann führte der Hook die Tests aus, und Claude nannte von selbst den roten Test. Der Prompt hat Tests verboten, der Hook hat sie trotzdem ausgeführt. Nehmt die Änderung wieder zurück. Die Datei `.claude/settings.local.json` committet ihr nicht.
+Neue Session, Modus Auto, Prompt aus Schritt 4. Ratet vorher, was passiert. In unserem Lauf meldete Claude „Erledigt“, der Hook testete trotzdem, und Claude nannte den roten Test. Danach `git restore api/routes.js`. Die Datei `.claude/settings.local.json` nicht committen.
 
 ### 6. Plant und widersprecht
 

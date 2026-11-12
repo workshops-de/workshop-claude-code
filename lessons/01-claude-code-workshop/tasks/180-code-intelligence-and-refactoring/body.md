@@ -38,13 +38,13 @@ In the same session:
 In api/routes.js, change the status code of GET /books/:isbn for an unknown book from 404 to 410. Do not change any tests and do not run any tests.
 ```
 
-Claude reports "done". Run `npm test` yourself: in our run exactly one test turned red. If everything stays green, your net is missing this case; ask Claude to add it. Undo: `git restore api/routes.js`.
+Claude reports "done". Run `npm test` yourself. In our run one test turned red. If everything stays green, the net is missing this case. Undo: `git restore api/routes.js`.
 
 ### 5. Let the tests run automatically
 
-A **Stop hook** runs every time Claude wants to stop, whatever the prompt says. This one runs `npm test`, blocks when red (`exit 2`, see task 120) and lets the second attempt through so Claude does not get stuck in a loop. You do not have to read it, just let Claude add it:
+A **Stop hook** runs `npm test` as soon as Claude wants to stop. When red, Claude may not stop (`exit 2`, task 120). Let Claude add it:
 
-````text
+```text
 Add exactly this Stop hook to .claude/settings.local.json and keep any existing entries:
 
 {
@@ -62,9 +62,9 @@ Add exactly this Stop hook to .claude/settings.local.json and keep any existing 
     ]
   }
 }
-````
+```
 
-New session, Auto mode, the same prompt as in step 4. Predict first what will happen. In our run Claude reported "done", then the hook ran the tests, and Claude named the red test on its own. The prompt forbade tests, the hook ran them anyway. Undo the change again. Do not commit `.claude/settings.local.json`.
+New session, Auto mode, the prompt from step 4. Guess first what will happen. In our run Claude reported "done", the hook tested anyway, and Claude named the red test. Then `git restore api/routes.js`. Do not commit `.claude/settings.local.json`.
 
 ### 6. Plan and push back
 
