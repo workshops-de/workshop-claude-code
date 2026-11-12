@@ -27,8 +27,8 @@ Haltet an und entscheidet: Hat der Schritt das Verhalten geändert, dann macht i
 </details>
 
 <details>
-<summary>💡 Tipp 5: Alle Tests auf einmal rot?</summary>
+<summary>💡 Tipp 5: Alle Tests rot, oder der Hook greift nicht?</summary>
 
-Prüft `node -v`: `bookmonkey-legacy` braucht Node 24 oder neuer (`node:sqlite`).
+Prüft `node -v`: `bookmonkey-legacy` braucht Node 24 oder neuer (`node:sqlite`). Meldet nur der Stop-Hook alles rot, während `npm test` im Terminal grün ist, läuft der Hook vermutlich mit einer anderen Node-Version. Lasst Claude im Hook `node -v` ausgeben und vergleicht. Greift der Hook gar nicht, habt ihr nach dem Einfügen eine neue Session gestartet? Lasst Claude prüfen, ob `.claude/settings.local.json` gültiges JSON ist.
 
 </details>

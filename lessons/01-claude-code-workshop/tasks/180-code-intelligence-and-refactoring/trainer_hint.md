@@ -1,38 +1,63 @@
 ## Learning goals
 
-- **Feature:** plan mode for large changes, characterisation tests as a safety net, small
-  verified steps with commits, `/rewind`, optional code intelligence.
+- **Feature:** plan mode for large changes, characterisation tests as a safety net, a Stop hook
+  that triggers the net automatically, small verified steps with commits, `/rewind`, optional
+  sandbox and code intelligence.
 - **Concepts:** refactoring vs. rewriting; behaviour preservation; inventory before change;
-  separating "refactor" from "fix".
-- **Takeaways:** delegate judgement-heavy refactors; pin behaviour before you move code; keep
-  mechanical edits in the IDE; you own the diff.
+  separating "refactor" from "fix"; test a net before you trust it; a request in the prompt vs. a
+  hook.
+- **Takeaways:** delegate judgement-heavy refactors; pin behaviour before you move code; "the net
+  knows nothing about right or wrong, only about same or different"; what must always happen
+  belongs in a hook; you own the diff.
 
 ## Facilitation notes
 
 - This opens "Quality & Automation". Set the frame: the rest of the block is about making quality
   systematic.
-- Let participants choose freely. Option (a) is about finding all places that do the same thing
-  differently; option (b) is about moving code without changing what it does. Both are scoped
-  down on purpose: (a) to three places the group picks, (b) to the two
-  resources moved first. Both still take longer than people expect; time-box at 45 minutes of
-  work and say out loud that a clean partial step with green tests counts as success.
-- Show `/diff` after the first step and `/rewind` (or `Esc` twice) once live: the agenda promises
-  both, and participants only use them after they have seen them once.
-- Do not hand out the list of affected places. The inventory is the learning. The complete list
-  for both options and the notes on what the tests should reveal are in the private trainer repo
+- The codebase has known bugs, and the characterisation tests are green anyway. That is the key
+  sentence for step 3: the net reports changes, not bugs. Bugs found go on the list for the
+  debugging and code review tasks.
+- Step 4 is the aha moment: Claude reports "done", and only your own `npm test` shows the break. If
+  everything stays green for someone, the task is not broken, their net has a gap. That insight is
+  exactly what is valuable.
+- Step 5 builds on task 120: there Claude built hooks, here participants get a finished one.
+  Reason: when we let Claude build the Stop hook itself, it wrote a debug file to `/tmp` and added
+  no protection against endless loops. The given hook lets the second stop through
+  (`stop_hook_active`), so Claude can still ask when red in step 8.
+- `.claude/settings.local.json` is not in the repo's `.gitignore`. Make sure nobody commits the
+  file and that everyone removes the hook in step 10. Otherwise `npm test` runs at every stop in
+  later tasks, including the debugging task.
+- Show `/rewind` (or `Esc` twice) once live in step 4: participants only use it after they have
+  seen it once. Those who prefer git: `git restore api/routes.js`.
+- Do not hand out the list of odd places. The inventory is the learning. The complete list and the
+  notes on what the tests should reveal are in the private trainer repo
   (`bookmonkey-legacy-trainer`, `SOLUTIONS.md`).
 - Expect the agent to "improve" things on the way. That is the most important discussion: a
-  refactor that also changes behaviour is no longer a refactor. Ask participants to list such
-  findings instead and keep them for the debugging and code review tasks.
-- Some participants will find surprising behaviour while writing characterisation tests. Good.
-  Confirm only that surprises are worth writing down, not what they mean.
+  refactor that also changes behaviour is no longer a refactor.
 - Participants who work on their own codebase need a test command that runs in under a minute;
-  check that before they start.
+  check that before they start. The Stop hook runs it at every stop.
+- The sandbox bonus shows two things: it also blocks something harmless (a local port), and hooks
+  run outside it. The question in point 3 works well for the debrief.
 - If your organization has an LSP plugin available, a live before/after (grep-based vs.
   code-intelligence-based inventory) is a strong demo.
 
+## Tested
+
+On 12 Nov with Claude Code 2.1.319 and Sonnet via `claude -p` in a copy of `bookmonkey-legacy`
+on macOS, Node 24.11, without personal settings (`--setting-sources project,local`):
+
+- Step 4: after the change from 404 to 410, exactly the characterisation test for the unknown book
+  turned red.
+- Step 5: Claude first reported "done", the Stop hook blocked, Claude named the red test with file
+  and line and stopped on the second attempt.
+- Bonus: sandbox on gives `listen EPERM`, with `allowLocalBinding` all tests are green. The Stop
+  hook stayed green inside the sandbox.
+
+Not tested: `/rewind` (interactive only), the steps in the desktop app, and whether the desktop app
+reads the sandbox entries from `.claude/settings.local.json` the same way as the CLI.
+
 ## Time estimate
 
-~60 minutes: 10 inventory, 15 characterisation tests, 25 refactor in steps, 10 verify and debrief.
-The narrowed scope is what makes 60 minutes hold; without it, plan 90. Groups that finish early
-take the bonus (more places for (a), more resources for (b)).
+~75 minutes: 10 inventory, 15 characterisation tests, 15 testing the net and the hook, 25 refactor in
+steps, 10 verify and debrief. If time runs short, skip step 9 and say out loud that a clean partial
+step with green tests counts as success. Groups that finish early take the bonus before step 10.

@@ -27,8 +27,8 @@ Stop and decide: if the step changed behaviour, undo it (`git restore .` for unc
 </details>
 
 <details>
-<summary>💡 Hint 5: All tests red at once?</summary>
+<summary>💡 Hint 5: All tests red, or the hook does not kick in?</summary>
 
-Check `node -v`: `bookmonkey-legacy` needs Node 24 or newer (`node:sqlite`).
+Check `node -v`: `bookmonkey-legacy` needs Node 24 or newer (`node:sqlite`). If only the Stop hook reports everything red while `npm test` in the terminal is green, the hook probably runs with a different Node version. Ask Claude to print `node -v` from the hook and compare. If the hook does not kick in at all, did you start a new session after adding it? Ask Claude to check that `.claude/settings.local.json` is valid JSON.
 
 </details>
