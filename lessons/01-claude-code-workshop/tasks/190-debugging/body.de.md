@@ -1,4 +1,5 @@
 > **⚠️ Vorher starten, im `bookmonkey-legacy`-Clone:** jeweils in einem eigenen Terminal, während der ganzen Aufgabe offen lassen.
+> - Branch: `git switch main`, nicht der Refactoring-Branch aus Aufgabe 180
 > - API: `npm run dev:api` (http://localhost:4780)
 > - Web-App: `npm run dev:web` (http://localhost:5180)
 > - Davor, falls ihr unsicher seid, ob die Daten frisch sind: `npm run db:reset`
