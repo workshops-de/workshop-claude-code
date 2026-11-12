@@ -123,6 +123,8 @@ other file changes needed for the numbering itself.
   matcher, `Edit|Write`, `exit 2`) go into the explanation text, not into the prompt. Let Claude
   test its own work ("zeig mir die Ausgabe") instead of scripting the test. Expected results say
   what you see, marked "in unserem Lauf", plus what to do when Claude answers differently.
+  Technical terms that drop out of a prompt go into one collapsible tip per step ("Fachbegriffe
+  zum Nachsteuern"), as short bullets only, not as a second prompt (trainer's request 2026-11-13).
 - Write like a trainer talking to colleagues: full, plain sentences. No punchlines, no emoji
   markers in the task body, no dramatic words.
 - **Server box at the very top of `body.md` and `body.de.md`** (trainer's request, 2026-11-12).

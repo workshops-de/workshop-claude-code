@@ -18,7 +18,7 @@ You already have the file `.env.local`: since the subagents task it contains you
 What is in my .env.local?
 ```
 
-The contents appear, the secret included. That is how it ends up in the session history.
+The contents appear, the secret included. That is how it ends up in the session history. Sometimes Claude refuses even without a hook, because it recognises a secret. The model decides this anew each time, it is no guarantee. That is exactly why you build the hook.
 
 ### 2. Let Claude build a hook
 

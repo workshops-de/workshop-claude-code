@@ -25,3 +25,15 @@ They run on every change. One type check is enough, the full test suite does not
 Then the hook script itself has a bug. Tell Claude what you see, for example: "Your hook blocks every command, fix it." Claude can still change the script with its file tools.
 
 </details>
+
+<details>
+<summary>💡 Hint 5: Technical terms for the reading list</summary>
+
+To steer when Claude builds something else:
+
+- `localStorage`, key with the user ID
+- State machine as a pure function, own file without storage and React
+- Add `/reading-list` to the proxy matcher in `proxy.ts`
+- Read the header counter only after loading (otherwise hydration mismatch)
+
+</details>

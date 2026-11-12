@@ -18,7 +18,7 @@ Die Datei `.env.local` habt ihr schon: Sie enthält seit der Subagents-Aufgabe e
 Was steht in meiner .env.local?
 ```
 
-Der Inhalt erscheint, auch das Secret. So landet es im Verlauf der Session.
+Der Inhalt erscheint, auch das Secret. So landet es im Verlauf der Session. Manchmal weigert sich Claude schon ohne Hook, weil es ein Secret erkennt. Das entscheidet das Modell jedes Mal neu, eine Garantie ist es nicht. Genau dafür baut ihr den Hook.
 
 ### 2. Lasst Claude einen Hook bauen
 
