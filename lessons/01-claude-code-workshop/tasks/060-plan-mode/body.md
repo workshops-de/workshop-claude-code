@@ -1,5 +1,8 @@
-> **⚠️ Must be running:** each in its own terminal. Start what is not running yet and keep it open for the whole task.
-> - API: `npx bookmonkey-api` (http://localhost:4730)
+> **⚠️ Setup first:** Once your session runs in the new `bookmonkey` folder (see below), send this prompt to Claude before you switch to Plan mode. In the Desktop App, Claude starts the API in its own terminal tab (stop: Ctrl+C in the tab). Without the Desktop App, Claude gives you the command.
+>
+> ```text
+> Setup for task 060: Check with curl whether the bookmonkey-api on http://localhost:4730 (command: npx bookmonkey-api) responds. If a server is missing, start it with that command in its own tab in the Desktop App terminal. If you cannot, give me the commands. If a port is already in use, ask me. End with a checklist of ✅ and ❌.
+> ```
 
 ---
 

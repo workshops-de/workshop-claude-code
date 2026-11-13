@@ -1,5 +1,8 @@
-> **⚠️ Muss laufen:** jeweils in einem eigenen Terminal. Startet, was noch nicht läuft, und lasst es während der ganzen Aufgabe offen.
-> - API: `npx bookmonkey-api` (http://localhost:4730)
+> **⚠️ Setup zuerst:** Schickt diesen Prompt in einer Session im Projektordner an Claude. In der Desktop-App startet Claude fehlende Server in eigenen Terminal-Tabs (stoppen: Ctrl+C im Tab). Ohne Desktop-App nennt Claude euch die Befehle für eigene Terminals.
+>
+> ```text
+> Setup für Aufgabe 230: Prüf mit curl, ob die bookmonkey-api auf http://localhost:4730 (Befehl: npx bookmonkey-api) antwortet. Fehlt ein Server, starte ihn mit diesem Befehl in einem eigenen Tab im Terminal der Desktop-App. Geht das nicht, nenn mir die Befehle. Ist ein Port schon belegt, frag mich. Gib mir am Ende eine Checkliste mit ✅ und ❌.
+> ```
 
 ---
 
@@ -35,7 +38,7 @@ Führt im Root-Ordner `API_URL=http://localhost:3001 npm run contract` aus (Powe
 
 ### 4. Gebt Claude das Ziel
 
-Stoppt das Backend im zweiten Terminal, Claude startet im Worktree sein eigenes. Öffnet in der Desktop-App das Terminal im Projektordner und startet dort `claude --worktree contract-run --permission-mode auto`. Der **Auto-Modus** sorgt dafür, dass Claude nicht bei jedem Befehl fragt. Schickt dort:
+Stoppt das Backend in seinem Terminal-Tab, Claude startet im Worktree sein eigenes. Öffnet in der Desktop-App das Terminal im Projektordner und startet dort `claude --worktree contract-run --permission-mode auto`. Der **Auto-Modus** sorgt dafür, dass Claude nicht bei jedem Befehl fragt. Schickt dort:
 
 ```text
 /goal npm run contract mit API_URL=http://localhost:3001 endet mit Exit-Code 0. Installiere zuerst die Abhängigkeiten in backend/ und contract-tests/. Starte das Backend aus diesem Ordner selbst mit PORT=3001 und beende es danach wieder. Die Daten bleiben im Speicher: Beim Start lädt das Backend alle Bücher von http://localhost:4730/books. Dateien unter contract-tests/ bleiben unverändert. Stopp nach 20 Turns.

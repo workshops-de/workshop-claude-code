@@ -1,4 +1,8 @@
-> **⚠️ Vorher beenden:** Läuft die API noch aus der Debugging-Aufgabe, beendet sie mit Ctrl+C. In Schritt 1 startet ihr sie neu.
+> **⚠️ Vorher aufräumen:** Schickt diesen Prompt an Claude. Die API startet ihr in Schritt 1 neu.
+>
+> ```text
+> Setup für Aufgabe 220: Läuft auf Port 4780 noch eine API aus der Debugging-Aufgabe, beende sie. Starte nichts. Sag mir am Ende, ob du etwas beendet hast.
+> ```
 
 ---
 
@@ -15,7 +19,7 @@ git merge --no-edit main
 npm run db:reset
 ```
 
-Der Merge holt eure `CLAUDE.md` und Einstellungen aus `main` in den Review-Branch. Der Diff `main...review/admin-export-v2` mit drei Punkten zeigt trotzdem nur, was Dana geändert hat. Startet in einem zweiten Terminal die API mit `npm run dev:api` (http://localhost:4780). Die Web-App braucht ihr nicht.
+Der Merge holt eure `CLAUDE.md` und Einstellungen aus `main` in den Review-Branch. Der Diff `main...review/admin-export-v2` mit drei Punkten zeigt trotzdem nur, was Dana geändert hat. Startet danach die API mit `npm run dev:api` (http://localhost:4780), in der Desktop-App gern über Claude in einem eigenen Terminal-Tab. Die Web-App braucht ihr nicht.
 
 ### 2. Legt den Security-Subagent an
 

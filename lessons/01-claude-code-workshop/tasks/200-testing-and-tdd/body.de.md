@@ -1,5 +1,8 @@
-> **⚠️ Muss laufen:** jeweils in einem eigenen Terminal. Startet, was noch nicht läuft, und lasst es während der ganzen Aufgabe offen.
-> - API: `npx bookmonkey-api` (http://localhost:4730)
+> **⚠️ Setup zuerst:** Schickt diesen Prompt in einer Session im Projektordner an Claude. In der Desktop-App startet Claude fehlende Server in eigenen Terminal-Tabs (stoppen: Ctrl+C im Tab). Ohne Desktop-App nennt Claude euch die Befehle für eigene Terminals.
+>
+> ```text
+> Setup für Aufgabe 200: Prüf mit curl, ob die bookmonkey-api auf http://localhost:4730 (Befehl: npx bookmonkey-api) antwortet. Fehlt ein Server, starte ihn mit diesem Befehl in einem eigenen Tab im Terminal der Desktop-App. Geht das nicht, nenn mir die Befehle. Ist ein Port schon belegt, frag mich. Gib mir am Ende eine Checkliste mit ✅ und ❌.
+> ```
 
 ---
 
@@ -41,7 +44,7 @@ Startet eine neue Session und schickt:
 Lege mit npx @nestjs/cli new backend --package-manager npm --skip-git ein NestJS-Backend in backend/ an. Es soll auf Port 3001 laufen, wenn die Umgebungsvariable PORT nicht gesetzt ist. Entferne die Beispielroute samt ihrem Test, es gibt noch keine Books-Endpunkte. Schließe backend/ und contract-tests/ in der Root-tsconfig.json und in der Root-eslint.config.mjs vom Frontend-Tooling aus. Starte das Backend noch nicht.
 ```
 
-Der Type-Check-Hook aus der Hooks-Aufgabe läuft im Hauptprojekt bei jeder Änderung. `backend/` und `contract-tests/` haben ihre eigene Einstellung, deshalb schließt ihr sie dort aus. Startet das Backend danach in einem zweiten Terminal mit `cd backend && npm run start:dev`.
+Der Type-Check-Hook aus der Hooks-Aufgabe läuft im Hauptprojekt bei jeder Änderung. `backend/` und `contract-tests/` haben ihre eigene Einstellung, deshalb schließt ihr sie dort aus. Startet das Backend danach in einem eigenen Terminal-Tab mit `cd backend && npm run start:dev`.
 
 ### 5. Seht die Tests rot
 

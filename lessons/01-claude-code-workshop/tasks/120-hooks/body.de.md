@@ -1,6 +1,8 @@
-> **⚠️ Für Schritt 7 starten:** jeweils in einem eigenen Terminal, bis zum Ende offen lassen.
-> - API: `npx bookmonkey-api` (http://localhost:4730)
-> - App: `npm run dev` (http://localhost:3000)
+> **⚠️ Setup vor Schritt 7:** Schickt diesen Prompt an Claude, bevor ihr mit Schritt 7 beginnt. In der Desktop-App startet Claude fehlende Server in eigenen Terminal-Tabs (stoppen: Ctrl+C im Tab). Ohne Desktop-App nennt Claude euch die Befehle.
+>
+> ```text
+> Setup für Aufgabe 120: Fehlt im Projektordner node_modules, führe npm install aus. Prüf mit curl, ob die bookmonkey-api auf http://localhost:4730 (Befehl: npx bookmonkey-api) und die App auf http://localhost:3000 (Befehl: npm run dev im Projektordner) antworten. Fehlt ein Server, starte ihn mit diesem Befehl in einem eigenen Tab im Terminal der Desktop-App. Geht das nicht, nenn mir die Befehle. Ist ein Port schon belegt, frag mich. Gib mir am Ende eine Checkliste mit ✅ und ❌.
+> ```
 
 ---
 
@@ -88,7 +90,7 @@ In unserem Lauf meldete er fünfmal. Viermal waren es Zwischenstände (ein Impor
 
 ### 7. Probiert die Leseliste im Browser aus
 
-Startet die beiden Server, meldet euch auf http://localhost:3000 als Demo-User an und setzt ein Buch auf die Liste. Meldet euch ab, registriert einen zweiten Account (zum Beispiel zweiter@example.com mit password1!) und öffnet `/reading-list`. Die Liste ist leer. Seht ihr die Bücher des ersten Accounts, sagt Claude das und dass jeder User eine eigene Liste haben soll.
+Prüft, dass beide Server laufen (Setup-Prompt oben), meldet euch auf http://localhost:3000 als Demo-User an und setzt ein Buch auf die Liste. Meldet euch ab, registriert einen zweiten Account (zum Beispiel zweiter@example.com mit password1!) und öffnet `/reading-list`. Die Liste ist leer. Seht ihr die Bücher des ersten Accounts, sagt Claude das und dass jeder User eine eigene Liste haben soll.
 
 ### 8. Committet euren Stand
 

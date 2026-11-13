@@ -1,11 +1,8 @@
-> **⚠️ Vorher starten, im `bookmonkey-legacy`-Clone:** jeweils in einem eigenen Terminal, während der ganzen Aufgabe offen lassen.
-> - Zuerst in Claude, damit ihr nicht auf dem Refactoring-Branch aus Aufgabe 180 arbeitet:
->   ```text
->   Wechsle auf den Branch main. Gibt es offene Änderungen, frag mich vorher. Steht in .claude/settings.local.json noch der Stop-Hook aus Aufgabe 180, entferne ihn.
->   ```
-> - API: `npm run dev:api` (http://localhost:4780)
-> - Web-App: `npm run dev:web` (http://localhost:5180)
-> - Davor, falls ihr unsicher seid, ob die Daten frisch sind: `npm run db:reset`
+> **⚠️ Setup zuerst, im `bookmonkey-legacy`-Clone:** Schickt diesen Prompt an Claude. In der Desktop-App startet Claude die Server in eigenen Terminal-Tabs (stoppen: Ctrl+C im Tab). Ohne Desktop-App nennt Claude euch die Befehle.
+>
+> ```text
+> Setup für Aufgabe 190: Wechsle auf den Branch main. Gibt es offene Änderungen, frag mich vorher. Steht in .claude/settings.local.json noch der Stop-Hook aus Aufgabe 180, entferne ihn. Läuft auf Port 4780 schon eine API, beende sie. Führe dann npm run db:reset aus, damit die Daten frisch sind. Prüf mit curl, ob die API auf http://localhost:4780 (Befehl: npm run dev:api) und die Web-App auf http://localhost:5180 (Befehl: npm run dev:web) antworten. Fehlt ein Server, starte ihn mit diesem Befehl in einem eigenen Tab im Terminal der Desktop-App. Geht das nicht, nenn mir die Befehle. Ist ein Port schon belegt, frag mich. Gib mir am Ende eine Checkliste mit ✅ und ❌.
+> ```
 
 ---
 

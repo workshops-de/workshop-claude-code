@@ -1,6 +1,8 @@
-> **⚠️ Start for step 7:** each in its own terminal, keep it open until the end.
-> - API: `npx bookmonkey-api` (http://localhost:4730)
-> - App: `npm run dev` (http://localhost:3000)
+> **⚠️ Setup before step 7:** Send this prompt to Claude before you start step 7. In the Desktop App, Claude starts missing servers in their own terminal tabs (stop: Ctrl+C in the tab). Without the Desktop App, Claude gives you the commands.
+>
+> ```text
+> Setup for task 120: If node_modules is missing in the project folder, run npm install. Check with curl whether the bookmonkey-api on http://localhost:4730 (command: npx bookmonkey-api) and the app on http://localhost:3000 (command: npm run dev in the project folder) respond. If a server is missing, start it with that command in its own tab in the Desktop App terminal. If you cannot, give me the commands. If a port is already in use, ask me. End with a checklist of ✅ and ❌.
+> ```
 
 ---
 
@@ -88,7 +90,7 @@ In our run it reported five times. Four were intermediate states (an import only
 
 ### 7. Try the reading list in the browser
 
-Start both servers, sign in on http://localhost:3000 as the demo user and put a book on the list. Sign out, register a second account (for example second@example.com with password1!) and open `/reading-list`. The list is empty. If you see the first account's books, tell Claude so, and that every user should have their own list.
+Make sure both servers run (setup prompt at the top), sign in on http://localhost:3000 as the demo user and put a book on the list. Sign out, register a second account (for example second@example.com with password1!) and open `/reading-list`. The list is empty. If you see the first account's books, tell Claude so, and that every user should have their own list.
 
 ### 8. Commit your state
 

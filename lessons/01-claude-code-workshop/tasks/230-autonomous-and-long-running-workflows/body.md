@@ -1,5 +1,8 @@
-> **⚠️ Must be running:** each in its own terminal. Start what is not running yet and keep it open for the whole task.
-> - API: `npx bookmonkey-api` (http://localhost:4730)
+> **⚠️ Setup first:** Send this prompt to Claude in a session in the project folder. In the Desktop App, Claude starts missing servers in their own terminal tabs (stop: Ctrl+C in the tab). Without the Desktop App, Claude gives you the commands for separate terminals.
+>
+> ```text
+> Setup for task 230: Check with curl whether the bookmonkey-api on http://localhost:4730 (command: npx bookmonkey-api) responds. If a server is missing, start it with that command in its own tab in the Desktop App terminal. If you cannot, give me the commands. If a port is already in use, ask me. End with a checklist of ✅ and ❌.
+> ```
 
 ---
 
@@ -35,7 +38,7 @@ In the root folder run `API_URL=http://localhost:3001 npm run contract` (PowerSh
 
 ### 4. Give Claude the goal
 
-Stop the backend in the second terminal, Claude starts its own in the worktree. In the desktop app, open the terminal in the project folder and run `claude --worktree contract-run --permission-mode auto` there. **Auto mode** means Claude does not ask for every command. Send there:
+Stop the backend in its terminal tab, Claude starts its own in the worktree. In the desktop app, open the terminal in the project folder and run `claude --worktree contract-run --permission-mode auto` there. **Auto mode** means Claude does not ask for every command. Send there:
 
 ```text
 /goal npm run contract with API_URL=http://localhost:3001 exits with code 0. First install the dependencies in backend/ and contract-tests/. Start the backend yourself from this folder with PORT=3001 and stop it afterwards. The data stays in memory: on start the backend loads all books from http://localhost:4730/books. Files under contract-tests/ stay unchanged. Stop after 20 turns.

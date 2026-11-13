@@ -1,6 +1,8 @@
-> **⚠️ Must be running:** each in its own terminal. Start what is not running yet and keep it open for the whole task.
-> - API: `npx bookmonkey-api` (http://localhost:4730)
-> - App: `npm run dev` (http://localhost:3000)
+> **⚠️ Setup first:** Send this prompt to Claude in a session in the project folder. In the Desktop App, Claude starts missing servers in their own terminal tabs (stop: Ctrl+C in the tab). Without the Desktop App, Claude gives you the commands for separate terminals.
+>
+> ```text
+> Setup for task 110: If node_modules is missing in the project folder, run npm install. Check with curl whether the bookmonkey-api on http://localhost:4730 (command: npx bookmonkey-api) and the app on http://localhost:3000 (command: npm run dev in the project folder) respond. If a server is missing, start it with that command in its own tab in the Desktop App terminal. If you cannot, give me the commands. If a port is already in use, ask me. End with a checklist of ✅ and ❌.
+> ```
 
 ---
 

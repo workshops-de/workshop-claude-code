@@ -1,6 +1,8 @@
-> **⚠️ Muss laufen:** jeweils in einem eigenen Terminal. Startet, was noch nicht läuft, und lasst es während der ganzen Aufgabe offen.
-> - API: `npx bookmonkey-api` (http://localhost:4730)
-> - App: `npm run dev` (http://localhost:3000)
+> **⚠️ Setup zuerst:** Schickt diesen Prompt in einer Session im Projektordner an Claude. In der Desktop-App startet Claude fehlende Server in eigenen Terminal-Tabs (stoppen: Ctrl+C im Tab). Ohne Desktop-App nennt Claude euch die Befehle für eigene Terminals.
+>
+> ```text
+> Setup für Aufgabe 080: Fehlt im Projektordner node_modules, führe npm install aus. Prüf mit curl, ob die bookmonkey-api auf http://localhost:4730 (Befehl: npx bookmonkey-api) und die App auf http://localhost:3000 (Befehl: npm run dev im Projektordner) antworten. Fehlt ein Server, starte ihn mit diesem Befehl in einem eigenen Tab im Terminal der Desktop-App. Geht das nicht, nenn mir die Befehle. Ist ein Port schon belegt, frag mich. Gib mir am Ende eine Checkliste mit ✅ und ❌.
+> ```
 
 ---
 

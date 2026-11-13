@@ -1,11 +1,8 @@
-> **⚠️ Start first, in your `bookmonkey-legacy` clone:** each in its own terminal, keep it open for the whole task.
-> - First in Claude, so you do not work on the refactoring branch from task 180:
->   ```text
->   Switch to the main branch. If there are uncommitted changes, ask me first. If the Stop hook from task 180 is still in .claude/settings.local.json, remove it.
->   ```
-> - API: `npm run dev:api` (http://localhost:4780)
-> - Web app: `npm run dev:web` (http://localhost:5180)
-> - Before that, if you are unsure whether the data is fresh: `npm run db:reset`
+> **⚠️ Setup first, in your `bookmonkey-legacy` clone:** Send this prompt to Claude. In the Desktop App, Claude starts the servers in their own terminal tabs (stop: Ctrl+C in the tab). Without the Desktop App, Claude gives you the commands.
+>
+> ```text
+> Setup for task 190: Switch to the main branch. If there are uncommitted changes, ask me first. If the Stop hook from task 180 is still in .claude/settings.local.json, remove it. If an API is already running on port 4780, stop it. Then run npm run db:reset so the data is fresh. Check with curl whether the API on http://localhost:4780 (command: npm run dev:api) and the web app on http://localhost:5180 (command: npm run dev:web) respond. If a server is missing, start it with that command in its own tab in the Desktop App terminal. If you cannot, give me the commands. If a port is already in use, ask me. End with a checklist of ✅ and ❌.
+> ```
 
 ---
 
