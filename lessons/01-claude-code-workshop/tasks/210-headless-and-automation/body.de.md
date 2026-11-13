@@ -94,7 +94,7 @@ Committe alle Änderungen aus dieser Aufgabe. Lies vorher den Diff.
 
 `claude -p` macht aus Claude ein Kommandozeilenprogramm: Eingabe per Pipe, Ausgabe auf der Konsole, und mit Schema und Exit-Code lässt es sich in Skripte einbauen. Mit einem Git-Hook läuft die Prüfung vor jedem Push von selbst. Dieselbe Idee steckt in jeder Pipeline, die Claude aufruft. Die Antworten unterscheiden sich in jedem Lauf, das Urteil und die Probleme prüft ihr selbst.
 
-**Fertig, wenn** `review.sh` ein Urteil mit Exit-Code ausgibt, der Hook den Push des PR-Branches stoppt, er mit `--no-verify` durchgeht und Skript und Hook-Ordner committet sind (liegt der Hook in `.git/hooks`, nur das Skript).
+**Fertig, wenn** `review.sh` ein Urteil mit Exit-Code ausgibt, der Hook den Push des PR-Branches stoppt, dieser Push mit `--no-verify` aber durchgeht und Skript und Hook-Ordner committet sind (liegt der Hook in `.git/hooks`, nur das Skript).
 
 <details>
 <summary>Mehr dazu</summary>
