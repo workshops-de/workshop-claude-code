@@ -31,9 +31,9 @@ Then the hook script itself has a bug. Tell Claude what you see, for example: "Y
 
 To steer when Claude builds something else:
 
-- `localStorage`, key with the user ID
-- State machine as a pure function, own file without storage and React
-- Add `/reading-list` to the proxy matcher in `proxy.ts`
-- Read the header counter only after loading (otherwise hydration mismatch)
+- **`localStorage`**, key with the **user ID**
+- **State machine** as a **pure function**, own file without storage and React
+- Add `/reading-list` to the **proxy matcher** in `proxy.ts`
+- Read the header counter only **after loading** (otherwise **hydration mismatch**)
 
 </details>

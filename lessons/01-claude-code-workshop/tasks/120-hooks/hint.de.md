@@ -31,9 +31,9 @@ Dann hat das Hook-Skript selbst einen Fehler. Sagt Claude, was ihr seht, zum Bei
 
 Zum Nachsteuern, wenn Claude etwas anderes baut:
 
-- `localStorage`, Schlüssel mit User-ID
-- State Machine als reine Funktion, eigene Datei ohne Speicher und React
-- Proxy-Matcher in `proxy.ts` um `/reading-list` ergänzen
-- Header-Zähler erst nach dem Laden lesen (sonst Hydration-Mismatch)
+- **`localStorage`**, Schlüssel mit **User-ID**
+- **State Machine** als **reine Funktion**, eigene Datei ohne Speicher und React
+- **Proxy-Matcher** in `proxy.ts` um `/reading-list` ergänzen
+- Header-Zähler erst **nach dem Laden** lesen (sonst **Hydration-Mismatch**)
 
 </details>
