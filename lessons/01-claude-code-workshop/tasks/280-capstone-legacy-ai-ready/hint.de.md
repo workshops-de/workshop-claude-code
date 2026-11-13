@@ -6,7 +6,7 @@ Was würde die neue Kollegin an ihrem ersten Tag als Erstes fragen? Und was hat 
 </details>
 
 <details>
-<summary>💡 Tipp 2: 45 Minuten reichen nicht für alles?</summary>
+<summary>💡 Tipp 2: 35 Minuten reichen nicht für alles?</summary>
 
 Welcher Baustein bringt am meisten, wenn alle anderen fehlen? Baut den zuerst gut, statt vier halb. Was fehlt, kommt auf eure Liste „bewusst weggelassen“.
 

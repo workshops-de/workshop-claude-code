@@ -3,7 +3,7 @@ title: 'Capstone: Make BookMonkey Legacy AI-Ready'
 position: 280
 category: 'Autonomy & Methodologies'
 preparation: false
-estimated_time_in_minutes: 75
+estimated_time_in_minutes: 60
 always_unlocked: false
 
 # Group exercise on a fresh clone of bookmonkey-legacy, no solution branch.

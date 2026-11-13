@@ -5,16 +5,16 @@
 - **Übungsfeld:** ein frischer Klon von `bookmonkey-legacy`, ohne die Dateien aus den früheren Aufgaben.
 - **Takeaways:** Ein gutes Setup ist klein, geprüft und begründet. Jede Gruppe kann sagen, was sie bewusst weggelassen hat.
 
-## Ablauf (75 min)
+## Ablauf (60 min)
 
 | Zeit | Was |
 | --- | --- |
 | 5 min | Gruppen bilden (3 bis 4 Personen), frisch klonen |
-| 10 min | Erkunden im Plan Mode |
-| 5 min | Tabelle „Was gehört wohin?“ |
-| 25 min | Bauen, Rollen nach jedem Baustein wechseln |
+| 7 min | Erkunden im Plan Mode |
+| 3 min | Tabelle „Was gehört wohin?“ |
+| 20 min | Bauen, Rollen nach jedem Baustein wechseln |
 | 5 min | Probe in einer neuen Session |
-| 25 min | Red-Team-Prompt und Vorstellen, je Gruppe 4 min, danach kurze Runde |
+| 20 min | Red-Team-Prompt und Vorstellen, je Gruppe 3 min, danach kurze Runde |
 
 ## Hinweise zur Durchführung
 
@@ -27,7 +27,7 @@
 - Pflicht sind nur `CLAUDE.md` und ein durchsetzender Baustein (Hook oder Deny-Regel). Rule und Skill sind Kür, wenn Zeit bleibt.
 - Die Red-Team-Runde vor dem Vorstellen beantwortet live die Frage „Was ist, wenn Claude dasselbe mit einem anderen Befehl erreicht?“. Ein Angriffs-Prompt pro Gruppe, nicht mehr.
 - Fragt jemand, wer bei einem Widerspruch zwischen Rule und `CLAUDE.md` gewinnt: Es ist keine feste Rangfolge dokumentiert, beides landet im Kontext. Den Widerspruch auflösen.
-- Bei mehr als 5 Gruppen: 3 min je Gruppe oder nur Punkt 1 und 2.
+- Bei mehr als 5 Gruppen: nur Punkt 1 und 2.
 
 ## Worauf ihr beim Rundgang achten könnt
 

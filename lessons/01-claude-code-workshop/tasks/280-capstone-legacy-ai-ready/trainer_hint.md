@@ -5,16 +5,16 @@
 - **Practice ground:** a fresh clone of `bookmonkey-legacy`, without the files from earlier tasks.
 - **Takeaways:** a good setup is small, checked and reasoned. Every group can say what it left out on purpose.
 
-## Flow (75 min)
+## Flow (60 min)
 
 | Time | What |
 | --- | --- |
 | 5 min | Form groups (3 to 4 people), clone fresh |
-| 10 min | Explore in plan mode |
-| 5 min | Table "what goes where?" |
-| 25 min | Build, switch roles after each block |
+| 7 min | Explore in plan mode |
+| 3 min | Table "what goes where?" |
+| 20 min | Build, switch roles after each block |
 | 5 min | Probe in a new session |
-| 25 min | Red-team prompt and present, 4 min per group, then a short round |
+| 20 min | Red-team prompt and present, 3 min per group, then a short round |
 
 ## Facilitation notes
 
@@ -27,7 +27,7 @@
 - Only `CLAUDE.md` and one enforcing block (hook or deny rule) are required. Rule and skill are extras if there is time.
 - The red-team round before the presentations answers "What if Claude reaches the same result with a different command?" live. One attack prompt per group, no more.
 - If someone asks which wins when a rule and the `CLAUDE.md` contradict: no fixed precedence is documented, both end up in the context. Resolve the contradiction.
-- With more than 5 groups: 3 min per group, or only points 1 and 2.
+- With more than 5 groups: only points 1 and 2.
 
 ## What to look for on your walkaround
 

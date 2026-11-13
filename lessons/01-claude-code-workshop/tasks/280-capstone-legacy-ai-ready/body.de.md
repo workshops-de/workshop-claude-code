@@ -2,7 +2,7 @@
 
 ---
 
-Euer Team übernimmt am Montag `bookmonkey-legacy`. Nächste Woche fängt eine neue Kollegin an, und alle arbeiten mit Claude Code. Ihr habt nach dem Klonen etwa 45 Minuten, um das Repo so vorzubereiten, dass Claude darin von der ersten Session an guten Code schreibt und nichts kaputt macht.
+Euer Team übernimmt am Montag `bookmonkey-legacy`. Nächste Woche fängt eine neue Kollegin an, und alle arbeiten mit Claude Code. Ihr habt nach dem Klonen etwa 35 Minuten, um das Repo so vorzubereiten, dass Claude darin von der ersten Session an guten Code schreibt und nichts kaputt macht.
 
 Ihr nutzt dafür alles aus dieser Woche. Es gibt keine Musterlösung. Ihr entscheidet als Gruppe, was ihr baut, was ihr bewusst weglasst, und warum.
 
@@ -16,7 +16,7 @@ Klont das Repo in einen neuen Ordner, damit eure Dateien aus den früheren Aufga
 git clone https://github.com/andrekovac/bookmonkey-legacy.git bookmonkey-altbau && cd bookmonkey-altbau && npm install && npm run db:reset
 ```
 
-### 2. Lasst Claude gründlich erkunden (10 min)
+### 2. Lasst Claude gründlich erkunden (7 min)
 
 Startet eine Session im Plan Mode und fragt wie bei einer Übergabe unter Kollegen:
 
@@ -26,7 +26,7 @@ Wir übernehmen dieses Repo und wollen, dass du hier ab Montag sicher arbeiten k
 
 Wenn Claude fragt, ob es den Plan umsetzen soll, lehnt ab. In diesem Schritt wird nur erkundet. Lest das Ergebnis gemeinsam und prüft mindestens zwei Aussagen selbst nach.
 
-### 3. Entscheidet, was wohin gehört (5 min)
+### 3. Entscheidet, was wohin gehört (3 min)
 
 Sammelt auf Papier oder im Chat, was Claude in diesem Repo wissen oder einhalten muss. Ordnet jeden Punkt einem Ort zu:
 
@@ -49,7 +49,6 @@ Nehmt euch pro Baustein ein, zwei Fragen vor. Wer gerade nicht tippt, stellt ein
 - Was würde Claude ohne diese Datei falsch machen? Steht nur das drin?
 - Welcher Quelle im Repo würde Claude glauben, ohne sie zu prüfen? Habt ihr eine davon gegengeprüft?
 - Läuft das Repo bei der neuen Kollegin mit ihrer Node-Version? Woran merkt sie es, wenn nicht?
-- Was gilt nur für `api/` oder nur für `web/`? Muss das wirklich bei jedem Start geladen werden?
 - Wie viel Kontext ist schon belegt, bevor ihr den ersten Prompt schreibt?
 
 </details>
@@ -61,7 +60,6 @@ Nehmt euch pro Baustein ein, zwei Fragen vor. Wer gerade nicht tippt, stellt ein
 - Widerspricht eine Rule eurer `CLAUDE.md`? Was macht Claude dann, und wie verhindert ihr den Widerspruch?
 - Welcher Ablauf kommt in diesem Team immer wieder vor, mit denselben Schritten?
 - Wann soll Claude euren Skill von selbst nehmen, und wann gerade nicht? Steht das in der Beschreibung?
-- Was ist, wenn jemand den Skill mit einem halben Satz aufruft?
 - Bei welchen Aufgaben soll Claude in diesem Repo erst planen, bevor es etwas ändert? Wo steht das?
 
 </details>
@@ -74,8 +72,6 @@ Nehmt euch pro Baustein ein, zwei Fragen vor. Wer gerade nicht tippt, stellt ein
 - Bei welchem Befehl wollt ihr nie wieder auf „Erlauben“ klicken? Und welcher darf nie ohne Rückfrage laufen?
 - Wie zeigt ihr, dass euer Hook wirklich blockiert, und nicht nur, dass es ihn gibt?
 - Was ist, wenn Claude dasselbe mit einem anderen Befehl erreicht?
-- Reicht hier eine Deny-Regel, oder braucht ihr wirklich ein Skript?
-- Was passiert mit eurem Hook bei 30 Änderungen hintereinander? Ist er schnell genug?
 
 </details>
 
@@ -95,12 +91,11 @@ Nehmt euch pro Baustein ein, zwei Fragen vor. Wer gerade nicht tippt, stellt ein
 - Was gehört in `.claude/settings.json`, was in `.claude/settings.local.json` oder eure persönliche Konfiguration?
 - Die neue Kollegin klont das Repo morgen: Läuft euer Hook bei ihr ohne Erklärung? Braucht er ein Tool, das nur ihr installiert habt?
 - Holt ihr Tickets oder Daten bisher von Hand aus Jira oder dem Browser? Gehört dafür ein MCP-Server ins Repo?
-- Läuft Claude in diesem Repo schon irgendwo außerhalb eurer Rechner? Gelten eure Regeln dort auch?
 - Wie merkt ihr in drei Monaten, dass eure `CLAUDE.md` nicht mehr stimmt?
 
 </details>
 
-### 4. Baut euer Setup (25 min)
+### 4. Baut euer Setup (20 min)
 
 Baut zuerst den Baustein, der am meisten bringt, und prüft ihn. Ziel sind eine `CLAUDE.md` und ein Baustein, der etwas durchsetzt (Hook oder Deny-Regel). Rule und Skill baut ihr, wenn noch Zeit ist. Was fehlt, kommt auf eure Liste „bewusst weggelassen“.
 
@@ -127,7 +122,7 @@ Committet am Ende alles, was ins Repo gehört.
 
 Gebt Claude in einer neuen Session ein echtes Ticket, zum Beispiel BM-412 aus Aufgabe 190 („Nächster Band“ führt ins Nichts). Brecht ab, sobald ihr gesehen habt, ob eure Bausteine greifen: Liest Claude eure Dateien? Greift die Rule? Blockiert der Hook? Fertig werden muss das Ticket nicht. Notiert, was nicht so lief wie gedacht.
 
-### 6. Stellt vor (je Gruppe 4 min)
+### 6. Stellt vor (je Gruppe 3 min)
 
 Bevor ihr vorstellt, gibt euch eine andere Gruppe einen einzigen Prompt, der euren Hook oder eure Deny-Regel umgehen soll. Hält der Baustein, gibt es Applaus. Wenn nicht, zeigt ihr, warum.
 

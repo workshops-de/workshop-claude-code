@@ -2,7 +2,7 @@
 
 ---
 
-Your team takes over `bookmonkey-legacy` on Monday. A new colleague starts next week, and everyone works with Claude Code. After cloning you have about 45 minutes to prepare the repo so that Claude writes good code in it from the first session on and breaks nothing.
+Your team takes over `bookmonkey-legacy` on Monday. A new colleague starts next week, and everyone works with Claude Code. After cloning you have about 35 minutes to prepare the repo so that Claude writes good code in it from the first session on and breaks nothing.
 
 You use everything from this week for it. There is no model solution. As a group you decide what you build, what you leave out on purpose, and why.
 
@@ -16,7 +16,7 @@ Clone the repo into a new folder, so your files from earlier tasks do not come a
 git clone https://github.com/andrekovac/bookmonkey-legacy.git bookmonkey-altbau && cd bookmonkey-altbau && npm install && npm run db:reset
 ```
 
-### 2. Let Claude explore thoroughly (10 min)
+### 2. Let Claude explore thoroughly (7 min)
 
 Start a session in plan mode and ask the way you would in a hand-over between colleagues:
 
@@ -26,7 +26,7 @@ We are taking over this repo and want you to work in it safely from Monday on. E
 
 If Claude asks whether to carry out the plan, say no. This step is only for exploring. Read the result together and check at least two statements yourselves.
 
-### 3. Decide what goes where (5 min)
+### 3. Decide what goes where (3 min)
 
 Collect on paper or in the chat what Claude needs to know or respect in this repo. Give each point a place:
 
@@ -49,7 +49,6 @@ Pick one or two questions per building block. Whoever is not typing asks one of 
 - What would Claude get wrong without this file? Is only that in it?
 - Which source in the repo would Claude believe without checking it? Did you cross-check one of them?
 - Does the repo run for the new colleague with her Node version? How does she notice if it does not?
-- What applies only to `api/` or only to `web/`? Does it really need to load at every start?
 - How much context is already used before you write the first prompt?
 
 </details>
@@ -61,7 +60,6 @@ Pick one or two questions per building block. Whoever is not typing asks one of 
 - Does a rule contradict your `CLAUDE.md`? What does Claude do then, and how do you prevent the contradiction?
 - Which workflow comes up again and again in this team, with the same steps?
 - When should Claude pick your skill on its own, and when not? Does the description say so?
-- What if someone calls the skill with half a sentence?
 - For which tasks should Claude plan first in this repo, before it changes anything? Where does that stand?
 
 </details>
@@ -74,8 +72,6 @@ Pick one or two questions per building block. Whoever is not typing asks one of 
 - For which command do you never want to click "Allow" again? And which one must never run without asking?
 - How do you show that your hook really blocks, and not only that it exists?
 - What if Claude reaches the same result with a different command?
-- Is a deny rule enough here, or do you really need a script?
-- What happens to your hook with 30 edits in a row? Is it fast enough?
 
 </details>
 
@@ -95,12 +91,11 @@ Pick one or two questions per building block. Whoever is not typing asks one of 
 - What belongs in `.claude/settings.json`, and what in `.claude/settings.local.json` or your personal configuration?
 - The new colleague clones the repo tomorrow: does your hook run for her without explanation? Does it need a tool that only you have installed?
 - Do you fetch tickets or data by hand from Jira or the browser so far? Does an MCP server for that belong in the repo?
-- Does Claude already run somewhere in this repo outside your machines? Do your rules apply there too?
 - How will you notice in three months that your `CLAUDE.md` is no longer correct?
 
 </details>
 
-### 4. Build your setup (25 min)
+### 4. Build your setup (20 min)
 
 Build the block that helps most first, and check it. The goal is a `CLAUDE.md` and one block that enforces something (hook or deny rule). Build a rule and a skill if there is time left. What is missing goes on your "left out on purpose" list.
 
@@ -127,7 +122,7 @@ At the end, commit everything that belongs in the repo.
 
 In a new session, give Claude a real ticket, for example BM-412 from task 190 ("next volume" leads nowhere). Stop as soon as you have seen whether your blocks apply: does Claude read your files? Does the rule apply? Does the hook block? The ticket does not need to be finished. Note what did not go as planned.
 
-### 6. Present (4 min per group)
+### 6. Present (3 min per group)
 
 Before you present, another group gives you one single prompt that tries to get around your hook or deny rule. If the block holds, there is applause. If not, you show why.
 

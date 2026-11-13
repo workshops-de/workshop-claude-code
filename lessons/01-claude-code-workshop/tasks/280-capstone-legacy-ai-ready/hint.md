@@ -6,7 +6,7 @@ What would the new colleague ask first on her first day? And what did Claude get
 </details>
 
 <details>
-<summary>💡 Hint 2: 45 minutes are not enough for everything?</summary>
+<summary>💡 Hint 2: 35 minutes are not enough for everything?</summary>
 
 Which block helps most if all the others are missing? Build that one well first instead of four halfway. What is missing goes on your "left out on purpose" list.
 
