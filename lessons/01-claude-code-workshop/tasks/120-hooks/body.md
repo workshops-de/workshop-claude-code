@@ -30,6 +30,18 @@ A line in `CLAUDE.md` would only ask Claude. A hook always runs, even when Claud
 I don't want you to read or change .env files, not even by accident, because our secrets are in them. Use a hook to make sure this never happens. You may still read .env.example, there is nothing secret in it.
 ```
 
+<details>
+<summary>🔑 Technical terms to steer</summary>
+
+If Claude builds something else:
+
+- **`PreToolUse`** hook: runs **before** the tool
+- **`exit 2`** blocks, `exit 1` only reports
+- Matcher also covers **`Bash`**, not only `Read`
+- Exception for **`.env.example`**
+
+</details>
+
 Start a new session so the setting is loaded, and ask the question from step 1 again. Claude should say that a **hook** blocks the access.
 
 ### 3. Let Claude test the hook
@@ -53,6 +65,17 @@ Then start a new session and ask the question from step 1 again.
 ```text
 Whenever you change a file, the types should be checked right away, not only at the end. Build a second hook for this that reports the type errors back to you, so you fix them straight away.
 ```
+
+<details>
+<summary>🔑 Technical terms to steer</summary>
+
+If Claude builds something else:
+
+- **`PostToolUse`** hook with matcher **`Edit|Write`**
+- Type check with **`tsc --noEmit`**
+- Errors go **back to Claude**, not only to the terminal
+
+</details>
 
 If the hook reports `PageProps` or `LayoutProps`, the Next types are missing. In our run Claude ran `next typegen` for this itself. Otherwise, ask Claude to do it.
 
@@ -79,6 +102,18 @@ Claude lists the allowed and forbidden changes and names its assumptions, in our
 ```text
 Build it now. On a book's detail page I want to put it on my reading list and change its state. Under /reading-list I see my books grouped by state, and the header shows how many there are. The page is only reachable for signed-in users, and every user has their own list. The API cannot do reading lists yet, so store them in the browser for now. Keep the rules for the changes in one place and independent of the storage, so we can take them into our own backend later.
 ```
+
+<details>
+<summary>🔑 Technical terms to steer</summary>
+
+If Claude builds something else:
+
+- **`localStorage`**, key with the **user ID**
+- **State machine** as a **pure function**, own file without storage and React
+- Add `/reading-list` to the **proxy matcher** in `proxy.ts`
+- Read the header counter only **after loading** (otherwise **hydration mismatch**)
+
+</details>
 
 Both hooks run on every change. Then ask:
 

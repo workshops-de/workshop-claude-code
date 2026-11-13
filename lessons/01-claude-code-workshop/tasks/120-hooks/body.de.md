@@ -30,6 +30,18 @@ Eine Zeile in der `CLAUDE.md` würde Claude nur bitten. Ein Hook läuft immer, a
 Ich will nicht, dass du .env-Dateien liest oder änderst, auch nicht aus Versehen, denn darin stehen unsere Secrets. Sorg mit einem Hook dafür, dass das garantiert nicht passiert. .env.example darfst du weiter lesen, da steht nichts Geheimes drin.
 ```
 
+<details>
+<summary>🔑 Fachbegriffe zum Nachsteuern</summary>
+
+Falls Claude etwas anderes baut:
+
+- **`PreToolUse`**-Hook: läuft **vor** dem Tool
+- **`exit 2`** blockiert, `exit 1` meldet nur
+- Matcher auch für **`Bash`**, nicht nur `Read`
+- Ausnahme für **`.env.example`**
+
+</details>
+
 Startet eine neue Session, damit die Einstellung geladen wird, und stellt die Frage aus Schritt 1 noch einmal. Claude sollte sagen, dass ein **Hook** den Zugriff blockiert.
 
 ### 3. Lasst Claude den Hook testen
@@ -53,6 +65,17 @@ Startet danach eine neue Session und stellt die Frage aus Schritt 1 noch einmal.
 ```text
 Immer wenn du eine Datei änderst, sollen die Typen sofort geprüft werden, nicht erst am Ende. Bau dafür einen zweiten Hook, der dir die Typfehler zurückmeldet, damit du sie gleich behebst.
 ```
+
+<details>
+<summary>🔑 Fachbegriffe zum Nachsteuern</summary>
+
+Falls Claude etwas anderes baut:
+
+- **`PostToolUse`**-Hook mit Matcher **`Edit|Write`**
+- Typecheck mit **`tsc --noEmit`**
+- Fehler gehen **an Claude zurück**, nicht nur ins Terminal
+
+</details>
 
 Meldet der Hook `PageProps` oder `LayoutProps`, fehlen die Next-Typen. In unserem Lauf hat Claude dafür selbst `next typegen` ausgeführt. Sonst bittet Claude darum.
 
@@ -79,6 +102,18 @@ Claude zählt die erlaubten und verbotenen Wechsel auf und nennt seine Annahmen,
 ```text
 Bau das jetzt. Auf der Detailseite eines Buchs will ich es auf meine Leseliste setzen und den Zustand wechseln. Unter /reading-list sehe ich meine Bücher nach Zustand gruppiert, und oben im Header steht, wie viele es sind. Die Seite ist nur für angemeldete User erreichbar, und jeder User hat seine eigene Liste. Die API kann noch keine Leselisten, speichere sie deshalb vorerst im Browser. Halte die Regeln für die Wechsel an einer Stelle und unabhängig vom Speicher, damit wir sie später ins eigene Backend mitnehmen können.
 ```
+
+<details>
+<summary>🔑 Fachbegriffe zum Nachsteuern</summary>
+
+Falls Claude etwas anderes baut:
+
+- **`localStorage`**, Schlüssel mit **User-ID**
+- **State Machine** als **reine Funktion**, eigene Datei ohne Speicher und React
+- **Proxy-Matcher** in `proxy.ts` um `/reading-list` ergänzen
+- Header-Zähler erst **nach dem Laden** lesen (sonst **Hydration-Mismatch**)
+
+</details>
 
 Beide Hooks laufen bei jeder Änderung mit. Fragt danach:
 

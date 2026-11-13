@@ -25,15 +25,3 @@ Sie laufen bei jeder Änderung. Ein Typecheck genügt, die komplette Test-Suite 
 Dann hat das Hook-Skript selbst einen Fehler. Sagt Claude, was ihr seht, zum Beispiel: „Dein Hook blockiert jeden Befehl, repariere ihn.“ Claude kann das Skript weiter mit seinen Datei-Werkzeugen ändern.
 
 </details>
-
-<details>
-<summary>💡 Tipp 5: Fachbegriffe für die Leseliste</summary>
-
-Zum Nachsteuern, wenn Claude etwas anderes baut:
-
-- **`localStorage`**, Schlüssel mit **User-ID**
-- **State Machine** als **reine Funktion**, eigene Datei ohne Speicher und React
-- **Proxy-Matcher** in `proxy.ts` um `/reading-list` ergänzen
-- Header-Zähler erst **nach dem Laden** lesen (sonst **Hydration-Mismatch**)
-
-</details>
