@@ -50,7 +50,7 @@ Use exactly these `category:` values, in teaching order:
 | `Steering & Memory`        | 060–070   | Plan mode, rules and imports                            |
 | `Extending Claude Code`    | 080–120   | Skills, subagents, custom skills/commands, MCP, own MCP server, hooks |
 | `Quality & Automation`     | 180–220   | Refactoring, debugging, TDD, headless, GitHub Actions, PR review |
-| `Autonomy & Methodologies` | 230–270   | Autonomous runs, Agent SDK, gateways, Spec Kit, BMAD    |
+| `Autonomy & Methodologies` | 230–280   | Autonomous runs, Agent SDK, gateways, Spec Kit, BMAD, capstone group exercise (280) |
 
 Positions 130–170 are intentionally empty (their former tasks were merged into 090–120).
 
