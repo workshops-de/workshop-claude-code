@@ -10,7 +10,7 @@ This task is about **debugging with Claude**: you get a bug ticket from users an
 
 This is the ticket, and all you know:
 
-> **Ticket #412: "Next volume" leads nowhere**
+> **Ticket BM-412: "Next volume" leads nowhere**
 >
 > Since a while the "next volume" link in The Lord of the Rings leads nowhere. Other series work until someone saves a book in the admin.
 
@@ -25,7 +25,7 @@ Then log in at http://localhost:5180/login with `admin@bookmonkey.example` and `
 Start a new session in **Auto** mode and stay in it until the end. A hypothesis is a guess that can be checked. You want several of them before Claude touches code:
 
 ```text
-Ticket #412 from the library team: The link "next volume" in The Lord of the Rings leads nowhere. Other series work until someone saves a book in the admin.
+Ticket BM-412 from the library team: The link "next volume" in The Lord of the Rings leads nowhere. Other series work until someone saves a book in the admin.
 
 This is what I observed: On the page of The Fellowship of the Ring it says "Nächster Band: nicht gefunden". After I saved A Game of Thrones in the admin, the navigation in this series no longer works.
 

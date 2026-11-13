@@ -10,7 +10,7 @@ In dieser Aufgabe geht es um **Debugging mit Claude**: Ihr bekommt ein Fehlertic
 
 Das ist das Ticket, mehr wisst ihr nicht:
 
-> **Ticket #412: „Nächster Band“ führt ins Nichts**
+> **Ticket BM-412: „Nächster Band“ führt ins Nichts**
 >
 > Seit einer Weile führt der Link „nächster Band“ bei The Lord of the Rings ins Nichts. Andere Reihen funktionieren, bis jemand im Admin ein Buch speichert.
 
@@ -25,7 +25,7 @@ Meldet euch dann unter http://localhost:5180/login mit `admin@bookmonkey.example
 Startet eine neue Session im Modus **Auto** und bleibt bis zum Ende darin. Eine Hypothese ist eine Vermutung, die sich prüfen lässt. Ihr wollt mehrere davon, bevor Claude Code anfasst:
 
 ```text
-Ticket #412 vom Bibliotheksteam: Der Link "nächster Band" bei The Lord of the Rings führt ins Nichts. Andere Reihen funktionieren, bis jemand im Admin ein Buch speichert.
+Ticket BM-412 vom Bibliotheksteam: Der Link "nächster Band" bei The Lord of the Rings führt ins Nichts. Andere Reihen funktionieren, bis jemand im Admin ein Buch speichert.
 
 Das habe ich beobachtet: Auf der Seite von The Fellowship of the Ring steht "Nächster Band: nicht gefunden". Nachdem ich A Game of Thrones im Admin gespeichert habe, funktioniert die Navigation in dieser Reihe nicht mehr.
 
