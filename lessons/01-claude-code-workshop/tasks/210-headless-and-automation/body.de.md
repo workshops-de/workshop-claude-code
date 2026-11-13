@@ -28,7 +28,7 @@ Was vor dem `|` steht, bekommt Claude als Eingabe. Das `>` schreibt die Antwort 
 git diff origin/main...origin/feature/admin-export-v2 | claude -p "Prüfe diesen Diff auf Probleme. Gib ein Urteil und eine Liste der Probleme zurück." --output-format json --json-schema '{"type":"object","properties":{"urteil":{"type":"string","enum":["ok","bedenklich"]},"probleme":{"type":"array","items":{"type":"string"}}},"required":["urteil","probleme"]}' | jq .structured_output
 ```
 
-Das Schema legt fest, welche Felder die Antwort hat. Ihr bekommt kein Fließtext, sondern ein Urteil und eine Liste, die `jq` ausliest. Das Feld heißt `structured_output`.
+Das Schema legt fest, welche Felder die Antwort hat. Ihr bekommt keinen Fließtext, sondern ein Urteil und eine Liste, die `jq` ausliest. Das Feld heißt `structured_output`.
 
 ### 4. Lasst Claude daraus ein Skript bauen
 
@@ -48,17 +48,41 @@ Niemand beantwortet im Skript Rückfragen. Darum werden die erlaubten Tools vora
 
 Ihr seht das Urteil, die Probleme und zuletzt den **Exit-Code**, eine Zahl, an der andere Programme erkennen, ob etwas gelungen ist. Das Skript braucht etwas Zeit.
 
-### 6. Baut ein eigenes Skript
+### 6. Lasst jeden Push die Prüfung durchlaufen
 
-Überlegt euch eine Prüfung oder Aufgabe, die ihr im Alltag wiederholt, und lasst Claude ein Skript dafür schreiben, das `claude -p` nutzt. Probiert es dann aus.
+Jetzt kommt das Skript zum Einsatz. Am nützlichsten ist es, wenn es von selbst läuft. Ein **Git-Hook** ist ein Skript, das Git zu einem festen Zeitpunkt startet, hier vor jedem `git push`. Endet es mit einem Exit-Code ungleich 0, stoppt Git den Push. Es ist kein Claude-Code-Hook wie in Aufgabe 120: Git startet ihn, nicht Claude.
 
-Zum Beispiel:
+Bereitet zuerst einen Testplatz vor, damit nichts auf euer echtes Remote gelangt:
 
 ```text
-Schreib ein Skript commit-vorschlag.sh, das die gestagten Änderungen (git diff --staged) per Pipe an claude -p gibt und eine kurze Commit-Nachricht vorschlägt. Mach es ausführbar.
+git init --bare ../test-remote.git
+git remote add test ../test-remote.git
+git checkout -b admin-export origin/feature/admin-export-v2
 ```
 
-Für dieses Beispiel braucht ihr eine gestagte Änderung (`git add review.sh`).
+`git init --bare` legt ein leeres Repository ohne Arbeitsordner an, das Pushes wie ein Server annimmt (nicht zu verwechseln mit `claude --bare`). Gebt dann Claude diesen Prompt:
+
+```text
+Ich möchte, dass jeder Push meines Branches automatisch durch review.sh geprüft wird. Wenn das Urteil bedenklich ist, soll der Push gestoppt werden, damit niemand aus Versehen ungeprüften Code pusht. Richte das in diesem Repo ein und zeig mir danach, dass es greift. Zum Ausprobieren pushst du meinen Branch admin-export auf das Remote test, niemals auf origin.
+```
+
+<details>
+<summary>🔑 Fachbegriffe zum Nachsteuern</summary>
+
+Falls Claude etwas anderes baut:
+
+- **Git-Hook `pre-push`**: läuft vor dem Push, nicht nach einem Commit
+- Exit-Code **ungleich 0** stoppt den Push
+- Hooks in `.git/hooks` werden **nicht committet**; ein Ordner im Repo plus `git config core.hooksPath` lässt sich teilen, `core.hooksPath` setzt aber jede Person selbst
+- **`git push --no-verify`** überspringt den Hook
+
+</details>
+
+Der Push von `admin-export` soll mit Urteil und Problemliste stoppen. Startet dann selbst `git push --no-verify test admin-export`: Er geht durch. Darum läuft dieselbe Prüfung später auch auf dem Server (Aufgabe 215). Wer Zeit hat, lässt Claude noch einen Branch ohne Änderungen auf `test` pushen (`git checkout -b clean origin/main`): Er geht durch. Geht danach mit `git checkout main` zurück. Pusht diese Test-Branches nie auf `origin`.
+
+In unserem Lauf (Claude Code 2.1.323, Sonnet) hat Claude den Hook in einem Ordner `.githooks` angelegt und `core.hooksPath` gesetzt. Der Push des PR-Branches stoppte, auf dem Test-Remote kam nichts an, der unveränderte Branch ging durch. Legt Claude den Hook woanders ab, ist das in Ordnung, solange der Push stoppt.
+
+Überlegt, wohin so eine Prüfung gehört. Eine Prüfung, die so lange dauert, passt zu `pre-push`, nicht zu `pre-commit`: Ihr committet oft und pusht selten. Und das KI-Urteil ändert sich von Lauf zu Lauf, darum braucht es einen Ausweg wie `--no-verify`.
 
 ### 7. Committet euren Stand
 
@@ -68,9 +92,9 @@ Committe alle Änderungen aus dieser Aufgabe. Lies vorher den Diff.
 
 ### Was gerade passiert ist
 
-`claude -p` macht aus Claude ein Kommandozeilenprogramm: Eingabe per Pipe, Ausgabe auf der Konsole, und mit Schema und Exit-Code lässt es sich in Skripte einbauen. Dieselbe Idee steckt in jeder Pipeline, die Claude aufruft. Die Antworten unterscheiden sich in jedem Lauf, das Urteil und die Probleme prüft ihr selbst.
+`claude -p` macht aus Claude ein Kommandozeilenprogramm: Eingabe per Pipe, Ausgabe auf der Konsole, und mit Schema und Exit-Code lässt es sich in Skripte einbauen. Mit einem Git-Hook läuft die Prüfung vor jedem Push von selbst. Dieselbe Idee steckt in jeder Pipeline, die Claude aufruft. Die Antworten unterscheiden sich in jedem Lauf, das Urteil und die Probleme prüft ihr selbst.
 
-**Fertig, wenn** `review.sh` ein Urteil mit Exit-Code ausgibt, ihr ein eigenes Skript mit `claude -p` gebaut und ausprobiert habt und beides committet ist.
+**Fertig, wenn** `review.sh` ein Urteil mit Exit-Code ausgibt, der Hook den Push des PR-Branches stoppt, er mit `--no-verify` durchgeht und Skript und Hook-Ordner committet sind (liegt der Hook in `.git/hooks`, nur das Skript).
 
 <details>
 <summary>Mehr dazu</summary>

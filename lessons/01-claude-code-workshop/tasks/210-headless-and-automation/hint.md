@@ -19,3 +19,10 @@ Piping the diff avoids granting Bash permission just to read it.
 Print the full JSON answer once without `jq`. The result that follows the schema is in the `structured_output` field.
 
 </details>
+
+<details>
+<summary>💡 Hint 4: The push is not stopped?</summary>
+
+Run `./review.sh <branch>; echo $?` by hand first. The hook only stops the push if the script ends with a number other than 0. Also check that the hook file is executable (macOS and Linux: `chmod +x`).
+
+</details>

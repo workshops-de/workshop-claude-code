@@ -48,17 +48,41 @@ Nobody answers questions inside a script. That is why the allowed tools are fixe
 
 You see the verdict, the problems and finally the **exit code**, a number other programs use to tell whether something succeeded. The script takes a moment.
 
-### 6. Build your own script
+### 6. Let every push run the check
 
-Think of a check or task you repeat in daily work and let Claude write a script for it that uses `claude -p`. Then try it out.
+Now the script goes to work. It helps most when it runs by itself. A **Git hook** is a script that Git starts at a fixed moment, here before every `git push`. If it ends with an exit code other than 0, Git stops the push. It is not a Claude Code hook like in task 120: Git starts it, not Claude.
 
-For example:
+First prepare a place to test, so nothing reaches your real remote:
 
 ```text
-Write a script commit-vorschlag.sh that pipes the staged changes (git diff --staged) into claude -p and suggests a short commit message. Make it executable.
+git init --bare ../test-remote.git
+git remote add test ../test-remote.git
+git checkout -b admin-export origin/feature/admin-export-v2
 ```
 
-For this example you need a staged change (`git add review.sh`).
+`git init --bare` creates an empty repository without a working folder that accepts pushes like a server (not the same as `claude --bare`). Then give Claude this prompt:
+
+```text
+I want every push of my branch to run through review.sh first. If the verdict is bedenklich, the push must be stopped, so nobody pushes unchecked code by accident. Set this up in this repo and show me afterwards that it works. To try it, push my branch admin-export to the remote test, never to origin.
+```
+
+<details>
+<summary>🔑 Technical terms to steer</summary>
+
+If Claude builds something else:
+
+- **Git hook `pre-push`**: runs before the push, not after a commit
+- Exit code **not 0** stops the push
+- Hooks in `.git/hooks` are **not committed**; a folder in the repo plus `git config core.hooksPath` can be shared, but each person sets `core.hooksPath` themselves
+- **`git push --no-verify`** skips the hook
+
+</details>
+
+The push of `admin-export` should stop with the verdict and the list of problems. Then run `git push --no-verify test admin-export` yourself: it goes through. That is why the same check later also runs on the server (task 215). If you have time, let Claude also push a branch without changes to `test` (`git checkout -b clean origin/main`): it goes through. Afterwards go back with `git checkout main`. Never push these test branches to `origin`.
+
+In our run (Claude Code 2.1.323, Sonnet) Claude created the hook in a folder `.githooks` and set `core.hooksPath`. The push of the PR branch stopped, nothing arrived on the test remote, and the unchanged branch went through. If Claude puts the hook somewhere else, that is fine as long as the push stops.
+
+Think about where such a check belongs. A check that takes this long fits `pre-push`, not `pre-commit`, because you commit often and push rarely. And the AI verdict changes from run to run, so you need an exit like `--no-verify`.
 
 ### 7. Commit your state
 
@@ -68,9 +92,9 @@ Committe alle Änderungen aus dieser Aufgabe. Lies vorher den Diff.
 
 ### What just happened
 
-`claude -p` turns Claude into a command line program: input by pipe, output on the console, and with a schema and an exit code it fits into scripts. The same idea sits in every pipeline that calls Claude. The answers differ in every run, you check the verdict and the problems yourself.
+`claude -p` turns Claude into a command line program: input by pipe, output on the console, and with a schema and an exit code it fits into scripts. With a Git hook, the check runs by itself before every push. The same idea sits in every pipeline that calls Claude. The answers differ in every run, you check the verdict and the problems yourself.
 
-**Done when** `review.sh` prints a verdict with an exit code, you have built and tried your own script with `claude -p`, and both are committed.
+**Done when** `review.sh` prints a verdict with an exit code, a push of the PR branch is stopped by the hook while `--no-verify` lets it through, and the script and the hook folder are committed (if the hook lives in `.git/hooks`, only the script).
 
 <details>
 <summary>More</summary>

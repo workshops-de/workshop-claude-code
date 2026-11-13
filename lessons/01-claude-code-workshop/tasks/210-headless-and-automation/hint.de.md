@@ -19,3 +19,10 @@ Wenn ihr den Diff per Pipe übergebt, müsst ihr Bash nicht freigeben, nur um ih
 Gebt die komplette JSON-Antwort einmal ohne `jq` aus. Das Ergebnis nach Schema steht im Feld `structured_output`.
 
 </details>
+
+<details>
+<summary>💡 Tipp 4: Der Push wird nicht gestoppt?</summary>
+
+Startet `./review.sh <branch>; echo $?` einmal von Hand. Der Hook stoppt den Push nur, wenn das Skript mit einer Zahl ungleich 0 endet. Prüft auch, ob die Hook-Datei ausführbar ist (macOS und Linux: `chmod +x`).
+
+</details>
