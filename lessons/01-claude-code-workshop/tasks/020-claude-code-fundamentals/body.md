@@ -54,6 +54,10 @@ review tasks, so the map you draw today pays off later.
    claude --permission-mode plan
    ```
 
+   In the desktop app: first open any folder (for example your home folder), then the app's
+   terminal (``Ctrl+` ``), and run only the `git clone …` line there. Then pick the `bookmonkey-legacy`
+   folder under the prompt box and set **Plan** in the mode menu next to it.
+
 2. **Watch the loop once.** Run `/context`, so you have a baseline. Then ask a first architecture
    question, for example "Which parts does this repository have, and how is each one started?".
    When the answer is there, press `Ctrl+O` to open the transcript viewer (Desktop app: press

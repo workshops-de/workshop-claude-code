@@ -58,6 +58,10 @@ zeichnet, zahlt sich also später aus.
    claude --permission-mode plan
    ```
 
+   In der Desktop-App: Öffnet zuerst irgendeinen Ordner (zum Beispiel euren Benutzerordner), dann
+   das Terminal der App (``Ctrl+` ``), und führt dort nur die Zeile `git clone …` aus. Wählt danach den
+   Ordner `bookmonkey-legacy` unter dem Eingabefeld und stellt im Modus-Menü daneben **Plan** ein.
+
 2. **Beobachtet die Schleife einmal.** Führt `/context` aus, damit ihr eine Ausgangsbasis habt.
    Stellt dann eine erste Architekturfrage, zum Beispiel „Aus welchen Teilen besteht dieses
    Repository, und wie wird jeder gestartet?“. Wenn die Antwort da ist, drückt `Ctrl+O`, um den
