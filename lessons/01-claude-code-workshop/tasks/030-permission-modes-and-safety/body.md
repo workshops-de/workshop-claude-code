@@ -41,6 +41,11 @@ beats an allow on any other.
    `~/.claude/settings.json` (`permissions.defaultMode`) to explain it. Then press `Shift+Tab`
    several times and watch the status line: from `auto` the first press switches to Manual
    (`⏸ manual mode on`), then the cycle runs Manual → `acceptEdits` → `plan` → back to `auto`.
+
+   In the desktop app there is no status line, and `Shift+Tab` does not switch the mode. You see
+   and switch the mode in the mode menu under the prompt box (Windows `Ctrl+Shift+M`, macOS
+   `Cmd+Shift+M`). `git diff` and `git restore .` in the next steps run in the app's terminal
+   (``Ctrl+` ``).
 2. Make a small edit in `acceptEdits` and confirm it applied without a prompt; then review the
    change with `git diff` afterward. Undo it with `git restore .`, so the clone stays clean for
    the next tasks.
@@ -49,11 +54,22 @@ beats an allow on any other.
    actions it blocks and two it allows by default. Then switch to Manual (`default`) and give the
    same task: count the prompts you get now. If you answer a Bash prompt with "Yes, and don't ask
    again", open `.claude/settings.local.json` afterwards: the rule is now there.
+
+   In the desktop app: `claude auto-mode defaults` runs in the app's terminal (needs the CLI).
+   Without the CLI, read the default rules on the "Configure auto mode" page (references).
 4. State a **boundary** in conversation (for example, "don't run any network commands until I say
    so") and verify Claude respects it even where defaults would allow the action.
    Run `/compact` and test the boundary again. Then write the same boundary as a **deny rule**: create
    `.claude/settings.local.json` with `{"permissions": {"deny": ["Bash(curl *)"]}}` and test once
    more.
+
+   **Native Windows without Git for Windows:** then Claude runs commands with the **PowerShell
+   tool**, and a `Bash(...)` rule does not apply to it. Also write the boundary as a PowerShell
+   rule, same shape: `{"permissions": {"deny": ["Bash(curl *)", "PowerShell(curl *)",
+   "PowerShell(curl.exe *)", "PowerShell(Invoke-WebRequest *)"]}}`. Test with
+   `curl.exe -I https://example.com`. Create the file in an editor or let Claude create it, not
+   with `>` in Windows PowerShell (that saves it as UTF-16). With Git for Windows, Claude mostly
+   uses the Bash tool, and everything works as described.
 5. **Open `/permissions`** and find your `Bash(curl *)` deny rule: `←` and `→` switch the tabs
    (Allow, Ask, Deny, Workspace and, where available, Recently blocked and Auto mode), and the
    dialog shows the settings file each rule comes from. Then add the same rule `Bash(curl *)` on
@@ -64,11 +80,21 @@ beats an allow on any other.
    command text `curl …`, not the same program inside a shell. If you get a prompt, answer No (in
    auto mode, watch what the classifier does). Delete both rules afterwards, so later tasks can
    use `curl` again.
+
+   Native Windows without Git: test the bypass with `cmd /c curl.exe -I https://example.com`
+   instead of `sh -c`. Same principle: the rule only reads the start of the command text.
+
+   In the desktop app: if `/permissions` is not available there, open the app's terminal
+   (``Ctrl+` ``) and start `claude` there (needs the CLI).
 6. Decide, for three scenarios (exploring an unfamiliar repo, iterating on code you're reviewing, a
    locked-down CI job), which mode fits and why.
 7. **Let the operating system stop a command.** A sandbox does not read the command text like the
    deny rule in step 5 (remember the `sh -c` detour). It limits what the running process may touch.
    If `/sandbox` shows that your sandbox is already on, turn it off for this step.
+
+   **Native Windows** has no sandbox, and this step needs the CLI. Watch someone with macOS, Linux
+   or WSL2 and say beforehand what will happen.
+
    1. In a second terminal, create a file outside the project: `echo secret > ~/sandbox-demo.txt`.
    2. Give Claude this prompt and allow the command if it asks. Python reads the file and writes
       `~/sandbox-demo-2.txt`, both outside the project:
@@ -100,9 +126,9 @@ beats an allow on any other.
 - [ ] You can explain the difference between a stated boundary and a deny rule
 - [ ] You can say in which order deny, ask and allow are checked, and what happens if no rule matches
 - [ ] You found a rule in `/permissions` and can say which settings file it comes from
-- [ ] You saw a `Bash(curl *)` deny rule stop `curl` but not `sh -c 'curl …'`, and can say why
+- [ ] You saw a `Bash(curl *)` deny rule stop `curl` but not `sh -c 'curl …'` (Windows without Git: `cmd /c curl.exe …`), and can say why
 - [ ] You picked an appropriate mode for each of the three given scenarios
-- [ ] You saw the same Python command work without the sandbox and fail with `Operation not permitted` with the sandbox and blocked reads, and can say who stopped it
+- [ ] You saw the same Python command work without the sandbox and fail with `Operation not permitted` with the sandbox and blocked reads (on Windows: watched someone else), and can say who stopped it
 
 ## References
 

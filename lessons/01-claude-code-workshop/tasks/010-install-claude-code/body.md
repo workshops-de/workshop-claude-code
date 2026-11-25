@@ -9,9 +9,29 @@ workshop.
 
 - Node.js 26 (current LTS) installed (`node -v`). The BookMonkey API you start in the plan mode
   task declares `node >=26`; the npm install of Claude Code itself needs Node.js 22 or later.
-- A terminal you're comfortable in
+- A terminal you're comfortable in (with the desktop app: the app's terminal)
 - A Claude account with Claude Code access (Pro, Max, Team, Enterprise, or Console; the free
   Claude.ai plan does not include Claude Code)
+
+## With the desktop app instead of the terminal
+
+The desktop app already includes Claude Code. Set it up like this:
+
+1. Download and install the app:
+   [Windows (x64)](https://claude.ai/claude-code/desktop-download?platform=win-x64),
+   [Windows (ARM64)](https://claude.ai/claude-code/desktop-download?platform=win-arm64),
+   [macOS](https://claude.ai/claude-code/desktop-download?platform=mac).
+2. Sign in with your Claude account and open the **Code** tab.
+3. Pick your project folder under the prompt box. Next to it is the **mode menu** (Manual, Accept
+   edits, Plan, Auto); the permission modes task explains it.
+4. Then do steps 5 and 6 below in the app: ask a trivial question, close the app and open it again.
+
+**Developers install the CLI anyway** with step 1 below: the permission modes task needs it
+(`claude auto-mode defaults`, `claude --settings`). The app has its own terminal (``Ctrl+` ``); reopen it
+after the install so it finds `claude`. If you only work in the app, skip the CLI.
+
+On Windows, also install [Git for Windows](https://git-scm.com/downloads/win): the Git steps of the
+tasks need it, and the CLI uses it for its Bash tool.
 
 ## Steps
 
@@ -66,12 +86,20 @@ workshop.
 
 ## Success Criteria
 
+**With the CLI**
+
 - [ ] `claude --version` runs without error
 - [ ] `claude doctor` reports no install errors
 - [ ] You are signed in to a Claude account
 - [ ] `claude` starts an interactive session in a project directory
 - [ ] The agent answered a trivial question about the current directory
 - [ ] Restarting the session does not require signing in again
+
+**With the desktop app**
+
+- [ ] You are signed in
+- [ ] The Code tab answered a question about your folder
+- [ ] After restarting the app you are still signed in
 
 ## References
 
