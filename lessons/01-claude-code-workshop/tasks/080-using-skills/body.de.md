@@ -28,7 +28,7 @@ Startet eine neue Session, damit Claude den Skill kennt, und gebt diesen Prompt:
 Richte shadcn/ui in diesem Projekt ein und baue unter /books eine Katalogseite: eine Karte pro Buch von GET /books mit Cover, Titel, Autor und Preis. Jede Karte verlinkt auf /books/<isbn>.
 ```
 
-Schaut im Verlauf, ob Claude den Skill geladen hat (Desktop-App: `Ctrl+O`, bis die Ansicht **Verbose** ist). In unserem Lauf war `Skill shadcn` der erste Aufruf, noch vor dem Lesen des Projekts. Die Links auf `/books/<isbn>` führen noch ins Leere, die Detailseite baut ihr in einer späteren Aufgabe.
+Schaut im Verlauf, ob Claude den Skill geladen hat (Desktop-App: Pfeil neben dem Session-Namen → **Transcript view** → **Verbose**, oder `Ctrl+O`, bis **Verbose** aktiv ist). In unserem Lauf war `Skill shadcn` der erste Aufruf, noch vor dem Lesen des Projekts. Die Links auf `/books/<isbn>` führen noch ins Leere, die Detailseite baut ihr in einer späteren Aufgabe.
 
 ### 3. Fragt, was der Skill bewirkt hat
 

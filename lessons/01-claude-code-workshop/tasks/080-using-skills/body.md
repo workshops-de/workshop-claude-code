@@ -28,7 +28,7 @@ Start a new session so that Claude knows the skill, and give this prompt:
 Set up shadcn/ui in this project and build a catalogue page at /books: one card per book from GET /books with cover, title, author and price. Each card links to /books/<isbn>.
 ```
 
-Look in the transcript to see whether Claude loaded the skill (desktop app: press `Ctrl+O` until the view is **Verbose**). In our run, `Skill shadcn` was the first call, before Claude read the project. The links to `/books/<isbn>` still lead nowhere; you build the detail page in a later task.
+Look in the transcript to see whether Claude loaded the skill (desktop app: arrow next to the session name → **Transcript view** → **Verbose**, or press `Ctrl+O` until **Verbose** is on). In our run, `Skill shadcn` was the first call, before Claude read the project. The links to `/books/<isbn>` still lead nowhere; you build the detail page in a later task.
 
 ### 3. Ask what the skill changed
 

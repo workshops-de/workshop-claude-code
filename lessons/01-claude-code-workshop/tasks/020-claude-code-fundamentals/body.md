@@ -44,7 +44,7 @@ Run `/context` and note the value. Then ask:
 Which parts does this repository have, and how do you start each one?
 ```
 
-After the answer, open the transcript viewer with `Ctrl+O` (desktop app: press `Ctrl+O` until the view is **Verbose**). Count the tool calls. In the terminal, `Ctrl+O` closes the viewer again. Find a word from one call's result in the input of the next call: that is **Observe** deciding the next **Act**. You do not see the **Reason** step directly, only its effect on the next call.
+After the answer, open the transcript viewer with `Ctrl+O` (desktop app: arrow next to the session name → **Transcript view** → **Verbose**, or press `Ctrl+O` until **Verbose** is on). Count the tool calls. In the terminal, `Ctrl+O` closes the viewer again. Find a word from one call's result in the input of the next call: that is **Observe** deciding the next **Act**. You do not see the **Reason** step directly, only its effect on the next call.
 
 ### 3. Get the architecture explained
 

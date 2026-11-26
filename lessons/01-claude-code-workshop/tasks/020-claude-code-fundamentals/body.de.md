@@ -44,7 +44,7 @@ Führt `/context` aus und merkt euch den Wert. Fragt dann:
 Aus welchen Teilen besteht dieses Repository, und wie startet man jeden Teil?
 ```
 
-Öffnet nach der Antwort mit `Ctrl+O` den Transcript-Viewer (Desktop-App: `Ctrl+O`, bis die Ansicht **Verbose** ist). Zählt die Tool-Aufrufe. Im Terminal schließt `Ctrl+O` den Viewer wieder. Sucht ein Wort aus dem Ergebnis eines Aufrufs in der Eingabe des nächsten: Das ist **Observe**, das den nächsten **Act** bestimmt. Den **Reason**-Schritt seht ihr nicht direkt, nur seine Wirkung auf den nächsten Aufruf.
+Öffnet nach der Antwort mit `Ctrl+O` den Transcript-Viewer (Desktop-App: Pfeil neben dem Session-Namen → **Transcript view** → **Verbose**, oder `Ctrl+O`, bis **Verbose** aktiv ist). Zählt die Tool-Aufrufe. Im Terminal schließt `Ctrl+O` den Viewer wieder. Sucht ein Wort aus dem Ergebnis eines Aufrufs in der Eingabe des nächsten: Das ist **Observe**, das den nächsten **Act** bestimmt. Den **Reason**-Schritt seht ihr nicht direkt, nur seine Wirkung auf den nächsten Aufruf.
 
 ### 3. Lasst euch die Architektur erklären
 
