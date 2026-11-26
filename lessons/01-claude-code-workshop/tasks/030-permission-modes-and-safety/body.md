@@ -1,3 +1,11 @@
+> **⚠️ Setup first:** Start a session in your `bookmonkey-legacy` clone (terminal: `cd bookmonkey-legacy` and `claude`; Desktop App: new session, pick the `bookmonkey-legacy` folder) and send this prompt. No clone yet? Do the setup of task 020 first.
+>
+> ```text
+> Setup for task 030: Check with git remote -v that this folder is the bookmonkey-legacy clone, with git status that it is clean, and with node -v that Node.js 24 or newer is installed. Change nothing. Give me a checklist with ✅ and ❌ at the end.
+> ```
+
+---
+
 This task is about **how much Claude may do without asking**. A **permission mode** sets that for the whole session. **Permission rules** make exceptions to it, and a **sandbox** lets the operating system draw limits. You try all three and at the end pick the mode that fits the risk.
 
 You work in your `bookmonkey-legacy` clone. An overview of the modes is at the end.

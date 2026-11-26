@@ -1,3 +1,11 @@
+> **⚠️ Setup first:** Start a session in your `bookmonkey-legacy` clone (terminal: `cd bookmonkey-legacy` and `claude`; Desktop App: new session, pick the `bookmonkey-legacy` folder) and send this prompt. No clone yet? Do the setup of task 020 first.
+>
+> ```text
+> Setup for task 040: Check with git remote -v that this folder is the bookmonkey-legacy clone, with git status that it is clean, and with node -v that Node.js 24 or newer is installed. Change nothing. If the project already has a CLAUDE.md, tell me and do not delete it. Give me a checklist with ✅ and ❌ at the end.
+> ```
+
+---
+
 This task is about **CLAUDE.md**, the memory of your project: a Markdown file Claude reads at the start of every session. You work in your `bookmonkey-legacy` clone (Node.js 24 or newer), in a new session in the mode that asks before changes.
 
 ### 1. Ask a question without memory

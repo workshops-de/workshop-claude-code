@@ -1,3 +1,11 @@
+> **⚠️ Setup zuerst:** Startet eine Session in eurem `bookmonkey-legacy`-Clone (Terminal: `cd bookmonkey-legacy` und `claude`; Desktop-App: neue Session, Ordner `bookmonkey-legacy` wählen) und schickt diesen Prompt. Habt ihr noch keinen Clone, macht zuerst das Setup von Aufgabe 020.
+>
+> ```text
+> Setup für Aufgabe 050: Prüf mit git remote -v, ob dieser Ordner der Clone von bookmonkey-legacy ist, mit git status, ob er sauber ist, und mit node -v, ob Node.js 24 oder neuer installiert ist. Ändere nichts. Gibt es noch keine CLAUDE.md im Projekt, sag es mir. Gib mir am Ende eine Checkliste mit ✅ und ❌.
+> ```
+
+---
+
 In dieser Aufgabe geht es um das **Kontextfenster**: Alles, was Claude in einer Session liest, bleibt darin und belegt Platz. Ihr füllt es absichtlich, **kompaktiert** es und startet danach mit einer **neuen Session** neu.
 
 Ihr arbeitet in eurem `bookmonkey-legacy`-Clone (Node.js 24). Hat das Projekt noch keine `CLAUDE.md`, schreibt in einer Session `/init`. Startet dann eine neue Session.

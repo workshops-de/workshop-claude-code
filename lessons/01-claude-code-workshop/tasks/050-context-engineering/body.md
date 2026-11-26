@@ -1,3 +1,11 @@
+> **⚠️ Setup first:** Start a session in your `bookmonkey-legacy` clone (terminal: `cd bookmonkey-legacy` and `claude`; Desktop App: new session, pick the `bookmonkey-legacy` folder) and send this prompt. No clone yet? Do the setup of task 020 first.
+>
+> ```text
+> Setup for task 050: Check with git remote -v that this folder is the bookmonkey-legacy clone, with git status that it is clean, and with node -v that Node.js 24 or newer is installed. Change nothing. If the project has no CLAUDE.md yet, tell me. Give me a checklist with ✅ and ❌ at the end.
+> ```
+
+---
+
 This task is about the **context window**: everything Claude reads in a session stays in it and takes up space. You fill it on purpose, **compact** it, and then restart with a **new session**.
 
 You work in your `bookmonkey-legacy` clone (Node.js 24). If the project has no `CLAUDE.md` yet, type `/init` in a session. Then start a new session.

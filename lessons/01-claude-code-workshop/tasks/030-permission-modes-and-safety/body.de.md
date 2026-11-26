@@ -1,3 +1,11 @@
+> **⚠️ Setup zuerst:** Startet eine Session in eurem `bookmonkey-legacy`-Clone (Terminal: `cd bookmonkey-legacy` und `claude`; Desktop-App: neue Session, Ordner `bookmonkey-legacy` wählen) und schickt diesen Prompt. Habt ihr noch keinen Clone, macht zuerst das Setup von Aufgabe 020.
+>
+> ```text
+> Setup für Aufgabe 030: Prüf mit git remote -v, ob dieser Ordner der Clone von bookmonkey-legacy ist, mit git status, ob er sauber ist, und mit node -v, ob Node.js 24 oder neuer installiert ist. Ändere nichts. Gib mir am Ende eine Checkliste mit ✅ und ❌.
+> ```
+
+---
+
 In dieser Aufgabe geht es darum, **wie viel Claude ohne Nachfrage darf**. Ein **Permission Mode** legt das für die ganze Session fest. **Permission-Regeln** machen Ausnahmen davon, und eine **Sandbox** lässt das Betriebssystem Grenzen ziehen. Ihr probiert alle drei aus und wählt am Ende den Modus passend zum Risiko.
 
 Ihr arbeitet in eurem `bookmonkey-legacy`-Clone. Die Modi im Überblick stehen am Ende.

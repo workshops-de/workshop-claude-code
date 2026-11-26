@@ -1,40 +1,29 @@
+> **⚠️ Setup first:** Clone the repo once, in one of two ways.
+>
+> **Command line** (any terminal, or the Desktop App's terminal, ``Ctrl+` ``):
+>
+> ```bash
+> git clone https://github.com/andrekovac/bookmonkey-legacy.git
+> ```
+>
+> **In the chat:** start a session in the folder where your projects live and send this prompt. Allow the `git clone` command when Claude asks.
+>
+> ```text
+> Setup for task 020: Clone https://github.com/andrekovac/bookmonkey-legacy.git into this folder. Then check with node -v that Node.js 24 or newer is installed. Give me a checklist with ✅ and ❌ at the end.
+> ```
+
+---
+
 In this task you learn how Claude Code works as an **agent**: it reads, searches and runs commands, looks at the result and then decides the next step (**Reason → Act → Observe**). You inherit an unfamiliar codebase and only have to **understand** it. You change no file.
 
 The codebase is [`bookmonkey-legacy`](https://github.com/andrekovac/bookmonkey-legacy): a library app after five years and four developers, an Express API on SQLite, a React web app with Vite, about 15,000 lines. You need Claude Code, Git and a terminal. You meet it again in the tasks on refactoring, debugging and code review. The map you draw today helps you there.
 
-### 1. Clone the repo and start in plan mode
+### 1. Start in plan mode
 
 In **plan mode** Claude reads files and runs exploring commands, but changes nothing until you approve a plan. In this task you never approve one.
 
-**In the terminal:**
-
-```bash
-git clone https://github.com/andrekovac/bookmonkey-legacy.git
-cd bookmonkey-legacy
-claude --permission-mode plan
-```
-
-If a session is already running, press `Shift+Tab` until `plan mode on` shows.
-
-**In the desktop app (the "Code" tab):**
-
-1. Clone the repo once, in one of two ways:
-   - **Command line:** in any terminal or in the app's terminal (``Ctrl+` ``):
-
-     ```bash
-     git clone https://github.com/andrekovac/bookmonkey-legacy.git
-     ```
-
-   - **In the chat:** start a session in the folder where your projects live and write:
-
-     ```text
-     Clone https://github.com/andrekovac/bookmonkey-legacy.git into this folder.
-     ```
-
-     Allow the `git clone` command when Claude asks.
-
-2. Start a new session and pick the `bookmonkey-legacy` folder below the input field.
-3. Set **Plan** in the mode menu next to it.
+- **Terminal:** `cd bookmonkey-legacy` and `claude --permission-mode plan`. If a session is already running, press `Shift+Tab` until `plan mode on` shows.
+- **Desktop app (the "Code" tab):** start a new session, pick the `bookmonkey-legacy` folder below the input field and set **Plan** in the mode menu next to it.
 
 ### 2. Watch the loop once
 
