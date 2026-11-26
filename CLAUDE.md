@@ -59,7 +59,7 @@ Positions 130–170 are intentionally empty (their former tasks were merged into
 ```
 lessons/01-claude-code-workshop/tasks/NNN-task-slug/
 ├── task.yml          # required: title, position, category, timing, lock/prep flags
-├── body.md           # required: Overview, The Feature, Apply it to BookMonkey (or BookMonkey Legacy), Steps, Success Criteria, References
+├── body.md           # required: intro, ### numbered steps, What just happened, Done when, More (see Content style)
 ├── hint.md           # optional: collapsible <details> hints, 2-4 per task
 ├── trainer_hint.md   # optional: facilitator-only notes (learning goals, timing, pitfalls)
 └── bonus.md          # optional: "Going further" stretch content
@@ -98,13 +98,26 @@ other file changes needed for the numbering itself.
 
 ### Content style
 
-- Body text: Overview → **The Feature** (what it is, when to use it, how: real commands, file
-  paths, config snippets) → **Apply it to BookMonkey** or **Apply it to BookMonkey Legacy** (short
-  project context) → (Prerequisites) → numbered Steps (set up the feature first, then apply it) →
-  Success Criteria (a **Feature** block first, then an **App still works** block, or a matching
-  outcome block such as "nothing changed" for read-only tasks) → References (Claude Code docs
-  first). Foundations and later-category tasks without a BookMonkey step may keep Background
-  instead of the two feature sections. Keep steps actionable and concrete (real commands, real prompts).
+- Body text, the step style every task uses since 2026-11 (020 and 030 were moved to it on
+  2026-11-26; only the setup task 010 keeps the old section layout):
+  1. Server box and `---`, when the task needs one (see below).
+  2. Two or three plain sentences: which feature this task is about, what you do with it, and the
+     project you work in. No separate "The Feature" or "Apply it to …" sections.
+  3. Numbered steps as `### 1. Imperative title`, each with one prompt in a `text` fence (or the
+     command in a `bash` fence) and one or two sentences on what you see ("in unserem Lauf" /
+     "in our run"). Keep step numbers stable once hints or trainer notes refer to them.
+  4. Notes that only some learners need (desktop app, native Windows, the answer to a "why?"
+     question) go into a `<details>` block right under the step, not into the step text.
+  5. `### What just happened` / `### Was gerade passiert ist`: a small table (lever, when, gap) that
+     names the pattern the learner just experienced. Facts the learner should discover by testing
+     (who wins, why a rule misses) appear here, after the steps, never before the test.
+  6. `**Done when** …` / `**Fertig, wenn** …`: one sentence listing what the learner can show or
+     say.
+  7. `<details><summary>More</summary>` / `<summary>Mehr dazu</summary>`: background, file
+     locations and the docs links (Claude Code docs first).
+
+  Aim for about 550 to 800 words per body (040 and 050 are the models). Do not put a table or
+  sentence above a step that answers the question the step asks.
 - Verify feature claims against the current docs (`https://code.claude.com/docs/en/<page>.md`
   returns plain Markdown). Claude Code changes fast (e.g. `/agents` no longer has a wizard).
 - Test claims, do not just assert them (trainer's request, 2026-11-09). Every factual statement on

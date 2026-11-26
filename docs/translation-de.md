@@ -142,6 +142,9 @@ Leave trainer speaker notes untouched (partly already German, written by the tra
 | Prerequisites | Voraussetzungen |
 | Steps | Schritte |
 | Success Criteria | Erfolgskriterien |
+| What just happened | Was gerade passiert ist |
+| Done when | Fertig, wenn |
+| More | Mehr dazu |
 | References | Referenzen |
 | Background | Hintergrund |
 | Learning goals | Lernziele |
