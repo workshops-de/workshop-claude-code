@@ -1,138 +1,112 @@
-## Overview
+This task is about **how much Claude may do without asking**. A **permission mode** sets that for the whole session. **Permission rules** make exceptions to it, and a **sandbox** lets the operating system draw limits. You try all three and at the end pick the mode that fits the risk.
 
-Understand and control **how much autonomy** you grant Claude Code, so you can match oversight to
-risk. You will learn the permission modes (Manual (`default`), `acceptEdits`, `plan`, `auto`,
-`dontAsk`, `bypassPermissions`), which one a session starts in, how to switch between them, and
-the safeguards that protect you, including **auto mode's** background safety classifier, the idea
-of human-in-the-loop boundaries, and the **permission rules** you manage with `/permissions`. This underpins every later task: the looser the mode, the
-more your review discipline matters.
+You work in your `bookmonkey-legacy` clone. An overview of the modes is at the end.
 
-## Background
+### 1. Read the mode before you type
 
-When Claude wants to edit a file, run a command, or make a network request, a permission mode
-decides whether it asks you first. **Manual** (config value `default`) and `plan` only read without
-asking; `acceptEdits` writes files (and common filesystem commands) without prompting; `auto` lets
-Claude act while a separate classifier model reviews each action first; `dontAsk` allows only
-pre-approved tools (ideal for locked-down CI); `bypassPermissions` skips checks entirely and is
-only safe in an isolated container or VM.
+Start `claude` in the clone. Which mode does the status line show, and why? Check `claude --version` and `permissions.defaultMode` in your `~/.claude/settings.json` to explain it.
 
-Since Claude Code v2.1.283, **auto mode is the built-in starting mode** for interactive terminal
-and VS Code sessions. A `--permission-mode` flag or `permissions.defaultMode` in a settings file
-wins over that built-in default, and if auto mode is not available to your session, it starts in
-Manual instead.
+Then press `Shift+Tab` a few times: from `auto` it goes to Manual (`⏸ manual mode on`), then `acceptEdits`, `plan` and back to `auto`.
 
-A mode is only the baseline. **Permission rules** are the exceptions, and `/permissions` is where
-you see and change them. What an **allow** rule matches runs without asking, an **ask** rule prompts
-even if an allow rule also matches, and a **deny** rule blocks, in every mode, including
-`bypassPermissions`. The order is fixed: deny, then ask, then allow. The first match decides, so a more specific rule does
-not win. If no rule matches, the mode decides.
+<details>
+<summary>In the desktop app</summary>
 
-A rule is written `Tool` or `Tool(specifier)`, for example `Bash(curl *)` (shell commands that
-start like this) or `Edit(./src/**)` (edits below `src/`). The Permissions doc lists every shape.
+There is no status line, and `Shift+Tab` does not switch the mode. You see and switch it in the mode menu below the input field (Windows `Ctrl+Shift+M`, macOS `Cmd+Shift+M`). Commands like `git diff` run in the app's terminal (``Ctrl+` ``).
 
-Rules live in `~/.claude/settings.json` (you, everywhere), `.claude/settings.json` (team, in git),
-`.claude/settings.local.json` (you, this repo) and managed settings (your IT). A deny on any level
-beats an allow on any other.
+</details>
 
-## Steps
+<details>
+<summary>Answer: why this mode?</summary>
 
-1. **Start a session and read the status line** before you type anything (`claude` in your
-   `bookmonkey-legacy` clone). Which mode does it show, and why? Check `claude --version` and your
-   `~/.claude/settings.json` (`permissions.defaultMode`) to explain it. Then press `Shift+Tab`
-   several times and watch the status line: from `auto` the first press switches to Manual
-   (`⏸ manual mode on`), then the cycle runs Manual → `acceptEdits` → `plan` → back to `auto`.
+Since Claude Code v2.1.283 a terminal session starts in **auto mode**. A `--permission-mode` flag or `permissions.defaultMode` in your settings takes precedence. If auto mode is not available for your session, it starts in Manual.
 
-   In the desktop app there is no status line, and `Shift+Tab` does not switch the mode. You see
-   and switch the mode in the mode menu under the prompt box (Windows `Ctrl+Shift+M`, macOS
-   `Cmd+Shift+M`). `git diff` and `git restore .` in the next steps run in the app's terminal
-   (``Ctrl+` ``).
-2. Make a small edit in `acceptEdits` and confirm it applied without a prompt; then review the
-   change with `git diff` afterward. Undo it with `git restore .`, so the clone stays clean for
-   the next tasks.
-3. Cycle back to **auto mode** and give it a contained task. Observe the classifier: run
-   `claude auto-mode defaults` in a second terminal to read the default rules, and identify two
-   actions it blocks and two it allows by default. Then switch to Manual (`default`) and give the
-   same task: count the prompts you get now. If you answer a Bash prompt with "Yes, and don't ask
-   again", open `.claude/settings.local.json` afterwards: the rule is now there.
+</details>
 
-   In the desktop app: `claude auto-mode defaults` runs in the app's terminal (needs the CLI).
-   Without the CLI, read the default rules on the "Configure auto mode" page (references).
-4. State a **boundary** in conversation (for example, "don't run any network commands until I say
-   so") and verify Claude respects it even where defaults would allow the action.
-   Run `/compact` and test the boundary again. Then write the same boundary as a **deny rule**: create
-   `.claude/settings.local.json` with `{"permissions": {"deny": ["Bash(curl *)"]}}` and test once
-   more.
+### 2. Change something in `acceptEdits`
 
-   **Native Windows without Git for Windows:** then Claude runs commands with the **PowerShell
-   tool**, and a `Bash(...)` rule does not apply to it. Also write the boundary as a PowerShell
-   rule, same shape: `{"permissions": {"deny": ["Bash(curl *)", "PowerShell(curl *)",
-   "PowerShell(curl.exe *)", "PowerShell(Invoke-WebRequest *)"]}}`. Test with
-   `curl.exe -I https://example.com`. Create the file in an editor or let Claude create it, not
-   with `>` in Windows PowerShell (that saves it as UTF-16). With Git for Windows, Claude mostly
-   uses the Bash tool, and everything works as described.
-5. **Open `/permissions`** and find your `Bash(curl *)` deny rule: `←` and `→` switch the tabs
-   (Allow, Ask, Deny, Workspace and, where available, Recently blocked and Auto mode), and the
-   dialog shows the settings file each rule comes from. Then add the same rule `Bash(curl *)` on
-   the **Allow** tab; if asked where to save it, pick the local project settings. Before you test:
-   which one wins, the older deny or the newer allow? Ask Claude to run
-   `curl -I https://example.com` and read the message. Now ask for
-   `sh -c 'curl -I https://example.com'`. This time the deny rule does not fire: it matches the
-   command text `curl …`, not the same program inside a shell. If you get a prompt, answer No (in
-   auto mode, watch what the classifier does). Delete both rules afterwards, so later tasks can
-   use `curl` again.
+Switch to `acceptEdits` with `Shift+Tab` and let Claude make a small change. It comes without a prompt. Check it with `git diff` and undo it with `git restore .`.
 
-   Native Windows without Git: test the bypass with `cmd /c curl.exe -I https://example.com`
-   instead of `sh -c`. Same principle: the rule only reads the start of the command text.
+### 3. Compare auto and Manual
 
-   In the desktop app: if `/permissions` is not available there, open the app's terminal
-   (``Ctrl+` ``) and start `claude` there (needs the CLI).
-6. Decide, for three scenarios (exploring an unfamiliar repo, iterating on code you're reviewing, a
-   locked-down CI job), which mode fits and why.
-7. **Let the operating system stop a command.** A sandbox does not read the command text like the
-   deny rule in step 5 (remember the `sh -c` detour). It limits what the running process may touch.
-   If `/sandbox` shows that your sandbox is already on, turn it off for this step.
+Run `claude auto-mode defaults` in a second terminal and find two actions the classifier blocks by default and two it allows. Then give a well-scoped task that runs commands in **auto mode**. Switch to **Manual** with `Shift+Tab` and give the same task again. Count the prompts in both modes. If you answer a Bash prompt in Manual with "Yes, and don't ask again", the rule then sits in `.claude/settings.local.json`.
 
-   **Native Windows** has no sandbox, and this step needs the CLI. Watch someone with macOS, Linux
-   or WSL2 and say beforehand what will happen.
+Without the CLI in the desktop app: the default rules are on the docs page [Configure auto mode](https://code.claude.com/docs/en/auto-mode-config).
 
-   1. In a second terminal, create a file outside the project: `echo secret > ~/sandbox-demo.txt`.
-   2. Give Claude this prompt and allow the command if it asks. Python reads the file and writes
-      `~/sandbox-demo-2.txt`, both outside the project:
+### 4. Turn a wish into a rule
 
-      ```text
-      Run exactly this command once, no alternatives: python3 -c "import os; h=os.path.expanduser('~'); print(open(h+'/sandbox-demo.txt').read()); open(h+'/sandbox-demo-2.txt','w').write('x'); print('WRITE OK')"
-      ```
+Tell Claude in the conversation: "Do not run any network commands until I say so." Ask Claude for `curl -I https://example.com` and check whether it sticks to it. Run `/compact` and check again: does the limit hold after compacting?
 
-   3. Predict: what happens to the same prompt with the sandbox on? Then leave with `/exit`, start
-      again with the sandbox on and reads outside the project blocked, and send the same prompt:
+Then write the same limit as a **deny rule** in `.claude/settings.local.json`:
 
-      ```bash
-      claude --settings '{"permissions":{"blockReadsOutsideWorkingDirectories":true},"sandbox":{"enabled":true,"allowUnsandboxedCommands":false,"failIfUnavailable":true}}'
-      ```
+```json
+{"permissions": {"deny": ["Bash(curl *)"]}}
+```
 
-      On macOS, Python now reports `PermissionError: [Errno 1] Operation not permitted` (Linux and
-      WSL2 may word it differently, native Windows has no sandbox). The code is the same, but the
-      operating system said no, not Claude.
-   4. Clean up: `rm -f ~/sandbox-demo.txt ~/sandbox-demo-2.txt`.
+Test a third time. The sentence in the conversation is a wish to the model, the deny rule is checked by Claude Code on every command.
 
-   The sandboxing page lists what stays outside the sandbox: Claude's own file tools, MCP servers
-   and hooks.
+<details>
+<summary>Native Windows without Git for Windows</summary>
 
-## Success Criteria
+Claude uses the **PowerShell tool** there, a `Bash(...)` rule does not apply. Add `"PowerShell(curl *)", "PowerShell(curl.exe *)", "PowerShell(Invoke-WebRequest *)"` and test with `curl.exe -I https://example.com`. Create the file in your editor or let Claude create it, not with `>` in Windows PowerShell (that saves it as UTF-16).
 
-- [ ] You can say which mode your session started in, and why
-- [ ] You ran the same task in auto and in Manual and can say how many prompts each gave
-- [ ] You confirmed at least one boundary was respected in conversation
-- [ ] You can explain the difference between a stated boundary and a deny rule
-- [ ] You can say in which order deny, ask and allow are checked, and what happens if no rule matches
-- [ ] You found a rule in `/permissions` and can say which settings file it comes from
-- [ ] You saw a `Bash(curl *)` deny rule stop `curl` but not `sh -c 'curl …'` (Windows without Git: `cmd /c curl.exe …`), and can say why
-- [ ] You picked an appropriate mode for each of the three given scenarios
-- [ ] You saw the same Python command work without the sandbox and fail with `Operation not permitted` with the sandbox and blocked reads (on Windows: watched someone else), and can say who stopped it
+</details>
 
-## References
+### 5. Find the rule in `/permissions` and look for its gap
 
-- Claude Code: Choose a permission mode: https://code.claude.com/docs/en/permission-modes
-- Claude Code: Configure auto mode: https://code.claude.com/docs/en/auto-mode-config
-- Claude Code: Permissions (allow/ask/deny rules): https://code.claude.com/docs/en/permissions
-- Claude Code: Sandboxing: https://code.claude.com/docs/en/sandboxing
+Open `/permissions`, switch tabs with `←` and `→` and find your deny rule. The dialog shows which file it comes from. In the **Allow** tab, add the same rule `Bash(curl *)` (local project settings).
+
+Predict first: who wins, deny or allow? Then let Claude run `curl -I https://example.com` and read the message: who won?
+
+Now ask for `sh -c 'curl -I https://example.com'` (Windows without Git: `cmd /c curl.exe -I https://example.com`). Does the deny rule apply? Why not? If a prompt comes, answer No. Delete both rules afterwards.
+
+If `/permissions` is not available in the desktop app, start `claude` in the app's terminal.
+
+### 6. Pick the mode for the risk
+
+Which mode fits, and why? Exploring an unknown repo. Iterating on code you are reviewing right now. A locked-down CI job.
+
+### 7. Let the operating system stop it
+
+A **sandbox** does not read command text. It limits what the running process may access. Check with `/sandbox` whether it is on, and switch it off for this step. Native Windows has no sandbox, and this step needs the CLI: watch someone on macOS, Linux or WSL2 and predict what happens.
+
+In a second terminal create `echo secret > ~/sandbox-demo.txt` and give Claude this prompt:
+
+```text
+Run exactly this command once, no alternatives: python3 -c "import os; h=os.path.expanduser('~'); print(open(h+'/sandbox-demo.txt').read()); open(h+'/sandbox-demo-2.txt','w').write('x'); print('WRITE OK')"
+```
+
+If Claude asks, allow the command. If the classifier blocks it, switch to Manual and confirm. Python reads and writes outside the project, and it works. Predict what happens with the sandbox. Quit with `/exit` and start again:
+
+```bash
+claude --settings '{"permissions":{"blockReadsOutsideWorkingDirectories":true},"sandbox":{"enabled":true,"allowUnsandboxedCommands":false,"failIfUnavailable":true}}'
+```
+
+Send the same prompt. On macOS Python reports `PermissionError: [Errno 1] Operation not permitted`. Same code, but the operating system said no, not Claude. Clean up: `rm -f ~/sandbox-demo.txt ~/sandbox-demo-2.txt`.
+
+### What just happened
+
+| Mode | Without asking |
+|---|---|
+| Manual (`default`) | read only |
+| `acceptEdits` | read, edit files |
+| `plan` | read only, change nothing |
+| `auto` | Claude acts, a classifier checks every action first |
+| `dontAsk` | only tools allowed in advance, nothing else |
+| `bypassPermissions` | everything except deny rules, no other checks, only in an isolated container or VM |
+
+| Lever | Checked by | Gap |
+|---|---|---|
+| Sentence in the conversation | the model, if it sticks to it | no guarantee |
+| Deny rule | Claude Code, on the command text | `sh -c '…'` is a different text |
+| Sandbox | the operating system, on access | covers shell commands, not Claude's file tools, MCP servers or hooks |
+
+Rules are checked in a fixed order: **deny, then ask, then allow**. The first match decides, so a more specific rule does not win. If no rule matches, the mode decides.
+
+**Done when** you can say which mode your session starts in and why, how many prompts auto and Manual gave, which file a rule comes from, who wins between deny and allow, why `sh -c` gets past the deny rule, who stopped the Python command, and you have picked a mode for the three scenarios.
+
+<details>
+<summary>More on this</summary>
+
+A rule has the form `Tool` or `Tool(specifier)`, for example `Bash(curl *)` or `Edit(./src/**)` (edits below `src/`). An ask rule asks even when an allow rule matches as well. A deny rule blocks in every mode, including `bypassPermissions`. Rules live in `~/.claude/settings.json` (you, everywhere), `.claude/settings.json` (team, in Git), `.claude/settings.local.json` (you, this repo) and in managed settings (your IT). A deny on one level beats an allow on any other. Docs: [Permission modes](https://code.claude.com/docs/en/permission-modes), [Configure auto mode](https://code.claude.com/docs/en/auto-mode-config), [Permissions](https://code.claude.com/docs/en/permissions), [Sandboxing](https://code.claude.com/docs/en/sandboxing).
+
+</details>
