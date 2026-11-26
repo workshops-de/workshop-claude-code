@@ -32,7 +32,15 @@ Since Claude Code v2.1.283 a terminal session starts in **auto mode**. A `--perm
 
 ### 2. Change something in `acceptEdits`
 
-Switch to `acceptEdits` with `Shift+Tab` and let Claude make a small change. It comes without a prompt. Check it with `git diff` and undo it with `git restore .`.
+Switch to `acceptEdits` (terminal: `Shift+Tab`; desktop app: mode menu, **Accept edits**) and send:
+
+```text
+Add the line "Workshop test" in README.md right below the first heading.
+```
+
+The change comes without a prompt. Read the diff: `git diff` (desktop app: in the app's diff view or in the app's terminal).
+
+Then take it back with **rewind**: `/rewind` (in the terminal also `Esc` twice), pick your message from just now, then **Restore code**. This works in the desktop app too. Rewind only restores changes Claude made with Edit or Write, not through Bash. Fallback: `git restore .`.
 
 ### 3. Compare auto and Manual
 
