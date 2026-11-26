@@ -91,6 +91,23 @@ claude --settings '{"permissions":{"blockReadsOutsideWorkingDirectories":true},"
 
 Schickt denselben Prompt. Unter macOS meldet Python `PermissionError: [Errno 1] Operation not permitted`. Derselbe Code, aber Nein gesagt hat das Betriebssystem, nicht Claude. Räumt auf: `rm -f ~/sandbox-demo.txt ~/sandbox-demo-2.txt`.
 
+<details>
+<summary>In der Desktop-App</summary>
+
+Die Desktop-App liest dieselben Settings-Dateien wie das Terminal, aber `--settings` gibt es dort nicht. Ob eine Desktop-Session Bash-Befehle wirklich in der Sandbox ausführt, steht nicht in den Docs. Probiert es aus:
+
+1. Lasst Claude die Einstellung lokal eintragen:
+
+   ```text
+   Trag in .claude/settings.local.json ein: permissions.blockReadsOutsideWorkingDirectories true, sandbox.enabled true, sandbox.allowUnsandboxedCommands false, sandbox.failIfUnavailable true. Behalte, was schon drinsteht.
+   ```
+
+2. Startet eine neue Session (**+ New**) im selben Ordner und schickt den Python-Prompt von oben.
+3. Kommt `PermissionError`, greift die Sandbox auch in der App. Läuft der Befehl durch, macht diesen Schritt mit `claude` im Terminal der App (``Ctrl+` ``).
+4. Räumt danach auf: Nehmt die vier Einträge wieder aus `.claude/settings.local.json`.
+
+</details>
+
 ### Was gerade passiert ist
 
 | Modus | Ohne Nachfrage |
