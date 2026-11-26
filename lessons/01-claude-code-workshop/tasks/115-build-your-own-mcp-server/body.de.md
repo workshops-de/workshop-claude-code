@@ -24,7 +24,7 @@ Claude legt den Ordner an, installiert das SDK und testet die Tools gegen die AP
 Registriere den Server bookmonkey als MCP-Server im Projekt-Scope, sodass ihn das ganze Team über .mcp.json bekommt.
 ```
 
-Claude legt dafür die Datei `.mcp.json` im Projektordner an, in der steht, wie der Server gestartet wird. Weil sie im Repository liegt, hat das Team den Server nach dem Klonen. Startet danach eine neue Session. Bestätigt den Projekt-Server, wenn Claude Code danach fragt. Öffnet in der Desktop-App das Terminal, startet dort `claude` und gebt `/mcp` ein: `bookmonkey` sollte als verbunden erscheinen.
+Claude legt dafür die Datei `.mcp.json` im Projektordner an, in der steht, wie der Server gestartet wird. Weil sie im Repository liegt, hat das Team den Server nach dem Klonen. Startet danach eine neue Session. Bestätigt den Projekt-Server, wenn Claude Code danach fragt. Gebt `/mcp` ein (auch im Chat der Desktop-App): `bookmonkey` sollte als verbunden erscheinen.
 
 ### 3. Stellt eine Frage über den ganzen Katalog
 

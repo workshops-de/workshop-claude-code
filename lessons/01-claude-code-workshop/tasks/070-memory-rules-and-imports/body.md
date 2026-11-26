@@ -114,7 +114,7 @@ Imports organise your memory, but they do not save context: everything loaded at
 
 Your `domain.md` also contains the reading list with its states. You build it in the hooks task. You should commit `docs/openapi.json`, because it serves later as the contract for your own backend.
 
-We did not check whether the desktop app shows which files were loaded; to look, open the terminal there, start `claude` and type `/memory`.
+To see which files were loaded, type `/memory`; it also works in the desktop app's chat.
 
 - [Memory, rules and imports](https://code.claude.com/docs/en/memory)
 - [Path-specific rules](https://code.claude.com/docs/en/memory#path-specific-rules)

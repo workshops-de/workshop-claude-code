@@ -42,7 +42,7 @@ Claude fasst das Gespräch zusammen und macht mit der Zusammenfassung weiter. Fr
 
 ### 5. Startet neu
 
-Startet eine **neue Session** (Terminal: `/clear`; Desktop-App: **+ New** in der Seitenleiste, `Cmd+N` / `Ctrl+N`) und fragt etwas Neues:
+Startet eine **neue Session** (`/clear`, in der Desktop-App auch **+ New** oder `Cmd+N` / `Ctrl+N`) und fragt etwas Neues:
 
 ```text
 Erkläre kurz das Routing der Web-App.

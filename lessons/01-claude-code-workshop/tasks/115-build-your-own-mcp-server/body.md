@@ -24,7 +24,7 @@ Claude creates the folder, installs the SDK and tests the tools against the API.
 Register the server bookmonkey as an MCP server in the project scope, so the whole team gets it through .mcp.json.
 ```
 
-The registration creates the file `.mcp.json` in the project folder, which says how the server is started. Because it lives in the repository, the team has the server after cloning. Then start a new session. Confirm the project server if Claude Code asks. Open the terminal in the desktop app, start `claude` there and enter `/mcp`: `bookmonkey` should be listed as connected.
+The registration creates the file `.mcp.json` in the project folder, which says how the server is started. Because it lives in the repository, the team has the server after cloning. Then start a new session. Confirm the project server if Claude Code asks. Enter `/mcp` (also in the desktop app's chat): `bookmonkey` should be listed as connected.
 
 ### 3. Ask a question about the whole catalogue
 

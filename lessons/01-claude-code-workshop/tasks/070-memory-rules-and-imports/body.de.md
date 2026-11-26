@@ -114,7 +114,7 @@ Imports ordnen euer Gedächtnis, sie sparen aber keinen Kontext: Alles, was beim
 
 Eure `domain.md` enthält auch die Leseliste mit ihren Zuständen. Die baut ihr in der Hooks-Aufgabe. `docs/openapi.json` solltet ihr committen, denn sie dient später als Vertrag für ein eigenes Backend.
 
-Ob die geladenen Dateien in der Desktop-App sichtbar sind, haben wir nicht geprüft; wer nachsehen will, öffnet dort das Terminal, startet `claude` und tippt `/memory`.
+Welche Dateien geladen sind, zeigt `/memory`, auch im Chat der Desktop-App.
 
 - [Memory, rules and imports](https://code.claude.com/docs/en/memory)
 - [Path-specific rules](https://code.claude.com/docs/en/memory#path-specific-rules)

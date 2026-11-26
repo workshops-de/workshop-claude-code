@@ -42,7 +42,7 @@ Claude summarizes the conversation and continues with the summary. Afterwards as
 
 ### 5. Restart
 
-Start a **new session** (terminal: `/clear`; desktop app: **+ New** in the sidebar, `Cmd+N` / `Ctrl+N`) and ask something new:
+Start a **new session** (`/clear`, in the desktop app also **+ New** or `Cmd+N` / `Ctrl+N`) and ask something new:
 
 ```text
 Briefly explain the routing of the web app.

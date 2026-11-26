@@ -112,7 +112,7 @@ New colleagues should be able to start and test the project without asking anyon
 - **`description`** of a skill: Claude uses it to decide whether to pick the skill on its own.
 - **PreToolUse** with matcher **`Bash`** or **`Edit|Write`**: the hook runs before the tool. **`exit 2`** blocks, `exit 1` shows an error but does not block.
 - **`permissions.deny`** and **`permissions.allow`** in `.claude/settings.json`: rules without a script of their own.
-- **`/memory`** and **`/context`**: show what is loaded and how much space it takes. In the desktop app `/context` works in the chat; for `/memory` and `/hooks` start `claude` in the app's terminal.
+- **`/memory`** and **`/context`**: show what is loaded and how much space it takes. In the desktop app both work in the chat; only `/hooks` needs `claude` in the app's terminal.
 
 </details>
 
