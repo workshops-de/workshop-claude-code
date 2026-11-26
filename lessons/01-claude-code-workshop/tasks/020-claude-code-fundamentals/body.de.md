@@ -18,11 +18,20 @@ Läuft schon eine Session, drückt `Shift+Tab`, bis `plan mode on` erscheint.
 
 **In der Desktop-App (Tab „Code“):**
 
-1. Klont das Repo einmal. Das geht in jedem Terminal oder im Terminal der App (``Ctrl+` ``):
+1. Klont das Repo einmal, auf einem der zwei Wege:
+   - **Kommandozeile:** in jedem Terminal oder im Terminal der App (``Ctrl+` ``):
 
-   ```bash
-   git clone https://github.com/andrekovac/bookmonkey-legacy.git
-   ```
+     ```bash
+     git clone https://github.com/andrekovac/bookmonkey-legacy.git
+     ```
+
+   - **Im Chat:** Startet eine Session in dem Ordner, in dem eure Projekte liegen, und schreibt:
+
+     ```text
+     Klone https://github.com/andrekovac/bookmonkey-legacy.git in diesen Ordner.
+     ```
+
+     Erlaubt den `git clone`-Befehl, wenn Claude fragt.
 
 2. Startet eine neue Session und wählt unter dem Eingabefeld den Ordner `bookmonkey-legacy`.
 3. Stellt im Modus-Menü daneben **Plan** ein.

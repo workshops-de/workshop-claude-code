@@ -18,11 +18,20 @@ If a session is already running, press `Shift+Tab` until `plan mode on` shows.
 
 **In the desktop app (the "Code" tab):**
 
-1. Clone the repo once, in any terminal or in the app's terminal (``Ctrl+` ``):
+1. Clone the repo once, in one of two ways:
+   - **Command line:** in any terminal or in the app's terminal (``Ctrl+` ``):
 
-   ```bash
-   git clone https://github.com/andrekovac/bookmonkey-legacy.git
-   ```
+     ```bash
+     git clone https://github.com/andrekovac/bookmonkey-legacy.git
+     ```
+
+   - **In the chat:** start a session in the folder where your projects live and write:
+
+     ```text
+     Clone https://github.com/andrekovac/bookmonkey-legacy.git into this folder.
+     ```
+
+     Allow the `git clone` command when Claude asks.
 
 2. Start a new session and pick the `bookmonkey-legacy` folder below the input field.
 3. Set **Plan** in the mode menu next to it.
