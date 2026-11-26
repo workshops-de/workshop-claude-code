@@ -1,106 +1,83 @@
-## Overview
+In this task you learn how Claude Code works as an **agent**: it reads, searches and runs commands, looks at the result and then decides the next step (**Reason → Act → Observe**). You inherit an unfamiliar codebase and only have to **understand** it. You change no file.
 
-Get comfortable driving Claude Code as an agentic tool on a codebase you have never seen. You
-inherit a real, grown application and your only job is to **understand it**: you change no file.
-On the way you learn the mental model behind the tool: an agent works in a **Reason → Act →
-Observe** loop, proposes tool calls that change your environment, and is only as good as the
-context you give it.
+The codebase is [`bookmonkey-legacy`](https://github.com/andrekovac/bookmonkey-legacy): a library app after five years and four developers, an Express API on SQLite, a React web app with Vite, about 15,000 lines. You need Claude Code, Git and a terminal. You meet it again in the tasks on refactoring, debugging and code review. The map you draw today helps you there.
 
-You do **not** produce code in this task. You produce understanding, and fluency with the tool.
+### 1. Clone the repo and start in plan mode
 
-## The Feature
+```bash
+git clone https://github.com/andrekovac/bookmonkey-legacy.git
+cd bookmonkey-legacy
+claude --permission-mode plan
+```
 
-Claude Code reads, searches, and runs commands in your repository, then reasons about what it saw.
-For exploration you want all of that, minus the editing:
+In **plan mode** Claude reads files and runs exploring commands, but changes nothing until you approve a plan. Alternatively press `Shift+Tab` in a running session until `plan mode on` shows. In this task you never approve one.
 
-- **Plan mode leaves your code alone.** Start a session in it with `claude --permission-mode plan`,
-  or press `Shift+Tab` until the status bar shows `plan mode on`. Claude reads files, runs exploring
-  shell commands and writes only its plan file. Edits stay blocked until you approve a plan (unless
-  the session has bypass permissions available). For this task you never approve one.
-- **Watch the loop.** Every tool call (Read, Grep, a `git log`) is an _act_; its output is the
-  _observe_ step. The _reason_ step happens in between, and you usually see only its effect on the
-  next call. Open the transcript viewer with `Ctrl+O` to see what Claude actually looked at.
-- **Slash commands** steer the session: `/help` lists them, `/context` shows how full the context
-  window is, `/permissions` shows what Claude may do without asking.
-- **Ask for artefacts, not impressions.** "Draw a Mermaid diagram of the modules and their
-  imports" is checkable. "What do you think of this code?" is not.
+In the desktop app: open any folder, run only `git clone …` in the app's terminal (``Ctrl+` ``), then pick the `bookmonkey-legacy` folder below the input field and set **Plan** in the mode menu next to it.
 
-## Apply it to BookMonkey Legacy
+### 2. Watch the loop once
 
-> **Repo / ports:** your `bookmonkey-legacy` clone (Node.js 24 or newer), API on
-> http://localhost:4780, web app on http://localhost:5180
->
-> **Login:** admin `admin@bookmonkey.example` / `admin2021`
+Run `/context` and note the value. Then ask:
 
-In the build tasks you create a fresh BookMonkey. Here you meet its older sibling:
-[`bookmonkey-legacy`](https://github.com/andrekovac/bookmonkey-legacy), the company library and
-book shop app as it looks after five years and four developers: an Express API on top of SQLite,
-a React web app built with Vite, around 15,000 lines of code that grew feature by feature, and the
-git history to go with it. You inherit this codebase again in the refactoring, debugging, and code
-review tasks, so the map you draw today pays off later.
+```text
+Which parts does this repository have, and how do you start each one?
+```
 
-## Prerequisites
+After the answer, open the transcript viewer with `Ctrl+O` (desktop app: press `Ctrl+O` until the view is **Verbose**). Count the tool calls. In the terminal, `Ctrl+O` closes the viewer again. Find a word from one call's result in the input of the next call: that is **Observe** deciding the next **Act**. You do not see the **Reason** step directly, only its effect on the next call.
 
-- Claude Code installed and verified (see "Install Claude Code and Verify It Works")
-- Git and a terminal. Node.js 24 or newer only if you want to run the app (optional here).
+### 3. Get the architecture explained
 
-## Steps
+```text
+Give me an overview of the architecture: parts, how they start, ports, where the data lives. For every statement, name the file it is based on.
+```
 
-1. Clone the repository and start Claude Code in it, in plan mode:
+### 4. Get a dependency map drawn
 
-   ```bash
-   git clone https://github.com/andrekovac/bookmonkey-legacy.git
-   cd bookmonkey-legacy
-   claude --permission-mode plan
-   ```
+```text
+Draw the main modules of the API and the web app as a Mermaid diagram, with arrows for the imports.
+```
 
-   In the desktop app: first open any folder (for example your home folder), then the app's
-   terminal (``Ctrl+` ``), and run only the `git clone …` line there. Then pick the `bookmonkey-legacy`
-   folder under the prompt box and set **Plan** in the mode menu next to it.
+Paste it into [mermaid.live](https://mermaid.live) or a Mermaid preview in your editor. Check one arrow yourself by opening the file.
 
-2. **Watch the loop once.** Run `/context`, so you have a baseline. Then ask a first architecture
-   question, for example "Which parts does this repository have, and how is each one started?".
-   When the answer is there, press `Ctrl+O` to open the transcript viewer (Desktop app: press
-   `Ctrl+O` until the view is **Verbose**) and count the tool calls Claude made. Then find a word
-   from the result of one call in the input of the next call: that is **Observe** feeding the next
-   **Act**. In the terminal, `Ctrl+O` again closes the viewer.
-3. Ask for an **architecture overview**: the parts of the system, how they are started, which
-   ports they use, and where the data lives. Ask Claude to name the files it based each claim on.
-4. Ask for a **dependency map** as a Mermaid diagram: the main modules of the API and the web app
-   and which one imports which. Paste it into a Mermaid preview (your editor or
-   [mermaid.live](https://mermaid.live)) and check one arrow yourself by opening the file.
-5. Pick one user action, for example "open the detail page of a book", and ask Claude to trace the
-   **request flow** from the React page through the API route and the service layer down to the SQL
-   query, with file and line references.
-6. Ask for the **five biggest risks** of taking over this codebase, each with the evidence that
-   made Claude pick it. Push back on at least one: "show me where", "is that still true today?".
-7. Ask **who worked on what**: let Claude use `git log` and `git shortlog -sn` to tell you which
-   developers touched which areas, in which years, and how the style changed over time.
-8. Run `/context` again and compare with your baseline. Then check the repository:
-   `git status` must say `nothing to commit, working tree clean`.
+### 5. Follow a request
 
-## Success Criteria
+```text
+When I open a book's detail page: which path does the request take from the React page through the API route and the service layer down to the SQL query? With file and line.
+```
 
-**Feature**
+### 6. Ask for the risks
 
-- [ ] You explored the whole session in plan mode and never approved a plan
-- [ ] You found a word from one tool result in the next tool call and can say what it shows
-- [ ] You checked `/context` at the start and at the end and know what filled the window
-- [ ] You can explain when you would approve vs. reject a proposed action
+```text
+What are the five biggest risks if we take over this codebase? Give the evidence for each.
+```
 
-**Codebase understood, nothing changed**
+Push back on at least one: "Show me where" or "Is that still true today?".
 
-- [ ] You have an architecture overview, a Mermaid dependency map, and one traced request flow,
-      each with file references
-- [ ] You have five risks with evidence, and you challenged at least one of them
-- [ ] You know who worked on which part of the code and when
-- [ ] `git status` in `bookmonkey-legacy` is clean
+### 7. Ask who worked on what
 
-## References
+```text
+Use git log and git shortlog -sn to find out who touched which areas, in which years, and how the style changed.
+```
 
-- Claude Code: Overview: https://code.claude.com/docs/en/overview
-- Claude Code: Permission modes (plan mode): https://code.claude.com/docs/en/permission-modes
-- Claude Code: Common workflows (understand new codebases): https://code.claude.com/docs/en/common-workflows
-- Claude Code: Interactive mode: https://code.claude.com/docs/en/interactive-mode
-- Claude Code: Commands: https://code.claude.com/docs/en/commands
-- Mermaid flowchart syntax: https://mermaid.js.org/syntax/flowchart.html
+### 8. Check the context window and the repo
+
+Run `/context` again and compare with step 2: what filled the window? Then run `git status` in the terminal: it must report `nothing to commit, working tree clean`.
+
+### What just happened
+
+| Tool | For |
+|---|---|
+| Plan mode | Exploring without anything being changed |
+| `Ctrl+O` | Seeing what Claude really read and ran |
+| `/context` | Seeing how full the context window is |
+| Asking for artefacts | A diagram, a file and a line instead of an impression: you can check it |
+
+"What do you think of this code?" cannot be checked. A Mermaid diagram with files can.
+
+**Done when** you have an architecture overview, a dependency map, a request flow and five risks with evidence, can say what filled the context window, can say when you approve a proposed action and when you do not, and `git status` is clean.
+
+<details>
+<summary>More on this</summary>
+
+`/help` lists all slash commands, `/permissions` shows what Claude may do without asking. Docs: [Overview](https://code.claude.com/docs/en/overview), [Permission modes](https://code.claude.com/docs/en/permission-modes), [Common workflows](https://code.claude.com/docs/en/common-workflows), [Interactive mode](https://code.claude.com/docs/en/interactive-mode), [Commands](https://code.claude.com/docs/en/commands), [Mermaid](https://mermaid.js.org/syntax/flowchart.html).
+
+</details>

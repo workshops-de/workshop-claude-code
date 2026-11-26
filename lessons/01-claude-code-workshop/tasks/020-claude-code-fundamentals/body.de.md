@@ -1,115 +1,83 @@
-## Überblick
+In dieser Aufgabe lernt ihr, wie Claude Code als **Agent** arbeitet: Es liest, sucht und führt Befehle aus, schaut sich das Ergebnis an und entscheidet dann den nächsten Schritt (**Reason → Act → Observe**). Ihr erbt eine fremde Codebasis und sollt sie nur **verstehen**. Ihr ändert keine Datei.
 
-Lernt, Claude Code als agentisches Tool auf einer Codebasis zu steuern, die ihr noch nie gesehen
-habt. Ihr erbt eine echte, gewachsene Anwendung und habt nur eine Aufgabe: sie zu **verstehen**.
-Ihr ändert keine Datei. Dabei lernt ihr das mentale Modell hinter dem Tool: Ein Agent arbeitet in
-einer **Reason → Act → Observe**-Schleife, schlägt Tool-Aufrufe vor, die eure Umgebung verändern,
-und ist nur so gut wie der Kontext, den ihr ihm gebt.
+Die Codebasis ist [`bookmonkey-legacy`](https://github.com/andrekovac/bookmonkey-legacy): eine Bibliotheks-App nach fünf Jahren und vier Entwicklern, Express-API auf SQLite, React-Web-App mit Vite, rund 15.000 Zeilen. Ihr braucht Claude Code, Git und ein Terminal. Ihr trefft sie in den Aufgaben zu Refactoring, Debugging und Code-Review wieder. Die Karte, die ihr heute zeichnet, hilft euch dort.
 
-In dieser Aufgabe erzeugt ihr **keinen** Code. Ihr erzeugt Verständnis und Routine im Umgang mit
-dem Tool.
+### 1. Klont das Repo und startet im Plan Mode
 
-## Das Feature
+```bash
+git clone https://github.com/andrekovac/bookmonkey-legacy.git
+cd bookmonkey-legacy
+claude --permission-mode plan
+```
 
-Claude Code liest, durchsucht und führt Befehle in eurem Repository aus und überlegt dann, was es
-gesehen hat. Zum Erkunden wollt ihr all das, nur ohne Änderungen:
+Im **Plan Mode** liest Claude Dateien und führt erkundende Befehle aus, ändert aber nichts, bis ihr einen Plan freigebt. Alternativ drückt ihr in einer laufenden Session `Shift+Tab`, bis `plan mode on` erscheint. In dieser Aufgabe gebt ihr nie einen frei.
 
-- **Plan Mode lässt euren Code in Ruhe.** Startet eine Session darin mit
-  `claude --permission-mode plan` oder drückt `Shift+Tab`, bis die Statuszeile `plan mode on`
-  zeigt. Claude liest Dateien, führt erkundende Shell-Befehle aus und schreibt nur seine
-  Plan-Datei. Änderungen bleiben gesperrt, bis ihr einen Plan freigebt (außer die Session hat
-  Bypass Permissions verfügbar). In dieser Aufgabe gebt ihr nie einen frei.
-- **Beobachtet die Schleife.** Jeder Tool-Aufruf (Read, Grep, ein `git log`) ist ein _Act_; seine
-  Ausgabe ist der _Observe_-Schritt. Der _Reason_-Schritt passiert dazwischen, und meist seht ihr
-  nur seine Wirkung auf den nächsten Aufruf. Öffnet den Transcript-Viewer mit `Ctrl+O`, um zu
-  sehen, was Claude sich tatsächlich angeschaut hat.
-- **Slash Commands** steuern die Session: `/help` listet sie auf, `/context` zeigt, wie voll das
-  Kontextfenster ist, `/permissions` zeigt, was Claude ohne Nachfrage tun darf.
-- **Verlangt Artefakte, keine Eindrücke.** „Zeichne ein Mermaid-Diagramm der Module und ihrer
-  Imports“ ist überprüfbar. „Was hältst du von diesem Code?“ ist es nicht.
+In der Desktop-App: Öffnet irgendeinen Ordner, führt im Terminal der App (``Ctrl+` ``) nur `git clone …` aus, wählt dann den Ordner `bookmonkey-legacy` unter dem Eingabefeld und stellt im Modus-Menü daneben **Plan** ein.
 
-## Anwendung auf BookMonkey Legacy
+### 2. Beobachtet die Schleife einmal
 
-> **Repo / Ports:** euer `bookmonkey-legacy`-Clone (Node.js 24 oder neuer), API auf
-> http://localhost:4780, Web-App auf http://localhost:5180
->
-> **Login:** Admin `admin@bookmonkey.example` / `admin2021`
+Führt `/context` aus und merkt euch den Wert. Fragt dann:
 
-In den Build-Aufgaben erstellt ihr einen frischen BookMonkey. Hier lernt ihr seinen älteren
-Bruder kennen: [`bookmonkey-legacy`](https://github.com/andrekovac/bookmonkey-legacy), die
-Bibliotheks- und Buchshop-App eines Unternehmens, wie sie nach fünf Jahren und vier Entwicklern
-aussieht: eine Express-API auf SQLite, eine React-Web-App mit Vite, rund 15.000 Zeilen Code, die
-Feature für Feature gewachsen sind, und die passende Git-Historie dazu. Diese Codebasis erbt ihr
-in den Aufgaben zu Refactoring, Debugging und Code-Review noch einmal, die Karte, die ihr heute
-zeichnet, zahlt sich also später aus.
+```text
+Aus welchen Teilen besteht dieses Repository, und wie startet man jeden Teil?
+```
 
-## Voraussetzungen
+Öffnet nach der Antwort mit `Ctrl+O` den Transcript-Viewer (Desktop-App: `Ctrl+O`, bis die Ansicht **Verbose** ist). Zählt die Tool-Aufrufe. Im Terminal schließt `Ctrl+O` den Viewer wieder. Sucht ein Wort aus dem Ergebnis eines Aufrufs in der Eingabe des nächsten: Das ist **Observe**, das den nächsten **Act** bestimmt. Den **Reason**-Schritt seht ihr nicht direkt, nur seine Wirkung auf den nächsten Aufruf.
 
-- Claude Code installiert und geprüft (siehe „Claude Code installieren und prüfen“)
-- Git und ein Terminal. Node.js 24 oder neuer nur, wenn ihr die App starten wollt (hier optional).
+### 3. Lasst euch die Architektur erklären
 
-## Schritte
+```text
+Gib mir einen Überblick über die Architektur: Teile, Start, Ports, wo die Daten liegen. Nenn zu jeder Aussage die Datei, auf die sie sich stützt.
+```
 
-1. Klont das Repository und startet Claude Code darin im Plan Mode:
+### 4. Lasst eine Abhängigkeitskarte zeichnen
 
-   ```bash
-   git clone https://github.com/andrekovac/bookmonkey-legacy.git
-   cd bookmonkey-legacy
-   claude --permission-mode plan
-   ```
+```text
+Zeichne die wichtigsten Module von API und Web-App als Mermaid-Diagramm, mit Pfeilen für die Imports.
+```
 
-   In der Desktop-App: Öffnet zuerst irgendeinen Ordner (zum Beispiel euren Benutzerordner), dann
-   das Terminal der App (``Ctrl+` ``), und führt dort nur die Zeile `git clone …` aus. Wählt danach den
-   Ordner `bookmonkey-legacy` unter dem Eingabefeld und stellt im Modus-Menü daneben **Plan** ein.
+Fügt es in [mermaid.live](https://mermaid.live) oder eine Mermaid-Vorschau im Editor ein. Prüft einen Pfeil selbst, indem ihr die Datei öffnet.
 
-2. **Beobachtet die Schleife einmal.** Führt `/context` aus, damit ihr eine Ausgangsbasis habt.
-   Stellt dann eine erste Architekturfrage, zum Beispiel „Aus welchen Teilen besteht dieses
-   Repository, und wie wird jeder gestartet?“. Wenn die Antwort da ist, drückt `Ctrl+O`, um den
-   Transcript-Viewer zu öffnen (Desktop-App: `Ctrl+O` drücken, bis die Ansicht **Verbose** ist),
-   und zählt die Tool-Aufrufe, die Claude gemacht hat. Sucht dann ein Wort aus dem Ergebnis eines
-   Aufrufs in der Eingabe des nächsten Aufrufs: Das ist **Observe**, das den nächsten **Act**
-   speist. Im Terminal schließt ihr den Viewer mit `Ctrl+O` wieder.
-3. Verlangt einen **Architekturüberblick**: die Teile des Systems, wie sie gestartet werden,
-   welche Ports sie nutzen und wo die Daten liegen. Claude soll zu jeder Aussage die Dateien
-   nennen, auf die sie sich stützt.
-4. Verlangt eine **Abhängigkeitskarte** als Mermaid-Diagramm: die wichtigsten Module der API und
-   der Web-App und welches welches importiert. Fügt sie in eine Mermaid-Vorschau ein (euer Editor
-   oder [mermaid.live](https://mermaid.live)) und prüft einen Pfeil selbst, indem ihr die Datei
-   öffnet.
-5. Wählt eine Nutzeraktion, zum Beispiel „die Detailseite eines Buchs öffnen“, und lasst Claude
-   den **Request-Flow** von der React-Seite über die API-Route und die Service-Schicht bis zur
-   SQL-Abfrage nachverfolgen, mit Datei- und Zeilenangaben.
-6. Verlangt die **fünf größten Risiken** bei der Übernahme dieser Codebasis, jeweils mit den
-   Belegen, aus denen Claude sie gewählt hat. Hakt bei mindestens einem nach: „zeig mir, wo“,
-   „stimmt das heute noch?“.
-7. Fragt, **wer woran gearbeitet hat**: Claude soll mit `git log` und `git shortlog -sn`
-   herausfinden, welche Entwickler welche Bereiche angefasst haben, in welchen Jahren und wie sich
-   der Stil über die Zeit verändert hat.
-8. Führt `/context` noch einmal aus und vergleicht mit eurer Ausgangsbasis. Prüft dann das
-   Repository: `git status` muss `nothing to commit, working tree clean` melden.
+### 5. Verfolgt einen Request
 
-## Erfolgskriterien
+```text
+Wenn ich die Detailseite eines Buchs öffne: Welchen Weg nimmt der Request von der React-Seite über die API-Route und die Service-Schicht bis zur SQL-Abfrage? Mit Datei und Zeile.
+```
 
-**Feature**
+### 6. Fragt nach den Risiken
 
-- [ ] Ihr habt die ganze Session im Plan Mode erkundet und nie einen Plan freigegeben
-- [ ] Ihr habt ein Wort aus einem Tool-Ergebnis im nächsten Tool-Aufruf gefunden und könnt sagen, was das zeigt
-- [ ] Ihr habt `/context` am Anfang und am Ende geprüft und wisst, was das Fenster gefüllt hat
-- [ ] Ihr könnt erklären, wann ihr eine vorgeschlagene Aktion freigebt und wann ihr sie ablehnt
+```text
+Was sind die fünf größten Risiken, wenn wir diese Codebasis übernehmen? Nenn zu jedem die Belege.
+```
 
-**Codebasis verstanden, nichts geändert**
+Hakt bei mindestens einem nach: „Zeig mir, wo“ oder „Stimmt das heute noch?“.
 
-- [ ] Ihr habt einen Architekturüberblick, eine Mermaid-Abhängigkeitskarte und einen
-      nachverfolgten Request-Flow, jeweils mit Dateiverweisen
-- [ ] Ihr habt fünf Risiken mit Belegen und mindestens eines davon hinterfragt
-- [ ] Ihr wisst, wer wann an welchem Teil des Codes gearbeitet hat
-- [ ] `git status` in `bookmonkey-legacy` ist sauber
+### 7. Fragt, wer woran gearbeitet hat
 
-## Referenzen
+```text
+Finde mit git log und git shortlog -sn heraus, wer welche Bereiche angefasst hat, in welchen Jahren, und wie sich der Stil verändert hat.
+```
 
-- Claude Code: Overview: https://code.claude.com/docs/en/overview
-- Claude Code: Permission modes (plan mode): https://code.claude.com/docs/en/permission-modes
-- Claude Code: Common workflows (understand new codebases): https://code.claude.com/docs/en/common-workflows
-- Claude Code: Interactive mode: https://code.claude.com/docs/en/interactive-mode
-- Claude Code: Commands: https://code.claude.com/docs/en/commands
-- Mermaid flowchart syntax: https://mermaid.js.org/syntax/flowchart.html
+### 8. Prüft Kontextfenster und Repo
+
+Führt `/context` noch einmal aus und vergleicht mit Schritt 2: Was hat das Fenster gefüllt? Prüft dann im Terminal `git status`: Es muss `nothing to commit, working tree clean` melden.
+
+### Was gerade passiert ist
+
+| Werkzeug | Wofür |
+|---|---|
+| Plan Mode | Erkunden, ohne dass etwas geändert wird |
+| `Ctrl+O` | Sehen, was Claude wirklich gelesen und ausgeführt hat |
+| `/context` | Sehen, wie voll das Kontextfenster ist |
+| Artefakte verlangen | Diagramm, Datei und Zeile statt Eindruck: Das könnt ihr prüfen |
+
+„Was hältst du von diesem Code?“ könnt ihr nicht prüfen. Ein Mermaid-Diagramm mit Dateien schon.
+
+**Fertig, wenn** ihr Architekturüberblick, Abhängigkeitskarte, Request-Flow und fünf Risiken mit Belegen habt, sagen könnt, was das Kontextfenster gefüllt hat, sagen könnt, wann ihr eine vorgeschlagene Aktion freigebt und wann nicht, und `git status` sauber ist.
+
+<details>
+<summary>Mehr dazu</summary>
+
+`/help` listet alle Slash Commands, `/permissions` zeigt, was Claude ohne Nachfrage tun darf. Docs: [Overview](https://code.claude.com/docs/en/overview), [Permission modes](https://code.claude.com/docs/en/permission-modes), [Common workflows](https://code.claude.com/docs/en/common-workflows), [Interactive mode](https://code.claude.com/docs/en/interactive-mode), [Commands](https://code.claude.com/docs/en/commands), [Mermaid](https://mermaid.js.org/syntax/flowchart.html).
+
+</details>
