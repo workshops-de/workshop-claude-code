@@ -94,17 +94,12 @@ Send the same prompt. On macOS Python reports `PermissionError: [Errno 1] Operat
 <details>
 <summary>In the desktop app</summary>
 
-The desktop app reads the same settings files as the terminal, but it has no `--settings` flag. The docs do not say whether a desktop session really runs Bash commands in the sandbox. Try it:
+In the app, `/sandbox` opens the settings:
 
-1. Let Claude add the setting locally:
-
-   ```text
-   Add to .claude/settings.local.json: permissions.blockReadsOutsideWorkingDirectories true, sandbox.enabled true, sandbox.allowUnsandboxedCommands false, sandbox.failIfUnavailable true. Keep what is already there.
-   ```
-
-2. Start a new session (**+ New**) in the same folder and send the Python prompt from above.
-3. If you get `PermissionError`, the sandbox works in the app too. If the command runs, do this step with `claude` in the app's terminal (``Ctrl+` ``).
-4. Clean up afterwards: remove the four entries from `.claude/settings.local.json` again.
+1. Turn on **Local sandbox** and, below it, **Strict sandbox mode** (blocks commands that cannot run in the sandbox instead of asking).
+2. Start a new session (**+ New**), because the sandbox only applies to new sessions. Send the Python prompt from above.
+3. Predict what happens. Without `blockReadsOutsideWorkingDirectories` the sandbox usually allows reading but not writing outside the project: Python prints `secret` and then reports `PermissionError` on the write.
+4. Turn both switches off again afterwards. **Strict sandbox mode** also applies in the terminal.
 
 </details>
 

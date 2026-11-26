@@ -94,17 +94,12 @@ Schickt denselben Prompt. Unter macOS meldet Python `PermissionError: [Errno 1] 
 <details>
 <summary>In der Desktop-App</summary>
 
-Die Desktop-App liest dieselben Settings-Dateien wie das Terminal, aber `--settings` gibt es dort nicht. Ob eine Desktop-Session Bash-Befehle wirklich in der Sandbox ausführt, steht nicht in den Docs. Probiert es aus:
+`/sandbox` öffnet in der App die Einstellungen:
 
-1. Lasst Claude die Einstellung lokal eintragen:
-
-   ```text
-   Trag in .claude/settings.local.json ein: permissions.blockReadsOutsideWorkingDirectories true, sandbox.enabled true, sandbox.allowUnsandboxedCommands false, sandbox.failIfUnavailable true. Behalte, was schon drinsteht.
-   ```
-
-2. Startet eine neue Session (**+ New**) im selben Ordner und schickt den Python-Prompt von oben.
-3. Kommt `PermissionError`, greift die Sandbox auch in der App. Läuft der Befehl durch, macht diesen Schritt mit `claude` im Terminal der App (``Ctrl+` ``).
-4. Räumt danach auf: Nehmt die vier Einträge wieder aus `.claude/settings.local.json`.
+1. Schaltet **Local sandbox** ein und darunter **Strict sandbox mode** (blockt Befehle, die nicht in der Sandbox laufen können, statt zu fragen).
+2. Startet eine neue Session (**+ New**), denn die Sandbox gilt erst für neue Sessions. Schickt den Python-Prompt von oben.
+3. Sagt vorher, was passiert. Ohne `blockReadsOutsideWorkingDirectories` darf die Sandbox in der Regel lesen, aber außerhalb des Projekts nicht schreiben: Python gibt `geheim` aus und meldet dann beim Schreiben `PermissionError`.
+4. Schaltet beide Schalter danach wieder aus. **Strict sandbox mode** gilt auch im Terminal.
 
 </details>
 
