@@ -4,15 +4,28 @@ The codebase is [`bookmonkey-legacy`](https://github.com/andrekovac/bookmonkey-l
 
 ### 1. Clone the repo and start in plan mode
 
+In **plan mode** Claude reads files and runs exploring commands, but changes nothing until you approve a plan. In this task you never approve one.
+
+**In the terminal:**
+
 ```bash
 git clone https://github.com/andrekovac/bookmonkey-legacy.git
 cd bookmonkey-legacy
 claude --permission-mode plan
 ```
 
-In **plan mode** Claude reads files and runs exploring commands, but changes nothing until you approve a plan. Alternatively press `Shift+Tab` in a running session until `plan mode on` shows. In this task you never approve one.
+If a session is already running, press `Shift+Tab` until `plan mode on` shows.
 
-In the desktop app: open any folder, run only `git clone …` in the app's terminal (``Ctrl+` ``), then pick the `bookmonkey-legacy` folder below the input field and set **Plan** in the mode menu next to it.
+**In the desktop app (the "Code" tab):**
+
+1. Clone the repo once, in any terminal or in the app's terminal (``Ctrl+` ``):
+
+   ```bash
+   git clone https://github.com/andrekovac/bookmonkey-legacy.git
+   ```
+
+2. Start a new session and pick the `bookmonkey-legacy` folder below the input field.
+3. Set **Plan** in the mode menu next to it.
 
 ### 2. Watch the loop once
 

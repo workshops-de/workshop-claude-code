@@ -4,15 +4,28 @@ Die Codebasis ist [`bookmonkey-legacy`](https://github.com/andrekovac/bookmonkey
 
 ### 1. Klont das Repo und startet im Plan Mode
 
+Im **Plan Mode** liest Claude Dateien und führt erkundende Befehle aus, ändert aber nichts, bis ihr einen Plan freigebt. In dieser Aufgabe gebt ihr nie einen frei.
+
+**Im Terminal:**
+
 ```bash
 git clone https://github.com/andrekovac/bookmonkey-legacy.git
 cd bookmonkey-legacy
 claude --permission-mode plan
 ```
 
-Im **Plan Mode** liest Claude Dateien und führt erkundende Befehle aus, ändert aber nichts, bis ihr einen Plan freigebt. Alternativ drückt ihr in einer laufenden Session `Shift+Tab`, bis `plan mode on` erscheint. In dieser Aufgabe gebt ihr nie einen frei.
+Läuft schon eine Session, drückt `Shift+Tab`, bis `plan mode on` erscheint.
 
-In der Desktop-App: Öffnet irgendeinen Ordner, führt im Terminal der App (``Ctrl+` ``) nur `git clone …` aus, wählt dann den Ordner `bookmonkey-legacy` unter dem Eingabefeld und stellt im Modus-Menü daneben **Plan** ein.
+**In der Desktop-App (Tab „Code“):**
+
+1. Klont das Repo einmal. Das geht in jedem Terminal oder im Terminal der App (``Ctrl+` ``):
+
+   ```bash
+   git clone https://github.com/andrekovac/bookmonkey-legacy.git
+   ```
+
+2. Startet eine neue Session und wählt unter dem Eingabefeld den Ordner `bookmonkey-legacy`.
+3. Stellt im Modus-Menü daneben **Plan** ein.
 
 ### 2. Beobachtet die Schleife einmal
 
