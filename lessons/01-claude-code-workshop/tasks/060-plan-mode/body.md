@@ -14,7 +14,7 @@ You work in a new, empty folder `bookmonkey` with Node.js 26 (for example `mkdir
 
 ### 1. Let Claude make a plan
 
-Set the mode to **Plan** and send:
+Set the mode to **Plan** (desktop app: mode menu below the input field; terminal: `Shift+Tab`) and send:
 
 ```text
 Plan a new Next.js project with TypeScript and Tailwind for BookMonkey, a book catalog. It should have a public and a protected area, separated by route groups. The start page shows the titles of the first five books from http://localhost:4730/books?_limit=5. Do not change anything yet, I want to see the plan first.

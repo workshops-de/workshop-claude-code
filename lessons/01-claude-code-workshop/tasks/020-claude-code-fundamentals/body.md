@@ -100,6 +100,6 @@ Run `/context` again and compare with step 2: what filled the window? Then run `
 <details>
 <summary>More on this</summary>
 
-`/help` lists all slash commands, `/permissions` shows what Claude may do without asking. Docs: [Overview](https://code.claude.com/docs/en/overview), [Permission modes](https://code.claude.com/docs/en/permission-modes), [Common workflows](https://code.claude.com/docs/en/common-workflows), [Interactive mode](https://code.claude.com/docs/en/interactive-mode), [Commands](https://code.claude.com/docs/en/commands), [Mermaid](https://mermaid.js.org/syntax/flowchart.html).
+`/help` lists all slash commands, `/permissions` shows what Claude may do without asking (in the desktop app it only works in `claude` in the app's terminal). Docs: [Overview](https://code.claude.com/docs/en/overview), [Permission modes](https://code.claude.com/docs/en/permission-modes), [Common workflows](https://code.claude.com/docs/en/common-workflows), [Interactive mode](https://code.claude.com/docs/en/interactive-mode), [Commands](https://code.claude.com/docs/en/commands), [Mermaid](https://mermaid.js.org/syntax/flowchart.html).
 
 </details>

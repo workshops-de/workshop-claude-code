@@ -34,7 +34,7 @@ Startet eine neue Session und bittet um eine kleine Änderung, ohne den Skill zu
 Zeige auf jeder Buchkarte im Katalog auch den Verlag an.
 ```
 
-Schaut im Verlauf, ob Claude `add-book-feature` geladen hat. Seht ihr es nicht, fragt Claude: "Welche Skills hast du für diese Aufgabe geladen?" In unserem Lauf hat es den Skill geladen. Wenn nicht, ergänzt in der `description` die Wörter aus eurem Prompt.
+Schaut im Verlauf, ob Claude `add-book-feature` geladen hat (Desktop-App: `Ctrl+O`, bis die Ansicht **Verbose** ist). Seht ihr es nicht, fragt Claude: "Welche Skills hast du für diese Aufgabe geladen?" In unserem Lauf hat es den Skill geladen. Wenn nicht, ergänzt in der `description` die Wörter aus eurem Prompt.
 
 ### 4. Legt einen Befehl an
 

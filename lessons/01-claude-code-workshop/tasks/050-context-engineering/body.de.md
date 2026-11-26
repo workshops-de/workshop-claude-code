@@ -42,7 +42,7 @@ Claude fasst das Gespräch zusammen und macht mit der Zusammenfassung weiter. Fr
 
 ### 5. Startet neu
 
-Startet eine **neue Session** und fragt etwas Neues:
+Startet eine **neue Session** (Terminal: `/clear`; Desktop-App: **+ New** in der Seitenleiste, `Cmd+N` / `Ctrl+N`) und fragt etwas Neues:
 
 ```text
 Erkläre kurz das Routing der Web-App.
@@ -75,6 +75,6 @@ Ein Subagent liest in seinem eigenen Kontext und gibt nur die Antwort zurück. I
 <details>
 <summary>Mehr dazu</summary>
 
-Den Füllstand zeigt `/context` (wir haben es hier nicht getestet, siehe Docs). `/btw` stellt eine Zwischenfrage, ohne sie dem Gespräch hinzuzufügen. Mehr in den Docs: [Commands](https://code.claude.com/docs/en/commands), [Costs and context usage](https://code.claude.com/docs/en/costs), [Best practices](https://code.claude.com/docs/en/best-practices).
+Den Füllstand zeigt `/context` (wir haben es hier nicht getestet, siehe Docs). In der Desktop-App seht ihr ihn auch in der Karte **Context** der Session-Details oder im Ring neben der Modellauswahl. `/btw` stellt eine Zwischenfrage, ohne sie dem Gespräch hinzuzufügen. Mehr in den Docs: [Commands](https://code.claude.com/docs/en/commands), [Costs and context usage](https://code.claude.com/docs/en/costs), [Best practices](https://code.claude.com/docs/en/best-practices).
 
 </details>

@@ -42,7 +42,7 @@ Claude summarizes the conversation and continues with the summary. Afterwards as
 
 ### 5. Restart
 
-Start a **new session** and ask something new:
+Start a **new session** (terminal: `/clear`; desktop app: **+ New** in the sidebar, `Cmd+N` / `Ctrl+N`) and ask something new:
 
 ```text
 Briefly explain the routing of the web app.
@@ -75,6 +75,6 @@ A subagent reads in its own context and returns only the answer. In our run it d
 <details>
 <summary>More</summary>
 
-The fill level is shown by `/context` (we did not test it here, see the docs). `/btw` asks a side question without adding it to the conversation. More in the docs: [Commands](https://code.claude.com/docs/en/commands), [Costs and context usage](https://code.claude.com/docs/en/costs), [Best practices](https://code.claude.com/docs/en/best-practices).
+The fill level is shown by `/context` (we did not test it here, see the docs). In the desktop app you also see it in the **Context** card of the session details or in the ring next to the model picker. `/btw` asks a side question without adding it to the conversation. More in the docs: [Commands](https://code.claude.com/docs/en/commands), [Costs and context usage](https://code.claude.com/docs/en/costs), [Best practices](https://code.claude.com/docs/en/best-practices).
 
 </details>

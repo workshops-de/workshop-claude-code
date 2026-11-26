@@ -34,7 +34,7 @@ Start a new session and ask for a small change without naming the skill. You wri
 Show the publisher on every book card in the catalogue as well.
 ```
 
-Look in the transcript whether Claude loaded `add-book-feature`. If you do not see it, ask Claude: "Which skills did you load for this task?" In our run it did. If not, add the words from your prompt to the `description`.
+Look in the transcript whether Claude loaded `add-book-feature` (desktop app: press `Ctrl+O` until the view is **Verbose**). If you do not see it, ask Claude: "Which skills did you load for this task?" In our run it did. If not, add the words from your prompt to the `description`.
 
 ### 4. Create a command
 

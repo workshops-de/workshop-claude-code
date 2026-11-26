@@ -14,7 +14,7 @@ Ihr arbeitet in einem neuen, leeren Ordner `bookmonkey` mit Node.js 26 (zum Beis
 
 ### 1. Lasst Claude einen Plan machen
 
-Stellt den Modus auf **Plan** und schickt:
+Stellt den Modus auf **Plan** (Desktop-App: Modus-Menü unter dem Eingabefeld; Terminal: `Shift+Tab`) und schickt:
 
 ```text
 Plane ein neues Next.js-Projekt mit TypeScript und Tailwind für BookMonkey, einen Buchkatalog. Es soll einen öffentlichen und einen geschützten Bereich geben, getrennt durch Route Groups. Die Startseite zeigt die Titel der ersten fünf Bücher von http://localhost:4730/books?_limit=5. Ändere noch nichts, ich will erst den Plan sehen.

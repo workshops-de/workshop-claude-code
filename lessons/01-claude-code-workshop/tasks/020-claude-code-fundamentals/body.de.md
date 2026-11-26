@@ -100,6 +100,6 @@ Führt `/context` noch einmal aus und vergleicht mit Schritt 2: Was hat das Fens
 <details>
 <summary>Mehr dazu</summary>
 
-`/help` listet alle Slash Commands, `/permissions` zeigt, was Claude ohne Nachfrage tun darf. Docs: [Overview](https://code.claude.com/docs/en/overview), [Permission modes](https://code.claude.com/docs/en/permission-modes), [Common workflows](https://code.claude.com/docs/en/common-workflows), [Interactive mode](https://code.claude.com/docs/en/interactive-mode), [Commands](https://code.claude.com/docs/en/commands), [Mermaid](https://mermaid.js.org/syntax/flowchart.html).
+`/help` listet alle Slash Commands, `/permissions` zeigt, was Claude ohne Nachfrage tun darf (in der Desktop-App nur in `claude` im Terminal der App). Docs: [Overview](https://code.claude.com/docs/en/overview), [Permission modes](https://code.claude.com/docs/en/permission-modes), [Common workflows](https://code.claude.com/docs/en/common-workflows), [Interactive mode](https://code.claude.com/docs/en/interactive-mode), [Commands](https://code.claude.com/docs/en/commands), [Mermaid](https://mermaid.js.org/syntax/flowchart.html).
 
 </details>

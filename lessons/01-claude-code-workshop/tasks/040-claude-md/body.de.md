@@ -68,7 +68,7 @@ Eine **CLAUDE.md** wird bei jedem Start gelesen und liegt bei jeder Anfrage im K
 <summary>Mehr dazu</summary>
 
 - Persönliche Notizen gehören in `CLAUDE.local.md` (in die `.gitignore`). Eine `AGENTS.md` liest Claude nur, wenn es keine `CLAUDE.md` gibt.
-- Öffnet in der Desktop-App das Terminal und startet dort `claude`: `/memory` zeigt die geladenen Dateien, `/context all` zeigt sie mit Token-Zahl.
+- `/context all` zeigt die geladenen Dateien mit Token-Zahl, auch im Chat der Desktop-App. `/memory` listet sie ebenfalls; dafür öffnet ihr in der Desktop-App das Terminal und startet dort `claude`.
 - Die Docs empfehlen unter 200 Zeilen pro Datei: [Memory](https://code.claude.com/docs/en/memory) · [Best practices](https://code.claude.com/docs/en/best-practices)
 
 </details>
