@@ -36,3 +36,40 @@
 
 Versucht, euren Skill `add-book-feature` mit `paths` auf euer App-Verzeichnis zu begrenzen, oder
 macht aus eurem Command ein kleines Plugin, das euer Team installieren könnte.
+
+## Nach der Diskussion: vom Buch-Rezept zum Projekt-Skill
+
+`add-book-feature` wird geladen, wenn eine Anfrage nach einem Buch-Feature klingt. Ein Skill lohnt
+sich aber, wenn dieselbe Vorgehensweise in verschiedenen Aufgaben wiederkommt. Macht euren in drei
+Schritten breiter.
+
+1. **Erst sortieren, dann umschreiben.** Lasst Claude die Liste machen und sortiert sie selbst:
+
+   ```text
+   Liste die 10 wichtigsten Entscheidungen hinter der Leseseite und den Formularen, die wir gebaut haben (wo Dateien liegen, wie die API aufgerufen wird, URL-State, Anmeldung, Prüfungen, Projekt-Fakten). Eine Zeile pro Punkt. Ändere nichts.
+   ```
+
+   | Topf | Wohin damit |
+   | --- | --- |
+   | kommt bei jedem Screen wieder | in den Skill |
+   | gilt in diesem Projekt immer | `CLAUDE.md` |
+   | eine Aufgabe, die ich selbst starte | ein Command |
+   | nur dieses eine Feature | nirgends, es steht im Code |
+
+   Fragt euch: Würde der Skill auch bei einer Anmeldeseite oder einer Übersicht aller Reihen
+   helfen? Wenn nicht, ist er ein Rezept und kein Skill.
+
+2. **Schreibt den Skill nur aus dem ersten Topf neu.**
+
+   ```text
+   Mach aus add-book-feature einen Skill unter .claude/skills/api-screens/SKILL.md, der beschreibt, wie hier jeder Screen gegen die bookmonkey-api gebaut wird: Liste, Detailseite, Formular. Nimm nur die Entscheidungen aus „kommt bei jedem Screen wieder“, die Buchseiten nur als Beispiel, nicht als Regel. Lösch den alten Skill und lass /new-book-view auf den neuen verweisen. Die description beginnt mit Wörtern aus echten Anfragen (Screen, Seite, Liste, Detailseite, Formular, Suche, Paging, API).
+   ```
+
+3. **Testet ihn mit einer Aufgabe, die nie „Buch-Feature“ sagt.** In einer neuen Session:
+
+   ```text
+   Füge eine Seite /series hinzu, die jede Buchreihe mit ihren Büchern in der richtigen Reihenfolge zeigt.
+   ```
+
+   Schaut im Transcript, ob Claude `api-screens` geladen hat. Wenn nicht, ergänzt die Wörter aus
+   eurem Prompt in der `description`.
