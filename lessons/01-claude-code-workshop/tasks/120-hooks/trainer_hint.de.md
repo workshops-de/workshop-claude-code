@@ -13,6 +13,9 @@
   aufzeigen.
 - Claude baut die Hooks selbst, die Falle `exit 1` vs. `exit 2` sehen die Teilnehmenden deshalb
   kaum. Fragt in der Runde, warum ihr Hook mit `exit 2` endet (`exit 1` meldet nur).
+- Anschlussfrage: „Was passiert, wenn das Guard-Skript abstürzt oder in den Timeout läuft?“ Der
+  Aufruf geht durch, wie bei `exit 1`. `"onFailure": "block"` am Guard lässt ihn sicher scheitern
+  (ab Claude Code v2.1.295). Nur für Guards: Beim Typecheck-Hook würde es die Arbeit stoppen, sobald `tsc` kaputt ist.
 - Schritt 3 ist der neue Aha-Moment: Im Lauf vom 2026-11-12 (Sonnet 5.5) blockierte der Hook die
   harmlose Commit-Message, und Claude fand selbst Umgehungen wie `cat .e*.local`. Der Umbau kann
   groß werden (im Lauf ein Perl-Filter) und kurz alle Bash-Aufrufe blockieren, wenn das Skript

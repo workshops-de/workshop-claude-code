@@ -37,6 +37,7 @@ Falls Claude etwas anderes baut:
 
 - **`PreToolUse`**-Hook: läuft **vor** dem Tool
 - **`exit 2`** blockiert, `exit 1` meldet nur
+- **`"onFailure": "block"`** am Guard: auch Absturz oder Timeout blockieren
 - Matcher auch für **`Bash`**, nicht nur `Read`
 - Ausnahme für **`.env.example`**
 
@@ -146,7 +147,7 @@ Ein Hook, der Befehlstext durchsucht, fängt Versehen ab, aber keinen absichtlic
 <details>
 <summary>Mehr dazu</summary>
 
-Claude legt die Hooks in `.claude/settings.json` und `.claude/hooks/` an. Die Hooks seht ihr im Terminal: öffnet in der Desktop-App das Terminal, startet dort `claude` und gebt `/hooks` ein. Nutzt ein Hook-Skript `jq` und `jq` fehlt, blockiert es je nach Bauart alles oder nichts. Prüft vorher `jq --version`. `exit 2` blockiert einen Aufruf, `exit 1` meldet nur einen Fehler und lässt ihn durch. Eine Sperre unabhängig vom Befehlstext ist eine Regel in `.claude/settings.json`: `{"permissions": {"deny": ["Read(./.env*)"]}}`. Habt ihr beim Testen User registriert, entfernt `curl -X POST http://localhost:4730/dev/reset` sie wieder.
+Claude legt die Hooks in `.claude/settings.json` und `.claude/hooks/` an. Die Hooks seht ihr im Terminal: öffnet in der Desktop-App das Terminal, startet dort `claude` und gebt `/hooks` ein. Nutzt ein Hook-Skript `jq` und `jq` fehlt, blockiert es je nach Bauart alles oder nichts. Prüft vorher `jq --version`. `exit 2` blockiert einen Aufruf, `exit 1` meldet nur einen Fehler und lässt ihn durch. Ein Absturz oder Timeout des Skripts lässt ihn ebenfalls durch, außer der Hook hat `"onFailure": "block"` (ab Claude Code v2.1.295). Setzt das bei Guards wie dem `.env`-Hook, nicht beim Typecheck-Hook: Ein kaputter Check soll eure Arbeit nicht stoppen. Eine Sperre unabhängig vom Befehlstext ist eine Regel in `.claude/settings.json`: `{"permissions": {"deny": ["Read(./.env*)"]}}`. Habt ihr beim Testen User registriert, entfernt `curl -X POST http://localhost:4730/dev/reset` sie wieder.
 
 [Hooks guide](https://code.claude.com/docs/en/hooks-guide)
 

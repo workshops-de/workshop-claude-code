@@ -37,6 +37,7 @@ If Claude builds something else:
 
 - **`PreToolUse`** hook: runs **before** the tool
 - **`exit 2`** blocks, `exit 1` only reports
+- **`"onFailure": "block"`** on the guard: a crash or timeout blocks too
 - Matcher also covers **`Bash`**, not only `Read`
 - Exception for **`.env.example`**
 
@@ -146,7 +147,7 @@ A hook that searches command text catches accidents, but not a deliberate detour
 <details>
 <summary>More</summary>
 
-Claude puts the hooks in `.claude/settings.json` and `.claude/hooks/`. To see them, open the terminal in the desktop app, start `claude` there and enter `/hooks`. If a hook script uses `jq` and `jq` is missing, it blocks everything or nothing, depending on how it is built. Check `jq --version` first. `exit 2` blocks a call, `exit 1` only reports an error and lets it through. A block that does not depend on the command text is a rule in `.claude/settings.json`: `{"permissions": {"deny": ["Read(./.env*)"]}}`. If you registered users while testing, `curl -X POST http://localhost:4730/dev/reset` removes them again.
+Claude puts the hooks in `.claude/settings.json` and `.claude/hooks/`. To see them, open the terminal in the desktop app, start `claude` there and enter `/hooks`. If a hook script uses `jq` and `jq` is missing, it blocks everything or nothing, depending on how it is built. Check `jq --version` first. `exit 2` blocks a call, `exit 1` only reports an error and lets it through. A crash or a timeout of the script lets it through too, unless the hook has `"onFailure": "block"` (Claude Code v2.1.295 or later). Use it on guards like the `.env` hook, not on the type-check hook: a broken check should not stop your work. A block that does not depend on the command text is a rule in `.claude/settings.json`: `{"permissions": {"deny": ["Read(./.env*)"]}}`. If you registered users while testing, `curl -X POST http://localhost:4730/dev/reset` removes them again.
 
 [Hooks guide](https://code.claude.com/docs/en/hooks-guide)
 

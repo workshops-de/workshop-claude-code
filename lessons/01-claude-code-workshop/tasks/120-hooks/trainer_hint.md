@@ -12,6 +12,9 @@
 - Reconnect to the `CLAUDE.md` task: memory advises, hooks enforce. Draw the contrast explicitly.
 - Claude builds the hooks itself, so participants rarely see the `exit 1` vs. `exit 2` trap. Ask
   the room why their hook ends with `exit 2` (`exit 1` only reports).
+- Follow-up question: "What if the guard script crashes or hits its timeout?" It lets the call
+  through, like `exit 1`. `"onFailure": "block"` on the guard makes it fail closed (Claude Code
+  v2.1.295 or later). Only for guards: on the type-check hook it would stop work whenever `tsc` breaks.
 - Step 3 is the new payoff: in the run of 2026-11-12 (Sonnet 5.5) the hook blocked the harmless
   commit message, and Claude found bypasses like `cat .e*.local` on its own. The rebuild can get
   big (a Perl filter in the run) and briefly block every Bash call if the script has a bug. Good
