@@ -1,5 +1,18 @@
 ## Going further: scoped, forked & shared skills
 
+- **Decide who may start a skill**: two frontmatter fields set who can load it.
+
+  | Frontmatter | Claude loads it by itself | You can type `/name` |
+  | --- | --- | --- |
+  | neither field | yes | yes |
+  | `disable-model-invocation: true` | no | yes |
+  | `user-invocable: false` | yes | no |
+
+  With `disable-model-invocation: true` the `description` is not put into Claude's context, so
+  Claude does not know the skill exists. Use it for jobs with side effects or a timing you want to
+  control (deploy, commit, your `/new-book-view`). It also saves context in every session.
+  `user-invocable: false` is the opposite: the skill is hidden from the `/` menu, like the shadcn
+  skill from task 080.
 - **Scope a skill to paths**: the `paths` frontmatter loads it only when Claude works with
   matching files; nested `.claude/skills/` folders load when work reaches that directory.
 - **Run a skill in its own context**: `context: fork` runs it in a subagent, so a long procedure

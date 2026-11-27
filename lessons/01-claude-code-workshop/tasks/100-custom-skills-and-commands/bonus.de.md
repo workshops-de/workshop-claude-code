@@ -1,5 +1,19 @@
 ## Weiterführend – Skills mit Pfad-Scope, Fork und zum Teilen
 
+- **Festlegen, wer einen Skill starten darf** – zwei Felder im Frontmatter bestimmen, wer ihn laden
+  kann.
+
+  | Frontmatter | Claude lädt ihn von selbst | Ihr könnt `/name` tippen |
+  | --- | --- | --- |
+  | keines der beiden Felder | ja | ja |
+  | `disable-model-invocation: true` | nein | ja |
+  | `user-invocable: false` | ja | nein |
+
+  Mit `disable-model-invocation: true` kommt die `description` nicht in Claudes Kontext. Claude
+  weiß also nicht, dass es den Skill gibt. Nutzt das für Aufgaben mit Nebenwirkungen oder mit einem
+  Zeitpunkt, den ihr selbst wählen wollt (Deploy, Commit, euer `/new-book-view`). Es spart auch in
+  jeder Session Kontext. `user-invocable: false` ist das Gegenteil: Der Skill fehlt im `/`-Menü, so
+  wie der shadcn-Skill aus Aufgabe 080.
 - **Einen Skill auf Pfade begrenzen** – das Frontmatter `paths` lädt ihn nur, wenn Claude mit
   passenden Dateien arbeitet; verschachtelte `.claude/skills/`-Ordner werden geladen, sobald die
   Arbeit dieses Verzeichnis erreicht.
